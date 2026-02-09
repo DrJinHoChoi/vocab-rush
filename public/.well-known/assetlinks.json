@@ -1,0 +1,8 @@
+[{
+  "relation": ["delegate_permission/common.handle_all_urls"],
+  "target": {
+    "namespace": "android_app",
+    "package_name": "com.vocabrush.app",
+    "sha256_cert_fingerprints": ["TODO: 여기에 앱 서명 SHA256 지문을 넣으세요"]
+  }
+}]
