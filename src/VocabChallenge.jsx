@@ -5,7 +5,99 @@ import { useState, useEffect, useCallback, useRef } from "react";
 // ============================================================
 import { VOCAB_DATA } from "./vocabData.js";
 
+// ============================================================
+// ADSENSE CONFIG — 발급 후 여기에 입력
+// ============================================================
+const AD_CONFIG = {
+  publisherId: "ca-pub-XXXXXXXXXXXXXXXX", // 본인 AdSense 게시자 ID
+  slots: {
+    menuBanner:   "1234567890", // 메뉴 하단 배너
+    resultBanner: "1234567891", // 결과 화면 배너
+    interstitial: "1234567892", // 게임 사이 전면 광고
+  },
+  // 전면광고 표시 간격 (게임 N회마다)
+  interstitialEvery: 3,
+};
+
+// ============================================================
+// AD BANNER COMPONENT (Google AdSense)
+// ============================================================
+function AdBanner({ slot, format = "auto", style = {} }) {
+  const adRef = useRef(null);
+  const pushed = useRef(false);
+
+  useEffect(() => {
+    if (pushed.current) return;
+    try {
+      if (adRef.current && window.adsbygoogle) {
+        (window.adsbygoogle = window.adsbygoogle || []).push({});
+        pushed.current = true;
+      }
+    } catch (e) {}
+  }, []);
+
+  if (AD_CONFIG.publisherId.includes("XXXX")) return null; // 미설정시 숨김
+
+  return (
+    <div style={{ margin: "16px auto", textAlign: "center", overflow: "hidden", ...style }}>
+      <ins
+        ref={adRef}
+        className="adsbygoogle"
+        style={{ display: "block" }}
+        data-ad-client={AD_CONFIG.publisherId}
+        data-ad-slot={slot}
+        data-ad-format={format}
+        data-full-width-responsive="true"
+      />
+    </div>
+  );
+}
+
+// ============================================================
+// INTERSTITIAL AD (전면 광고)
+// ============================================================
+function InterstitialAd({ show, onClose }) {
+  useEffect(() => {
+    if (show) {
+      const timer = setTimeout(onClose, 5000); // 5초 후 자동 닫힘
+      return () => clearTimeout(timer);
+    }
+  }, [show, onClose]);
+
+  if (!show || AD_CONFIG.publisherId.includes("XXXX")) return null;
+
+  return (
+    <div style={{
+      position: "fixed", inset: 0, zIndex: 9999,
+      background: "rgba(0,0,0,0.85)",
+      display: "flex", flexDirection: "column",
+      alignItems: "center", justifyContent: "center",
+      padding: 20,
+    }}>
+      <div style={{
+        background: "#1e293b", borderRadius: 20, padding: 24,
+        maxWidth: 400, width: "100%", textAlign: "center",
+        border: "1px solid rgba(255,255,255,0.1)",
+      }}>
+        <p style={{ color: "#64748b", fontSize: 11, marginBottom: 12, letterSpacing: 1 }}>SPONSORED</p>
+        <AdBanner slot={AD_CONFIG.slots.interstitial} format="rectangle" />
+        <button
+          onClick={onClose}
+          style={{
+            marginTop: 16, padding: "10px 32px", borderRadius: 12,
+            border: "1px solid rgba(255,255,255,0.2)", background: "transparent",
+            color: "#94a3b8", fontSize: 14, cursor: "pointer", fontWeight: 600,
+          }}
+        >
+          계속하기
+        </button>
+      </div>
+    </div>
+  );
+}
+
 const CATEGORIES = [
+  { key: "random", icon: "🎲", label: "랜덤 믹스" },
   { key: "A1", icon: "🟢", label: "기초 A1" },
   { key: "A2", icon: "🔵", label: "초급 A2" },
   { key: "B1", icon: "🟡", label: "중급 B1" },
@@ -39,27 +131,69 @@ function generateChoices(correct, allWords) {
 }
 
 // ============================================================
-// AUDIO: Web Speech API + Sound Effects
+// AUDIO: Mobile-safe Speech + Sound Effects
 // ============================================================
-function speakWord(word) {
-  if (!window.speechSynthesis) return;
-  window.speechSynthesis.cancel();
-  const u = new SpeechSynthesisUtterance(word);
-  u.lang = "en-US";
-  u.rate = 0.85;
-  u.pitch = 1;
-  const voices = window.speechSynthesis.getVoices();
-  const enVoice = voices.find(
-    (v) => v.lang.startsWith("en") && v.name.includes("Female")
-  ) || voices.find((v) => v.lang.startsWith("en-US")) || voices.find((v) => v.lang.startsWith("en"));
-  if (enVoice) u.voice = enVoice;
-  window.speechSynthesis.speak(u);
+let _audioUnlocked = false;
+let _voices = [];
+let _audioCtx = null;
+
+// Must be called inside a direct click/touch handler to unlock mobile audio
+function unlockAudio(force) {
+  if (_audioUnlocked && !force) return;
+  _audioUnlocked = true;
+  // Unlock AudioContext
+  try {
+    if (!_audioCtx) _audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    if (_audioCtx.state === "suspended") _audioCtx.resume();
+    const buf = _audioCtx.createBuffer(1, 1, 22050);
+    const src = _audioCtx.createBufferSource();
+    src.buffer = buf;
+    src.connect(_audioCtx.destination);
+    src.start(0);
+  } catch (e) {}
+  // Unlock SpeechSynthesis — iOS requires speak() inside gesture
+  try {
+    const synth = window.speechSynthesis;
+    if (synth) {
+      synth.cancel();
+      synth.resume();
+      const dummy = new SpeechSynthesisUtterance(" ");
+      dummy.volume = 0.01;
+      dummy.lang = "en-US";
+      synth.speak(dummy);
+      _voices = synth.getVoices();
+      synth.onvoiceschanged = () => { _voices = synth.getVoices(); };
+    }
+  } catch (e) {}
 }
 
-const AudioCtx = window.AudioContext || window.webkitAudioContext;
-let _audioCtx = null;
+// NO setTimeout — must stay in gesture chain for mobile
+function speakWord(word) {
+  const synth = window.speechSynthesis;
+  if (!synth) return;
+  try {
+    synth.cancel();
+    synth.resume();
+    if (!_voices.length) _voices = synth.getVoices();
+    const u = new SpeechSynthesisUtterance(word);
+    u.lang = "en-US";
+    u.rate = 0.85;
+    u.pitch = 1;
+    const enVoice = _voices.find(
+      (v) => v.lang.startsWith("en") && v.name.includes("Female")
+    ) || _voices.find((v) => v.lang.startsWith("en-US")) || _voices.find((v) => v.lang.startsWith("en"));
+    if (enVoice) u.voice = enVoice;
+    synth.speak(u);
+  } catch (e) {}
+}
+
+function stopSpeech() {
+  try { if (window.speechSynthesis) window.speechSynthesis.cancel(); } catch (e) {}
+}
+
 function getAudioCtx() {
-  if (!_audioCtx) _audioCtx = new AudioCtx();
+  if (!_audioCtx) _audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  if (_audioCtx.state === "suspended") _audioCtx.resume();
   return _audioCtx;
 }
 
@@ -137,10 +271,11 @@ function playTickSound() {
 // ============================================================
 export default function VocabChallenge() {
   const [screen, setScreen] = useState("menu");
-  const [category, setCategory] = useState("B1");
+  const [category, setCategory] = useState("random");
   const [difficulty, setDifficulty] = useState("medium");
   const [roundSize, setRoundSize] = useState(10);
   const [soundOn, setSoundOn] = useState(true);
+  const soundRef = useRef(true);
   const [questions, setQuestions] = useState([]);
   const [current, setCurrent] = useState(0);
   const [score, setScore] = useState(0);
@@ -152,18 +287,50 @@ export default function VocabChallenge() {
   const [showExample, setShowExample] = useState(false);
   const [results, setResults] = useState([]);
   const [comboFlash, setComboFlash] = useState(false);
+  const [gameCount, setGameCount] = useState(0);
+  const [showInterstitial, setShowInterstitial] = useState(false);
   const timerRef = useRef(null);
 
   const allWords = Object.values(VOCAB_DATA).flat();
 
   useEffect(() => {
+    // Load voices
     if (window.speechSynthesis) {
-      window.speechSynthesis.getVoices();
+      _voices = window.speechSynthesis.getVoices();
+      window.speechSynthesis.onvoiceschanged = () => {
+        _voices = window.speechSynthesis.getVoices();
+      };
+      // Chrome keepalive
+      const keepAlive = setInterval(() => {
+        if (window.speechSynthesis && !window.speechSynthesis.speaking) {
+          window.speechSynthesis.resume();
+        }
+      }, 10000);
+      return () => clearInterval(keepAlive);
     }
   }, []);
 
+  // Unlock audio on first ANY touch/click (mobile requires user gesture)
+  useEffect(() => {
+    const handler = () => { unlockAudio(); };
+    document.addEventListener("touchstart", handler, { once: true });
+    document.addEventListener("click", handler, { once: true });
+    return () => {
+      document.removeEventListener("touchstart", handler);
+      document.removeEventListener("click", handler);
+    };
+  }, []);
+
+  // Keep ref in sync with state so closures always read latest value
+  useEffect(() => {
+    soundRef.current = soundOn;
+  }, [soundOn]);
+
   const startGame = useCallback(() => {
-    const words = shuffle(VOCAB_DATA[category]).slice(0, roundSize);
+    // User gesture → unlock mobile audio
+    unlockAudio();
+    const pool = category === "random" ? allWords : VOCAB_DATA[category];
+    const words = shuffle(pool).slice(0, roundSize);
     const qs = words.map((w) => ({
       word: w,
       choices: generateChoices(w, allWords),
@@ -185,7 +352,7 @@ export default function VocabChallenge() {
     if (screen !== "play" || selected !== null) return;
     timerRef.current = setInterval(() => {
       setTimeLeft((t) => {
-        if (t <= 4 && t > 1 && soundOn) playTickSound();
+        if (t <= 4 && t > 1 && soundRef.current) playTickSound();
         if (t <= 1) {
           clearInterval(timerRef.current);
           handleAnswer(null);
@@ -199,7 +366,7 @@ export default function VocabChallenge() {
 
   // Auto-speak word on new question
   useEffect(() => {
-    if (screen === "play" && selected === null && questions[current] && soundOn) {
+    if (screen === "play" && selected === null && questions[current] && soundRef.current) {
       setTimeout(() => speakWord(questions[current].word.en), 300);
     }
   }, [screen, current, selected]);
@@ -217,7 +384,7 @@ export default function VocabChallenge() {
     const streakBonus = correct && newStreak >= 3 ? newStreak * 5 : 0;
     const pts = correct ? DIFFICULTY[difficulty].points + speedBonus + streakBonus : 0;
 
-    if (soundOn) {
+    if (soundRef.current) {
       if (correct && newStreak >= 3) {
         playComboSound();
       } else if (correct) {
@@ -249,6 +416,12 @@ export default function VocabChallenge() {
 
     setTimeout(() => {
       if (current + 1 >= questions.length) {
+        const newCount = gameCount + 1;
+        setGameCount(newCount);
+        // 3판마다 전면광고
+        if (newCount % AD_CONFIG.interstitialEvery === 0) {
+          setShowInterstitial(true);
+        }
         setScreen("result");
       } else {
         setCurrent((c) => c + 1);
@@ -276,7 +449,7 @@ export default function VocabChallenge() {
             <h1 style={S.title}>VOCAB RUSH</h1>
             <p style={S.subtitle}>직장인 영어 어휘 타이머 챌린지</p>
             <p style={S.wordCount}>
-              총 {allWords.length}개 단어 · SAT 수준 · 발음 지원 🔊
+              총 {allWords.length}개 단어 · CEFR A1~C2 · 발음 지원 🔊
             </p>
           </div>
 
@@ -295,7 +468,7 @@ export default function VocabChallenge() {
                   <span style={{ fontSize: 20 }}>{c.icon}</span>
                   <span style={{ fontSize: 12, marginTop: 3 }}>{c.label}</span>
                   <span style={{ fontSize: 10, color: "#64748b" }}>
-                    {VOCAB_DATA[c.key].length}개
+                    {c.key === "random" ? allWords.length : VOCAB_DATA[c.key].length}개
                   </span>
                 </button>
               ))}
@@ -350,7 +523,15 @@ export default function VocabChallenge() {
           <div style={{ ...S.section, display: "flex", justifyContent: "space-between", alignItems: "center" }}>
             <p style={{ ...S.sectionLabel, margin: 0 }}>사운드</p>
             <button
-              onClick={() => setSoundOn(!soundOn)}
+              onClick={() => {
+                const next = !soundOn;
+                setSoundOn(next);
+                if (next) {
+                  unlockAudio(true); // force re-unlock on ON
+                } else {
+                  stopSpeech();
+                }
+              }}
               style={{
                 ...S.soundToggle,
                 background: soundOn ? "rgba(96,165,250,0.15)" : "rgba(255,255,255,0.05)",
@@ -373,6 +554,17 @@ export default function VocabChallenge() {
             <p>🔥 3연속 정답 시 콤보 보너스!</p>
             <p>💡 힌트 & 예문 사용 가능</p>
           </div>
+
+          {/* 메뉴 하단 배너 광고 */}
+          <AdBanner slot={AD_CONFIG.slots.menuBanner} />
+
+          <a
+            href="/privacy.html"
+            target="_blank"
+            style={{ display: "block", textAlign: "center", fontSize: 11, color: "#475569", marginTop: 8, textDecoration: "none" }}
+          >
+            개인정보처리방침
+          </a>
         </div>
       </div>
     );
@@ -432,7 +624,7 @@ export default function VocabChallenge() {
 
             {/* Speaker button */}
             <button
-              onClick={() => speakWord(q.word.en)}
+              onClick={() => { unlockAudio(); speakWord(q.word.en); }}
               style={S.speakerBtn}
               title="발음 다시 듣기"
             >
@@ -496,7 +688,7 @@ export default function VocabChallenge() {
               return (
                 <button
                   key={i}
-                  onClick={() => handleAnswer(ch)}
+                  onClick={() => { unlockAudio(); handleAnswer(ch); }}
                   disabled={selected !== null}
                   style={{
                     ...S.choiceBtn,
@@ -588,7 +780,7 @@ export default function VocabChallenge() {
                 <div key={i} style={S.reviewItem}>
                   <div style={{ display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap" }}>
                     <button
-                      onClick={() => speakWord(r.word.en)}
+                      onClick={() => { unlockAudio(); speakWord(r.word.en); }}
                       style={S.miniSpeaker}
                     >
                       🔊
@@ -609,7 +801,16 @@ export default function VocabChallenge() {
             <button onClick={startGame} style={S.retryBtn}>🔄 다시 도전</button>
             <button onClick={() => setScreen("menu")} style={S.menuBtn}>메뉴로</button>
           </div>
+
+          {/* 결과 화면 배너 광고 */}
+          <AdBanner slot={AD_CONFIG.slots.resultBanner} />
         </div>
+
+        {/* 전면 광고 (3판마다) */}
+        <InterstitialAd
+          show={showInterstitial}
+          onClose={() => setShowInterstitial(false)}
+        />
       </div>
     );
   }
