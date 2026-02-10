@@ -162,64 +162,75 @@ function generateChoices(correct, allWords) {
 }
 
 // ============================================================
-// AUDIO: Mobile-safe Speech + Sound Effects
+// AUDIO: Google TTS (primary) + Speech API (fallback)
 // ============================================================
 let _audioUnlocked = false;
-let _voices = [];
 let _audioCtx = null;
+let _currentAudio = null;
 
-// Must be called inside a direct click/touch handler to unlock mobile audio
-function unlockAudio(force) {
-  if (_audioUnlocked && !force) return;
+function unlockAudio() {
+  if (_audioUnlocked) return;
   _audioUnlocked = true;
-  // Unlock AudioContext
   try {
     if (!_audioCtx) _audioCtx = new (window.AudioContext || window.webkitAudioContext)();
     if (_audioCtx.state === "suspended") _audioCtx.resume();
+    // Play silent buffer to unlock iOS audio
     const buf = _audioCtx.createBuffer(1, 1, 22050);
     const src = _audioCtx.createBufferSource();
     src.buffer = buf;
     src.connect(_audioCtx.destination);
     src.start(0);
   } catch (e) {}
-  // Unlock SpeechSynthesis — iOS requires speak() inside gesture
+  // Also pre-warm HTML5 Audio for mobile
   try {
-    const synth = window.speechSynthesis;
-    if (synth) {
-      synth.cancel();
-      synth.resume();
-      const dummy = new SpeechSynthesisUtterance(" ");
-      dummy.volume = 0.01;
-      dummy.lang = "en-US";
-      synth.speak(dummy);
-      _voices = synth.getVoices();
-      synth.onvoiceschanged = () => { _voices = synth.getVoices(); };
-    }
+    const a = new Audio();
+    a.volume = 0.01;
+    a.play().catch(() => {});
   } catch (e) {}
 }
 
-// NO setTimeout — must stay in gesture chain for mobile
+// Primary: Google Translate TTS via Audio element (works on all mobile)
 function speakWord(word) {
+  try {
+    // Stop previous audio
+    if (_currentAudio) {
+      _currentAudio.pause();
+      _currentAudio = null;
+    }
+    const url = `https://translate.google.com/translate_tts?ie=UTF-8&tl=en&client=tw-ob&q=${encodeURIComponent(word)}`;
+    const audio = new Audio(url);
+    audio.volume = 1;
+    _currentAudio = audio;
+    const playPromise = audio.play();
+    if (playPromise) {
+      playPromise.catch(() => {
+        // Fallback: Web Speech API
+        speakWordFallback(word);
+      });
+    }
+  } catch (e) {
+    speakWordFallback(word);
+  }
+}
+
+// Fallback: Web Speech API
+function speakWordFallback(word) {
   const synth = window.speechSynthesis;
   if (!synth) return;
   try {
-    synth.cancel();
     synth.resume();
-    if (!_voices.length) _voices = synth.getVoices();
     const u = new SpeechSynthesisUtterance(word);
     u.lang = "en-US";
     u.rate = 0.85;
-    u.pitch = 1;
-    const enVoice = _voices.find(
-      (v) => v.lang.startsWith("en") && v.name.includes("Female")
-    ) || _voices.find((v) => v.lang.startsWith("en-US")) || _voices.find((v) => v.lang.startsWith("en"));
-    if (enVoice) u.voice = enVoice;
     synth.speak(u);
   } catch (e) {}
 }
 
 function stopSpeech() {
-  try { if (window.speechSynthesis) window.speechSynthesis.cancel(); } catch (e) {}
+  try {
+    if (_currentAudio) { _currentAudio.pause(); _currentAudio = null; }
+    if (window.speechSynthesis) window.speechSynthesis.cancel();
+  } catch (e) {}
 }
 
 function getAudioCtx() {
@@ -325,24 +336,7 @@ export default function VocabChallenge() {
   const allWords = Object.values(VOCAB_DATA).flat();
 
   useEffect(() => {
-    // Load voices
-    if (window.speechSynthesis) {
-      _voices = window.speechSynthesis.getVoices();
-      window.speechSynthesis.onvoiceschanged = () => {
-        _voices = window.speechSynthesis.getVoices();
-      };
-      // Chrome keepalive
-      const keepAlive = setInterval(() => {
-        if (window.speechSynthesis && !window.speechSynthesis.speaking) {
-          window.speechSynthesis.resume();
-        }
-      }, 10000);
-      return () => clearInterval(keepAlive);
-    }
-  }, []);
-
-  // Unlock audio on first ANY touch/click (mobile requires user gesture)
-  useEffect(() => {
+    // Unlock audio on first touch/click (mobile requires user gesture)
     const handler = () => { unlockAudio(); };
     document.addEventListener("touchstart", handler, { once: true });
     document.addEventListener("click", handler, { once: true });
@@ -478,7 +472,7 @@ export default function VocabChallenge() {
           <div style={S.logoArea}>
             <div style={S.logoIcon}>⚡</div>
             <h1 style={S.title}>VOCAB RUSH</h1>
-            <p style={S.subtitle}>직장인 영어 어휘 타이머 챌린지</p>
+            <p style={S.subtitle}>학생·직장인을 위한 영어 어휘 타이머 챌린지</p>
             <p style={S.wordCount}>
               총 {allWords.length}개 단어 · CEFR A1~C2 · 발음 지원 🔊
             </p>
@@ -558,7 +552,7 @@ export default function VocabChallenge() {
                 const next = !soundOn;
                 setSoundOn(next);
                 if (next) {
-                  unlockAudio(true); // force re-unlock on ON
+                  unlockAudio(); // re-unlock on ON
                 } else {
                   stopSpeech();
                 }
