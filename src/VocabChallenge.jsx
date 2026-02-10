@@ -36,7 +36,23 @@ function AdBanner({ slot, format = "auto", style = {} }) {
     } catch (e) {}
   }, []);
 
-  if (AD_CONFIG.publisherId.includes("XXXX")) return null; // 미설정시 숨김
+  const isConfigured = !AD_CONFIG.publisherId.includes("XXXX");
+
+  // AdSense 미설정 → 플레이스홀더 표시
+  if (!isConfigured) {
+    return (
+      <div style={{
+        margin: "16px auto", padding: "20px 12px", textAlign: "center",
+        background: "rgba(96,165,250,0.08)", borderRadius: 12,
+        border: "1px solid rgba(96,165,250,0.25)", ...style,
+      }}>
+        <p style={{ fontSize: 11, color: "#94a3b8", letterSpacing: 2, fontWeight: 600 }}>AD</p>
+        <p style={{ fontSize: 13, color: "#94a3b8", marginTop: 6 }}>
+          📢 광고 영역
+        </p>
+      </div>
+    );
+  }
 
   return (
     <div style={{ margin: "16px auto", textAlign: "center", overflow: "hidden", ...style }}>
@@ -64,7 +80,9 @@ function InterstitialAd({ show, onClose }) {
     }
   }, [show, onClose]);
 
-  if (!show || AD_CONFIG.publisherId.includes("XXXX")) return null;
+  if (!show) return null;
+
+  const isConfigured = !AD_CONFIG.publisherId.includes("XXXX");
 
   return (
     <div style={{
@@ -80,7 +98,20 @@ function InterstitialAd({ show, onClose }) {
         border: "1px solid rgba(255,255,255,0.1)",
       }}>
         <p style={{ color: "#64748b", fontSize: 11, marginBottom: 12, letterSpacing: 1 }}>SPONSORED</p>
-        <AdBanner slot={AD_CONFIG.slots.interstitial} format="rectangle" />
+        {isConfigured ? (
+          <AdBanner slot={AD_CONFIG.slots.interstitial} format="rectangle" />
+        ) : (
+          <div style={{
+            width: "100%", height: 200, background: "rgba(255,255,255,0.03)",
+            borderRadius: 12, border: "1px dashed rgba(255,255,255,0.1)",
+            display: "flex", alignItems: "center", justifyContent: "center",
+            flexDirection: "column", gap: 8,
+          }}>
+            <span style={{ fontSize: 32 }}>📢</span>
+            <p style={{ fontSize: 13, color: "#64748b" }}>전면 광고 영역</p>
+            <p style={{ fontSize: 11, color: "#475569" }}>AdSense 연동 후 표시</p>
+          </div>
+        )}
         <button
           onClick={onClose}
           style={{
