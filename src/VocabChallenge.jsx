@@ -389,6 +389,9 @@ export default function VocabChallenge() {
   const [stats, setStats] = useState(loadStats);
   const [newAchievements, setNewAchievements] = useState([]);
   const [showBadges, setShowBadges] = useState(false);
+  const [reviewMode, setReviewMode] = useState(false);
+  const [reviewIdx, setReviewIdx] = useState(0);
+  const [reviewFlipped, setReviewFlipped] = useState(false);
   const timerRef = useRef(null);
 
   const allWords = Object.values(VOCAB_DATA).flat();
@@ -1006,9 +1009,135 @@ export default function VocabChallenge() {
             )}
           </div>
 
-          <div style={{ display: "flex", gap: 12, marginTop: 24 }}>
+          {/* 전체 단어 복습 카드 */}
+          {!reviewMode ? (
+            <button
+              onClick={() => { setReviewMode(true); setReviewIdx(0); setReviewFlipped(false); }}
+              style={{
+                width: "100%", marginTop: 16, padding: "14px 0", borderRadius: 14,
+                background: "linear-gradient(135deg, rgba(168,85,247,0.15), rgba(96,165,250,0.1))",
+                border: "1px solid rgba(168,85,247,0.3)", color: "#c4b5fd",
+                fontSize: 15, fontWeight: 700, cursor: "pointer",
+                display: "flex", alignItems: "center", justifyContent: "center", gap: 8,
+              }}
+            >
+              📚 전체 단어 복습 ({questions.length}개)
+            </button>
+          ) : (
+            <div style={{
+              marginTop: 16, borderRadius: 16,
+              background: "rgba(168,85,247,0.06)", border: "1px solid rgba(168,85,247,0.2)",
+              overflow: "hidden",
+            }}>
+              {/* 카드 헤더 */}
+              <div style={{
+                display: "flex", justifyContent: "space-between", alignItems: "center",
+                padding: "10px 16px", borderBottom: "1px solid rgba(168,85,247,0.15)",
+              }}>
+                <span style={{ fontSize: 13, color: "#a78bfa", fontWeight: 600 }}>
+                  📚 복습 {reviewIdx + 1} / {questions.length}
+                </span>
+                <button
+                  onClick={() => setReviewMode(false)}
+                  style={{
+                    background: "none", border: "none", color: "#64748b",
+                    fontSize: 13, cursor: "pointer", padding: "4px 8px",
+                  }}
+                >✕ 닫기</button>
+              </div>
+
+              {/* 카드 본체 */}
+              <div
+                onClick={() => setReviewFlipped(!reviewFlipped)}
+                style={{
+                  padding: "24px 20px", textAlign: "center", cursor: "pointer",
+                  minHeight: 180, display: "flex", flexDirection: "column",
+                  alignItems: "center", justifyContent: "center",
+                  transition: "all 0.2s",
+                }}
+              >
+                {!reviewFlipped ? (
+                  <>
+                    <div style={{ fontSize: 11, color: "#64748b", marginBottom: 8, letterSpacing: 1 }}>TAP TO REVEAL</div>
+                    {questions[reviewIdx].word.pos && (
+                      <span style={{ fontSize: 12, color: "#60a5fa", fontWeight: 600, marginBottom: 4 }}>
+                        {questions[reviewIdx].word.pos}
+                      </span>
+                    )}
+                    <div style={{ fontSize: 22, color: "#e2e8f0", fontWeight: 700, marginBottom: 8 }}>
+                      {questions[reviewIdx].word.ko}
+                    </div>
+                    <div style={{ fontSize: 13, color: "#64748b" }}>탭하면 정답이 보입니다</div>
+                  </>
+                ) : (
+                  <>
+                    <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 8 }}>
+                      <button
+                        onClick={(e) => { e.stopPropagation(); unlockAudio(); speakWord(questions[reviewIdx].word.en); }}
+                        style={{ background: "none", border: "none", fontSize: 20, cursor: "pointer" }}
+                      >🔊</button>
+                      <span style={{ fontSize: 24, color: "#fff", fontWeight: 800 }}>
+                        {questions[reviewIdx].word.en}
+                      </span>
+                      {questions[reviewIdx].word.pos && (
+                        <span style={{ fontSize: 12, color: "#60a5fa" }}>({questions[reviewIdx].word.pos})</span>
+                      )}
+                    </div>
+                    <div style={{ fontSize: 16, color: "#cbd5e1", marginBottom: 8 }}>
+                      {questions[reviewIdx].word.ko}
+                    </div>
+                    {questions[reviewIdx].word.def && (
+                      <div style={{ fontSize: 13, color: "#a78bfa", fontStyle: "italic", marginBottom: 6 }}>
+                        {questions[reviewIdx].word.def}
+                      </div>
+                    )}
+                    {questions[reviewIdx].word.ex && (
+                      <div style={{ fontSize: 12, color: "#94a3b8", marginTop: 4 }}>
+                        📖 {questions[reviewIdx].word.ex}
+                      </div>
+                    )}
+                    {/* 정답/오답 표시 */}
+                    <div style={{
+                      marginTop: 10, fontSize: 12, fontWeight: 600,
+                      color: results[reviewIdx]?.correct ? "#4ade80" : "#f87171",
+                    }}>
+                      {results[reviewIdx]?.correct ? "✅ 정답" : "❌ 오답"}
+                    </div>
+                  </>
+                )}
+              </div>
+
+              {/* 네비게이션 */}
+              <div style={{
+                display: "flex", justifyContent: "space-between", padding: "12px 16px",
+                borderTop: "1px solid rgba(168,85,247,0.15)",
+              }}>
+                <button
+                  onClick={() => { setReviewIdx(Math.max(0, reviewIdx - 1)); setReviewFlipped(false); }}
+                  disabled={reviewIdx === 0}
+                  style={{
+                    padding: "8px 20px", borderRadius: 10, border: "1px solid rgba(255,255,255,0.1)",
+                    background: "rgba(255,255,255,0.04)", color: reviewIdx === 0 ? "#333" : "#e2e8f0",
+                    fontSize: 14, cursor: reviewIdx === 0 ? "default" : "pointer", fontWeight: 600,
+                  }}
+                >← 이전</button>
+                <button
+                  onClick={() => { setReviewIdx(Math.min(questions.length - 1, reviewIdx + 1)); setReviewFlipped(false); }}
+                  disabled={reviewIdx === questions.length - 1}
+                  style={{
+                    padding: "8px 20px", borderRadius: 10, border: "1px solid rgba(168,85,247,0.3)",
+                    background: "rgba(168,85,247,0.1)", fontSize: 14, fontWeight: 600,
+                    color: reviewIdx === questions.length - 1 ? "#333" : "#c4b5fd",
+                    cursor: reviewIdx === questions.length - 1 ? "default" : "pointer",
+                  }}
+                >다음 →</button>
+              </div>
+            </div>
+          )}
+
+          <div style={{ display: "flex", gap: 12, marginTop: 16 }}>
             <button onClick={startGame} style={S.retryBtn}>🔄 다시 도전</button>
-            <button onClick={() => { setNewAchievements([]); setScreen("menu"); }} style={S.menuBtn}>메뉴로</button>
+            <button onClick={() => { setNewAchievements([]); setReviewMode(false); setScreen("menu"); }} style={S.menuBtn}>메뉴로</button>
           </div>
 
           {/* 새 업적 달성 알림 */}
