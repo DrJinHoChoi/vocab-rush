@@ -1058,16 +1058,46 @@ export default function VocabChallenge() {
               >
                 {!reviewFlipped ? (
                   <>
-                    <div style={{ fontSize: 11, color: "#64748b", marginBottom: 8, letterSpacing: 1 }}>TAP TO REVEAL</div>
                     {questions[reviewIdx].word.pos && (
-                      <span style={{ fontSize: 12, color: "#60a5fa", fontWeight: 600, marginBottom: 4 }}>
+                      <span style={{ fontSize: 12, color: "#60a5fa", fontWeight: 600, marginBottom: 6 }}>
                         {questions[reviewIdx].word.pos}
                       </span>
                     )}
-                    <div style={{ fontSize: 22, color: "#e2e8f0", fontWeight: 700, marginBottom: 8 }}>
+                    <div style={{ fontSize: 22, color: "#e2e8f0", fontWeight: 700, marginBottom: 10 }}>
                       {questions[reviewIdx].word.ko}
                     </div>
-                    <div style={{ fontSize: 13, color: "#64748b" }}>탭하면 정답이 보입니다</div>
+                    {questions[reviewIdx].word.def && (
+                      <div style={{
+                        fontSize: 13, color: "#a78bfa", fontStyle: "italic", marginBottom: 8,
+                        padding: "8px 14px", borderRadius: 10,
+                        background: "rgba(168,85,247,0.08)", border: "1px solid rgba(168,85,247,0.15)",
+                        lineHeight: 1.5,
+                      }}>
+                        📘 {questions[reviewIdx].word.def}
+                      </div>
+                    )}
+                    {questions[reviewIdx].word.ex && (
+                      <div style={{
+                        fontSize: 12, color: "#94a3b8", marginBottom: 8,
+                        padding: "8px 14px", borderRadius: 10,
+                        background: "rgba(96,165,250,0.06)", border: "1px solid rgba(96,165,250,0.1)",
+                        lineHeight: 1.5,
+                      }}>
+                        📖 {questions[reviewIdx].word.ex.replace(
+                          new RegExp(questions[reviewIdx].word.en, "gi"),
+                          (m) => "●".repeat(m.length)
+                        )}
+                      </div>
+                    )}
+                    <div style={{
+                      marginTop: 10, padding: "10px 24px", borderRadius: 24,
+                      background: "linear-gradient(135deg, rgba(168,85,247,0.2), rgba(96,165,250,0.15))",
+                      border: "1px solid rgba(168,85,247,0.3)",
+                      color: "#c4b5fd", fontSize: 14, fontWeight: 700,
+                      animation: "pulse 2s infinite",
+                    }}>
+                      👆 탭하여 정답 확인
+                    </div>
                   </>
                 ) : (
                   <>
