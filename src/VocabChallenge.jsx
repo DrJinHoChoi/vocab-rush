@@ -146,6 +146,60 @@ const DIFFICULTY = {
 
 const ROUND_OPTIONS = [10, 15, 20, 25];
 
+// ============================================================
+// ACHIEVEMENT / REWARD SYSTEM
+// ============================================================
+const ACHIEVEMENTS = [
+  // 누적 정답 마일스톤
+  { id: "c100",   icon: "🌱", title: "첫 걸음",     desc: "누적 100문제 정답", check: s => s.totalCorrect >= 100 },
+  { id: "c300",   icon: "🌿", title: "새싹",        desc: "누적 300문제 정답", check: s => s.totalCorrect >= 300 },
+  { id: "c500",   icon: "🌳", title: "성장",        desc: "누적 500문제 정답", check: s => s.totalCorrect >= 500 },
+  { id: "c1000",  icon: "🔥", title: "천 단어 마스터", desc: "누적 1,000문제 정답!", check: s => s.totalCorrect >= 1000 },
+  { id: "c2000",  icon: "💎", title: "어휘 장인",    desc: "누적 2,000문제 정답!", check: s => s.totalCorrect >= 2000 },
+  { id: "c5000",  icon: "👑", title: "전설",        desc: "누적 5,000문제 정답!", check: s => s.totalCorrect >= 5000 },
+  { id: "c10000", icon: "🏅", title: "신화",        desc: "누적 10,000문제 정답!", check: s => s.totalCorrect >= 10000 },
+  // 연속 정답
+  { id: "s5",  icon: "⚡", title: "번개",    desc: "5연속 정답", check: s => s.bestStreakEver >= 5 },
+  { id: "s10", icon: "🌊", title: "파도",    desc: "10연속 정답", check: s => s.bestStreakEver >= 10 },
+  { id: "s15", icon: "🌪️", title: "폭풍",    desc: "15연속 정답", check: s => s.bestStreakEver >= 15 },
+  { id: "s20", icon: "☄️", title: "혜성",    desc: "20연속 정답", check: s => s.bestStreakEver >= 20 },
+  { id: "s25", icon: "🪐", title: "행성 정복", desc: "25연속 전문 올킬!", check: s => s.bestStreakEver >= 25 },
+  // 게임 횟수
+  { id: "g10",  icon: "🎮", title: "단골",    desc: "10게임 플레이", check: s => s.totalGames >= 10 },
+  { id: "g50",  icon: "🎯", title: "습관",    desc: "50게임 플레이", check: s => s.totalGames >= 50 },
+  { id: "g100", icon: "🏆", title: "중독",    desc: "100게임 플레이", check: s => s.totalGames >= 100 },
+  { id: "g500", icon: "🦾", title: "영어 머신", desc: "500게임 플레이", check: s => s.totalGames >= 500 },
+  // 퍼펙트 라운드
+  { id: "p1",  icon: "✨", title: "퍼펙트!",   desc: "첫 만점 라운드", check: s => s.perfectRounds >= 1 },
+  { id: "p10", icon: "💫", title: "완벽주의자", desc: "10회 만점 라운드", check: s => s.perfectRounds >= 10 },
+  { id: "p50", icon: "🌟", title: "무결점",    desc: "50회 만점 라운드", check: s => s.perfectRounds >= 50 },
+  // 누적 점수
+  { id: "sc5k",  icon: "💰", title: "부자",     desc: "누적 5,000점", check: s => s.totalScore >= 5000 },
+  { id: "sc20k", icon: "💎", title: "재벌",     desc: "누적 20,000점", check: s => s.totalScore >= 20000 },
+  { id: "sc100k",icon: "🏦", title: "점수왕",   desc: "누적 100,000점", check: s => s.totalScore >= 100000 },
+];
+
+const DEFAULT_STATS = {
+  totalCorrect: 0,
+  totalGames: 0,
+  bestStreakEver: 0,
+  totalScore: 0,
+  perfectRounds: 0,
+  unlockedIds: [],
+};
+
+function loadStats() {
+  try {
+    const raw = localStorage.getItem("vocab_rush_stats");
+    if (raw) return { ...DEFAULT_STATS, ...JSON.parse(raw) };
+  } catch (e) {}
+  return { ...DEFAULT_STATS };
+}
+
+function saveStats(stats) {
+  try { localStorage.setItem("vocab_rush_stats", JSON.stringify(stats)); } catch (e) {}
+}
+
 function shuffle(arr) {
   const a = [...arr];
   for (let i = a.length - 1; i > 0; i--) {
@@ -331,6 +385,9 @@ export default function VocabChallenge() {
   const [comboFlash, setComboFlash] = useState(false);
   const [gameCount, setGameCount] = useState(0);
   const [showInterstitial, setShowInterstitial] = useState(false);
+  const [stats, setStats] = useState(loadStats);
+  const [newAchievements, setNewAchievements] = useState([]);
+  const [showBadges, setShowBadges] = useState(false);
   const timerRef = useRef(null);
 
   const allWords = Object.values(VOCAB_DATA).flat();
@@ -443,10 +500,39 @@ export default function VocabChallenge() {
       if (current + 1 >= questions.length) {
         const newCount = gameCount + 1;
         setGameCount(newCount);
-        // 3판마다 전면광고
         if (newCount % AD_CONFIG.interstitialEvery === 0) {
           setShowInterstitial(true);
         }
+
+        // Update persistent stats
+        const currentResults = [...results, {
+          word: q.word, chosen: choice || { en: "__timeout__" },
+          correct, points: pts, timeUsed: DIFFICULTY[difficulty].time - timeLeft,
+        }];
+        const roundCorrect = currentResults.filter(r => r.correct).length;
+        const isPerfect = roundCorrect === questions.length;
+
+        setStats(prev => {
+          const updated = {
+            ...prev,
+            totalCorrect: prev.totalCorrect + roundCorrect,
+            totalGames: prev.totalGames + 1,
+            bestStreakEver: Math.max(prev.bestStreakEver, Math.max(bestStreak, newStreak)),
+            totalScore: prev.totalScore + score + pts,
+            perfectRounds: prev.perfectRounds + (isPerfect ? 1 : 0),
+          };
+          // Check new achievements
+          const newly = ACHIEVEMENTS.filter(
+            a => !prev.unlockedIds.includes(a.id) && a.check(updated)
+          );
+          if (newly.length > 0) {
+            updated.unlockedIds = [...prev.unlockedIds, ...newly.map(a => a.id)];
+            setNewAchievements(newly);
+          }
+          saveStats(updated);
+          return updated;
+        });
+
         setScreen("result");
       } else {
         setCurrent((c) => c + 1);
@@ -477,6 +563,43 @@ export default function VocabChallenge() {
               총 {allWords.length}개 단어 · CEFR A1~C2 · 발음 지원 🔊
             </p>
           </div>
+
+          {/* 누적 통계 */}
+          <div style={{
+            display: "grid", gridTemplateColumns: "1fr 1fr 1fr 1fr", gap: 8,
+            margin: "12px 0 8px", padding: "14px 8px", borderRadius: 14,
+            background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.06)",
+          }}>
+            <div style={{ textAlign: "center" }}>
+              <div style={{ fontSize: 18, fontWeight: 700, color: "#4ade80" }}>{stats.totalCorrect.toLocaleString()}</div>
+              <div style={{ fontSize: 10, color: "#64748b" }}>누적 정답</div>
+            </div>
+            <div style={{ textAlign: "center" }}>
+              <div style={{ fontSize: 18, fontWeight: 700, color: "#facc15" }}>{stats.totalGames}</div>
+              <div style={{ fontSize: 10, color: "#64748b" }}>총 게임</div>
+            </div>
+            <div style={{ textAlign: "center" }}>
+              <div style={{ fontSize: 18, fontWeight: 700, color: "#f87171" }}>{stats.bestStreakEver}</div>
+              <div style={{ fontSize: 10, color: "#64748b" }}>최고 연속</div>
+            </div>
+            <div style={{ textAlign: "center" }}>
+              <div style={{ fontSize: 18, fontWeight: 700, color: "#60a5fa" }}>{stats.unlockedIds.length}/{ACHIEVEMENTS.length}</div>
+              <div style={{ fontSize: 10, color: "#64748b" }}>업적</div>
+            </div>
+          </div>
+
+          {/* 배지 보기 버튼 */}
+          <button
+            onClick={() => setShowBadges(true)}
+            style={{
+              width: "100%", padding: "10px", borderRadius: 12, border: "1px solid rgba(255,255,255,0.08)",
+              background: "rgba(255,255,255,0.03)", color: "#94a3b8", fontSize: 13,
+              cursor: "pointer", fontWeight: 500, marginBottom: 8,
+              display: "flex", alignItems: "center", justifyContent: "center", gap: 6,
+            }}
+          >
+            🏅 업적 & 보상 보기 ({stats.unlockedIds.length}개 달성)
+          </button>
 
           <div style={S.section}>
             <p style={S.sectionLabel}>카테고리</p>
@@ -591,6 +714,9 @@ export default function VocabChallenge() {
             개인정보처리방침
           </a>
         </div>
+
+        {/* 배지 모달 */}
+        {showBadges && <BadgesModal stats={stats} onClose={() => setShowBadges(false)} />}
       </div>
     );
   }
@@ -824,7 +950,44 @@ export default function VocabChallenge() {
 
           <div style={{ display: "flex", gap: 12, marginTop: 24 }}>
             <button onClick={startGame} style={S.retryBtn}>🔄 다시 도전</button>
-            <button onClick={() => setScreen("menu")} style={S.menuBtn}>메뉴로</button>
+            <button onClick={() => { setNewAchievements([]); setScreen("menu"); }} style={S.menuBtn}>메뉴로</button>
+          </div>
+
+          {/* 새 업적 달성 알림 */}
+          {newAchievements.length > 0 && (
+            <div style={{
+              margin: "16px 0 0", padding: 16, borderRadius: 16,
+              background: "linear-gradient(135deg, rgba(251,191,36,0.15), rgba(245,158,11,0.08))",
+              border: "1px solid rgba(251,191,36,0.3)",
+            }}>
+              <p style={{ fontSize: 14, fontWeight: 700, color: "#fbbf24", marginBottom: 10, textAlign: "center" }}>
+                🎊 새 업적 달성!
+              </p>
+              {newAchievements.map(a => (
+                <div key={a.id} style={{
+                  display: "flex", alignItems: "center", gap: 10, padding: "8px 0",
+                  borderBottom: "1px solid rgba(255,255,255,0.05)",
+                }}>
+                  <span style={{ fontSize: 28 }}>{a.icon}</span>
+                  <div>
+                    <div style={{ color: "#fff", fontWeight: 600, fontSize: 14 }}>{a.title}</div>
+                    <div style={{ color: "#94a3b8", fontSize: 12 }}>{a.desc}</div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+
+          {/* 누적 통계 미니 */}
+          <div style={{
+            display: "flex", justifyContent: "center", gap: 16, marginTop: 12,
+            fontSize: 11, color: "#64748b",
+          }}>
+            <span>누적 {stats.totalCorrect.toLocaleString()}정답</span>
+            <span>·</span>
+            <span>{stats.totalGames}게임</span>
+            <span>·</span>
+            <span>{stats.unlockedIds.length}업적</span>
           </div>
 
           {/* 결과 화면 배너 광고 */}
@@ -839,6 +1002,98 @@ export default function VocabChallenge() {
       </div>
     );
   }
+}
+
+// ============================================================
+// BADGES MODAL (separate from main component for clarity)
+// ============================================================
+function BadgesModal({ stats, onClose }) {
+  return (
+    <div style={{
+      position: "fixed", inset: 0, zIndex: 9998,
+      background: "rgba(0,0,0,0.85)",
+      display: "flex", alignItems: "center", justifyContent: "center",
+      padding: 16,
+    }}>
+      <div style={{
+        background: "linear-gradient(180deg, #1e293b 0%, #0f172a 100%)",
+        borderRadius: 20, padding: "24px 20px", maxWidth: 440, width: "100%",
+        maxHeight: "80vh", overflow: "auto",
+        border: "1px solid rgba(255,255,255,0.08)",
+        boxShadow: "0 25px 60px rgba(0,0,0,0.5)",
+      }}>
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 20 }}>
+          <h2 style={{ color: "#f1f5f9", fontSize: 18, fontWeight: 700 }}>🏅 업적 & 보상</h2>
+          <button onClick={onClose} style={{
+            background: "none", border: "none", color: "#64748b", fontSize: 22, cursor: "pointer",
+          }}>✕</button>
+        </div>
+
+        {/* Progress bar */}
+        <div style={{ marginBottom: 20 }}>
+          <div style={{ display: "flex", justifyContent: "space-between", fontSize: 12, color: "#94a3b8", marginBottom: 6 }}>
+            <span>{stats.unlockedIds.length} / {ACHIEVEMENTS.length} 달성</span>
+            <span>{Math.round(stats.unlockedIds.length / ACHIEVEMENTS.length * 100)}%</span>
+          </div>
+          <div style={{ height: 6, background: "rgba(255,255,255,0.06)", borderRadius: 3 }}>
+            <div style={{
+              height: "100%", borderRadius: 3,
+              width: `${(stats.unlockedIds.length / ACHIEVEMENTS.length) * 100}%`,
+              background: "linear-gradient(90deg, #4ade80, #facc15)",
+              transition: "width 0.5s",
+            }} />
+          </div>
+        </div>
+
+        {/* Next milestone */}
+        {(() => {
+          const next = ACHIEVEMENTS.find(a => !stats.unlockedIds.includes(a.id));
+          if (!next) return <p style={{ color: "#fbbf24", textAlign: "center", fontSize: 14, marginBottom: 16 }}>🎊 모든 업적 달성! 축하합니다!</p>;
+          return (
+            <div style={{
+              padding: 12, borderRadius: 12, marginBottom: 16,
+              background: "rgba(96,165,250,0.08)", border: "1px solid rgba(96,165,250,0.2)",
+              textAlign: "center",
+            }}>
+              <p style={{ fontSize: 11, color: "#64748b", marginBottom: 4 }}>다음 목표</p>
+              <p style={{ fontSize: 14, color: "#e2e8f0" }}>{next.icon} {next.title} — {next.desc}</p>
+            </div>
+          );
+        })()}
+
+        {/* All achievements */}
+        <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
+          {ACHIEVEMENTS.map(a => {
+            const unlocked = stats.unlockedIds.includes(a.id);
+            return (
+              <div key={a.id} style={{
+                display: "flex", alignItems: "center", gap: 12, padding: "10px 12px",
+                borderRadius: 12,
+                background: unlocked ? "rgba(74,222,128,0.06)" : "rgba(255,255,255,0.02)",
+                border: `1px solid ${unlocked ? "rgba(74,222,128,0.15)" : "rgba(255,255,255,0.04)"}`,
+                opacity: unlocked ? 1 : 0.5,
+              }}>
+                <span style={{ fontSize: 26, filter: unlocked ? "none" : "grayscale(1)" }}>{a.icon}</span>
+                <div style={{ flex: 1 }}>
+                  <div style={{ color: unlocked ? "#fff" : "#64748b", fontWeight: 600, fontSize: 13 }}>{a.title}</div>
+                  <div style={{ color: unlocked ? "#94a3b8" : "#475569", fontSize: 11 }}>{a.desc}</div>
+                </div>
+                {unlocked && <span style={{ color: "#4ade80", fontSize: 16 }}>✓</span>}
+              </div>
+            );
+          })}
+        </div>
+
+        <button onClick={onClose} style={{
+          width: "100%", marginTop: 20, padding: "12px", borderRadius: 12,
+          background: "rgba(96,165,250,0.15)", border: "1px solid rgba(96,165,250,0.3)",
+          color: "#60a5fa", fontSize: 14, fontWeight: 600, cursor: "pointer",
+        }}>
+          닫기
+        </button>
+      </div>
+    </div>
+  );
 }
 
 // ============================================================
