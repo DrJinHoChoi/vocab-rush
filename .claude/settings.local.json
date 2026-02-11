@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(node:*)",
+      "Bash(ls:*)",
+      "Bash(for f in \"C:\\\\Users\\\\jinho\\\\Downloads\\\\vocab-rush-pwa\\\\vocab-rush\\\\data_\"*.js)",
+      "Bash(done)",
+      "Bash(npm run build:*)"
+    ]
+  }
+}

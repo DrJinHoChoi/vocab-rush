@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 
 // ============================================================
-// 3,000+ VOCABULARY DATABASE - loaded from vocabData.js
+// 5,000+ VOCABULARY DATABASE - loaded from vocabData.js
 // ============================================================
 import { VOCAB_DATA } from "./vocabData.js";
 
@@ -381,6 +381,7 @@ export default function VocabChallenge() {
   const [selected, setSelected] = useState(null);
   const [showHint, setShowHint] = useState(false);
   const [showExample, setShowExample] = useState(false);
+  const [showDef, setShowDef] = useState(false);
   const [results, setResults] = useState([]);
   const [comboFlash, setComboFlash] = useState(false);
   const [gameCount, setGameCount] = useState(0);
@@ -425,6 +426,7 @@ export default function VocabChallenge() {
     setSelected(null);
     setShowHint(false);
     setShowExample(false);
+    setShowDef(false);
     setResults([]);
     setTimeLeft(DIFFICULTY[difficulty].time);
     setScreen("play");
@@ -539,6 +541,7 @@ export default function VocabChallenge() {
         setSelected(null);
         setShowHint(false);
         setShowExample(false);
+        setShowDef(false);
         setTimeLeft(DIFFICULTY[difficulty].time);
       }
     }, 1800);
@@ -809,6 +812,7 @@ export default function VocabChallenge() {
 
           <div style={S.questionArea}>
             <p style={S.questionLabel}>이 뜻의 영어 단어는?</p>
+            {q.word.pos && <span style={{ fontSize: 12, color: "#60a5fa", fontWeight: 600, letterSpacing: 1 }}>{q.word.pos}</span>}
             <div style={S.koreanWord}>{q.word.ko}</div>
 
             {/* Speaker button */}
@@ -820,7 +824,7 @@ export default function VocabChallenge() {
               🔊
             </button>
 
-            {/* Hint & Example */}
+            {/* Hint, Example & Definition */}
             <div style={S.helpRow}>
               {!showHint && selected === null && q.word.hint && (
                 <button onClick={() => setShowHint(true)} style={S.helpBtn}>
@@ -832,6 +836,11 @@ export default function VocabChallenge() {
                   📖 예문
                 </button>
               )}
+              {!showDef && selected === null && q.word.def && (
+                <button onClick={() => setShowDef(true)} style={S.helpBtn}>
+                  📘 정의
+                </button>
+              )}
             </div>
             {showHint && q.word.hint && <div style={S.hintBox}>💡 {q.word.hint}</div>}
             {showExample && q.word.ex && (
@@ -839,17 +848,24 @@ export default function VocabChallenge() {
                 📖 {q.word.ex}
               </div>
             )}
+            {showDef && q.word.def && (
+              <div style={{ ...S.hintBox, borderColor: "rgba(168,85,247,0.3)", background: "rgba(168,85,247,0.08)", color: "#c4b5fd" }}>
+                📘 {q.word.def}
+              </div>
+            )}
           </div>
 
           {/* Correct answer reveal */}
           {selected && selected.en !== "__timeout__" && selected.en === q.word.en && (
             <div style={S.revealBox}>
-              ✅ <strong>{q.word.en}</strong> — {q.word.ko}
+              <div>✅ <strong>{q.word.en}</strong> {q.word.pos && <span style={{ fontSize: 11, color: "#86efac" }}>({q.word.pos})</span>} — {q.word.ko}</div>
+              {q.word.def && <div style={{ fontSize: 12, color: "#86efac", marginTop: 4, fontStyle: "italic" }}>{q.word.def}</div>}
             </div>
           )}
           {selected && (selected.en === "__timeout__" || selected.en !== q.word.en) && (
             <div style={{ ...S.revealBox, borderColor: "rgba(248,113,113,0.3)", background: "rgba(248,113,113,0.08)", color: "#fca5a5" }}>
-              정답: <strong>{q.word.en}</strong> — {q.word.ko}
+              <div>정답: <strong>{q.word.en}</strong> {q.word.pos && <span style={{ fontSize: 11 }}>({q.word.pos})</span>} — {q.word.ko}</div>
+              {q.word.def && <div style={{ fontSize: 12, marginTop: 4, fontStyle: "italic", opacity: 0.8 }}>{q.word.def}</div>}
             </div>
           )}
 
@@ -975,10 +991,14 @@ export default function VocabChallenge() {
                       🔊
                     </button>
                     <span style={{ color: "#fff", fontWeight: 600 }}>{r.word.en}</span>
+                    {r.word.pos && <span style={{ color: "#60a5fa", fontSize: 11 }}>({r.word.pos})</span>}
                     <span style={{ color: "#888" }}>—</span>
                     <span style={{ color: "#cbd5e1" }}>{r.word.ko}</span>
                   </div>
-                  {r.word.ex && <div style={{ fontSize: 12, color: "#94a3b8", marginTop: 4, marginLeft: 36 }}>
+                  {r.word.def && <div style={{ fontSize: 12, color: "#a78bfa", marginTop: 4, marginLeft: 36, fontStyle: "italic" }}>
+                    {r.word.def}
+                  </div>}
+                  {r.word.ex && <div style={{ fontSize: 12, color: "#94a3b8", marginTop: 2, marginLeft: 36 }}>
                     {r.word.ex}
                   </div>}
                 </div>
