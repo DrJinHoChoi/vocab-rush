@@ -954,7 +954,7 @@ export default function VocabChallenge() {
               </>
             ) : q.isKorean ? (
               <>
-                <p style={S.questionLabel}>{q.korQuestion}</p>
+                <p style={{ fontSize: 20, color: "#f0fdf4", fontWeight: 700, marginBottom: 8, lineHeight: 1.6 }}>{q.korQuestion}</p>
                 <div style={S.helpRow}>
                   {!showHint && selected === null && q.korHint && (
                     <button onClick={() => setShowHint(true)} style={S.helpBtn}>
