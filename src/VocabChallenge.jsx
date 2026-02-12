@@ -428,7 +428,7 @@ export default function VocabChallenge() {
         mathAnswer: mq.answer,
         mathHint: mq.hint,
         word: { en: String(mq.answer), ko: mq.question },
-        choices: mq.choices.map(c => ({ en: c.label, _isCorrect: c.isCorrect })),
+        choices: mq.choices.map(c => ({ en: c.label, label: c.label, _isCorrect: c.isCorrect })),
       }));
     } else if (gameMode === "korean") {
       const korQs = generateKoreanQuestions(koreanCategory, roundSize);
