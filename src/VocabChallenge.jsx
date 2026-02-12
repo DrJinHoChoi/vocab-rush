@@ -4,6 +4,8 @@ import { useState, useEffect, useCallback, useRef } from "react";
 // 5,000+ VOCABULARY DATABASE - loaded from vocabData.js
 // ============================================================
 import { VOCAB_DATA } from "./vocabData.js";
+import { generateMathQuestions, MATH_CATEGORIES } from "./mathData.js";
+import { generateKoreanQuestions, KOREAN_CATEGORIES } from "./koreanData.js";
 
 // ============================================================
 // ADSENSE CONFIG — 발급 후 여기에 입력
@@ -367,7 +369,10 @@ function playTickSound() {
 // ============================================================
 export default function VocabChallenge() {
   const [screen, setScreen] = useState("menu");
+  const [gameMode, setGameMode] = useState("vocab"); // "vocab" | "math"
   const [category, setCategory] = useState("random");
+  const [mathCategory, setMathCategory] = useState("random");
+  const [koreanCategory, setKoreanCategory] = useState("random");
   const [difficulty, setDifficulty] = useState("medium");
   const [roundSize, setRoundSize] = useState(10);
   const [soundOn, setSoundOn] = useState(true);
@@ -413,14 +418,36 @@ export default function VocabChallenge() {
   }, [soundOn]);
 
   const startGame = useCallback(() => {
-    // User gesture → unlock mobile audio
     unlockAudio();
-    const pool = category === "random" ? allWords : VOCAB_DATA[category];
-    const words = shuffle(pool).slice(0, roundSize);
-    const qs = words.map((w) => ({
-      word: w,
-      choices: generateChoices(w, allWords),
-    }));
+    let qs;
+    if (gameMode === "math") {
+      const mathQs = generateMathQuestions(mathCategory, roundSize);
+      qs = mathQs.map((mq) => ({
+        isMath: true,
+        mathQuestion: mq.question,
+        mathAnswer: mq.answer,
+        mathHint: mq.hint,
+        word: { en: String(mq.answer), ko: mq.question },
+        choices: mq.choices.map(c => ({ en: c.label, _isCorrect: c.isCorrect })),
+      }));
+    } else if (gameMode === "korean") {
+      const korQs = generateKoreanQuestions(koreanCategory, roundSize);
+      qs = korQs.map((kq) => ({
+        isKorean: true,
+        korQuestion: kq.question,
+        korAnswer: kq.answer,
+        korHint: kq.hint,
+        word: { en: kq.answer, ko: kq.question },
+        choices: kq.choices.map(c => ({ en: c.label, label: c.label, _isCorrect: c.isCorrect })),
+      }));
+    } else {
+      const pool = category === "random" ? allWords : VOCAB_DATA[category];
+      const words = shuffle(pool).slice(0, roundSize);
+      qs = words.map((w) => ({
+        word: w,
+        choices: generateChoices(w, allWords),
+      }));
+    }
     setQuestions(qs);
     setCurrent(0);
     setScore(0);
@@ -433,7 +460,7 @@ export default function VocabChallenge() {
     setResults([]);
     setTimeLeft(DIFFICULTY[difficulty].time);
     setScreen("play");
-  }, [category, difficulty, roundSize]);
+  }, [gameMode, category, mathCategory, koreanCategory, difficulty, roundSize]);
 
   useEffect(() => {
     if (screen !== "play" || selected !== null) return;
@@ -451,9 +478,9 @@ export default function VocabChallenge() {
     return () => clearInterval(timerRef.current);
   }, [screen, current, selected]);
 
-  // Auto-speak word on new question
+  // Auto-speak word on new question (vocab mode only)
   useEffect(() => {
-    if (screen === "play" && selected === null && questions[current] && soundRef.current) {
+    if (screen === "play" && selected === null && questions[current] && soundRef.current && !questions[current].isMath && !questions[current].isKorean) {
       setTimeout(() => speakWord(questions[current].word.en), 300);
     }
   }, [screen, current, selected]);
@@ -462,7 +489,9 @@ export default function VocabChallenge() {
     if (selected !== null) return;
     clearInterval(timerRef.current);
     const q = questions[current];
-    const correct = choice && choice.en === q.word.en;
+    const correct = (q.isMath || q.isKorean)
+      ? (choice && choice._isCorrect === true)
+      : (choice && choice.en === q.word.en);
     const speedBonus =
       correct && timeLeft > DIFFICULTY[difficulty].time * 0.6
         ? Math.floor(timeLeft * 2)
@@ -486,7 +515,7 @@ export default function VocabChallenge() {
       setTimeout(() => setComboFlash(false), 800);
     }
 
-    setSelected(choice || { en: "__timeout__" });
+    setSelected(choice || { en: "__timeout__", _isCorrect: false });
     setScore((s) => s + pts);
     setStreak(newStreak);
     setBestStreak((b) => Math.max(b, newStreak));
@@ -494,6 +523,7 @@ export default function VocabChallenge() {
       ...r,
       {
         word: q.word,
+        question: q,
         chosen: choice,
         correct,
         points: pts,
@@ -563,11 +593,73 @@ export default function VocabChallenge() {
         <div style={S.menuCard}>
           <div style={S.logoArea}>
             <div style={S.logoIcon}>⚡</div>
-            <h1 style={S.title}>VOCAB RUSH</h1>
-            <p style={S.subtitle}>학생·직장인을 위한 영어 어휘 타이머 챌린지</p>
-            <p style={S.wordCount}>
-              총 {allWords.length}개 단어 · CEFR A1~C2 · 발음 지원 🔊
+            <h1 style={S.title}>{gameMode === "math" ? "MATH RUSH" : gameMode === "korean" ? "KOREAN RUSH" : "VOCAB RUSH"}</h1>
+            <p style={S.subtitle}>
+              {gameMode === "math"
+                ? "빠른 암산 타이머 챌린지"
+                : gameMode === "korean"
+                ? "맞춤법·사자성어·속담 타이머 챌린지"
+                : "학생·직장인을 위한 영어 어휘 타이머 챌린지"}
             </p>
+            <p style={S.wordCount}>
+              {gameMode === "math"
+                ? "8개 카테고리 · 무한 문제 생성 · 암산 특화 🔢"
+                : gameMode === "korean"
+                ? "8개 카테고리 · 670+ 문제 · 국어 실력 향상 ✏️"
+                : `총 ${allWords.length}개 단어 · CEFR A1~C2 · 발음 지원 🔊`}
+            </p>
+          </div>
+
+          {/* 게임 모드 탭 */}
+          <div style={{
+            display: "flex", gap: 0, marginBottom: 12, borderRadius: 12, overflow: "hidden",
+            border: "1px solid rgba(255,255,255,0.1)", background: "rgba(0,0,0,0.2)",
+          }}>
+            <button
+              onClick={() => setGameMode("vocab")}
+              style={{
+                flex: 1, padding: "12px 0", border: "none", cursor: "pointer",
+                background: gameMode === "vocab"
+                  ? "linear-gradient(135deg, rgba(96,165,250,0.2), rgba(59,130,246,0.1))"
+                  : "transparent",
+                color: gameMode === "vocab" ? "#60a5fa" : "#64748b",
+                fontSize: 14, fontWeight: 700,
+                borderBottom: gameMode === "vocab" ? "2px solid #60a5fa" : "2px solid transparent",
+                transition: "all 0.2s",
+              }}
+            >
+              📚 영어
+            </button>
+            <button
+              onClick={() => setGameMode("math")}
+              style={{
+                flex: 1, padding: "12px 0", border: "none", cursor: "pointer",
+                background: gameMode === "math"
+                  ? "linear-gradient(135deg, rgba(251,191,36,0.2), rgba(245,158,11,0.1))"
+                  : "transparent",
+                color: gameMode === "math" ? "#fbbf24" : "#64748b",
+                fontSize: 14, fontWeight: 700,
+                borderBottom: gameMode === "math" ? "2px solid #fbbf24" : "2px solid transparent",
+                transition: "all 0.2s",
+              }}
+            >
+              🔢 수학
+            </button>
+            <button
+              onClick={() => setGameMode("korean")}
+              style={{
+                flex: 1, padding: "12px 0", border: "none", cursor: "pointer",
+                background: gameMode === "korean"
+                  ? "linear-gradient(135deg, rgba(74,222,128,0.2), rgba(34,197,94,0.1))"
+                  : "transparent",
+                color: gameMode === "korean" ? "#4ade80" : "#64748b",
+                fontSize: 14, fontWeight: 700,
+                borderBottom: gameMode === "korean" ? "2px solid #4ade80" : "2px solid transparent",
+                transition: "all 0.2s",
+              }}
+            >
+              ✏️ 국어
+            </button>
           </div>
 
           {/* 누적 통계 */}
@@ -610,22 +702,53 @@ export default function VocabChallenge() {
           <div style={S.section}>
             <p style={S.sectionLabel}>카테고리</p>
             <div style={S.catGrid}>
-              {CATEGORIES.map((c) => (
-                <button
-                  key={c.key}
-                  onClick={() => setCategory(c.key)}
-                  style={{
-                    ...S.catBtn,
-                    ...(category === c.key ? S.catBtnActive : {}),
-                  }}
-                >
-                  <span style={{ fontSize: 20 }}>{c.icon}</span>
-                  <span style={{ fontSize: 12, marginTop: 3 }}>{c.label}</span>
-                  <span style={{ fontSize: 10, color: "#64748b" }}>
-                    {c.key === "random" ? allWords.length : VOCAB_DATA[c.key].length}개
-                  </span>
-                </button>
-              ))}
+              {gameMode === "math" ? (
+                MATH_CATEGORIES.map((c) => (
+                  <button
+                    key={c.key}
+                    onClick={() => setMathCategory(c.key)}
+                    style={{
+                      ...S.catBtn,
+                      ...(mathCategory === c.key ? { ...S.catBtnActive, borderColor: "#fbbf24", background: "rgba(251,191,36,0.12)" } : {}),
+                    }}
+                  >
+                    <span style={{ fontSize: 20 }}>{c.icon}</span>
+                    <span style={{ fontSize: 12, marginTop: 3 }}>{c.label}</span>
+                    <span style={{ fontSize: 10, color: "#64748b" }}>∞</span>
+                  </button>
+                ))
+              ) : gameMode === "korean" ? (
+                KOREAN_CATEGORIES.map((c) => (
+                  <button
+                    key={c.key}
+                    onClick={() => setKoreanCategory(c.key)}
+                    style={{
+                      ...S.catBtn,
+                      ...(koreanCategory === c.key ? { ...S.catBtnActive, borderColor: "#4ade80", background: "rgba(74,222,128,0.12)" } : {}),
+                    }}
+                  >
+                    <span style={{ fontSize: 20 }}>{c.icon}</span>
+                    <span style={{ fontSize: 12, marginTop: 3 }}>{c.label}</span>
+                  </button>
+                ))
+              ) : (
+                CATEGORIES.map((c) => (
+                  <button
+                    key={c.key}
+                    onClick={() => setCategory(c.key)}
+                    style={{
+                      ...S.catBtn,
+                      ...(category === c.key ? S.catBtnActive : {}),
+                    }}
+                  >
+                    <span style={{ fontSize: 20 }}>{c.icon}</span>
+                    <span style={{ fontSize: 12, marginTop: 3 }}>{c.label}</span>
+                    <span style={{ fontSize: 10, color: "#64748b" }}>
+                      {c.key === "random" ? allWords.length : VOCAB_DATA[c.key].length}개
+                    </span>
+                  </button>
+                ))
+              )}
             </div>
           </div>
 
@@ -814,68 +937,115 @@ export default function VocabChallenge() {
           </div>
 
           <div style={S.questionArea}>
-            <p style={S.questionLabel}>이 뜻의 영어 단어는?</p>
-            {q.word.pos && <span style={{ fontSize: 12, color: "#60a5fa", fontWeight: 600, letterSpacing: 1 }}>{q.word.pos}</span>}
-            <div style={S.koreanWord}>{q.word.ko}</div>
-
-            {/* Speaker button */}
-            <button
-              onClick={() => { unlockAudio(); speakWord(q.word.en); }}
-              style={S.speakerBtn}
-              title="발음 다시 듣기"
-            >
-              🔊
-            </button>
-
-            {/* Hint, Example & Definition */}
-            <div style={S.helpRow}>
-              {!showHint && selected === null && q.word.hint && (
-                <button onClick={() => setShowHint(true)} style={S.helpBtn}>
-                  💡 힌트
+            {q.isMath ? (
+              <>
+                <p style={S.questionLabel}>정답을 고르세요!</p>
+                <div style={{ ...S.koreanWord, fontFamily: "'JetBrains Mono', monospace", fontSize: 28 }}>
+                  {q.mathQuestion}
+                </div>
+                <div style={S.helpRow}>
+                  {!showHint && selected === null && q.mathHint && (
+                    <button onClick={() => setShowHint(true)} style={S.helpBtn}>
+                      💡 힌트
+                    </button>
+                  )}
+                </div>
+                {showHint && q.mathHint && <div style={S.hintBox}>💡 {q.mathHint}</div>}
+              </>
+            ) : q.isKorean ? (
+              <>
+                <p style={S.questionLabel}>{q.korQuestion}</p>
+                <div style={S.helpRow}>
+                  {!showHint && selected === null && q.korHint && (
+                    <button onClick={() => setShowHint(true)} style={S.helpBtn}>
+                      💡 힌트
+                    </button>
+                  )}
+                </div>
+                {showHint && q.korHint && <div style={S.hintBox}>💡 {q.korHint}</div>}
+              </>
+            ) : (
+              <>
+                <p style={S.questionLabel}>이 뜻의 영어 단어는?</p>
+                {q.word.pos && <span style={{ fontSize: 12, color: "#60a5fa", fontWeight: 600, letterSpacing: 1 }}>{q.word.pos}</span>}
+                <div style={S.koreanWord}>{q.word.ko}</div>
+                <button
+                  onClick={() => { unlockAudio(); speakWord(q.word.en); }}
+                  style={S.speakerBtn}
+                  title="발음 다시 듣기"
+                >
+                  🔊
                 </button>
-              )}
-              {!showExample && selected === null && q.word.ex && (
-                <button onClick={() => setShowExample(true)} style={S.helpBtn}>
-                  📖 예문
-                </button>
-              )}
-              {!showDef && selected === null && q.word.def && (
-                <button onClick={() => setShowDef(true)} style={S.helpBtn}>
-                  📘 정의
-                </button>
-              )}
-            </div>
-            {showHint && q.word.hint && <div style={S.hintBox}>💡 {q.word.hint}</div>}
-            {showExample && q.word.ex && (
-              <div style={{ ...S.hintBox, borderColor: "rgba(96,165,250,0.3)", background: "rgba(96,165,250,0.08)", color: "#93c5fd" }}>
-                📖 {q.word.ex}
-              </div>
-            )}
-            {showDef && q.word.def && (
-              <div style={{ ...S.hintBox, borderColor: "rgba(168,85,247,0.3)", background: "rgba(168,85,247,0.08)", color: "#c4b5fd" }}>
-                📘 {q.word.def}
-              </div>
+                <div style={S.helpRow}>
+                  {!showHint && selected === null && q.word.hint && (
+                    <button onClick={() => setShowHint(true)} style={S.helpBtn}>
+                      💡 힌트
+                    </button>
+                  )}
+                  {!showExample && selected === null && q.word.ex && (
+                    <button onClick={() => setShowExample(true)} style={S.helpBtn}>
+                      📖 예문
+                    </button>
+                  )}
+                  {!showDef && selected === null && q.word.def && (
+                    <button onClick={() => setShowDef(true)} style={S.helpBtn}>
+                      📘 정의
+                    </button>
+                  )}
+                </div>
+                {showHint && q.word.hint && <div style={S.hintBox}>💡 {q.word.hint}</div>}
+                {showExample && q.word.ex && (
+                  <div style={{ ...S.hintBox, borderColor: "rgba(96,165,250,0.3)", background: "rgba(96,165,250,0.08)", color: "#93c5fd" }}>
+                    📖 {q.word.ex}
+                  </div>
+                )}
+                {showDef && q.word.def && (
+                  <div style={{ ...S.hintBox, borderColor: "rgba(168,85,247,0.3)", background: "rgba(168,85,247,0.08)", color: "#c4b5fd" }}>
+                    📘 {q.word.def}
+                  </div>
+                )}
+              </>
             )}
           </div>
 
           {/* Correct answer reveal */}
-          {selected && selected.en !== "__timeout__" && selected.en === q.word.en && (
-            <div style={S.revealBox}>
-              <div>✅ <strong>{q.word.en}</strong> {q.word.pos && <span style={{ fontSize: 11, color: "#86efac" }}>({q.word.pos})</span>} — {q.word.ko}</div>
-              {q.word.def && <div style={{ fontSize: 12, color: "#86efac", marginTop: 4, fontStyle: "italic" }}>{q.word.def}</div>}
-            </div>
-          )}
-          {selected && (selected.en === "__timeout__" || selected.en !== q.word.en) && (
-            <div style={{ ...S.revealBox, borderColor: "rgba(248,113,113,0.3)", background: "rgba(248,113,113,0.08)", color: "#fca5a5" }}>
-              <div>정답: <strong>{q.word.en}</strong> {q.word.pos && <span style={{ fontSize: 11 }}>({q.word.pos})</span>} — {q.word.ko}</div>
-              {q.word.def && <div style={{ fontSize: 12, marginTop: 4, fontStyle: "italic", opacity: 0.8 }}>{q.word.def}</div>}
-            </div>
+          {(q.isMath || q.isKorean) ? (
+            <>
+              {selected && selected._isCorrect && (
+                <div style={S.revealBox}>
+                  ✅ <strong>{q.isMath ? q.mathQuestion.replace("= ?", `= ${q.mathAnswer}`) : q.korAnswer}</strong>
+                </div>
+              )}
+              {selected && !selected._isCorrect && (
+                <div style={{ ...S.revealBox, borderColor: "rgba(248,113,113,0.3)", background: "rgba(248,113,113,0.08)", color: "#fca5a5" }}>
+                  <div>정답: <strong>{q.isMath ? q.mathQuestion.replace("= ?", `= ${q.mathAnswer}`) : q.korAnswer}</strong></div>
+                  {(q.mathHint || q.korHint) && <div style={{ fontSize: 12, marginTop: 4, opacity: 0.8 }}>💡 {q.mathHint || q.korHint}</div>}
+                </div>
+              )}
+            </>
+          ) : (
+            <>
+              {selected && selected.en !== "__timeout__" && selected.en === q.word.en && (
+                <div style={S.revealBox}>
+                  <div>✅ <strong>{q.word.en}</strong> {q.word.pos && <span style={{ fontSize: 11, color: "#86efac" }}>({q.word.pos})</span>} — {q.word.ko}</div>
+                  {q.word.def && <div style={{ fontSize: 12, color: "#86efac", marginTop: 4, fontStyle: "italic" }}>{q.word.def}</div>}
+                </div>
+              )}
+              {selected && (selected.en === "__timeout__" || selected.en !== q.word.en) && (
+                <div style={{ ...S.revealBox, borderColor: "rgba(248,113,113,0.3)", background: "rgba(248,113,113,0.08)", color: "#fca5a5" }}>
+                  <div>정답: <strong>{q.word.en}</strong> {q.word.pos && <span style={{ fontSize: 11 }}>({q.word.pos})</span>} — {q.word.ko}</div>
+                  {q.word.def && <div style={{ fontSize: 12, marginTop: 4, fontStyle: "italic", opacity: 0.8 }}>{q.word.def}</div>}
+                </div>
+              )}
+            </>
           )}
 
           <div style={S.choicesGrid}>
             {q.choices.map((ch, i) => {
-              const isSelected = selected && selected.en === ch.en;
-              const isCorrect = ch.en === q.word.en;
+              const isSelected = (q.isMath || q.isKorean)
+                ? (selected && selected.label === ch.label)
+                : (selected && selected.en === ch.en);
+              const isCorrect = (q.isMath || q.isKorean) ? ch._isCorrect : ch.en === q.word.en;
               const revealed = selected !== null;
               let bg = "rgba(255,255,255,0.04)";
               let border = "rgba(255,255,255,0.1)";
@@ -904,10 +1074,11 @@ export default function VocabChallenge() {
                     borderColor: border,
                     color: textColor,
                     cursor: selected !== null ? "default" : "pointer",
+                    ...(q.isMath ? { justifyContent: "center", fontFamily: "'JetBrains Mono', monospace" } : {}),
                   }}
                 >
                   <span style={S.choiceNumber}>{["A", "B", "C", "D"][i]}</span>
-                  <span style={S.choiceText}>{ch.en}</span>
+                  <span style={S.choiceText}>{(q.isMath || q.isKorean) ? ch.label : ch.en}</span>
                   {revealed && isCorrect && <span style={{ marginLeft: "auto" }}>✓</span>}
                   {revealed && isSelected && !isCorrect && <span style={{ marginLeft: "auto" }}>✗</span>}
                 </button>
@@ -976,13 +1147,38 @@ export default function VocabChallenge() {
             </div>
           </div>
 
-          {/* Wrong words review with pronunciation */}
+          {/* Wrong answers review */}
           <div style={S.resultList}>
             <p style={{ fontWeight: 700, fontSize: 14, color: "#aaa", marginBottom: 10 }}>
               오답 복습 {wrongWords.length > 0 && `(${wrongWords.length}개)`}
             </p>
             {wrongWords.length === 0 ? (
               <p style={{ color: "#4ade80", fontSize: 14 }}>모두 정답! 완벽합니다 🎉</p>
+            ) : wrongWords[0]?.question?.isMath || wrongWords[0]?.question?.isKorean || questions[0]?.isMath || questions[0]?.isKorean ? (
+              wrongWords.map((r, i) => {
+                const rq = r.question;
+                const qText = rq?.mathQuestion || rq?.korQuestion || r.word?.ko;
+                const aText = rq?.isMath ? rq.mathAnswer : (rq?.korAnswer || r.word?.en);
+                const hText = rq?.mathHint || rq?.korHint || "";
+                return (
+                  <div key={i} style={S.reviewItem}>
+                    <div style={{ display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap" }}>
+                      <span style={{ fontSize: 16 }}>❌</span>
+                      <span style={{ color: "#fff", fontWeight: 600, ...(rq?.isMath ? { fontFamily: "'JetBrains Mono', monospace" } : {}) }}>
+                        {qText}
+                      </span>
+                    </div>
+                    <div style={{ fontSize: 13, color: "#4ade80", marginTop: 4, marginLeft: 28 }}>
+                      정답: {aText}
+                    </div>
+                    {hText && (
+                      <div style={{ fontSize: 12, color: "#fbbf24", marginTop: 2, marginLeft: 28 }}>
+                        💡 {hText}
+                      </div>
+                    )}
+                  </div>
+                );
+              })
             ) : (
               wrongWords.map((r, i) => (
                 <div key={i} style={S.reviewItem}>
@@ -1021,7 +1217,7 @@ export default function VocabChallenge() {
                 display: "flex", alignItems: "center", justifyContent: "center", gap: 8,
               }}
             >
-              📚 전체 단어 복습 ({questions.length}개)
+              {questions[0]?.isMath ? "🔢" : questions[0]?.isKorean ? "✏️" : "📚"} 전체 복습 ({questions.length}개)
             </button>
           ) : (
             <div style={{
@@ -1056,85 +1252,175 @@ export default function VocabChallenge() {
                   transition: "all 0.2s",
                 }}
               >
-                {!reviewFlipped ? (
-                  <>
-                    {questions[reviewIdx].word.pos && (
-                      <span style={{ fontSize: 12, color: "#60a5fa", fontWeight: 600, marginBottom: 6 }}>
-                        {questions[reviewIdx].word.pos}
-                      </span>
-                    )}
-                    <div style={{ fontSize: 22, color: "#e2e8f0", fontWeight: 700, marginBottom: 10 }}>
-                      {questions[reviewIdx].word.ko}
-                    </div>
-                    {questions[reviewIdx].word.def && (
-                      <div style={{
-                        fontSize: 13, color: "#a78bfa", fontStyle: "italic", marginBottom: 8,
-                        padding: "8px 14px", borderRadius: 10,
-                        background: "rgba(168,85,247,0.08)", border: "1px solid rgba(168,85,247,0.15)",
-                        lineHeight: 1.5,
-                      }}>
-                        📘 {questions[reviewIdx].word.def}
-                      </div>
-                    )}
-                    {questions[reviewIdx].word.ex && (
-                      <div style={{
-                        fontSize: 12, color: "#94a3b8", marginBottom: 8,
-                        padding: "8px 14px", borderRadius: 10,
-                        background: "rgba(96,165,250,0.06)", border: "1px solid rgba(96,165,250,0.1)",
-                        lineHeight: 1.5,
-                      }}>
-                        📖 {questions[reviewIdx].word.ex.replace(
-                          new RegExp(questions[reviewIdx].word.en, "gi"),
-                          (m) => "●".repeat(m.length)
+                {(() => {
+                  const rq = questions[reviewIdx];
+                  const isMath = rq.isMath;
+                  const isKorean = rq.isKorean;
+                  if (!reviewFlipped) {
+                    // ===== 앞면 (문제) =====
+                    return isMath ? (
+                      <>
+                        <div style={{ fontSize: 24, color: "#e2e8f0", fontWeight: 700, marginBottom: 10, fontFamily: "'JetBrains Mono', monospace" }}>
+                          {rq.mathQuestion}
+                        </div>
+                        {rq.mathHint && (
+                          <div style={{
+                            fontSize: 12, color: "#fbbf24", marginBottom: 8,
+                            padding: "8px 14px", borderRadius: 10,
+                            background: "rgba(251,191,36,0.08)", border: "1px solid rgba(251,191,36,0.15)",
+                          }}>
+                            💡 {rq.mathHint}
+                          </div>
                         )}
-                      </div>
-                    )}
-                    <div style={{
-                      marginTop: 10, padding: "10px 24px", borderRadius: 24,
-                      background: "linear-gradient(135deg, rgba(168,85,247,0.2), rgba(96,165,250,0.15))",
-                      border: "1px solid rgba(168,85,247,0.3)",
-                      color: "#c4b5fd", fontSize: 14, fontWeight: 700,
-                      animation: "pulse 2s infinite",
-                    }}>
-                      👆 탭하여 정답 확인
-                    </div>
-                  </>
-                ) : (
-                  <>
-                    <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 8 }}>
-                      <button
-                        onClick={(e) => { e.stopPropagation(); unlockAudio(); speakWord(questions[reviewIdx].word.en); }}
-                        style={{ background: "none", border: "none", fontSize: 20, cursor: "pointer" }}
-                      >🔊</button>
-                      <span style={{ fontSize: 24, color: "#fff", fontWeight: 800 }}>
-                        {questions[reviewIdx].word.en}
-                      </span>
-                      {questions[reviewIdx].word.pos && (
-                        <span style={{ fontSize: 12, color: "#60a5fa" }}>({questions[reviewIdx].word.pos})</span>
-                      )}
-                    </div>
-                    <div style={{ fontSize: 16, color: "#cbd5e1", marginBottom: 8 }}>
-                      {questions[reviewIdx].word.ko}
-                    </div>
-                    {questions[reviewIdx].word.def && (
-                      <div style={{ fontSize: 13, color: "#a78bfa", fontStyle: "italic", marginBottom: 6 }}>
-                        {questions[reviewIdx].word.def}
-                      </div>
-                    )}
-                    {questions[reviewIdx].word.ex && (
-                      <div style={{ fontSize: 12, color: "#94a3b8", marginTop: 4 }}>
-                        📖 {questions[reviewIdx].word.ex}
-                      </div>
-                    )}
-                    {/* 정답/오답 표시 */}
-                    <div style={{
-                      marginTop: 10, fontSize: 12, fontWeight: 600,
-                      color: results[reviewIdx]?.correct ? "#4ade80" : "#f87171",
-                    }}>
-                      {results[reviewIdx]?.correct ? "✅ 정답" : "❌ 오답"}
-                    </div>
-                  </>
-                )}
+                        <div style={{
+                          marginTop: 10, padding: "10px 24px", borderRadius: 24,
+                          background: "linear-gradient(135deg, rgba(251,191,36,0.2), rgba(245,158,11,0.15))",
+                          border: "1px solid rgba(251,191,36,0.3)",
+                          color: "#fbbf24", fontSize: 14, fontWeight: 700,
+                          animation: "pulse 2s infinite",
+                        }}>
+                          👆 탭하여 정답 확인
+                        </div>
+                      </>
+                    ) : isKorean ? (
+                      <>
+                        <div style={{ fontSize: 18, color: "#e2e8f0", fontWeight: 700, marginBottom: 10, lineHeight: 1.6 }}>
+                          {rq.korQuestion}
+                        </div>
+                        <div style={{
+                          marginTop: 10, padding: "10px 24px", borderRadius: 24,
+                          background: "linear-gradient(135deg, rgba(52,211,153,0.2), rgba(16,185,129,0.15))",
+                          border: "1px solid rgba(52,211,153,0.3)",
+                          color: "#34d399", fontSize: 14, fontWeight: 700,
+                          animation: "pulse 2s infinite",
+                        }}>
+                          👆 탭하여 정답 확인
+                        </div>
+                      </>
+                    ) : (
+                      <>
+                        {rq.word.pos && (
+                          <span style={{ fontSize: 12, color: "#60a5fa", fontWeight: 600, marginBottom: 6 }}>
+                            {rq.word.pos}
+                          </span>
+                        )}
+                        <div style={{ fontSize: 22, color: "#e2e8f0", fontWeight: 700, marginBottom: 10 }}>
+                          {rq.word.ko}
+                        </div>
+                        {rq.word.def && (
+                          <div style={{
+                            fontSize: 13, color: "#a78bfa", fontStyle: "italic", marginBottom: 8,
+                            padding: "8px 14px", borderRadius: 10,
+                            background: "rgba(168,85,247,0.08)", border: "1px solid rgba(168,85,247,0.15)",
+                            lineHeight: 1.5,
+                          }}>
+                            📘 {rq.word.def}
+                          </div>
+                        )}
+                        {rq.word.ex && (
+                          <div style={{
+                            fontSize: 12, color: "#94a3b8", marginBottom: 8,
+                            padding: "8px 14px", borderRadius: 10,
+                            background: "rgba(96,165,250,0.06)", border: "1px solid rgba(96,165,250,0.1)",
+                            lineHeight: 1.5,
+                          }}>
+                            📖 {rq.word.ex.replace(
+                              new RegExp(rq.word.en, "gi"),
+                              (m) => "●".repeat(m.length)
+                            )}
+                          </div>
+                        )}
+                        <div style={{
+                          marginTop: 10, padding: "10px 24px", borderRadius: 24,
+                          background: "linear-gradient(135deg, rgba(168,85,247,0.2), rgba(96,165,250,0.15))",
+                          border: "1px solid rgba(168,85,247,0.3)",
+                          color: "#c4b5fd", fontSize: 14, fontWeight: 700,
+                          animation: "pulse 2s infinite",
+                        }}>
+                          👆 탭하여 정답 확인
+                        </div>
+                      </>
+                    );
+                  } else {
+                    // ===== 뒷면 (정답) =====
+                    return isMath ? (
+                      <>
+                        <div style={{ fontSize: 26, color: "#fff", fontWeight: 800, marginBottom: 8, fontFamily: "'JetBrains Mono', monospace" }}>
+                          {rq.mathQuestion.replace("= ?", `= ${rq.mathAnswer}`)}
+                        </div>
+                        {rq.mathHint && (
+                          <div style={{ fontSize: 13, color: "#fbbf24", marginBottom: 6 }}>
+                            💡 {rq.mathHint}
+                          </div>
+                        )}
+                        <div style={{
+                          marginTop: 10, fontSize: 12, fontWeight: 600,
+                          color: results[reviewIdx]?.correct ? "#4ade80" : "#f87171",
+                        }}>
+                          {results[reviewIdx]?.correct ? "✅ 정답" : "❌ 오답"}
+                        </div>
+                      </>
+                    ) : isKorean ? (
+                      <>
+                        <div style={{ fontSize: 16, color: "#94a3b8", marginBottom: 8, lineHeight: 1.5 }}>
+                          {rq.korQuestion}
+                        </div>
+                        <div style={{ fontSize: 22, color: "#34d399", fontWeight: 800, marginBottom: 8 }}>
+                          ✅ {rq.korAnswer}
+                        </div>
+                        {rq.korHint && (
+                          <div style={{
+                            fontSize: 13, color: "#fbbf24", marginBottom: 6,
+                            padding: "8px 14px", borderRadius: 10,
+                            background: "rgba(251,191,36,0.08)", border: "1px solid rgba(251,191,36,0.15)",
+                          }}>
+                            💡 {rq.korHint}
+                          </div>
+                        )}
+                        <div style={{
+                          marginTop: 10, fontSize: 12, fontWeight: 600,
+                          color: results[reviewIdx]?.correct ? "#4ade80" : "#f87171",
+                        }}>
+                          {results[reviewIdx]?.correct ? "✅ 정답" : "❌ 오답"}
+                        </div>
+                      </>
+                    ) : (
+                      <>
+                        <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 8 }}>
+                          <button
+                            onClick={(e) => { e.stopPropagation(); unlockAudio(); speakWord(rq.word.en); }}
+                            style={{ background: "none", border: "none", fontSize: 20, cursor: "pointer" }}
+                          >🔊</button>
+                          <span style={{ fontSize: 24, color: "#fff", fontWeight: 800 }}>
+                            {rq.word.en}
+                          </span>
+                          {rq.word.pos && (
+                            <span style={{ fontSize: 12, color: "#60a5fa" }}>({rq.word.pos})</span>
+                          )}
+                        </div>
+                        <div style={{ fontSize: 16, color: "#cbd5e1", marginBottom: 8 }}>
+                          {rq.word.ko}
+                        </div>
+                        {rq.word.def && (
+                          <div style={{ fontSize: 13, color: "#a78bfa", fontStyle: "italic", marginBottom: 6 }}>
+                            {rq.word.def}
+                          </div>
+                        )}
+                        {rq.word.ex && (
+                          <div style={{ fontSize: 12, color: "#94a3b8", marginTop: 4 }}>
+                            📖 {rq.word.ex}
+                          </div>
+                        )}
+                        <div style={{
+                          marginTop: 10, fontSize: 12, fontWeight: 600,
+                          color: results[reviewIdx]?.correct ? "#4ade80" : "#f87171",
+                        }}>
+                          {results[reviewIdx]?.correct ? "✅ 정답" : "❌ 오답"}
+                        </div>
+                      </>
+                    );
+                  }
+                })()}
               </div>
 
               {/* 네비게이션 */}
