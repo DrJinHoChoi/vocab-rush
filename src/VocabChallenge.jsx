@@ -1824,7 +1824,7 @@ const S = {
     justifyContent: "center",
   },
   questionArea: { textAlign: "center", marginBottom: 14 },
-  questionLabel: { fontSize: 12, color: "#64748b", marginBottom: 8, fontWeight: 500 },
+  questionLabel: { fontSize: 14, color: "#e2e8f0", marginBottom: 8, fontWeight: 600 },
   koreanWord: {
     fontSize: 32,
     fontWeight: 800,
