@@ -142,27 +142,37 @@ function genFraction() {
   const type = rand(0, 2);
   let question, answer, hint;
   if (type === 0) {
-    // 분수→소수
-    const pairs = [[1,2,0.5],[1,4,0.25],[3,4,0.75],[1,5,0.2],[2,5,0.4],[3,5,0.6],[1,8,0.125],[3,8,0.375],[1,10,0.1],[3,10,0.3],[7,10,0.7]];
+    // 분수→소수 (깔끔하게 나누어떨어지는 쌍만 사용)
+    const pairs = [[1,2,0.5],[1,4,0.25],[3,4,0.75],[1,5,0.2],[2,5,0.4],[3,5,0.6],[4,5,0.8],[1,8,0.125],[3,8,0.375],[5,8,0.625],[7,8,0.875],[1,10,0.1],[3,10,0.3],[7,10,0.7],[9,10,0.9],[1,20,0.05],[1,25,0.04],[3,20,0.15],[7,20,0.35]];
     const [n, d, ans] = pairs[rand(0, pairs.length-1)];
     question = `${n}/${d} = ? (소수)`;
     answer = ans;
     hint = `${n}÷${d}=${ans}`;
     return { question, answer, hint, isFraction: true };
   } else if (type === 1) {
-    // 분수 덧셈 (같은 분모)
-    const d = [2,3,4,5,6,8,10][rand(0,6)];
+    // 분수 덧셈 → 기약분수 결과 (소수가 아닌 분수로 답)
+    const d = [2,4,5,8,10][rand(0,4)]; // 2,4,5,8,10만 사용 (소수로 나누어떨어짐)
     const a = rand(1, d-1); const b = rand(1, d-1);
     const sum = a + b;
-    answer = Math.round((sum / d) * 100) / 100;
+    answer = sum / d;
+    // 소수로 정확히 나누어떨어지는지 확인
+    const check = Math.round(answer * 10000) / 10000;
+    if (check !== answer || String(answer).length > 6) {
+      // 안전한 폴백: 간단한 분수→소수 변환
+      const pairs2 = [[1,2,0.5],[1,4,0.25],[3,4,0.75],[2,5,0.4],[3,5,0.6]];
+      const [n2,d2,a2] = pairs2[rand(0,pairs2.length-1)];
+      return { question: `${n2}/${d2} = ? (소수)`, answer: a2, hint: `${n2}÷${d2}=${a2}`, isFraction: true };
+    }
     question = `${a}/${d} + ${b}/${d} = ? (소수)`;
     hint = `(${a}+${b})/${d} = ${sum}/${d} = ${answer}`;
     return { question, answer, hint, isFraction: true };
   } else {
-    // 소수 곱셈
-    const a = [0.1,0.2,0.25,0.3,0.4,0.5][rand(0,5)];
+    // 소수 곱셈 (결과가 정확한 소수)
+    const a = [0.1,0.2,0.25,0.5][rand(0,3)];
     const b = rand(2, 20);
-    answer = Math.round(a * b * 100) / 100;
+    answer = a * b;
+    // 부동소수점 보정
+    answer = Math.round(answer * 1000) / 1000;
     question = `${a} × ${b} = ?`;
     hint = `${a}=${a*100}/100이므로, ${a*100}×${b}÷100=${answer}`;
     return { question, answer, hint, isFraction: true };
@@ -186,12 +196,23 @@ function genPercent() {
     question = `${price}원의 ${disc}% 할인가 = ?`;
     hint = `할인액: ${price}×${disc}%=${price*disc/100}, 결제액: ${price}-${price*disc/100}=${answer}`;
   } else {
-    // 비율 구하기
-    const total = [20,25,40,50,80,100,200][rand(0,6)];
-    const part = rand(1, total - 1);
-    answer = Math.round(part / total * 100);
-    question = `${part}/${total} = ?%`;
-    hint = `${part}÷${total}=${(part/total).toFixed(2)}, ×100=${answer}%`;
+    // 비율 구하기 (정확히 정수% 나오는 조합만 사용)
+    const total = [10,20,25,50,100][rand(0,4)];
+    // part가 total의 배수로 나누어 정수%가 되도록
+    const pctTarget = rand(1, 19) * 5; // 5, 10, 15, ..., 95
+    const part = total * pctTarget / 100;
+    if (part !== Math.floor(part) || part <= 0 || part >= total) {
+      // 안전한 폴백
+      const safePairs = [[1,4,25],[1,2,50],[3,4,75],[1,5,20],[2,5,40],[3,5,60],[4,5,80],[1,10,10],[3,10,30],[7,10,70],[9,10,90]];
+      const [sp, st, sa] = safePairs[rand(0,safePairs.length-1)];
+      answer = sa;
+      question = `${sp}/${st} = ?%`;
+      hint = `${sp}÷${st}=${sp/st}, ×100=${sa}%`;
+    } else {
+      answer = pctTarget;
+      question = `${part}/${total} = ?%`;
+      hint = `${part}÷${total}=${part/total}, ×100=${answer}%`;
+    }
   }
   return { question, answer, hint };
 }
