@@ -181,6 +181,7 @@ const ACHIEVEMENTS = [
   { id: "sc100k",icon: "🏦", title: "점수왕",   desc: "누적 100,000점", check: s => s.totalScore >= 100000 },
 ];
 
+const DEFAULT_MODE_STATS = { totalCorrect: 0, totalGames: 0, bestStreakEver: 0, totalScore: 0, perfectRounds: 0 };
 const DEFAULT_STATS = {
   totalCorrect: 0,
   totalGames: 0,
@@ -188,6 +189,9 @@ const DEFAULT_STATS = {
   totalScore: 0,
   perfectRounds: 0,
   unlockedIds: [],
+  vocab: { ...DEFAULT_MODE_STATS },
+  math: { ...DEFAULT_MODE_STATS },
+  korean: { ...DEFAULT_MODE_STATS },
 };
 
 function loadStats() {
@@ -548,6 +552,8 @@ export default function VocabChallenge() {
         const isPerfect = roundCorrect === questions.length;
 
         setStats(prev => {
+          const modeKey = gameMode; // "vocab" | "math" | "korean"
+          const prevMode = prev[modeKey] || { ...DEFAULT_MODE_STATS };
           const updated = {
             ...prev,
             totalCorrect: prev.totalCorrect + roundCorrect,
@@ -555,6 +561,13 @@ export default function VocabChallenge() {
             bestStreakEver: Math.max(prev.bestStreakEver, Math.max(bestStreak, newStreak)),
             totalScore: prev.totalScore + score + pts,
             perfectRounds: prev.perfectRounds + (isPerfect ? 1 : 0),
+            [modeKey]: {
+              totalCorrect: prevMode.totalCorrect + roundCorrect,
+              totalGames: prevMode.totalGames + 1,
+              bestStreakEver: Math.max(prevMode.bestStreakEver || 0, Math.max(bestStreak, newStreak)),
+              totalScore: prevMode.totalScore + score + pts,
+              perfectRounds: prevMode.perfectRounds + (isPerfect ? 1 : 0),
+            },
           };
           // Check new achievements
           const newly = ACHIEVEMENTS.filter(
@@ -662,29 +675,34 @@ export default function VocabChallenge() {
             </button>
           </div>
 
-          {/* 누적 통계 */}
-          <div style={{
-            display: "grid", gridTemplateColumns: "1fr 1fr 1fr 1fr", gap: 8,
-            margin: "12px 0 8px", padding: "14px 8px", borderRadius: 14,
-            background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.06)",
-          }}>
-            <div style={{ textAlign: "center" }}>
-              <div style={{ fontSize: 18, fontWeight: 700, color: "#4ade80" }}>{stats.totalCorrect.toLocaleString()}</div>
-              <div style={{ fontSize: 10, color: "#64748b" }}>누적 정답</div>
-            </div>
-            <div style={{ textAlign: "center" }}>
-              <div style={{ fontSize: 18, fontWeight: 700, color: "#facc15" }}>{stats.totalGames}</div>
-              <div style={{ fontSize: 10, color: "#64748b" }}>총 게임</div>
-            </div>
-            <div style={{ textAlign: "center" }}>
-              <div style={{ fontSize: 18, fontWeight: 700, color: "#f87171" }}>{stats.bestStreakEver}</div>
-              <div style={{ fontSize: 10, color: "#64748b" }}>최고 연속</div>
-            </div>
-            <div style={{ textAlign: "center" }}>
-              <div style={{ fontSize: 18, fontWeight: 700, color: "#60a5fa" }}>{stats.unlockedIds.length}/{ACHIEVEMENTS.length}</div>
-              <div style={{ fontSize: 10, color: "#64748b" }}>업적</div>
-            </div>
-          </div>
+          {/* 누적 통계 (과목별) */}
+          {(() => {
+            const ms = stats[gameMode] || DEFAULT_MODE_STATS;
+            return (
+              <div style={{
+                display: "grid", gridTemplateColumns: "1fr 1fr 1fr 1fr", gap: 8,
+                margin: "12px 0 8px", padding: "14px 8px", borderRadius: 14,
+                background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.06)",
+              }}>
+                <div style={{ textAlign: "center" }}>
+                  <div style={{ fontSize: 18, fontWeight: 700, color: "#4ade80" }}>{ms.totalCorrect.toLocaleString()}</div>
+                  <div style={{ fontSize: 10, color: "#64748b" }}>누적 정답</div>
+                </div>
+                <div style={{ textAlign: "center" }}>
+                  <div style={{ fontSize: 18, fontWeight: 700, color: "#facc15" }}>{ms.totalGames}</div>
+                  <div style={{ fontSize: 10, color: "#64748b" }}>총 게임</div>
+                </div>
+                <div style={{ textAlign: "center" }}>
+                  <div style={{ fontSize: 18, fontWeight: 700, color: "#f87171" }}>{ms.bestStreakEver || 0}</div>
+                  <div style={{ fontSize: 10, color: "#64748b" }}>최고 연속</div>
+                </div>
+                <div style={{ textAlign: "center" }}>
+                  <div style={{ fontSize: 18, fontWeight: 700, color: "#60a5fa" }}>{stats.unlockedIds.length}/{ACHIEVEMENTS.length}</div>
+                  <div style={{ fontSize: 10, color: "#64748b" }}>업적</div>
+                </div>
+              </div>
+            );
+          })()}
 
           {/* 배지 보기 버튼 */}
           <button
