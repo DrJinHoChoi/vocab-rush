@@ -287,12 +287,12 @@ export function generateMathQuestions(category, count) {
 }
 
 export const MATH_CATEGORIES = [
-  { key: "random",   icon: "\uD83C\uDFB2", label: "\uB79C\uB364 \uBB79\uC2A4" },
-  { key: "add_sub",  icon: "\u2795", label: "\uB367\uC148\u00B7\uBE84\uC148" },
-  { key: "multiply", icon: "\u2716\uFE0F", label: "\uACF1\uC148" },
-  { key: "divide",   icon: "\u2797", label: "\uB098\uB217\uC148" },
-  { key: "mixed",    icon: "\uD83D\uDD22", label: "\uD63C\uD569\uACC4\uC0B0" },
-  { key: "fraction", icon: "\uD83D\uDCCA", label: "\uBD84\uC218\u00B7\uC18C\uC218" },
-  { key: "percent",  icon: "\uD83D\uDCAF", label: "\uD37C\uC13C\uD2B8" },
-  { key: "power",    icon: "\u26A1", label: "\uAC70\uB4ED\uC81C\uACF1" },
+  { key: "random",   icon: "🎲", label: "랜덤 믹스" },
+  { key: "add_sub",  icon: "➕", label: "덧셈·뺄셈" },
+  { key: "multiply", icon: "✖️", label: "곱셈" },
+  { key: "divide",   icon: "➗", label: "나눗셈" },
+  { key: "mixed",    icon: "🔢", label: "혼합계산" },
+  { key: "fraction", icon: "📊", label: "분수·소수" },
+  { key: "percent",  icon: "💯", label: "퍼센트" },
+  { key: "power",    icon: "⚡", label: "거듭제곱" },
 ];
