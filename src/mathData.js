@@ -282,7 +282,7 @@ function genPower() {
 }
 
 function genBinary() {
-  const type = rand(0, 7);
+  const type = rand(0, 13);
   let question, answer, hint, wrongs;
 
   if (type === 0) {
@@ -375,18 +375,156 @@ function genBinary() {
     }
     wrongs = [...wrongSet].slice(0, 3);
     return { question, answer, hint, isBinary: true, wrongs };
-  } else {
+  } else if (type === 7) {
     // 2의 거듭제곱
     const exp = rand(1, 16);
     answer = Math.pow(2, exp);
     question = `2^${exp} = ?`;
     hint = `2를 ${exp}번 곱하면 ${answer}`;
     return { question, answer, hint };
+  } else if (type === 8) {
+    // BCD (Binary Coded Decimal) - 각 십진 자릿수를 4비트로 표현
+    const n = rand(10, 99);
+    const tens = Math.floor(n / 10);
+    const ones = n % 10;
+    answer = tens.toString(2).padStart(4, '0') + ' ' + ones.toString(2).padStart(4, '0');
+    question = `${n}의 BCD 코드는?`;
+    hint = `BCD: 각 십진 자릿수를 4비트로 → ${tens}=${tens.toString(2).padStart(4, '0')}, ${ones}=${ones.toString(2).padStart(4, '0')}`;
+    // Generate plausible wrong BCD answers
+    const w1tens = (tens + 1) % 10;
+    const w2ones = (ones + 1) % 10;
+    const w3tens = tens > 0 ? tens - 1 : tens + 2;
+    wrongs = [
+      w1tens.toString(2).padStart(4, '0') + ' ' + ones.toString(2).padStart(4, '0'),
+      tens.toString(2).padStart(4, '0') + ' ' + w2ones.toString(2).padStart(4, '0'),
+      w3tens.toString(2).padStart(4, '0') + ' ' + w2ones.toString(2).padStart(4, '0'),
+    ];
+    const wrongSet = new Set(wrongs.filter(w => w !== answer));
+    let fbk = 2;
+    while (wrongSet.size < 3) {
+      const wt = ((tens + fbk) % 10).toString(2).padStart(4, '0');
+      const wo = ones.toString(2).padStart(4, '0');
+      const w = wt + ' ' + wo;
+      if (w !== answer) wrongSet.add(w);
+      fbk++;
+    }
+    wrongs = [...wrongSet].slice(0, 3);
+    return { question, answer, hint, isBinary: true, wrongs };
+  } else if (type === 9) {
+    // 1의 보수 (4비트) - 비트 반전
+    const n = rand(1, 14);
+    const binStr = n.toString(2).padStart(4, '0');
+    const complement = binStr.split('').map(b => b === '0' ? '1' : '0').join('');
+    answer = complement;
+    question = `${binStr}의 1의 보수는?`;
+    hint = `1의 보수: 각 비트를 반전 → ${binStr} → ${complement}`;
+    wrongs = [
+      binStr, // original (common mistake)
+      ((~n & 0xF) + 1 & 0xF).toString(2).padStart(4, '0'), // 2's complement (common confusion)
+      (((~n & 0xF) + 2) & 0xF).toString(2).padStart(4, '0'),
+    ];
+    const wrongSet = new Set(wrongs.filter(w => w !== answer));
+    let fbk = 1;
+    while (wrongSet.size < 3) {
+      const w = ((parseInt(complement, 2) + fbk) & 0xF).toString(2).padStart(4, '0');
+      if (w !== answer) wrongSet.add(w);
+      fbk++;
+    }
+    wrongs = [...wrongSet].slice(0, 3);
+    return { question, answer, hint, isBinary: true, wrongs };
+  } else if (type === 10) {
+    // 2의 보수 (4비트) - 1의 보수 + 1, 음수 표현
+    const n = rand(1, 14);
+    const binStr = n.toString(2).padStart(4, '0');
+    const onesComp = (~n & 0xF);
+    const twosComp = (onesComp + 1) & 0xF;
+    answer = twosComp.toString(2).padStart(4, '0');
+    question = `${binStr}의 2의 보수는?`;
+    hint = `2의 보수: 1의 보수(${onesComp.toString(2).padStart(4, '0')}) + 1 = ${answer}`;
+    wrongs = [
+      onesComp.toString(2).padStart(4, '0'), // 1's complement (common confusion)
+      binStr, // original
+      ((twosComp + 1) & 0xF).toString(2).padStart(4, '0'),
+    ];
+    const wrongSet = new Set(wrongs.filter(w => w !== answer));
+    let fbk = 2;
+    while (wrongSet.size < 3) {
+      const w = ((twosComp + fbk) & 0xF).toString(2).padStart(4, '0');
+      if (w !== answer) wrongSet.add(w);
+      fbk++;
+    }
+    wrongs = [...wrongSet].slice(0, 3);
+    return { question, answer, hint, isBinary: true, wrongs };
+  } else if (type === 11) {
+    // 비트 시프트 - 왼쪽/오른쪽 시프트
+    const isLeft = Math.random() > 0.5;
+    if (isLeft) {
+      const n = rand(1, 15);
+      const shift = rand(1, 3);
+      answer = n << shift;
+      question = `${n} << ${shift} = ?`;
+      hint = `왼쪽 시프트: ${n} × 2^${shift} = ${n} × ${Math.pow(2, shift)} = ${answer}`;
+    } else {
+      const shift = rand(1, 2);
+      const n = rand(Math.pow(2, shift), 63);
+      answer = n >> shift;
+      question = `${n} >> ${shift} = ?`;
+      hint = `오른쪽 시프트: ${n} ÷ 2^${shift} = ${n} ÷ ${Math.pow(2, shift)} = ${answer} (소수점 버림)`;
+    }
+    return { question, answer, hint };
+  } else if (type === 12) {
+    // 2진법 덧셈 (4비트)
+    const a = rand(1, 7);
+    const b = rand(1, 7);
+    const sum = a + b;
+    const aStr = a.toString(2).padStart(4, '0');
+    const bStr = b.toString(2).padStart(4, '0');
+    answer = sum.toString(2).padStart(4, '0');
+    question = `${aStr} + ${bStr} = ? (2진법)`;
+    hint = `${a} + ${b} = ${sum} → ${answer}`;
+    wrongs = [
+      (a | b).toString(2).padStart(4, '0'),
+      (a ^ b).toString(2).padStart(4, '0'),
+      ((sum + 1) & 0xF).toString(2).padStart(4, '0'),
+    ];
+    const wrongSet = new Set(wrongs.filter(w => w !== answer));
+    let fbk = 2;
+    while (wrongSet.size < 3) {
+      const w = ((sum + fbk) & 0xF).toString(2).padStart(4, '0');
+      if (w !== answer) wrongSet.add(w);
+      fbk++;
+    }
+    wrongs = [...wrongSet].slice(0, 3);
+    return { question, answer, hint, isBinary: true, wrongs };
+  } else {
+    // 16진 덧셈
+    const a = rand(1, 14);
+    const b = rand(1, 14);
+    const sum = a + b;
+    const aHex = '0x' + a.toString(16).toUpperCase();
+    const bHex = '0x' + b.toString(16).toUpperCase();
+    answer = '0x' + sum.toString(16).toUpperCase();
+    question = `${aHex} + ${bHex} = ?`;
+    hint = `${a} + ${b} = ${sum} → ${answer}`;
+    wrongs = [
+      '0x' + (sum + 1).toString(16).toUpperCase(),
+      '0x' + (sum > 1 ? sum - 1 : sum + 2).toString(16).toUpperCase(),
+      '0x' + (sum + rand(2, 4)).toString(16).toUpperCase(),
+    ];
+    const wrongSet = new Set(wrongs.filter(w => w !== answer));
+    let fbk = 3;
+    while (wrongSet.size < 3) {
+      const w = '0x' + (sum + fbk).toString(16).toUpperCase();
+      if (w !== answer) wrongSet.add(w);
+      fbk++;
+    }
+    wrongs = [...wrongSet].slice(0, 3);
+    return { question, answer, hint, isBinary: true, wrongs };
   }
 }
 
 function genLogic() {
-  const type = rand(0, 7);
+  const type = rand(0, 12);
   let question, answer, hint, wrongs;
 
   if (type === 0) {
@@ -480,7 +618,7 @@ function genLogic() {
     }
     wrongs = answer === 'True' ? ['False', '0', '1'] : ['True', '1', '0'];
     return { question, answer, hint, isBinary: true, wrongs };
-  } else {
+  } else if (type === 7) {
     // De Morgan's Law
     const laws = [
       {
@@ -497,6 +635,111 @@ function genLogic() {
       },
     ];
     const law = laws[rand(0, 1)];
+    return { question: law.q, answer: law.a, hint: law.h, isBinary: true, wrongs: law.w };
+  } else if (type === 8) {
+    // NAND gate - NOT(A AND B)
+    const a = rand(0, 1), b = rand(0, 1);
+    answer = (a & b) ? 0 : 1;
+    question = `NAND(${a}, ${b}) = ?`;
+    hint = `NAND = NOT(AND): ${a} AND ${b} = ${a & b} → NOT = ${answer}`;
+    return { question, answer, hint };
+  } else if (type === 9) {
+    // NOR gate - NOT(A OR B)
+    const a = rand(0, 1), b = rand(0, 1);
+    answer = (a | b) ? 0 : 1;
+    question = `NOR(${a}, ${b}) = ?`;
+    hint = `NOR = NOT(OR): ${a} OR ${b} = ${a | b} → NOT = ${answer}`;
+    return { question, answer, hint };
+  } else if (type === 10) {
+    // XNOR gate - NOT(A XOR B)
+    const a = rand(0, 1), b = rand(0, 1);
+    answer = (a ^ b) ? 0 : 1;
+    question = `XNOR(${a}, ${b}) = ?`;
+    hint = `XNOR = NOT(XOR): ${a} XOR ${b} = ${a ^ b} → NOT = ${answer}`;
+    return { question, answer, hint };
+  } else if (type === 11) {
+    // 비트 마스킹 - AND를 이용한 특정 비트 추출
+    const val = rand(1, 15);
+    const masks = [
+      { mask: 0b1100, desc: '상위 2비트', maskStr: '1100' },
+      { mask: 0b0110, desc: '가운데 2비트', maskStr: '0110' },
+      { mask: 0b0011, desc: '하위 2비트', maskStr: '0011' },
+      { mask: 0b1010, desc: '짝수 위치 비트', maskStr: '1010' },
+      { mask: 0b0101, desc: '홀수 위치 비트', maskStr: '0101' },
+    ];
+    const m = masks[rand(0, masks.length - 1)];
+    const result = val & m.mask;
+    const valStr = val.toString(2).padStart(4, '0');
+    answer = result.toString(2).padStart(4, '0');
+    question = `${valStr} AND ${m.maskStr} = ? (${m.desc} 추출)`;
+    hint = `마스킹: 각 비트별 AND → ${answer}`;
+    wrongs = [
+      (val | m.mask).toString(2).padStart(4, '0'),
+      (val ^ m.mask).toString(2).padStart(4, '0'),
+      ((~result) & 0xF).toString(2).padStart(4, '0'),
+    ];
+    const wrongSet = new Set(wrongs.filter(w => w !== answer));
+    let fb = 1;
+    while (wrongSet.size < 3) {
+      const w = ((result + fb) & 0xF).toString(2).padStart(4, '0');
+      if (w !== answer) wrongSet.add(w);
+      fb++;
+    }
+    wrongs = [...wrongSet].slice(0, 3);
+    return { question, answer, hint, isBinary: true, wrongs };
+  } else {
+    // 부울 대수 간소화
+    const laws = [
+      {
+        q: 'A AND (A OR B) = ?',
+        a: 'A',
+        h: '흡수법칙: A AND (A OR B) = A',
+        w: ['B', 'A OR B', 'A AND B'],
+      },
+      {
+        q: 'A OR (A AND B) = ?',
+        a: 'A',
+        h: '흡수법칙: A OR (A AND B) = A',
+        w: ['B', 'A AND B', 'A OR B'],
+      },
+      {
+        q: 'A OR (NOT A) = ?',
+        a: '1',
+        h: '보수법칙: A OR (NOT A) = 1 (항상 참)',
+        w: ['0', 'A', 'NOT A'],
+      },
+      {
+        q: 'A AND (NOT A) = ?',
+        a: '0',
+        h: '보수법칙: A AND (NOT A) = 0 (항상 거짓)',
+        w: ['1', 'A', 'NOT A'],
+      },
+      {
+        q: 'A OR 0 = ?',
+        a: 'A',
+        h: '항등법칙: A OR 0 = A',
+        w: ['0', '1', 'NOT A'],
+      },
+      {
+        q: 'A AND 1 = ?',
+        a: 'A',
+        h: '항등법칙: A AND 1 = A',
+        w: ['1', '0', 'NOT A'],
+      },
+      {
+        q: 'A OR A = ?',
+        a: 'A',
+        h: '멱등법칙: A OR A = A',
+        w: ['0', '1', '2A'],
+      },
+      {
+        q: 'A AND A = ?',
+        a: 'A',
+        h: '멱등법칙: A AND A = A',
+        w: ['0', '1', 'A²'],
+      },
+    ];
+    const law = laws[rand(0, laws.length - 1)];
     return { question: law.q, answer: law.a, hint: law.h, isBinary: true, wrongs: law.w };
   }
 }
@@ -516,7 +759,7 @@ function comb(n, r) {
 }
 
 function genCsMath() {
-  const type = rand(0, 7);
+  const type = rand(0, 14);
   let question, answer, hint, wrongs;
 
   if (type === 0) {
@@ -588,7 +831,7 @@ function genCsMath() {
     question = s.q;
     hint = s.h;
     return { question, answer, hint };
-  } else {
+  } else if (type === 7) {
     // 확률 (분수 형태)
     const probs = [
       { q: '동전 3개를 던져 모두 앞면일 확률은?', a: '1/8', h: '(1/2)³ = 1/8', w: ['1/4', '1/6', '3/8'] },
@@ -600,6 +843,176 @@ function genCsMath() {
     ];
     const p = probs[rand(0, probs.length - 1)];
     return { question: p.q, answer: p.a, hint: p.h, isBinary: true, wrongs: p.w };
+  } else if (type === 8) {
+    // 행렬 기본 - 2x2 행렬 덧셈 또는 원소 곱
+    const isAdd = Math.random() > 0.5;
+    if (isAdd) {
+      // 2x2 행렬 덧셈: 특정 원소의 합을 물어봄
+      const a = [rand(1, 9), rand(1, 9), rand(1, 9), rand(1, 9)];
+      const b = [rand(1, 9), rand(1, 9), rand(1, 9), rand(1, 9)];
+      const pos = rand(0, 3);
+      const posNames = ['(1,1)', '(1,2)', '(2,1)', '(2,2)'];
+      answer = a[pos] + b[pos];
+      question = `행렬 A=[[${a[0]},${a[1]}],[${a[2]},${a[3]}]], B=[[${b[0]},${b[1]}],[${b[2]},${b[3]}]]일 때, (A+B)의 ${posNames[pos]} 원소는?`;
+      hint = `행렬 덧셈: 같은 위치의 원소끼리 더함 → ${a[pos]} + ${b[pos]} = ${answer}`;
+    } else {
+      // 2x2 행렬의 특정 원소 곱
+      const a = [rand(1, 9), rand(1, 9), rand(1, 9), rand(1, 9)];
+      const b = [rand(1, 9), rand(1, 9), rand(1, 9), rand(1, 9)];
+      // A*B의 (1,1) 원소 = a[0]*b[0] + a[1]*b[2]
+      const results = [
+        a[0]*b[0] + a[1]*b[2], // (1,1)
+        a[0]*b[1] + a[1]*b[3], // (1,2)
+        a[2]*b[0] + a[3]*b[2], // (2,1)
+        a[2]*b[1] + a[3]*b[3], // (2,2)
+      ];
+      const pos = rand(0, 3);
+      const posNames = ['(1,1)', '(1,2)', '(2,1)', '(2,2)'];
+      answer = results[pos];
+      const row = pos < 2 ? 0 : 1;
+      const col = pos % 2;
+      question = `행렬 A=[[${a[0]},${a[1]}],[${a[2]},${a[3]}]], B=[[${b[0]},${b[1]}],[${b[2]},${b[3]}]]일 때, (A×B)의 ${posNames[pos]} 원소는?`;
+      hint = `행렬 곱: ${a[row*2]}×${b[col]} + ${a[row*2+1]}×${b[col+2]} = ${a[row*2]*b[col]} + ${a[row*2+1]*b[col+2]} = ${answer}`;
+    }
+    return { question, answer, hint };
+  } else if (type === 9) {
+    // 그래프 이론 기초 - 완전 그래프
+    const isEdge = Math.random() > 0.5;
+    if (isEdge) {
+      // 꼭짓점 → 간선 수
+      const v = rand(3, 8);
+      answer = v * (v - 1) / 2;
+      question = `꼭짓점 ${v}개인 완전그래프(K${v})의 간선 수는?`;
+      hint = `완전그래프 간선 수 = V×(V-1)/2 = ${v}×${v - 1}/2 = ${answer}`;
+    } else {
+      // 간선 수 → 꼭짓점 수 (정확히 맞는 쌍만 사용)
+      const vList = [3, 4, 5, 6, 7, 8];
+      const v = vList[rand(0, vList.length - 1)];
+      const e = v * (v - 1) / 2;
+      answer = v;
+      question = `간선이 ${e}개인 완전그래프의 꼭짓점 수는?`;
+      hint = `V×(V-1)/2 = ${e} → V = ${v}`;
+    }
+    return { question, answer, hint };
+  } else if (type === 10) {
+    // 이진 탐색 트리 - 완전 이진 트리의 높이
+    const nodes = [1, 3, 7, 15, 31, 63];
+    const heights = [0, 1, 2, 3, 4, 5];
+    const idx = rand(1, nodes.length - 1);
+    answer = heights[idx];
+    question = `${nodes[idx]}개의 노드가 있는 완전 이진 트리의 높이는?`;
+    hint = `높이 = floor(log\u2082(${nodes[idx]})) = ${answer} (레벨 0부터 시작)`;
+    return { question, answer, hint };
+  } else if (type === 11) {
+    // 해시 함수 - key % divisor
+    const divisors = [7, 11, 13, 17];
+    const divisor = divisors[rand(0, divisors.length - 1)];
+    const key = rand(20, 200);
+    answer = key % divisor;
+    question = `해시함수 h(k) = k % ${divisor}일 때, h(${key}) = ?`;
+    hint = `${key} % ${divisor} = ${key} - ${Math.floor(key / divisor)}×${divisor} = ${answer}`;
+    return { question, answer, hint };
+  } else if (type === 12) {
+    // 진수 연산 혼합
+    const subType = rand(0, 2);
+    if (subType === 0) {
+      // 0xFF - 0xF0 style
+      const a = rand(1, 15) * 16; // multiples of 16: 16,32,...,240
+      const b = rand(1, Math.floor(a / 16)) * 16;
+      const diff = a - b;
+      answer = '0x' + diff.toString(16).toUpperCase();
+      question = `0x${a.toString(16).toUpperCase()} - 0x${b.toString(16).toUpperCase()} = ?`;
+      hint = `${a} - ${b} = ${diff} → ${answer}`;
+      wrongs = [
+        '0x' + (diff + 16).toString(16).toUpperCase(),
+        '0x' + (Math.abs(diff - 16) || 1).toString(16).toUpperCase(),
+        '0x' + (diff + rand(1, 8)).toString(16).toUpperCase(),
+      ];
+      const wrongSet = new Set(wrongs.filter(w => w !== answer));
+      let fb = 1;
+      while (wrongSet.size < 3) {
+        const w = '0x' + (diff + fb * 4).toString(16).toUpperCase();
+        if (w !== answer) wrongSet.add(w);
+        fb++;
+      }
+      wrongs = [...wrongSet].slice(0, 3);
+      return { question, answer, hint, isBinary: true, wrongs };
+    } else if (subType === 1) {
+      // 0xA + 0xB style (small hex addition)
+      const a = rand(1, 12);
+      const b = rand(1, 12);
+      const sum = a + b;
+      answer = '0x' + sum.toString(16).toUpperCase();
+      question = `0x${a.toString(16).toUpperCase()} + 0x${b.toString(16).toUpperCase()} = ?`;
+      hint = `${a} + ${b} = ${sum} → ${answer}`;
+      wrongs = [
+        '0x' + (sum + 1).toString(16).toUpperCase(),
+        '0x' + (sum > 1 ? sum - 1 : sum + 2).toString(16).toUpperCase(),
+        '0x' + (sum + rand(2, 5)).toString(16).toUpperCase(),
+      ];
+      const wrongSet = new Set(wrongs.filter(w => w !== answer));
+      let fb = 3;
+      while (wrongSet.size < 3) {
+        const w = '0x' + (sum + fb).toString(16).toUpperCase();
+        if (w !== answer) wrongSet.add(w);
+        fb++;
+      }
+      wrongs = [...wrongSet].slice(0, 3);
+      return { question, answer, hint, isBinary: true, wrongs };
+    } else {
+      // 0b1010 * 2 style (binary shift multiplication)
+      const n = rand(1, 7);
+      const multiplier = [2, 4][rand(0, 1)];
+      const result = n * multiplier;
+      const shift = multiplier === 2 ? 1 : 2;
+      answer = '0b' + result.toString(2);
+      question = `0b${n.toString(2)} × ${multiplier} = ?`;
+      hint = `2진수 × ${multiplier} = 왼쪽으로 ${shift}비트 시프트 → 0b${n.toString(2)} → ${answer}`;
+      wrongs = [
+        '0b' + (result + 1).toString(2),
+        '0b' + (result > 1 ? result - 1 : result + 2).toString(2),
+        '0b' + (result + rand(2, 4)).toString(2),
+      ];
+      const wrongSet = new Set(wrongs.filter(w => w !== answer));
+      let fb = 3;
+      while (wrongSet.size < 3) {
+        const w = '0b' + (result + fb).toString(2);
+        if (w !== answer) wrongSet.add(w);
+        fb++;
+      }
+      wrongs = [...wrongSet].slice(0, 3);
+      return { question, answer, hint, isBinary: true, wrongs };
+    }
+  } else if (type === 13) {
+    // 네트워크 수학 - 서브넷 호스트 수
+    const prefixes = [24, 25, 26, 27, 28, 29, 30];
+    const prefix = prefixes[rand(0, prefixes.length - 1)];
+    const hostBits = 32 - prefix;
+    answer = Math.pow(2, hostBits) - 2;
+    question = `서브넷 마스크 /${prefix}의 사용 가능한 호스트 수는?`;
+    hint = `호스트 비트 = 32-${prefix} = ${hostBits}, 호스트 수 = 2^${hostBits} - 2 = ${answer} (네트워크/브로드캐스트 주소 제외)`;
+    return { question, answer, hint };
+  } else {
+    // ASCII 코드
+    const asciiQuestions = [
+      { q: "문자 'A'의 ASCII 코드는?", a: 65, h: "'A' = 65 (대문자 A부터 65, B=66, ...)" },
+      { q: "문자 'Z'의 ASCII 코드는?", a: 90, h: "'Z' = 90 (A=65이므로 65+25=90)" },
+      { q: "문자 'a'의 ASCII 코드는?", a: 97, h: "'a' = 97 (소문자 a부터 97)" },
+      { q: "문자 'z'의 ASCII 코드는?", a: 122, h: "'z' = 122 (a=97이므로 97+25=122)" },
+      { q: "문자 '0'의 ASCII 코드는?", a: 48, h: "'0' = 48 (숫자 0부터 48, 1=49, ...)" },
+      { q: "문자 '9'의 ASCII 코드는?", a: 57, h: "'9' = 57 (0=48이므로 48+9=57)" },
+      { q: "ASCII 코드 65는 어떤 문자?", a: 'A', h: "65 = 'A' (대문자 알파벳의 시작)", w: ['a', 'B', '0'] },
+      { q: "ASCII 코드 48은 어떤 문자?", a: '0', h: "48 = '0' (숫자의 시작)", w: ['A', '1', 'a'] },
+      { q: "ASCII 코드 97은 어떤 문자?", a: 'a', h: "97 = 'a' (소문자 알파벳의 시작)", w: ['A', 'b', '0'] },
+      { q: "'A'와 'a'의 ASCII 코드 차이는?", a: 32, h: "'a'(97) - 'A'(65) = 32" },
+      { q: "공백(space)의 ASCII 코드는?", a: 32, h: "공백(space) = 32" },
+    ];
+    const q = asciiQuestions[rand(0, asciiQuestions.length - 1)];
+    if (q.w) {
+      // String answer with wrongs
+      return { question: q.q, answer: q.a, hint: q.h, isBinary: true, wrongs: q.w };
+    }
+    return { question: q.q, answer: q.a, hint: q.h };
   }
 }
 
