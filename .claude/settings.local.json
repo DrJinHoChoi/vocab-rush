@@ -5,7 +5,22 @@
       "Bash(ls:*)",
       "Bash(for f in \"C:\\\\Users\\\\jinho\\\\Downloads\\\\vocab-rush-pwa\\\\vocab-rush\\\\data_\"*.js)",
       "Bash(done)",
-      "Bash(npm run build:*)"
+      "Bash(npm run build:*)",
+      "Bash(gh repo view:*)",
+      "Bash(git clone:*)",
+      "Bash(git ls-tree:*)",
+      "Bash(git checkout:*)",
+      "Bash(test:*)",
+      "Bash(npm install)",
+      "Bash(ss:*)",
+      "Bash(gh api:*)",
+      "Bash(where:*)",
+      "Bash(git add:*)",
+      "Bash(git restore:*)",
+      "Bash(git commit:*)",
+      "Bash(git push:*)",
+      "Bash(python:*)",
+      "Bash(wc:*)"
     ]
   }
 }
