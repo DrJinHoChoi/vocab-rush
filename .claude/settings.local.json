@@ -20,7 +20,8 @@
       "Bash(git commit:*)",
       "Bash(git push:*)",
       "Bash(python:*)",
-      "Bash(wc:*)"
+      "Bash(wc:*)",
+      "Bash(gh pr create --title \"Add AI-based EV inverter: simulation, hardware modules, and circuit schematics\" --body \"$\\(cat <<''EOF''\n## Summary\n- **EV inverter FOC+SVPWM simulation** \\(`ev_inverter_sim.py`, 638 lines\\): Full Field-Oriented Control with Space Vector PWM, Clarke/Park transforms, IMC-tuned PI controllers, pure Python stdlib only\n- **4 AI hardware modules** for SiC-based inverter deployment:\n  - `thermal_model.py` \\(860 lines\\): 3-node Cauer RC thermal model + predictive derating NN \\(4→8→4→1\\), MSE=0.006\n  - `nn_observer.py` \\(685 lines\\): NN sensorless observer in alpha-beta frame \\(12→16→8→3\\), theta RMSE 1.5°, eliminates $53 encoder\n  - `anomaly_detector.py` \\(771 lines\\): Autoencoder anomaly detection \\(12→8→4→8→12\\) with RUL estimation, 3/4 faults detected at 5% severity, FP rate 4%\n  - `hw_architecture.py` \\(1200 lines\\): Complete HW spec + BOM \\($315 standard vs $238 AI-optimized = 24.4% savings\\) + **8 detailed ASCII circuit schematics** \\(power stage, gate driver, current sensing, MCU, protection, power supply, thermal stack, connectors\\)\n- All modules are **zero-dependency** \\(Python stdlib only: math, random, time, sys\\)\n- Total: **4,154 lines** of pure-Python AI + hardware design\n\n## Test plan\n- [x] `python ev_inverter_sim.py` — FOC simulation completes, all metrics printed\n- [x] `python thermal_model.py` — NN trains, all 6 ambient conditions SAFE\n- [x] `python nn_observer.py` — All 10 speeds Grade A, theta RMSE < 2°\n- [x] `python anomaly_detector.py` — 3/4 faults detected, FP < 5%\n- [x] `python hw_architecture.py` — 887-line output, all 8 schematics render, no warnings\n\n🤖 Generated with [Claude Code]\\(https://claude.com/claude-code\\)\nEOF\n\\)\")"
     ]
   }
 }
