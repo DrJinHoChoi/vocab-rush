@@ -724,6 +724,192 @@ const HONORIFIC_DATA = [
   { question: "'과연 누구의 아들입니까?'의 높임 표현은?", correct: "누구의 아드님이십니까?", wrong: ["누구의 아들이에요?", "누구 아들이야?", "누구의 자제야?"], hint: "어른의 아들을 여쭐 때" },
 ];
 
+// ===================== IT TERMINOLOGY (IT용어) 100 entries =====================
+const IT_TERM_DATA = [
+  // === Networking ===
+  { question: "IP 주소를 도메인 이름으로 변환하는 시스템은?", correct: "DNS", wrong: ["DHCP", "FTP", "HTTP"], hint: "Domain Name System" },
+  { question: "네트워크 내에서 IP 주소를 자동 할당하는 프로토콜은?", correct: "DHCP", wrong: ["DNS", "TCP", "ARP"], hint: "Dynamic Host Configuration Protocol" },
+  { question: "웹 통신에 사용되는 기본 프로토콜은?", correct: "HTTP", wrong: ["FTP", "SMTP", "SSH"], hint: "HyperText Transfer Protocol" },
+  { question: "파일 전송에 사용되는 프로토콜은?", correct: "FTP", wrong: ["HTTP", "SMTP", "POP3"], hint: "File Transfer Protocol" },
+  { question: "신뢰성 있는 데이터 전송을 보장하는 전송 계층 프로토콜은?", correct: "TCP", wrong: ["UDP", "IP", "ICMP"], hint: "Transmission Control Protocol" },
+  { question: "빠르지만 비신뢰성인 전송 계층 프로토콜은?", correct: "UDP", wrong: ["TCP", "HTTP", "FTP"], hint: "User Datagram Protocol" },
+  { question: "네트워크에서 데이터가 이동하는 최적 경로를 결정하는 장비는?", correct: "라우터", wrong: ["스위치", "허브", "모뎀"], hint: "서로 다른 네트워크를 연결" },
+  { question: "외부 네트워크로부터 내부를 보호하는 보안 시스템은?", correct: "방화벽", wrong: ["백신", "VPN", "프록시"], hint: "Firewall" },
+  { question: "인터넷에서 데이터를 암호화하여 전송하는 프로토콜은?", correct: "HTTPS", wrong: ["HTTP", "FTP", "SSH"], hint: "HTTP + SSL/TLS" },
+  { question: "원격 서버에 안전하게 접속하는 프로토콜은?", correct: "SSH", wrong: ["FTP", "HTTP", "SMTP"], hint: "Secure Shell" },
+  { question: "OSI 7계층에서 가장 아래 계층은?", correct: "물리 계층", wrong: ["데이터 링크", "네트워크", "전송"], hint: "Physical Layer (L1)" },
+  { question: "MAC 주소를 사용하는 OSI 계층은?", correct: "데이터 링크 계층", wrong: ["물리 계층", "네트워크 계층", "전송 계층"], hint: "Layer 2 (L2)" },
+  { question: "인터넷에서 패킷의 목적지 도달 여부를 확인하는 명령어는?", correct: "ping", wrong: ["tracert", "nslookup", "ifconfig"], hint: "ICMP 프로토콜 사용" },
+  { question: "가상 사설 네트워크의 약자는?", correct: "VPN", wrong: ["VPC", "VLAN", "VPS"], hint: "Virtual Private Network" },
+  { question: "웹소켓(WebSocket)의 주요 특징은?", correct: "양방향 실시간 통신", wrong: ["단방향 통신", "파일 전송", "이메일 전송"], hint: "서버↔클라이언트 양방향" },
+
+  // === Development ===
+  { question: "코드 변경 이력을 관리하는 시스템은?", correct: "버전 관리 시스템", wrong: ["운영체제", "데이터베이스", "컴파일러"], hint: "Git이 대표적" },
+  { question: "Git에서 원격 저장소의 변경사항을 가져오는 명령은?", correct: "pull", wrong: ["push", "commit", "merge"], hint: "서버에서 로컬로" },
+  { question: "소스코드를 기계어로 번역하는 프로그램은?", correct: "컴파일러", wrong: ["인터프리터", "디버거", "링커"], hint: "C, Java 등에서 사용" },
+  { question: "소스코드를 한 줄씩 번역하며 실행하는 프로그램은?", correct: "인터프리터", wrong: ["컴파일러", "어셈블러", "링커"], hint: "Python, JavaScript 등" },
+  { question: "프로그램의 오류를 찾아 수정하는 과정은?", correct: "디버깅", wrong: ["컴파일링", "리팩토링", "배포"], hint: "Bug를 찾아 고침" },
+  { question: "코드의 기능은 유지하면서 구조를 개선하는 것은?", correct: "리팩토링", wrong: ["디버깅", "컴파일링", "마이그레이션"], hint: "Refactoring" },
+  { question: "API의 풀네임은?", correct: "Application Programming Interface", wrong: ["Advanced Program Integration", "Auto Protocol Interface", "Application Process Input"], hint: "응용 프로그램 프로그래밍 인터페이스" },
+  { question: "REST API에서 데이터를 조회할 때 사용하는 HTTP 메서드는?", correct: "GET", wrong: ["POST", "PUT", "DELETE"], hint: "읽기 전용 요청" },
+  { question: "REST API에서 새 데이터를 생성할 때 사용하는 HTTP 메서드는?", correct: "POST", wrong: ["GET", "PUT", "PATCH"], hint: "새로운 리소스 생성" },
+  { question: "CI/CD에서 CI는 무엇의 약자인가?", correct: "Continuous Integration", wrong: ["Code Implementation", "Central Interface", "Continuous Installation"], hint: "지속적 통합" },
+  { question: "소프트웨어를 작은 단위로 나눠 독립 배포하는 아키텍처는?", correct: "마이크로서비스", wrong: ["모놀리식", "서버리스", "P2P"], hint: "Microservice Architecture" },
+  { question: "컨테이너 기반 가상화 도구의 대표적인 것은?", correct: "Docker", wrong: ["VMware", "VirtualBox", "Hyper-V"], hint: "경량 가상화, 이미지 기반" },
+  { question: "여러 컨테이너를 자동 관리·배포하는 도구는?", correct: "Kubernetes", wrong: ["Docker Compose", "Ansible", "Terraform"], hint: "K8s라고도 부름" },
+  { question: "SDK의 풀네임은?", correct: "Software Development Kit", wrong: ["System Design Kit", "Secure Data Key", "Server Deployment Kit"], hint: "개발 도구 모음" },
+  { question: "IDE의 풀네임은?", correct: "Integrated Development Environment", wrong: ["Internet Data Exchange", "Internal Debug Engine", "Interactive Design Editor"], hint: "통합 개발 환경" },
+
+  // === Database ===
+  { question: "관계형 데이터베이스에서 데이터를 조회하는 언어는?", correct: "SQL", wrong: ["HTML", "CSS", "XML"], hint: "Structured Query Language" },
+  { question: "SQL에서 데이터를 삽입하는 명령어는?", correct: "INSERT", wrong: ["UPDATE", "SELECT", "CREATE"], hint: "INSERT INTO 테이블 VALUES..." },
+  { question: "스키마가 유연하고 JSON 형태로 저장하는 DB 유형은?", correct: "NoSQL", wrong: ["RDBMS", "그래프DB", "시계열DB"], hint: "MongoDB가 대표적" },
+  { question: "데이터베이스에서 ACID의 A는?", correct: "Atomicity", wrong: ["Availability", "Authentication", "Authorization"], hint: "원자성 - 전부 실행 또는 전부 취소" },
+  { question: "대량 데이터를 빠르게 검색하기 위한 자료구조는?", correct: "인덱스", wrong: ["뷰", "트리거", "프로시저"], hint: "Index - 책의 색인과 같은 원리" },
+  { question: "DB에서 여러 작업을 하나의 논리적 단위로 묶는 것은?", correct: "트랜잭션", wrong: ["스키마", "뷰", "인덱스"], hint: "Transaction - 원자성 보장" },
+  { question: "테이블 간의 관계를 설정하는 키는?", correct: "외래키", wrong: ["기본키", "후보키", "슈퍼키"], hint: "Foreign Key" },
+  { question: "테이블에서 각 행을 고유하게 식별하는 키는?", correct: "기본키", wrong: ["외래키", "후보키", "대체키"], hint: "Primary Key" },
+  { question: "ORM의 풀네임은?", correct: "Object Relational Mapping", wrong: ["Online Resource Manager", "Open Runtime Module", "Object Reference Model"], hint: "객체-관계 매핑" },
+  { question: "데이터 중복을 줄이기 위해 테이블을 분리하는 과정은?", correct: "정규화", wrong: ["비정규화", "파티셔닝", "샤딩"], hint: "Normalization" },
+
+  // === AI/ML ===
+  { question: "인공지능에서 데이터를 학습하여 패턴을 찾는 기술은?", correct: "머신러닝", wrong: ["딥러닝", "강화학습", "전이학습"], hint: "Machine Learning" },
+  { question: "인공 신경망을 여러 층으로 쌓은 학습 방법은?", correct: "딥러닝", wrong: ["머신러닝", "통계학습", "규칙기반"], hint: "Deep Learning" },
+  { question: "GPT에서 T는 무엇의 약자인가?", correct: "Transformer", wrong: ["Transfer", "Training", "Text"], hint: "Generative Pre-trained Transformer" },
+  { question: "자연어 처리의 영어 약자는?", correct: "NLP", wrong: ["NLU", "NLG", "NER"], hint: "Natural Language Processing" },
+  { question: "이미지 인식에 주로 사용되는 신경망 구조는?", correct: "CNN", wrong: ["RNN", "GAN", "VAE"], hint: "Convolutional Neural Network" },
+  { question: "시계열 데이터 처리에 적합한 신경망 구조는?", correct: "RNN", wrong: ["CNN", "GAN", "SVM"], hint: "Recurrent Neural Network" },
+  { question: "실제와 구분이 어려운 가짜 이미지를 생성하는 모델은?", correct: "GAN", wrong: ["CNN", "RNN", "BERT"], hint: "Generative Adversarial Network" },
+  { question: "AI 모델의 성능을 평가할 때 데이터를 나누는 세 가지 세트는?", correct: "훈련/검증/테스트", wrong: ["입력/출력/결과", "학습/평가/배포", "전처리/학습/후처리"], hint: "Train/Validation/Test" },
+  { question: "모델이 훈련 데이터에만 잘 맞고 새 데이터에 약한 현상은?", correct: "과적합", wrong: ["과소적합", "정규화", "드롭아웃"], hint: "Overfitting" },
+  { question: "LLM의 풀네임은?", correct: "Large Language Model", wrong: ["Long Learning Method", "Linear Logic Module", "Local Language Manager"], hint: "대규모 언어 모델" },
+
+  // === Security ===
+  { question: "데이터를 읽을 수 없는 형태로 변환하는 것은?", correct: "암호화", wrong: ["해싱", "인코딩", "압축"], hint: "Encryption - 키로 복호화 가능" },
+  { question: "데이터를 고정 길이의 해시값으로 변환하는 것은?", correct: "해싱", wrong: ["암호화", "인코딩", "디코딩"], hint: "Hashing - 단방향, 복원 불가" },
+  { question: "웹사이트에 악성 스크립트를 삽입하는 공격은?", correct: "XSS", wrong: ["SQL Injection", "CSRF", "DDoS"], hint: "Cross-Site Scripting" },
+  { question: "SQL 쿼리에 악의적인 코드를 삽입하는 공격은?", correct: "SQL Injection", wrong: ["XSS", "CSRF", "Brute Force"], hint: "입력값 검증으로 방지" },
+  { question: "여러 컴퓨터에서 동시에 공격하여 서비스를 마비시키는 것은?", correct: "DDoS", wrong: ["DoS", "Phishing", "Ransomware"], hint: "Distributed Denial of Service" },
+  { question: "공개키와 개인키 쌍을 사용하는 암호화 방식은?", correct: "비대칭 암호화", wrong: ["대칭 암호화", "해싱", "디지털서명"], hint: "RSA가 대표적" },
+  { question: "인증(Authentication)과 인가(Authorization)의 차이: '너 누구야?'는?", correct: "인증", wrong: ["인가", "검증", "승인"], hint: "Authentication = 신원 확인" },
+  { question: "JWT의 풀네임은?", correct: "JSON Web Token", wrong: ["Java Web Tool", "JavaScript Widget Template", "JSON Wireless Transfer"], hint: "인증 토큰 표준" },
+  { question: "OAuth는 주로 어떤 목적으로 사용되는가?", correct: "제3자 인가", wrong: ["데이터 암호화", "파일 전송", "서버 관리"], hint: "Open Authorization" },
+  { question: "데이터를 인질로 잡고 금전을 요구하는 악성코드는?", correct: "랜섬웨어", wrong: ["스파이웨어", "애드웨어", "트로이목마"], hint: "Ransomware" },
+
+  // === Cloud & Infra ===
+  { question: "클라우드에서 서버·네트워크 등 인프라를 제공하는 서비스는?", correct: "IaaS", wrong: ["PaaS", "SaaS", "FaaS"], hint: "Infrastructure as a Service" },
+  { question: "클라우드에서 개발 플랫폼을 제공하는 서비스는?", correct: "PaaS", wrong: ["IaaS", "SaaS", "FaaS"], hint: "Platform as a Service" },
+  { question: "클라우드에서 완성된 소프트웨어를 제공하는 서비스는?", correct: "SaaS", wrong: ["IaaS", "PaaS", "FaaS"], hint: "Software as a Service - Gmail, Slack 등" },
+  { question: "서버 없이 함수 단위로 실행하는 컴퓨팅 모델은?", correct: "서버리스", wrong: ["컨테이너", "VM", "베어메탈"], hint: "Serverless - AWS Lambda 등" },
+  { question: "CDN의 풀네임은?", correct: "Content Delivery Network", wrong: ["Central Data Node", "Cloud Distribution Network", "Cached Domain Name"], hint: "콘텐츠 전송 네트워크" },
+  { question: "로드 밸런서의 주요 역할은?", correct: "트래픽 분산", wrong: ["데이터 암호화", "로그 수집", "코드 배포"], hint: "Load Balancer" },
+  { question: "AWS에서 가상 서버를 제공하는 서비스는?", correct: "EC2", wrong: ["S3", "RDS", "Lambda"], hint: "Elastic Compute Cloud" },
+  { question: "AWS에서 객체 스토리지 서비스는?", correct: "S3", wrong: ["EC2", "EBS", "RDS"], hint: "Simple Storage Service" },
+  { question: "인프라를 코드로 관리하는 개념은?", correct: "IaC", wrong: ["CI/CD", "DevOps", "MLOps"], hint: "Infrastructure as Code - Terraform 등" },
+  { question: "시스템의 가용성을 99.999% 보장하는 것을 무엇이라 하는가?", correct: "파이브 나인", wrong: ["포 나인", "식스 시그마", "제로 다운타임"], hint: "Five Nines - 연간 약 5분 장애" },
+
+  // === Web & Frontend ===
+  { question: "웹페이지의 구조를 정의하는 마크업 언어는?", correct: "HTML", wrong: ["CSS", "JavaScript", "XML"], hint: "HyperText Markup Language" },
+  { question: "웹페이지의 스타일을 정의하는 언어는?", correct: "CSS", wrong: ["HTML", "JavaScript", "SASS"], hint: "Cascading Style Sheets" },
+  { question: "SPA의 풀네임은?", correct: "Single Page Application", wrong: ["Static Page App", "Server Page Architecture", "Simple Progressive App"], hint: "단일 페이지 애플리케이션" },
+  { question: "SSR의 풀네임은?", correct: "Server Side Rendering", wrong: ["Static Site Rendering", "Single Source Routing", "Secure Server Response"], hint: "서버 측 렌더링" },
+  { question: "DOM의 풀네임은?", correct: "Document Object Model", wrong: ["Data Output Manager", "Direct Object Mapping", "Display Order Module"], hint: "문서 객체 모델" },
+  { question: "웹 접근성의 국제 표준 가이드라인은?", correct: "WCAG", wrong: ["W3C", "WAI", "ARIA"], hint: "Web Content Accessibility Guidelines" },
+  { question: "React에서 상태 관리에 사용되는 Hook은?", correct: "useState", wrong: ["useEffect", "useRef", "useContext"], hint: "컴포넌트의 상태를 관리" },
+  { question: "PWA의 풀네임은?", correct: "Progressive Web App", wrong: ["Public Web Access", "Portable Widget App", "Primary Web Architecture"], hint: "프로그레시브 웹 앱" },
+  { question: "JSON의 풀네임은?", correct: "JavaScript Object Notation", wrong: ["Java Standard Object Naming", "Joint Software Operation Node", "JavaScript Online Network"], hint: "데이터 교환 형식" },
+  { question: "CORS의 풀네임은?", correct: "Cross-Origin Resource Sharing", wrong: ["Central Object Request System", "Client Origin Response Server", "Cache Origin Redirect Service"], hint: "교차 출처 리소스 공유" },
+
+  // === Data & Algorithms ===
+  { question: "LIFO 원칙을 따르는 자료구조는?", correct: "스택", wrong: ["큐", "리스트", "트리"], hint: "Last In First Out" },
+  { question: "FIFO 원칙을 따르는 자료구조는?", correct: "큐", wrong: ["스택", "힙", "배열"], hint: "First In First Out" },
+  { question: "키-값 쌍으로 데이터를 저장하는 자료구조는?", correct: "해시맵", wrong: ["배열", "스택", "큐"], hint: "Hash Map / Dictionary" },
+  { question: "이진 탐색의 시간 복잡도는?", correct: "O(log n)", wrong: ["O(n)", "O(n²)", "O(1)"], hint: "반씩 나눠 탐색" },
+  { question: "버블 정렬의 평균 시간 복잡도는?", correct: "O(n²)", wrong: ["O(n log n)", "O(n)", "O(log n)"], hint: "인접한 요소를 반복 비교·교환" },
+  { question: "빅오 표기법에서 가장 빠른 시간 복잡도는?", correct: "O(1)", wrong: ["O(log n)", "O(n)", "O(n log n)"], hint: "상수 시간" },
+  { question: "노드와 간선으로 이루어진 비선형 자료구조는?", correct: "그래프", wrong: ["트리", "배열", "큐"], hint: "Graph - 방향/무방향, 가중치 있을 수 있음" },
+  { question: "부모-자식 관계의 계층적 자료구조는?", correct: "트리", wrong: ["그래프", "링크드리스트", "해시맵"], hint: "Tree - 루트 노드에서 시작" },
+  { question: "분할 정복 기법을 사용하는 대표적 정렬 알고리즘은?", correct: "퀵소트", wrong: ["버블소트", "삽입소트", "선택소트"], hint: "Quick Sort - 평균 O(n log n)" },
+  { question: "메모이제이션은 주로 어떤 기법에서 사용하는가?", correct: "동적 프로그래밍", wrong: ["그리디", "분할정복", "백트래킹"], hint: "DP - 중복 부분 문제 해결" },
+];
+
+// ===================== IT SPELLING (IT맞춤법) 80 entries =====================
+const IT_SPELL_DATA = [
+  // === 외래어 표기 ===
+  { question: "올바른 표기는? (렌더링 vs 랜더링)", correct: "렌더링", wrong: ["랜더링", "렌더닝", "렌드링"], hint: "Rendering - '렌'이 올바른 표기" },
+  { question: "올바른 표기는? (알고리즘 vs 알고리듬)", correct: "알고리즘", wrong: ["알고리듬", "알고리슴", "얼고리즘"], hint: "Algorithm의 표준 표기" },
+  { question: "올바른 표기는? (시뮬레이션 vs 시뮬레이셔)", correct: "시뮬레이션", wrong: ["시물레이션", "시뮬레이셔", "시뮬레이숀"], hint: "Simulation의 표준 표기" },
+  { question: "올바른 표기는? (인터페이스 vs 인터훼이스)", correct: "인터페이스", wrong: ["인터훼이스", "인터패이스", "인터폐이스"], hint: "Interface의 표준 표기" },
+  { question: "올바른 표기는? (데이터베이스 vs 데이타베이스)", correct: "데이터베이스", wrong: ["데이타베이스", "데이타배이스", "데이터배이스"], hint: "Database - '터'가 표준" },
+  { question: "올바른 표기는? (콘텐츠 vs 컨텐츠)", correct: "콘텐츠", wrong: ["컨텐츠", "콘텐쯔", "콘탠츠"], hint: "Contents - '콘'이 표준" },
+  { question: "올바른 표기는? (메시지 vs 메세지)", correct: "메시지", wrong: ["메세지", "메시쥐", "매시지"], hint: "Message - '시'가 표준" },
+  { question: "올바른 표기는? (디지털 vs 디지탈)", correct: "디지털", wrong: ["디지탈", "디지탈", "디지틀"], hint: "Digital - '털'이 표준" },
+  { question: "올바른 표기는? (소프트웨어 vs 소프트웨어)", correct: "소프트웨어", wrong: ["소프트웨아", "소프트웨여", "소프트웨얼"], hint: "Software의 표준 표기" },
+  { question: "올바른 표기는? (플랫폼 vs 플랫홈)", correct: "플랫폼", wrong: ["플랫홈", "플렛폼", "플렛홈"], hint: "Platform - '폼'이 표준" },
+  { question: "올바른 표기는? (프레임워크 vs 프래임워크)", correct: "프레임워크", wrong: ["프래임워크", "프레임웤", "프레임웍"], hint: "Framework의 표준 표기" },
+  { question: "올바른 표기는? (액세스 vs 억세스)", correct: "액세스", wrong: ["억세스", "엑세스", "악세스"], hint: "Access - '액'이 표준" },
+  { question: "올바른 표기는? (커뮤니케이션 vs 커뮤니케이숀)", correct: "커뮤니케이션", wrong: ["커뮤니케이숀", "커뮤니캐이션", "커뮤니케이셔"], hint: "Communication의 표준 표기" },
+  { question: "올바른 표기는? (앱 vs 어플)", correct: "앱", wrong: ["어플", "어플리케이숀", "애프"], hint: "App - 표준 외래어 표기" },
+  { question: "올바른 표기는? (아키텍처 vs 아키텍쳐)", correct: "아키텍처", wrong: ["아키텍쳐", "아키텍춰", "아키텍쵸"], hint: "Architecture - '처'가 표준" },
+
+  // === 띄어쓰기 ===
+  { question: "올바른 표기는? (로그인 vs 로그 인)", correct: "로그인", wrong: ["로그 인", "록인", "로긴"], hint: "Login은 한 단어" },
+  { question: "올바른 표기는? (업데이트 vs 업 데이트)", correct: "업데이트", wrong: ["업 데이트", "엡데이트", "업데이뜨"], hint: "Update는 한 단어" },
+  { question: "올바른 표기는? (다운로드 vs 다운 로드)", correct: "다운로드", wrong: ["다운 로드", "다운로우드", "다운롣"], hint: "Download는 한 단어" },
+  { question: "'백엔드 개발자'의 올바른 띄어쓰기는?", correct: "백엔드 개발자", wrong: ["백엔드개발자", "백 엔드 개발자", "백앤드 개발자"], hint: "백엔드(수식어) + 개발자(명사) 띄어쓰기" },
+  { question: "'오픈소스 라이선스'의 올바른 띄어쓰기는?", correct: "오픈 소스 라이선스", wrong: ["오픈소스 라이선스", "오픈소스라이선스", "오픈 소스라이선스"], hint: "Open Source License - 각각 띄어쓰기" },
+
+  // === 혼동하기 쉬운 IT 용어 ===
+  { question: "'인코딩'과 '암호화'의 차이: 키 없이 원래대로 복원 가능한 것은?", correct: "인코딩", wrong: ["암호화", "해싱", "직렬화"], hint: "Encoding은 단순 변환, 보안 목적 아님" },
+  { question: "'인증'과 '인가'의 차이: '이 페이지를 볼 권한이 있나?'는?", correct: "인가", wrong: ["인증", "검증", "허가"], hint: "Authorization = 권한 확인" },
+  { question: "'라이브러리'와 '프레임워크'의 차이: 개발자가 제어권을 가지는 것은?", correct: "라이브러리", wrong: ["프레임워크", "SDK", "API"], hint: "Library는 내가 호출, Framework는 나를 호출" },
+  { question: "'동기'와 '비동기'의 차이: 요청 후 응답을 기다리지 않는 것은?", correct: "비동기", wrong: ["동기", "블로킹", "직렬"], hint: "Asynchronous" },
+  { question: "'컴파일 타임'과 '런타임'의 차이: 프로그램 실행 중 발생하는 에러는?", correct: "런타임 에러", wrong: ["컴파일 에러", "빌드 에러", "구문 에러"], hint: "Runtime Error" },
+  { question: "'스레드'와 '프로세스'의 차이: 메모리를 공유하는 실행 단위는?", correct: "스레드", wrong: ["프로세스", "코루틴", "태스크"], hint: "Thread - 프로세스 내 경량 실행 단위" },
+  { question: "'Git'과 'GitHub'의 차이: 분산 버전 관리 시스템 자체는?", correct: "Git", wrong: ["GitHub", "GitLab", "Bitbucket"], hint: "Git은 도구, GitHub은 호스팅 서비스" },
+  { question: "'HTTP'와 'HTTPS'의 차이: 데이터를 암호화하여 전송하는 것은?", correct: "HTTPS", wrong: ["HTTP", "FTP", "SSH"], hint: "HTTPS = HTTP + SSL/TLS" },
+  { question: "'쿠키'와 '세션'의 차이: 서버 측에 저장되는 것은?", correct: "세션", wrong: ["쿠키", "토큰", "캐시"], hint: "Session은 서버, Cookie는 클라이언트" },
+  { question: "'스택'과 '힙'의 차이: 동적 할당 메모리 영역은?", correct: "힙", wrong: ["스택", "레지스터", "캐시"], hint: "Heap - malloc, new 등으로 할당" },
+
+  // === 약어 풀네임 ===
+  { question: "URL의 풀네임은?", correct: "Uniform Resource Locator", wrong: ["Universal Resource Link", "Unified Request Locator", "User Resource Lookup"], hint: "통합 자원 위치 지정자" },
+  { question: "CPU의 풀네임은?", correct: "Central Processing Unit", wrong: ["Computer Personal Unit", "Central Program Utility", "Core Processing Unit"], hint: "중앙 처리 장치" },
+  { question: "GPU의 풀네임은?", correct: "Graphics Processing Unit", wrong: ["General Processing Unit", "Global Program Utility", "Graphics Program Unit"], hint: "그래픽 처리 장치" },
+  { question: "RAM의 풀네임은?", correct: "Random Access Memory", wrong: ["Read Access Memory", "Rapid Action Memory", "Remote Access Module"], hint: "임의 접근 메모리" },
+  { question: "SSD의 풀네임은?", correct: "Solid State Drive", wrong: ["Super Speed Disk", "System Storage Device", "Serial Signal Drive"], hint: "반도체 기반 저장장치" },
+  { question: "IoT의 풀네임은?", correct: "Internet of Things", wrong: ["Integration of Technology", "Internet of Tools", "Input of Text"], hint: "사물인터넷" },
+  { question: "UI의 풀네임은?", correct: "User Interface", wrong: ["Universal Integration", "Unified Input", "User Interaction"], hint: "사용자 인터페이스" },
+  { question: "UX의 풀네임은?", correct: "User Experience", wrong: ["Universal Exchange", "User Extension", "Unified Experience"], hint: "사용자 경험" },
+  { question: "SEO의 풀네임은?", correct: "Search Engine Optimization", wrong: ["Software Engineering Organization", "Secure Email Operation", "System Event Observer"], hint: "검색 엔진 최적화" },
+  { question: "MVP의 IT 용어 풀네임은?", correct: "Minimum Viable Product", wrong: ["Most Valuable Player", "Main Version Package", "Maximum Value Protocol"], hint: "최소 기능 제품" },
+
+  // === 프로그래밍 개념 ===
+  { question: "변수의 데이터 타입을 자동으로 결정하는 것은?", correct: "타입 추론", wrong: ["타입 캐스팅", "타입 체크", "타입 선언"], hint: "Type Inference" },
+  { question: "함수가 자기 자신을 호출하는 것은?", correct: "재귀", wrong: ["반복", "콜백", "클로저"], hint: "Recursion" },
+  { question: "코드 블록 밖에서 내부 변수에 접근할 수 있게 하는 것은?", correct: "클로저", wrong: ["스코프", "호이스팅", "프로토타입"], hint: "Closure" },
+  { question: "비동기 작업의 결과를 나타내는 객체는?", correct: "Promise", wrong: ["Callback", "Observable", "Future"], hint: "이행/거부/대기 세 상태" },
+  { question: "상속 없이 코드를 재사용하는 패턴은?", correct: "컴포지션", wrong: ["상속", "다형성", "추상화"], hint: "Composition over Inheritance" },
+  { question: "같은 이름의 메서드가 다르게 동작하는 객체지향 원리는?", correct: "다형성", wrong: ["캡슐화", "상속", "추상화"], hint: "Polymorphism" },
+  { question: "데이터와 메서드를 하나로 묶고 외부 접근을 제한하는 것은?", correct: "캡슐화", wrong: ["추상화", "다형성", "상속"], hint: "Encapsulation" },
+  { question: "실행 중인 프로그램을 일시 중단하고 다른 작업을 수행하는 것은?", correct: "인터럽트", wrong: ["폴링", "콜백", "이벤트"], hint: "Interrupt" },
+  { question: "데이터를 변경할 수 없는 상태로 만드는 것은?", correct: "불변성", wrong: ["가변성", "반응성", "선언성"], hint: "Immutability" },
+  { question: "프로그램의 실행 흐름을 제어하지 않고 선언적으로 작성하는 것은?", correct: "선언형 프로그래밍", wrong: ["명령형 프로그래밍", "절차적 프로그래밍", "객체지향 프로그래밍"], hint: "Declarative Programming - React, SQL 등" },
+
+  // === DevOps & 협업 ===
+  { question: "'애자일'의 핵심 가치: 프로세스·도구보다 중요한 것은?", correct: "개인과 상호작용", wrong: ["문서화", "계약 협상", "계획 수립"], hint: "Agile Manifesto 첫 번째 가치" },
+  { question: "코드 리뷰에서 PR의 풀네임은?", correct: "Pull Request", wrong: ["Push Request", "Patch Release", "Program Review"], hint: "코드 병합 요청" },
+  { question: "스크럼에서 2~4주 단위의 개발 주기는?", correct: "스프린트", wrong: ["이터레이션", "릴리즈", "마일스톤"], hint: "Sprint" },
+  { question: "코드를 main 브랜치에 병합하기 전 자동 테스트를 실행하는 것은?", correct: "CI", wrong: ["CD", "QA", "UAT"], hint: "Continuous Integration" },
+  { question: "인프라 변경을 Git으로 관리하는 방법론은?", correct: "GitOps", wrong: ["DevOps", "MLOps", "DataOps"], hint: "Git + Operations" },
+
+  // === 최신 트렌드 ===
+  { question: "'제로 트러스트' 보안 모델의 핵심 원칙은?", correct: "아무것도 신뢰하지 않음", wrong: ["방화벽만 신뢰", "내부 네트워크 신뢰", "인증된 사용자 신뢰"], hint: "Zero Trust - 항상 검증" },
+  { question: "WebAssembly의 약자는?", correct: "Wasm", wrong: ["WAsm", "WASS", "WebAsm"], hint: "웹에서 네이티브 수준 성능" },
+  { question: "Edge Computing의 핵심 아이디어는?", correct: "데이터 발생 지점 근처에서 처리", wrong: ["중앙 서버에서 처리", "클라우드에서만 처리", "오프라인 처리"], hint: "지연 시간 감소, 대역폭 절약" },
+  { question: "GraphQL과 REST의 차이: 클라이언트가 필요한 데이터만 요청하는 것은?", correct: "GraphQL", wrong: ["REST", "SOAP", "gRPC"], hint: "쿼리 언어 기반 API" },
+  { question: "Terraform은 어떤 용도의 도구인가?", correct: "인프라 자동화(IaC)", wrong: ["CI/CD", "컨테이너 관리", "모니터링"], hint: "Infrastructure as Code" },
+];
+
 // ===================== DATA MAP & EXPORT =====================
 
 const DATA_MAP = {
@@ -734,6 +920,8 @@ const DATA_MAP = {
   synonym: SYNONYM_DATA,
   antonym: ANTONYM_DATA,
   honorific: HONORIFIC_DATA,
+  it_term: IT_TERM_DATA,
+  it_spell: IT_SPELL_DATA,
 };
 
 const allCategoryKeys = Object.keys(DATA_MAP);
@@ -768,12 +956,14 @@ export function generateKoreanQuestions(category, count) {
 }
 
 export const KOREAN_CATEGORIES = [
-  { key: "random",   icon: "\uD83C\uDFB2", label: "랜덤 믹스" },
-  { key: "spelling", icon: "\u270F\uFE0F", label: "맞춤법" },
-  { key: "spacing",  icon: "\uD83D\uDCCF", label: "띄어쓰기" },
-  { key: "idiom",    icon: "\uD83D\uDCDC", label: "사자성어" },
-  { key: "proverb",  icon: "\uD83D\uDDE3\uFE0F", label: "속담" },
-  { key: "synonym",  icon: "\uD83D\uDD04", label: "유의어" },
-  { key: "antonym",  icon: "\u2194\uFE0F", label: "반의어" },
-  { key: "honorific", icon: "\uD83C\uDFA9", label: "높임말" },
+  { key: "random",   icon: "🎲", label: "랜덤 믹스" },
+  { key: "spelling", icon: "✏️", label: "맞춤법" },
+  { key: "spacing",  icon: "📏", label: "띄어쓰기" },
+  { key: "idiom",    icon: "📜", label: "사자성어" },
+  { key: "proverb",  icon: "🗣️", label: "속담" },
+  { key: "synonym",  icon: "🔄", label: "유의어" },
+  { key: "antonym",  icon: "↔️", label: "반의어" },
+  { key: "honorific", icon: "🎩", label: "높임말" },
+  { key: "it_term",  icon: "💻", label: "IT용어" },
+  { key: "it_spell", icon: "⌨️", label: "IT맞춤법" },
 ];
