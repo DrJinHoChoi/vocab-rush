@@ -609,17 +609,20 @@ export default function VocabChallenge() {
             <h1 style={S.title}>{gameMode === "math" ? "MATH RUSH" : gameMode === "korean" ? "KOREAN RUSH" : "VOCAB RUSH"}</h1>
             <p style={S.subtitle}>
               {gameMode === "math"
-                ? "빠른 암산 타이머 챌린지"
+                ? "암산 · CS수학 · AI수학 타이머 챌린지"
                 : gameMode === "korean"
-                ? "맞춤법·사자성어·속담 타이머 챌린지"
-                : "학생·직장인을 위한 영어 어휘 타이머 챌린지"}
+                ? "맞춤법 · IT용어 · AI도구 타이머 챌린지"
+                : "영어 어휘 · AI 도구 활용 타이머 챌린지"}
             </p>
             <p style={S.wordCount}>
               {gameMode === "math"
-                ? "8개 카테고리 · 무한 문제 생성 · 암산 특화 🔢"
+                ? "12개 카테고리 · 무한 문제 생성 · AI/CS 수학 포함 🔢"
                 : gameMode === "korean"
-                ? "8개 카테고리 · 670+ 문제 · 국어 실력 향상 ✏️"
-                : `총 ${allWords.length}개 단어 · CEFR A1~C2 · 발음 지원 🔊`}
+                ? `11개 카테고리 · 1,000+ 문제 · AI 시대 국어 실력 ✏️`
+                : `총 ${allWords.length.toLocaleString()}개 단어 · CEFR A1~C2 + AI/Tech 🔊`}
+            </p>
+            <p style={{ fontSize: 10, color: "#6ee7b7", marginTop: 4, letterSpacing: 0.5 }}>
+              🤖 AI 도구 활용에 필요한 국 · 영 · 수 실력을 게임으로!
             </p>
           </div>
 
@@ -768,6 +771,33 @@ export default function VocabChallenge() {
                 ))
               )}
             </div>
+            {/* AI 도구 활용 팁 */}
+            {(() => {
+              const aiCat = (gameMode === "math" && ["ai_math", "binary", "logic", "cs_math"].includes(mathCategory))
+                || (gameMode === "korean" && ["ai_tool", "it_term", "it_spell"].includes(koreanCategory))
+                || (gameMode === "vocab" && category === "tech");
+              if (!aiCat) return null;
+              const tips = {
+                ai_math: "💡 AI 모델의 핵심 수학 — sigmoid, ReLU, softmax, CNN, Attention 등",
+                binary: "💡 컴퓨터의 언어 — 2진법, 16진법은 프로그래밍의 기초",
+                logic: "💡 논리 연산은 AI 회로와 알고리즘의 핵심 원리",
+                cs_math: "💡 순열·조합·확률은 AI 알고리즘 분석의 필수 수학",
+                ai_tool: "💡 ChatGPT, Claude 등 AI 도구를 200% 활용하는 지식",
+                it_term: "💡 개발자와 소통하려면 IT 용어부터!",
+                it_spell: "💡 알고리즘? 알고리듬? AI 시대 올바른 표기법",
+                tech: "💡 AI/ML, 클라우드, 보안 등 테크 영어 어휘력 UP",
+              };
+              const key = gameMode === "math" ? mathCategory : gameMode === "korean" ? koreanCategory : category;
+              return (
+                <div style={{
+                  marginTop: 8, padding: "8px 12px", borderRadius: 8,
+                  background: "rgba(110,231,183,0.08)", border: "1px solid rgba(110,231,183,0.15)",
+                  fontSize: 11, color: "#6ee7b7", lineHeight: 1.5, textAlign: "center",
+                }}>
+                  {tips[key] || "💡 AI 도구 활용에 도움이 되는 문제들입니다"}
+                </div>
+              );
+            })()}
           </div>
 
           <div style={S.section}>
@@ -1164,6 +1194,29 @@ export default function VocabChallenge() {
               <span style={S.statLabel}>총 시간</span>
             </div>
           </div>
+
+          {/* AI 도구 활용 격려 메시지 */}
+          {(() => {
+            const isAiRelated = (gameMode === "math" && ["ai_math", "binary", "logic", "cs_math"].includes(mathCategory))
+              || (gameMode === "korean" && ["ai_tool", "it_term", "it_spell"].includes(koreanCategory))
+              || (gameMode === "vocab" && category === "tech");
+            if (!isAiRelated) return null;
+            const msgs = pct >= 80
+              ? ["🤖 AI 시대를 이끌 실력이 갖춰지고 있어요!", "🚀 AI 도구를 자유자재로 활용할 준비 완료!"]
+              : pct >= 50
+              ? ["📈 꾸준히 하면 AI 전문가가 될 수 있어요!", "💡 AI 용어에 점점 익숙해지고 있어요!"]
+              : ["💪 AI 시대 필수 지식, 반복하면 금방 익숙해져요!", "🔄 틀린 문제를 복습하면 실력이 쑥쑥!"];
+            return (
+              <div style={{
+                margin: "12px 0", padding: "10px 14px", borderRadius: 10,
+                background: "linear-gradient(135deg, rgba(110,231,183,0.08), rgba(96,165,250,0.08))",
+                border: "1px solid rgba(110,231,183,0.15)",
+                fontSize: 12, color: "#6ee7b7", textAlign: "center", lineHeight: 1.6,
+              }}>
+                {msgs[Math.floor(Math.random() * msgs.length)]}
+              </div>
+            );
+          })()}
 
           {/* Wrong answers review */}
           <div style={S.resultList}>
