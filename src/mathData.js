@@ -1,5 +1,5 @@
 // MATH RUSH - Dynamic Math Problem Generator
-// Categories: add_sub, multiply, divide, mixed, fraction, percent, power, binary, logic, cs_math, random
+// Categories: add_sub, multiply, divide, mixed, fraction, percent, power, binary, logic, cs_math, ai_math, random
 
 function rand(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -1016,6 +1016,169 @@ function genCsMath() {
   }
 }
 
+function genAiMath() {
+  const type = rand(0, 14);
+  let question, answer, hint, wrongs;
+
+  if (type === 0) {
+    // Sigmoid function: σ(0) = 0.5
+    answer = 0.5;
+    question = 'σ(0) = ? (시그모이드 함수)';
+    hint = 'σ(x) = 1/(1+e^(-x)), σ(0) = 1/(1+1) = 0.5';
+    return { question, answer, hint, isFraction: true };
+  } else if (type === 1) {
+    // ReLU function: max(0, x)
+    const x = rand(-10, 10);
+    answer = Math.max(0, x);
+    question = `ReLU(${x}) = ? (max(0, x))`;
+    hint = `ReLU(${x}) = max(0, ${x}) = ${answer}`;
+    return { question, answer, hint };
+  } else if (type === 2) {
+    // Softmax denominator (2 elements) - exact calculation
+    // Use simple e^0=1, e^1≈2.718 → approximate with nice numbers
+    // Instead, test understanding: "softmax([2,2])의 첫 번째 원소는?"
+    answer = 0.5;
+    question = 'softmax([x, x])의 첫 번째 원소는? (같은 값 두 개)';
+    hint = 'e^x / (e^x + e^x) = 1/2 = 0.5';
+    return { question, answer, hint, isFraction: true };
+  } else if (type === 3) {
+    // One-hot encoding dimension
+    const classes = rand(3, 10);
+    const idx = rand(0, classes - 1);
+    answer = classes;
+    question = `${classes}개 클래스의 원핫 인코딩 벡터 길이는?`;
+    hint = `클래스 수 = 벡터 차원 = ${classes}`;
+    return { question, answer, hint };
+  } else if (type === 4) {
+    // Convolution output size: (W - K + 2P)/S + 1
+    const W = [28, 32, 64, 224][rand(0, 3)];
+    const K = [3, 5, 7][rand(0, 2)];
+    const S = [1, 2][rand(0, 1)];
+    const P = [0, 1][rand(0, 1)];
+    answer = Math.floor((W - K + 2 * P) / S) + 1;
+    question = `CNN: 입력=${W}, 커널=${K}, 스트라이드=${S}, 패딩=${P}일 때 출력 크기는?`;
+    hint = `(${W}-${K}+2×${P})/${S}+1 = ${answer}`;
+    return { question, answer, hint };
+  } else if (type === 5) {
+    // Attention score dimension: Q·K^T → (seq_len × d_k) · (d_k × seq_len) = seq_len × seq_len
+    const seqLen = [4, 8, 16, 32][rand(0, 3)];
+    const dk = [8, 16, 32, 64][rand(0, 3)];
+    answer = seqLen * seqLen;
+    question = `Self-Attention: Q(${seqLen}×${dk}) · K^T(${dk}×${seqLen})의 결과 크기는?`;
+    hint = `행렬곱 (${seqLen}×${dk})·(${dk}×${seqLen}) = ${seqLen}×${seqLen} = ${answer}개 원소`;
+    return { question, answer, hint };
+  } else if (type === 6) {
+    // Model parameters: simple MLP layer
+    const input_dim = [64, 128, 256, 512][rand(0, 3)];
+    const output_dim = [32, 64, 128, 256][rand(0, 3)];
+    answer = input_dim * output_dim + output_dim; // weights + bias
+    question = `MLP 레이어: 입력=${input_dim}, 출력=${output_dim}일 때 파라미터 수는? (바이어스 포함)`;
+    hint = `가중치(${input_dim}×${output_dim}) + 바이어스(${output_dim}) = ${input_dim * output_dim} + ${output_dim} = ${answer}`;
+    return { question, answer, hint };
+  } else if (type === 7) {
+    // Batch processing: total_samples / batch_size = iterations per epoch
+    const total = [1000, 5000, 10000, 50000, 60000][rand(0, 4)];
+    const batch = [8, 16, 32, 64, 128, 256][rand(0, 5)];
+    answer = Math.ceil(total / batch);
+    question = `데이터 ${total.toLocaleString()}개, 배치 크기 ${batch}일 때 1에포크의 이터레이션 수는?`;
+    hint = `⌈${total}/${batch}⌉ = ${answer}`;
+    return { question, answer, hint };
+  } else if (type === 8) {
+    // Token count estimation: ~4 chars per token (English), rough estimate
+    const words = [100, 500, 1000, 2000][rand(0, 3)];
+    answer = Math.round(words * 1.3); // ~1.3 tokens per word average
+    question = `영어 ${words}단어는 약 몇 토큰? (1단어 ≈ 1.3토큰)`;
+    hint = `${words} × 1.3 ≈ ${answer}`;
+    return { question, answer, hint };
+  } else if (type === 9) {
+    // Learning rate: if lr=0.01 and weight=0.5, gradient=2 → new weight = 0.5 - 0.01*2 = 0.48
+    const lr_choices = [0.1, 0.01];
+    const lr = lr_choices[rand(0, 1)];
+    const w = rand(1, 5);
+    const grad = rand(1, 5);
+    const result = w - lr * grad;
+    answer = parseFloat(result.toFixed(2));
+    question = `경사하강법: w=${w}, lr=${lr}, 기울기=${grad}일 때 업데이트된 w는?`;
+    hint = `w_new = w - lr × grad = ${w} - ${lr}×${grad} = ${answer}`;
+    return { question, answer, hint, isFraction: true };
+  } else if (type === 10) {
+    // Precision/Recall: TP, FP, FN
+    const tp = rand(5, 50);
+    const fp = rand(1, 20);
+    const fn = rand(1, 20);
+    // Choose precision or recall
+    if (rand(0, 1) === 0) {
+      // Precision = TP / (TP + FP)  → use values where division is exact
+      const denom = tp + fp;
+      answer = Math.round((tp / denom) * 100);
+      question = `TP=${tp}, FP=${fp}일 때 정밀도(Precision)는 몇 %? (반올림)`;
+      hint = `Precision = TP/(TP+FP) = ${tp}/${denom} ≈ ${answer}%`;
+    } else {
+      const denom = tp + fn;
+      answer = Math.round((tp / denom) * 100);
+      question = `TP=${tp}, FN=${fn}일 때 재현율(Recall)은 몇 %? (반올림)`;
+      hint = `Recall = TP/(TP+FN) = ${tp}/${denom} ≈ ${answer}%`;
+    }
+    return { question, answer, hint };
+  } else if (type === 11) {
+    // Embedding dimension: total memory
+    const vocab = [10000, 30000, 50000][rand(0, 2)];
+    const dim = [128, 256, 512][rand(0, 2)];
+    answer = vocab * dim;
+    question = `어휘 ${(vocab/1000)}K, 임베딩 차원 ${dim}일 때 임베딩 테이블의 파라미터 수는?`;
+    hint = `${vocab.toLocaleString()} × ${dim} = ${answer.toLocaleString()}`;
+    return { question, answer, hint };
+  } else if (type === 12) {
+    // Transformer head count: d_model / d_k = num_heads
+    const d_model = [256, 512, 768, 1024][rand(0, 3)];
+    const num_heads = [4, 8, 12, 16][rand(0, 3)];
+    const d_k = d_model / num_heads;
+    if (d_k !== Math.floor(d_k)) {
+      // fallback to safe values
+      answer = 8;
+      question = `d_model=512, d_k=64일 때 멀티헤드 어텐션의 헤드 수는?`;
+      hint = `num_heads = d_model/d_k = 512/64 = 8`;
+    } else {
+      answer = num_heads;
+      question = `d_model=${d_model}, d_k=${d_k}일 때 멀티헤드 어텐션의 헤드 수는?`;
+      hint = `num_heads = d_model/d_k = ${d_model}/${d_k} = ${num_heads}`;
+    }
+    return { question, answer, hint };
+  } else if (type === 13) {
+    // Pooling output: Max pooling or Average pooling on a small array
+    const arr = [rand(1, 9), rand(1, 9), rand(1, 9), rand(1, 9)];
+    if (rand(0, 1) === 0) {
+      answer = Math.max(...arr);
+      question = `MaxPooling([${arr.join(', ')}]) = ?`;
+      hint = `최대값 = ${answer}`;
+    } else {
+      answer = (arr[0] + arr[1] + arr[2] + arr[3]) / 4;
+      // Ensure exact
+      if (answer !== Math.floor(answer)) {
+        // retry with multiples of 4
+        const base = rand(1, 5);
+        const a2 = [base*4, base*2, base*2, base*4];
+        answer = (a2[0]+a2[1]+a2[2]+a2[3])/4;
+        question = `AvgPooling([${a2.join(', ')}]) = ?`;
+        hint = `평균 = (${a2.join('+')})/4 = ${answer}`;
+      } else {
+        question = `AvgPooling([${arr.join(', ')}]) = ?`;
+        hint = `평균 = (${arr.join('+')})/4 = ${answer}`;
+      }
+    }
+    return { question, answer, hint };
+  } else {
+    // Dropout: effective neurons
+    const total = [100, 256, 512, 1024][rand(0, 3)];
+    const rate_choices = [0.1, 0.2, 0.25, 0.5];
+    const rate = rate_choices[rand(0, 3)];
+    answer = total * (1 - rate);
+    question = `뉴런 ${total}개에 드롭아웃 ${rate*100}%를 적용하면 활성 뉴런 수는?`;
+    hint = `${total} × (1-${rate}) = ${total} × ${1-rate} = ${answer}`;
+    return { question, answer, hint };
+  }
+}
+
 // ===================== MAIN EXPORT =====================
 
 const generators = {
@@ -1029,6 +1192,7 @@ const generators = {
   binary: genBinary,
   logic: genLogic,
   cs_math: genCsMath,
+  ai_math: genAiMath,
 };
 
 const allGeneratorKeys = Object.keys(generators);
@@ -1077,4 +1241,5 @@ export const MATH_CATEGORIES = [
   { key: "binary",   icon: "🔟", label: "진법변환" },
   { key: "logic",    icon: "🧠", label: "논리연산" },
   { key: "cs_math",  icon: "🖥️", label: "CS수학" },
+  { key: "ai_math",  icon: "🤖", label: "AI수학" },
 ];

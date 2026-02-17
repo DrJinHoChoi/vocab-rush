@@ -899,6 +899,38 @@ const IT_TERM_DATA = [
   { question: "Istio는 어떤 역할을 하는가?", correct: "서비스 메시", wrong: ["컨테이너 런타임", "CI/CD", "모니터링"], hint: "Service Mesh - 마이크로서비스 통신 관리" },
   { question: "A/B 테스트란?", correct: "두 버전을 비교하여 성과 측정", wrong: ["알파/베타 테스트", "회귀 테스트", "부하 테스트"], hint: "사용자를 두 그룹으로 나눠 실험" },
   { question: "카나리 배포(Canary Deploy)란?", correct: "소수 사용자에게 먼저 배포", wrong: ["전체 동시 배포", "블루-그린 배포", "롤링 배포"], hint: "위험 최소화 점진적 배포" },
+
+  // === AI Tool Concepts ===
+  { question: "AI가 사실이 아닌 정보를 생성하는 현상은?", correct: "할루시네이션", wrong: ["오버피팅", "언더피팅", "드리프트"], hint: "Hallucination - AI 환각" },
+  { question: "대규모 언어 모델에 소수의 예시를 제공하는 프롬프팅 기법은?", correct: "퓨샷 프롬프팅", wrong: ["제로샷", "파인튜닝", "프리트레이닝"], hint: "Few-shot Prompting" },
+  { question: "외부 문서를 검색하여 AI 응답의 정확도를 높이는 기술은?", correct: "RAG", wrong: ["RNN", "GAN", "NLP"], hint: "Retrieval-Augmented Generation" },
+  { question: "AI 모델의 응답 무작위성을 조절하는 매개변수는?", correct: "Temperature", wrong: ["Learning Rate", "Batch Size", "Epoch"], hint: "높으면 창의적, 낮으면 확정적" },
+  { question: "AI가 처리할 수 있는 입력의 최대 길이를 뜻하는 것은?", correct: "컨텍스트 윈도우", wrong: ["배치 사이즈", "에포크", "스텝"], hint: "Context Window - 문맥 창" },
+  { question: "텍스트를 AI가 처리하는 최소 단위로 분할한 것은?", correct: "토큰", wrong: ["청크", "배치", "샘플"], hint: "Token - 단어보다 작은 단위일 수 있음" },
+  { question: "기존 대규모 모델을 특정 작업에 맞게 추가 학습하는 것은?", correct: "파인튜닝", wrong: ["프리트레이닝", "프롬프팅", "임베딩"], hint: "Fine-tuning" },
+  { question: "텍스트를 고차원 벡터로 변환하는 것은?", correct: "임베딩", wrong: ["토큰화", "인코딩", "해싱"], hint: "Embedding - 의미적 유사도 계산에 사용" },
+  { question: "AI 에이전트가 외부 도구나 API를 호출하는 기능은?", correct: "함수 호출", wrong: ["콜백", "이벤트", "폴링"], hint: "Function Calling / Tool Use" },
+  { question: "AI 모델의 크기를 줄여 효율적으로 실행하는 기법은?", correct: "양자화", wrong: ["정규화", "표준화", "일반화"], hint: "Quantization - INT8, INT4 등" },
+  { question: "인간 피드백을 이용해 AI를 정렬하는 학습법은?", correct: "RLHF", wrong: ["DQN", "PPO", "SAC"], hint: "Reinforcement Learning from Human Feedback" },
+  { question: "적은 파라미터만 조정하여 효율적으로 파인튜닝하는 기법은?", correct: "LoRA", wrong: ["Adam", "SGD", "RMSProp"], hint: "Low-Rank Adaptation" },
+  { question: "AI가 이미지와 텍스트를 동시에 이해하는 모델을 뜻하는 것은?", correct: "멀티모달", wrong: ["유니모달", "크로스모달", "모노모달"], hint: "Multimodal - 여러 양식 처리" },
+  { question: "프롬프트에 악의적 지시를 삽입하여 AI를 조작하는 공격은?", correct: "프롬프트 인젝션", wrong: ["SQL 인젝션", "XSS", "CSRF"], hint: "Prompt Injection" },
+  { question: "AI 모델이 학습한 데이터의 마지막 시점을 뜻하는 것은?", correct: "지식 기준일", wrong: ["배포일", "학습일", "출시일"], hint: "Knowledge Cutoff" },
+  { question: "큰 모델의 지식을 작은 모델로 전달하는 기법은?", correct: "모델 증류", wrong: ["모델 양자화", "모델 병합", "모델 분할"], hint: "Knowledge Distillation" },
+  { question: "AI가 단계별로 사고하도록 유도하는 프롬프팅 기법은?", correct: "Chain of Thought", wrong: ["Zero-shot", "Few-shot", "Self-ask"], hint: "사고 연쇄 - 'Let's think step by step'" },
+  { question: "LLM 응답을 구조화된 JSON으로 받는 모드는?", correct: "JSON 모드", wrong: ["텍스트 모드", "스트리밍 모드", "배치 모드"], hint: "Structured Output" },
+  { question: "벡터 DB에 문서를 저장하기 전 적절한 크기로 나누는 과정은?", correct: "청킹", wrong: ["토큰화", "임베딩", "인덱싱"], hint: "Chunking - 텍스트 분할" },
+  { question: "AI 모델의 안전한 사용을 위한 출력 제한 장치는?", correct: "가드레일", wrong: ["방화벽", "백신", "필터"], hint: "Guardrail - AI 안전장치" },
+  { question: "여러 전문가 네트워크를 조합하여 효율적으로 처리하는 아키텍처는?", correct: "MoE", wrong: ["MLP", "CNN", "RNN"], hint: "Mixture of Experts" },
+  { question: "AI가 스스로 계획하고 도구를 사용하여 작업하는 시스템은?", correct: "AI 에이전트", wrong: ["챗봇", "검색엔진", "추천시스템"], hint: "AI Agent - 자율적 작업 수행" },
+  { question: "이미지 생성에서 원하지 않는 요소를 지정하는 프롬프트는?", correct: "네거티브 프롬프트", wrong: ["시스템 프롬프트", "유저 프롬프트", "메타 프롬프트"], hint: "Negative Prompt - 제외 조건" },
+  { question: "코사인 유사도의 값 범위는?", correct: "-1에서 1", wrong: ["0에서 1", "0에서 100", "-100에서 100"], hint: "Cosine Similarity: 1=동일, 0=무관, -1=반대" },
+  { question: "Transformer에서 입력 순서 정보를 제공하는 것은?", correct: "위치 인코딩", wrong: ["어텐션 마스크", "임베딩 레이어", "드롭아웃"], hint: "Positional Encoding" },
+  { question: "텍스트를 음성으로 변환하는 AI 기술은?", correct: "TTS", wrong: ["STT", "OCR", "NMT"], hint: "Text-to-Speech" },
+  { question: "음성을 텍스트로 변환하는 AI 기술은?", correct: "STT", wrong: ["TTS", "NLP", "NLU"], hint: "Speech-to-Text" },
+  { question: "AI 이미지의 해상도를 높이는 기술은?", correct: "업스케일링", wrong: ["다운샘플링", "압축", "크롭"], hint: "Upscaling / Super Resolution" },
+  { question: "AI 모델 API 사용 시 요청 수를 제한하는 것은?", correct: "레이트 리미팅", wrong: ["로드밸런싱", "캐싱", "큐잉"], hint: "Rate Limiting - 과도한 사용 방지" },
+  { question: "AI의 판단 근거를 사람이 이해할 수 있게 설명하는 것은?", correct: "설명 가능한 AI", wrong: ["강한 AI", "약한 AI", "범용 AI"], hint: "XAI - Explainable AI" },
 ];
 
 // ===================== IT SPELLING (IT맞춤법) 115 entries =====================
@@ -1017,6 +1049,79 @@ const IT_SPELL_DATA = [
   { question: "npm의 풀네임은?", correct: "Node Package Manager", wrong: ["New Programming Module", "Network Protocol Manager", "Node Process Manager"], hint: "Node.js 패키지 관리자" },
   { question: "TOML의 풀네임은?", correct: "Tom's Obvious Minimal Language", wrong: ["Text Object Markup Language", "Typed Object Model Language", "Terminal Output Message Log"], hint: "설정 파일 포맷" },
   { question: "ESLint에서 ES는?", correct: "ECMAScript", wrong: ["Essential", "Error System", "Extended Syntax"], hint: "JavaScript 표준 명세" },
+
+  // === AI 도구 외래어 표기 ===
+  { question: "올바른 표기는? (할루시네이션 vs 핼루시네이션)", correct: "할루시네이션", wrong: ["핼루시네이션", "할루씨네이션", "헬루시네이션"], hint: "Hallucination의 표준 표기" },
+  { question: "올바른 표기는? (파인튜닝 vs 파인투닝)", correct: "파인튜닝", wrong: ["파인투닝", "파인뜨닝", "파인뚜닝"], hint: "Fine-tuning의 표준 표기" },
+  { question: "올바른 표기는? (프롬프트 vs 프람프트)", correct: "프롬프트", wrong: ["프람프트", "프럼프트", "프롬프뜨"], hint: "Prompt의 표준 표기" },
+  { question: "올바른 표기는? (임베딩 vs 임배딩)", correct: "임베딩", wrong: ["임배딩", "엠베딩", "임뱨딩"], hint: "Embedding의 표준 표기" },
+  { question: "올바른 표기는? (토크나이저 vs 토크나이져)", correct: "토크나이저", wrong: ["토크나이져", "토큰나이저", "토크나이자"], hint: "Tokenizer의 표준 표기" },
+  { question: "올바른 표기는? (트랜스포머 vs 트렌스포머)", correct: "트랜스포머", wrong: ["트렌스포머", "트랜스폼머", "트랜스포마"], hint: "Transformer의 표준 표기" },
+  { question: "'파라미터'와 '매개변수': AI 분야에서 더 자주 사용하는 표현은?", correct: "파라미터", wrong: ["매개변수", "변수", "인자"], hint: "Parameter - AI에서는 영어 표현 선호" },
+  { question: "올바른 표기는? (어텐션 vs 아텐션)", correct: "어텐션", wrong: ["아텐션", "어텐숀", "아텐숀"], hint: "Attention의 표준 표기" },
+  { question: "올바른 표기는? (에이전트 vs 에이젼트)", correct: "에이전트", wrong: ["에이젼트", "에이전뜨", "에이젠트"], hint: "Agent의 표준 표기" },
+  { question: "올바른 표기는? (디퓨전 vs 디퓨젼)", correct: "디퓨전", wrong: ["디퓨젼", "디퓨죤", "디퓨션"], hint: "Diffusion의 표준 표기" },
+  { question: "'에포크'와 '이포크': 딥러닝 학습 주기의 올바른 표기는?", correct: "에포크", wrong: ["이포크", "에폭", "이폭"], hint: "Epoch의 표준 표기" },
+  { question: "올바른 표기는? (옵티마이저 vs 옵티마이져)", correct: "옵티마이저", wrong: ["옵티마이져", "옵티마이자", "옵티마이쩌"], hint: "Optimizer의 표준 표기" },
+  { question: "올바른 표기는? (하이퍼파라미터 vs 하이퍼파라메터)", correct: "하이퍼파라미터", wrong: ["하이퍼파라메터", "하이퍼파라미타", "하이퍼파라매터"], hint: "Hyperparameter의 표준 표기" },
+  { question: "'오버피팅'과 '과적합': 같은 의미의 두 표현 중 한국어 표현은?", correct: "과적합", wrong: ["과학습", "과훈련", "과맞춤"], hint: "Overfitting의 한국어 번역" },
+  { question: "올바른 표기는? (멀티모달 vs 멀티모덜)", correct: "멀티모달", wrong: ["멀티모덜", "멀티모들", "멀티모딜"], hint: "Multimodal의 표준 표기" },
+  { question: "'추론'과 '인퍼런스': AI 모델이 예측을 수행하는 것을 뜻하는 한국어는?", correct: "추론", wrong: ["추측", "예측", "판단"], hint: "Inference의 한국어 번역" },
+  { question: "올바른 표기는? (데이터셋 vs 데이타셋)", correct: "데이터셋", wrong: ["데이타셋", "데이터쎗", "데이타쎗"], hint: "Dataset의 표준 표기" },
+  { question: "올바른 표기는? (벤치마크 vs 밴치마크)", correct: "벤치마크", wrong: ["밴치마크", "벤치막", "밴치막"], hint: "Benchmark의 표준 표기" },
+  { question: "'사전 학습'과 '프리트레이닝': 같은 뜻의 한국어 표현은?", correct: "사전 학습", wrong: ["전 학습", "기초 학습", "초기 학습"], hint: "Pre-training의 한국어 번역" },
+  { question: "올바른 표기는? (스케일링 vs 스캐일링)", correct: "스케일링", wrong: ["스캐일링", "스케일닝", "스케일잉"], hint: "Scaling의 표준 표기" },
+];
+
+// ===================== AI TOOLS (AI도구) 80 entries =====================
+const AI_TOOL_DATA = [
+  // === AI 도구 종류 ===
+  { question: "OpenAI에서 만든 대표적인 대화형 AI는?", correct: "ChatGPT", wrong: ["Gemini", "Claude", "Copilot"], hint: "2022년 11월 출시" },
+  { question: "Anthropic에서 만든 AI 어시스턴트는?", correct: "Claude", wrong: ["ChatGPT", "Gemini", "Llama"], hint: "헌법적 AI 기반" },
+  { question: "Google에서 만든 대화형 AI는?", correct: "Gemini", wrong: ["ChatGPT", "Claude", "Copilot"], hint: "구글 검색과 통합" },
+  { question: "Meta에서 공개한 오픈소스 LLM은?", correct: "Llama", wrong: ["GPT", "PaLM", "Mistral"], hint: "Large Language Model Meta AI" },
+  { question: "GitHub의 AI 코딩 보조 도구는?", correct: "Copilot", wrong: ["ChatGPT", "Claude", "Gemini"], hint: "VS Code에서 사용" },
+  { question: "Midjourney의 주요 기능은?", correct: "AI 이미지 생성", wrong: ["코드 생성", "음성 합성", "번역"], hint: "Discord 기반 이미지 생성 AI" },
+  { question: "Stable Diffusion의 특징은?", correct: "오픈소스 이미지 생성 AI", wrong: ["유료 챗봇", "음성 AI", "검색 엔진"], hint: "로컬에서도 실행 가능" },
+  { question: "OpenAI의 텍스트→이미지 생성 모델은?", correct: "DALL-E", wrong: ["Whisper", "Codex", "GPT"], hint: "달리 - 이미지 생성 AI" },
+  { question: "OpenAI의 음성 인식 모델은?", correct: "Whisper", wrong: ["DALL-E", "Codex", "Sora"], hint: "다국어 음성→텍스트 변환" },
+  { question: "OpenAI의 텍스트→동영상 생성 모델은?", correct: "Sora", wrong: ["DALL-E", "Whisper", "Codex"], hint: "2024년 발표된 영상 생성 AI" },
+
+  // === AI 도구 활용법 ===
+  { question: "ChatGPT에서 대화 맥락을 유지하려면 어떻게 해야 하는가?", correct: "같은 대화에서 이어서 질문", wrong: ["새 대화 시작", "브라우저 새로고침", "로그아웃 후 재접속"], hint: "대화 세션 내 컨텍스트 유지" },
+  { question: "AI에게 역할을 부여하여 답변 품질을 높이는 기법은?", correct: "롤 프롬프팅", wrong: ["제로샷", "파인튜닝", "전이학습"], hint: "'당신은 전문 개발자입니다'와 같이 역할 지정" },
+  { question: "AI 응답에 예시를 포함하여 원하는 형식을 유도하는 것은?", correct: "퓨샷 프롬프팅", wrong: ["제로샷", "CoT", "롤 프롬프팅"], hint: "Few-shot - 예시 기반 유도" },
+  { question: "AI 코딩 도구에서 주석으로 원하는 코드를 설명하면?", correct: "AI가 코드를 자동 생성", wrong: ["주석이 삭제됨", "에러 발생", "무시됨"], hint: "Copilot 등의 주석 기반 코드 생성" },
+  { question: "프롬프트에 '단계별로 설명해줘'를 추가하면?", correct: "Chain of Thought 유도", wrong: ["답변 길이 제한", "오류 감소 보장", "속도 향상"], hint: "Step-by-step 추론 유도" },
+  { question: "AI에게 출력 형식을 지정할 때 가장 효과적인 방법은?", correct: "예시 포맷 제공", wrong: ["길게 설명", "반복 요청", "다른 모델 사용"], hint: "원하는 출력의 예시를 보여주기" },
+  { question: "AI 답변이 부정확할 때 가장 좋은 대처법은?", correct: "구체적으로 재질문", wrong: ["같은 질문 반복", "다른 AI 사용", "포기"], hint: "프롬프트를 더 구체적으로 수정" },
+  { question: "대규모 문서를 AI로 분석할 때 효과적인 방법은?", correct: "섹션별로 나눠서 질문", wrong: ["전체를 한 번에 입력", "요약만 요청", "키워드만 추출"], hint: "토큰 제한 고려 + 청킹" },
+  { question: "AI 코드 리뷰 시 가장 효과적인 프롬프트는?", correct: "코드와 함께 리뷰 관점 명시", wrong: ["코드만 붙여넣기", "파일명만 제공", "에러 메시지만 전달"], hint: "보안, 성능, 가독성 등 관점 지정" },
+  { question: "AI에게 표(Table) 형식으로 답변을 받으려면?", correct: "마크다운 표 형식으로 요청", wrong: ["CSV 파일 요청", "엑셀 출력 요청", "HTML 요청"], hint: "| 헤더1 | 헤더2 | 형식 지정" },
+
+  // === AI API & 개발 ===
+  { question: "OpenAI API에서 모델을 호출하는 기본 엔드포인트는?", correct: "/chat/completions", wrong: ["/generate", "/predict", "/inference"], hint: "채팅 완성 API" },
+  { question: "AI API 호출 시 비용을 줄이는 가장 효과적인 방법은?", correct: "적절한 max_tokens 설정", wrong: ["무한 토큰 사용", "가장 큰 모델 사용", "동시 요청 늘리기"], hint: "출력 토큰 수 제한" },
+  { question: "LangChain의 주요 용도는?", correct: "LLM 애플리케이션 개발 프레임워크", wrong: ["블록체인 개발", "웹 프레임워크", "게임 엔진"], hint: "AI 앱 개발을 위한 체이닝 도구" },
+  { question: "벡터 데이터베이스의 대표적인 예는?", correct: "Pinecone", wrong: ["MySQL", "MongoDB", "Redis"], hint: "임베딩 벡터 저장 및 검색 특화 DB" },
+  { question: "Hugging Face의 주요 역할은?", correct: "AI 모델 허브 및 커뮤니티", wrong: ["소셜 미디어", "클라우드 서비스", "게임 플랫폼"], hint: "오픈소스 AI 모델 공유 플랫폼" },
+  { question: "AI 모델을 로컬에서 실행하는 도구는?", correct: "Ollama", wrong: ["Docker", "Kubernetes", "Terraform"], hint: "로컬 LLM 실행 도구" },
+  { question: "AI 앱에서 스트리밍 응답의 장점은?", correct: "사용자 체감 응답 속도 향상", wrong: ["정확도 향상", "비용 절감", "보안 강화"], hint: "토큰이 생성되는 대로 표시" },
+  { question: "RAG 구현 시 가장 먼저 해야 할 단계는?", correct: "문서 청킹 및 임베딩 생성", wrong: ["모델 파인튜닝", "프롬프트 작성", "API 키 발급"], hint: "문서 → 청크 → 임베딩 → 벡터DB 저장" },
+  { question: "AI API의 rate limit에 걸렸을 때 대처법은?", correct: "지수 백오프 재시도", wrong: ["무한 재시도", "API 키 변경", "다른 모델 사용"], hint: "Exponential Backoff - 점점 늘려가며 재시도" },
+  { question: "프롬프트 엔지니어링에서 '구분자'의 역할은?", correct: "입력의 각 부분을 명확히 구분", wrong: ["답변 길이 제한", "모델 변경", "에러 방지"], hint: "###, ---, ``` 등으로 섹션 구분" },
+
+  // === AI 윤리 & 안전 ===
+  { question: "AI의 편향(Bias)이 문제가 되는 이유는?", correct: "차별적 결과를 초래할 수 있음", wrong: ["성능이 떨어짐", "비용이 증가함", "속도가 느려짐"], hint: "학습 데이터의 편향이 결과에 반영" },
+  { question: "AI 생성 콘텐츠임을 표시하는 것을 무엇이라 하는가?", correct: "AI 워터마킹", wrong: ["저작권 표시", "디지털 서명", "해시태그"], hint: "AI Watermarking" },
+  { question: "EU의 AI 규제법은?", correct: "AI Act", wrong: ["GDPR", "CCPA", "DMCA"], hint: "2024년 발효된 세계 최초 AI 전면 규제법" },
+  { question: "AI가 생성한 이미지의 저작권은 누구에게 있는가?", correct: "법적으로 불명확", wrong: ["AI에게", "사용자에게", "AI 회사에게"], hint: "각 국가별로 다른 법적 해석" },
+  { question: "딥페이크(Deepfake)의 주요 위험은?", correct: "허위 정보 및 사칭", wrong: ["서버 과부하", "저작권 침해", "데이터 유출"], hint: "AI로 만든 가짜 영상/이미지" },
+  { question: "AI 모델의 탄소 발자국이 문제가 되는 이유는?", correct: "학습에 대량의 에너지 소비", wrong: ["모델 크기가 큼", "데이터 저장 비용", "API 비용"], hint: "Green AI - 환경 친화적 AI" },
+  { question: "Responsible AI의 핵심 원칙이 아닌 것은?", correct: "수익 극대화", wrong: ["공정성", "투명성", "프라이버시"], hint: "책임감 있는 AI - 윤리적 개발" },
+  { question: "AI 모델이 개인정보를 기억하는 것을 방지하는 기법은?", correct: "차등 프라이버시", wrong: ["데이터 암호화", "접근 제어", "방화벽"], hint: "Differential Privacy" },
+  { question: "AI 시스템의 결정에 대해 설명을 요구할 수 있는 권리는?", correct: "설명 요구권", wrong: ["삭제권", "열람권", "이동권"], hint: "GDPR의 '자동화된 의사결정에 대한 설명'" },
+  { question: "AI 안전 연구에서 '정렬 문제'란?", correct: "AI의 목표를 인간 가치와 일치시키는 문제", wrong: ["데이터 정렬", "모델 동기화", "서버 정렬"], hint: "Alignment Problem" },
 ];
 
 // ===================== DATA MAP & EXPORT =====================
@@ -1031,6 +1136,7 @@ const DATA_MAP = {
   honorific: HONORIFIC_DATA,
   it_term: IT_TERM_DATA,
   it_spell: IT_SPELL_DATA,
+  ai_tool: AI_TOOL_DATA,
 };
 
 const allCategoryKeys = Object.keys(DATA_MAP);
@@ -1075,4 +1181,5 @@ export const KOREAN_CATEGORIES = [
   { key: "honorific", icon: "🎩", label: "높임말" },
   { key: "it_term",  icon: "💻", label: "IT용어" },
   { key: "it_spell", icon: "⌨️", label: "IT맞춤법" },
+  { key: "ai_tool",  icon: "🤖", label: "AI도구" },
 ];
