@@ -311,6 +311,13 @@ function playTickSound() {
 // MAIN COMPONENT
 // ============================================================
 export default function VocabChallenge() {
+  const [isWide, setIsWide] = useState(() => window.innerWidth >= 768);
+  useEffect(() => {
+    const onResize = () => setIsWide(window.innerWidth >= 768);
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
+  }, []);
+
   const [screen, setScreen] = useState("menu");
   const [gameMode, setGameMode] = useState("vocab"); // "vocab" | "math"
   const [category, setCategory] = useState("random");
@@ -876,7 +883,7 @@ export default function VocabChallenge() {
     const q = questions[current];
     return (
       <div style={S.container}>
-        <div style={S.gameCard}>
+        <div style={{ ...S.gameCard, ...(isWide ? { maxWidth: 820, padding: "20px 28px 16px" } : {}) }}>
           {comboFlash && (
             <div style={S.comboOverlay}>🔥 {streak} COMBO!</div>
           )}
@@ -919,6 +926,8 @@ export default function VocabChallenge() {
             <span style={{ fontSize: 11, color: "#666", marginLeft: 4 }}>초</span>
           </div>
 
+          <div style={isWide ? { display: "flex", gap: 24, alignItems: "stretch" } : {}}>
+          <div style={isWide ? { flex: 1, display: "flex", flexDirection: "column", justifyContent: "center" } : {}}>
           <div style={S.questionArea}>
             {q.isMath ? (
               <>
@@ -1023,6 +1032,8 @@ export default function VocabChallenge() {
             </>
           )}
 
+          </div>{/* end question panel */}
+          <div style={isWide ? { flex: 1, display: "flex", flexDirection: "column", justifyContent: "center" } : {}}>
           <div style={S.choicesGrid}>
             {q.choices.map((ch, i) => {
               const isSelected = (q.isMath || q.isKorean)
@@ -1068,6 +1079,8 @@ export default function VocabChallenge() {
               );
             })}
           </div>
+          </div>{/* end choices panel */}
+          </div>{/* end split layout wrapper */}
 
           <div style={S.progressDots}>
             {questions.map((_, i) => (
