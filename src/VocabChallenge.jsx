@@ -544,22 +544,23 @@ export default function VocabChallenge() {
   // ========================= MENU =========================
   if (screen === "menu") {
     return (
-      <div style={{ ...S.container, ...(isWide ? { alignItems: "flex-start", paddingTop: 32 } : {}) }}>
+      <div style={{ ...S.container, ...(isWide ? { alignItems: "center", padding: 12 } : {}) }}>
         <div style={{
           ...S.menuCard,
           ...(isWide ? {
-            maxWidth: 880,
+            maxWidth: 860,
+            padding: "20px 22px",
             display: "flex",
             flexWrap: "wrap",
-            gap: 28,
+            gap: 20,
             alignItems: "flex-start",
           } : {}),
         }}>
           {/* 왼쪽 패널 (PC) / 상단 (모바일): 로고+통계+규칙 */}
           <div style={isWide ? { flex: 1, minWidth: 0 } : {}}>
-          <div style={S.logoArea}>
-            <div style={S.logoIcon}>⚡</div>
-            <h1 style={S.title}>{gameMode === "math" ? "MATH RUSH" : gameMode === "korean" ? "KOREAN RUSH" : "VOCAB RUSH"}</h1>
+          <div style={{ ...S.logoArea, ...(isWide ? { marginBottom: 16 } : {}) }}>
+            <div style={{ ...S.logoIcon, ...(isWide ? { fontSize: 28, marginBottom: 6 } : {}) }}>⚡</div>
+            <h1 style={{ ...S.title, ...(isWide ? { fontSize: 24, letterSpacing: 4 } : {}) }}>{gameMode === "math" ? "MATH RUSH" : gameMode === "korean" ? "KOREAN RUSH" : "VOCAB RUSH"}</h1>
             <p style={S.subtitle}>
               {gameMode === "math"
                 ? "암산 · CS수학 · AI수학 타이머 챌린지"
@@ -677,7 +678,7 @@ export default function VocabChallenge() {
 
           {/* 오른쪽 패널 (PC) / 하단 (모바일): 설정+시작 */}
           <div style={isWide ? { flex: 1, minWidth: 0 } : {}}>
-          <div style={S.section}>
+          <div style={{ ...S.section, ...(isWide ? { marginBottom: 12 } : {}) }}>
             <p style={S.sectionLabel}>카테고리</p>
             <div style={S.catGrid}>
               {gameMode === "math" ? (
@@ -757,7 +758,7 @@ export default function VocabChallenge() {
             })()}
           </div>
 
-          <div style={S.section}>
+          <div style={{ ...S.section, ...(isWide ? { marginBottom: 12 } : {}) }}>
             <p style={S.sectionLabel}>난이도</p>
             <div style={S.optionRow}>
               {Object.entries(DIFFICULTY).map(([key, val]) => (
@@ -782,7 +783,7 @@ export default function VocabChallenge() {
             </div>
           </div>
 
-          <div style={S.section}>
+          <div style={{ ...S.section, ...(isWide ? { marginBottom: 12 } : {}) }}>
             <p style={S.sectionLabel}>문제 수</p>
             <div style={S.optionRow}>
               {ROUND_OPTIONS.map((n) => (
@@ -802,7 +803,7 @@ export default function VocabChallenge() {
             </div>
           </div>
 
-          <div style={{ ...S.section, display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+          <div style={{ ...S.section, display: "flex", justifyContent: "space-between", alignItems: "center", ...(isWide ? { marginBottom: 12 } : {}) }}>
             <p style={{ ...S.sectionLabel, margin: 0 }}>사운드</p>
             <button
               onClick={() => {
@@ -824,7 +825,7 @@ export default function VocabChallenge() {
             </button>
           </div>
 
-          <button onClick={startGame} style={S.startBtn}>
+          <button onClick={startGame} style={{ ...S.startBtn, ...(isWide ? { padding: "12px 0", fontSize: 15 } : {}) }}>
             <span style={{ fontSize: 18 }}>🚀</span>
             <span>게임 시작</span>
           </button>
@@ -832,7 +833,7 @@ export default function VocabChallenge() {
 
           {/* 하단 공통: 규칙+광고+링크 (PC에서는 전체 너비) */}
           <div style={isWide ? { width: "100%", flexBasis: "100%" } : {}}>
-          <div style={S.rules}>
+          <div style={{ ...S.rules, ...(isWide ? { marginTop: 8, padding: 10, fontSize: 11 } : {}) }}>
             <p style={{ fontWeight: 600, marginBottom: 6, color: "#ccc" }}>게임 규칙</p>
             <p>🔊 영어 발음을 듣고 한국어 뜻을 보고 정답을 고르세요</p>
             <p>⚡ 빠를수록 보너스 점수!</p>
