@@ -856,27 +856,13 @@ export default function VocabChallenge() {
             </a>
           </div>
 
-          <div style={{
-            display: "flex", justifyContent: "center", gap: 16,
-            marginTop: 12, paddingTop: 12,
-            borderTop: "1px solid rgba(255,255,255,0.05)",
-          }}>
-            <a href="/about.html" target="_blank" rel="noopener noreferrer"
-              style={{ fontSize: 11, color: "#475569", textDecoration: "none" }}>
-              소개
-            </a>
-            <a href="/terms.html" target="_blank" rel="noopener noreferrer"
-              style={{ fontSize: 11, color: "#475569", textDecoration: "none" }}>
-              이용약관
-            </a>
-            <a href="/privacy.html" target="_blank" rel="noopener noreferrer"
-              style={{ fontSize: 11, color: "#475569", textDecoration: "none" }}>
-              개인정보처리방침
-            </a>
+          <div style={{ display: "block", textAlign: "center", fontSize: 11, color: "#475569", marginTop: 8 }}>
+            <a href="/about.html" target="_blank" style={{ color: "#475569", textDecoration: "none" }}>소개</a>
+            {" · "}
+            <a href="/terms.html" target="_blank" style={{ color: "#475569", textDecoration: "none" }}>이용약관</a>
+            {" · "}
+            <a href="/privacy.html" target="_blank" style={{ color: "#475569", textDecoration: "none" }}>개인정보처리방침</a>
           </div>
-          <p style={{ textAlign: "center", fontSize: 10, color: "#334155", marginTop: 8 }}>
-            &copy; {new Date().getFullYear()} DataPD. All rights reserved.
-          </p>
         </div>
 
         {/* 배지 모달 */}
