@@ -11,14 +11,11 @@ import { generateKoreanQuestions, KOREAN_CATEGORIES } from "./koreanData.js";
 // ADSENSE CONFIG — 발급 후 여기에 입력
 // ============================================================
 const AD_CONFIG = {
-  publisherId: "ca-pub-XXXXXXXXXXXXXXXX", // 본인 AdSense 게시자 ID
+  publisherId: "ca-pub-6402470001589987",
   slots: {
-    menuBanner:   "1234567890", // 메뉴 하단 배너
-    resultBanner: "1234567891", // 결과 화면 배너
-    interstitial: "1234567892", // 게임 사이 전면 광고
+    menuBanner:   "1234567890", // 메뉴 하단 배너 — AdSense 승인 후 실제 슬롯 ID로 교체
+    resultBanner: "1234567891", // 결과 화면 배너 — AdSense 승인 후 실제 슬롯 ID로 교체
   },
-  // 전면광고 표시 간격 (게임 N회마다)
-  interstitialEvery: 3,
 };
 
 // ============================================================
@@ -67,64 +64,6 @@ function AdBanner({ slot, format = "auto", style = {} }) {
         data-ad-format={format}
         data-full-width-responsive="true"
       />
-    </div>
-  );
-}
-
-// ============================================================
-// INTERSTITIAL AD (전면 광고)
-// ============================================================
-function InterstitialAd({ show, onClose }) {
-  useEffect(() => {
-    if (show) {
-      const timer = setTimeout(onClose, 5000); // 5초 후 자동 닫힘
-      return () => clearTimeout(timer);
-    }
-  }, [show, onClose]);
-
-  if (!show) return null;
-
-  const isConfigured = !AD_CONFIG.publisherId.includes("XXXX");
-
-  return (
-    <div style={{
-      position: "fixed", inset: 0, zIndex: 9999,
-      background: "rgba(0,0,0,0.85)",
-      display: "flex", flexDirection: "column",
-      alignItems: "center", justifyContent: "center",
-      padding: 20,
-    }}>
-      <div style={{
-        background: "#1e293b", borderRadius: 20, padding: 24,
-        maxWidth: 400, width: "100%", textAlign: "center",
-        border: "1px solid rgba(255,255,255,0.1)",
-      }}>
-        <p style={{ color: "#64748b", fontSize: 11, marginBottom: 12, letterSpacing: 1 }}>SPONSORED</p>
-        {isConfigured ? (
-          <AdBanner slot={AD_CONFIG.slots.interstitial} format="rectangle" />
-        ) : (
-          <div style={{
-            width: "100%", height: 200, background: "rgba(255,255,255,0.03)",
-            borderRadius: 12, border: "1px dashed rgba(255,255,255,0.1)",
-            display: "flex", alignItems: "center", justifyContent: "center",
-            flexDirection: "column", gap: 8,
-          }}>
-            <span style={{ fontSize: 32 }}>📢</span>
-            <p style={{ fontSize: 13, color: "#64748b" }}>전면 광고 영역</p>
-            <p style={{ fontSize: 11, color: "#475569" }}>AdSense 연동 후 표시</p>
-          </div>
-        )}
-        <button
-          onClick={onClose}
-          style={{
-            marginTop: 16, padding: "10px 32px", borderRadius: 12,
-            border: "1px solid rgba(255,255,255,0.2)", background: "transparent",
-            color: "#94a3b8", fontSize: 14, cursor: "pointer", fontWeight: 600,
-          }}
-        >
-          계속하기
-        </button>
-      </div>
     </div>
   );
 }
@@ -394,7 +333,6 @@ export default function VocabChallenge() {
   const [results, setResults] = useState([]);
   const [comboFlash, setComboFlash] = useState(false);
   const [gameCount, setGameCount] = useState(0);
-  const [showInterstitial, setShowInterstitial] = useState(false);
   const [stats, setStats] = useState(loadStats);
   const [newAchievements, setNewAchievements] = useState([]);
   const [showBadges, setShowBadges] = useState(false);
@@ -539,9 +477,6 @@ export default function VocabChallenge() {
       if (current + 1 >= questions.length) {
         const newCount = gameCount + 1;
         setGameCount(newCount);
-        if (newCount % AD_CONFIG.interstitialEvery === 0) {
-          setShowInterstitial(true);
-        }
 
         // Update persistent stats
         const currentResults = [...results, {
@@ -921,13 +856,27 @@ export default function VocabChallenge() {
             </a>
           </div>
 
-          <a
-            href="/privacy.html"
-            target="_blank"
-            style={{ display: "block", textAlign: "center", fontSize: 11, color: "#475569", marginTop: 8, textDecoration: "none" }}
-          >
-            개인정보처리방침
-          </a>
+          <div style={{
+            display: "flex", justifyContent: "center", gap: 16,
+            marginTop: 12, paddingTop: 12,
+            borderTop: "1px solid rgba(255,255,255,0.05)",
+          }}>
+            <a href="/about.html" target="_blank" rel="noopener noreferrer"
+              style={{ fontSize: 11, color: "#475569", textDecoration: "none" }}>
+              소개
+            </a>
+            <a href="/terms.html" target="_blank" rel="noopener noreferrer"
+              style={{ fontSize: 11, color: "#475569", textDecoration: "none" }}>
+              이용약관
+            </a>
+            <a href="/privacy.html" target="_blank" rel="noopener noreferrer"
+              style={{ fontSize: 11, color: "#475569", textDecoration: "none" }}>
+              개인정보처리방침
+            </a>
+          </div>
+          <p style={{ textAlign: "center", fontSize: 10, color: "#334155", marginTop: 8 }}>
+            &copy; {new Date().getFullYear()} DataPD. All rights reserved.
+          </p>
         </div>
 
         {/* 배지 모달 */}
@@ -1616,11 +1565,6 @@ export default function VocabChallenge() {
           <AdBanner slot={AD_CONFIG.slots.resultBanner} />
         </div>
 
-        {/* 전면 광고 (3판마다) */}
-        <InterstitialAd
-          show={showInterstitial}
-          onClose={() => setShowInterstitial(false)}
-        />
       </div>
     );
   }

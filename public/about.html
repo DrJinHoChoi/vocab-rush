@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="VOCAB RUSH - 직장인과 학생을 위한 영어 어휘, 수학, 한국어 학습 게임. 타이머 챌린지로 실력을 키우세요." />
+  <title>소개 - VOCAB RUSH</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Noto Sans KR', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: #0a0a1a; color: #cbd5e1; line-height: 1.8;
+      padding: 40px 20px; max-width: 720px; margin: 0 auto;
+    }
+    h1 { color: #f1f5f9; font-size: 24px; margin-bottom: 8px; }
+    h2 { color: #e2e8f0; font-size: 18px; margin: 28px 0 12px; }
+    h3 { color: #e2e8f0; font-size: 16px; margin: 20px 0 8px; }
+    p { margin-bottom: 12px; font-size: 15px; }
+    ul { margin: 0 0 12px 20px; font-size: 15px; }
+    li { margin-bottom: 6px; }
+    a { color: #60a5fa; }
+    .subtitle { color: #64748b; font-size: 14px; margin-bottom: 32px; }
+    .back { display: inline-block; margin-top: 32px; color: #60a5fa; text-decoration: none; }
+    .card {
+      background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 12px; padding: 20px; margin-bottom: 16px;
+    }
+    .mode-icon { font-size: 24px; margin-right: 8px; }
+  </style>
+</head>
+<body>
+  <h1>VOCAB RUSH 소개</h1>
+  <p class="subtitle">직장인과 학생을 위한 타이머 기반 학습 챌린지 게임</p>
+
+  <h2>VOCAB RUSH란?</h2>
+  <p>VOCAB RUSH는 영어 어휘, 수학, 한국어 학습을 게임 형식으로 즐길 수 있는 무료 웹 애플리케이션입니다. 제한 시간 안에 문제를 풀면서 자연스럽게 실력을 향상시킬 수 있습니다.</p>
+  <p>회원가입 없이 브라우저에서 바로 시작할 수 있으며, PWA(Progressive Web App)를 지원하여 스마트폰 홈 화면에 앱처럼 설치할 수도 있습니다.</p>
+
+  <h2>학습 모드</h2>
+
+  <div class="card">
+    <h3><span class="mode-icon">📖</span> 영어 어휘 (Vocabulary)</h3>
+    <p>5,000개 이상의 영어 단어를 수준별로 학습합니다.</p>
+    <ul>
+      <li>CEFR 기준 A1(기초) ~ C2(최상급) 난이도 분류</li>
+      <li>SAT/GRE 수준의 고급 어휘 포함</li>
+      <li>IT/테크 분야 전문 용어</li>
+      <li>영어 발음 듣기 + 한국어 뜻 보기 + 4지선다 퀴즈</li>
+      <li>예문과 힌트 기능으로 문맥 속 학습 가능</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3><span class="mode-icon">🔢</span> 수학 (Math)</h3>
+    <p>다양한 수학 분야의 문제를 풀어보세요.</p>
+    <ul>
+      <li>사칙연산, 분수, 방정식, 기하학 등</li>
+      <li>프로그래밍 관련 수학(진법 변환, 비트 연산 등)</li>
+      <li>실생활 응용 문제</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3><span class="mode-icon">🇰🇷</span> 한국어 (Korean)</h3>
+    <p>한국어 어휘력과 문법 실력을 테스트합니다.</p>
+    <ul>
+      <li>맞춤법, 사자성어, 속담</li>
+      <li>IT/비즈니스 용어</li>
+      <li>올바른 표현 찾기</li>
+    </ul>
+  </div>
+
+  <h2>주요 기능</h2>
+  <ul>
+    <li><strong>3단계 난이도</strong> - Easy(15초) / Medium(10초) / Hard(6초)</li>
+    <li><strong>콤보 시스템</strong> - 3연속 정답 시 보너스 점수</li>
+    <li><strong>통계 추적</strong> - 누적 정답 수, 최고 점수, 연속 정답 기록</li>
+    <li><strong>뱃지 시스템</strong> - 다양한 도전 과제 달성</li>
+    <li><strong>음성 지원</strong> - 영어 단어 발음 듣기 (Web Speech API)</li>
+    <li><strong>오프라인 지원</strong> - PWA로 인터넷 없이도 플레이 가능</li>
+  </ul>
+
+  <h2>이런 분들에게 추천합니다</h2>
+  <ul>
+    <li>출퇴근 시간에 짧게 영어 단어를 외우고 싶은 직장인</li>
+    <li>TOEIC, TOEFL, 수능 영어를 준비하는 학생</li>
+    <li>IT 분야 영어 용어를 익히고 싶은 개발자</li>
+    <li>한국어 맞춤법과 어휘력을 키우고 싶은 분</li>
+    <li>수학 기초 실력을 게임처럼 즐기며 키우고 싶은 분</li>
+  </ul>
+
+  <h2>기술 스택</h2>
+  <p>VOCAB RUSH는 최신 웹 기술로 만들어졌습니다.</p>
+  <ul>
+    <li>React 18 + Vite (빠른 빌드와 최적화된 성능)</li>
+    <li>PWA (Progressive Web App) - 오프라인 지원</li>
+    <li>Web Speech API - 브라우저 내장 음성 합성</li>
+    <li>반응형 디자인 - 모바일/태블릿/데스크톱 모두 지원</li>
+  </ul>
+
+  <h2>운영 정보</h2>
+  <p>VOCAB RUSH는 <a href="https://www.datapd.ai" target="_blank">DataPD</a>에서 운영합니다.</p>
+  <p>문의: <a href="mailto:admin@datapd.ai">admin@datapd.ai</a></p>
+
+  <a class="back" href="/">← VOCAB RUSH로 돌아가기</a>
+</body>
+</html>
