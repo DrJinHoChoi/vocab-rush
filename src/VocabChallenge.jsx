@@ -544,8 +544,19 @@ export default function VocabChallenge() {
   // ========================= MENU =========================
   if (screen === "menu") {
     return (
-      <div style={S.container}>
-        <div style={S.menuCard}>
+      <div style={{ ...S.container, ...(isWide ? { alignItems: "flex-start", paddingTop: 32 } : {}) }}>
+        <div style={{
+          ...S.menuCard,
+          ...(isWide ? {
+            maxWidth: 880,
+            display: "flex",
+            flexWrap: "wrap",
+            gap: 28,
+            alignItems: "flex-start",
+          } : {}),
+        }}>
+          {/* 왼쪽 패널 (PC) / 상단 (모바일): 로고+통계+규칙 */}
+          <div style={isWide ? { flex: 1, minWidth: 0 } : {}}>
           <div style={S.logoArea}>
             <div style={S.logoIcon}>⚡</div>
             <h1 style={S.title}>{gameMode === "math" ? "MATH RUSH" : gameMode === "korean" ? "KOREAN RUSH" : "VOCAB RUSH"}</h1>
@@ -662,6 +673,10 @@ export default function VocabChallenge() {
             🏅 업적 & 보상 보기 ({stats.unlockedIds.length}개 달성)
           </button>
 
+          </div>{/* end left panel */}
+
+          {/* 오른쪽 패널 (PC) / 하단 (모바일): 설정+시작 */}
+          <div style={isWide ? { flex: 1, minWidth: 0 } : {}}>
           <div style={S.section}>
             <p style={S.sectionLabel}>카테고리</p>
             <div style={S.catGrid}>
@@ -813,7 +828,10 @@ export default function VocabChallenge() {
             <span style={{ fontSize: 18 }}>🚀</span>
             <span>게임 시작</span>
           </button>
+          </div>{/* end right panel */}
 
+          {/* 하단 공통: 규칙+광고+링크 (PC에서는 전체 너비) */}
+          <div style={isWide ? { width: "100%", flexBasis: "100%" } : {}}>
           <div style={S.rules}>
             <p style={{ fontWeight: 600, marginBottom: 6, color: "#ccc" }}>게임 규칙</p>
             <p>🔊 영어 발음을 듣고 한국어 뜻을 보고 정답을 고르세요</p>
@@ -870,6 +888,7 @@ export default function VocabChallenge() {
             {" · "}
             <a href="/privacy.html" target="_blank" style={{ color: "#94a3b8", textDecoration: "none" }}>개인정보처리방침</a>
           </div>
+          </div>{/* end bottom section */}
         </div>
 
         {/* 배지 모달 */}
@@ -883,7 +902,7 @@ export default function VocabChallenge() {
     const q = questions[current];
     return (
       <div style={S.container}>
-        <div style={{ ...S.gameCard, ...(isWide ? { maxWidth: 820, padding: "20px 28px 16px" } : {}) }}>
+        <div style={S.gameCard}>
           {comboFlash && (
             <div style={S.comboOverlay}>🔥 {streak} COMBO!</div>
           )}
@@ -926,8 +945,6 @@ export default function VocabChallenge() {
             <span style={{ fontSize: 11, color: "#666", marginLeft: 4 }}>초</span>
           </div>
 
-          <div style={isWide ? { display: "flex", gap: 24, alignItems: "stretch" } : {}}>
-          <div style={isWide ? { flex: 1, display: "flex", flexDirection: "column", justifyContent: "center" } : {}}>
           <div style={S.questionArea}>
             {q.isMath ? (
               <>
@@ -1032,8 +1049,6 @@ export default function VocabChallenge() {
             </>
           )}
 
-          </div>{/* end question panel */}
-          <div style={isWide ? { flex: 1, display: "flex", flexDirection: "column", justifyContent: "center" } : {}}>
           <div style={S.choicesGrid}>
             {q.choices.map((ch, i) => {
               const isSelected = (q.isMath || q.isKorean)
@@ -1079,8 +1094,6 @@ export default function VocabChallenge() {
               );
             })}
           </div>
-          </div>{/* end choices panel */}
-          </div>{/* end split layout wrapper */}
 
           <div style={S.progressDots}>
             {questions.map((_, i) => (
