@@ -856,12 +856,12 @@ export default function VocabChallenge() {
             </a>
           </div>
 
-          <div style={{ display: "block", textAlign: "center", fontSize: 11, color: "#475569", marginTop: 8 }}>
-            <a href="/about.html" target="_blank" style={{ color: "#475569", textDecoration: "none" }}>소개</a>
+          <div style={{ display: "block", textAlign: "center", fontSize: 11, color: "#94a3b8", marginTop: 8 }}>
+            <a href="/about.html" target="_blank" style={{ color: "#94a3b8", textDecoration: "none" }}>소개</a>
             {" · "}
-            <a href="/terms.html" target="_blank" style={{ color: "#475569", textDecoration: "none" }}>이용약관</a>
+            <a href="/terms.html" target="_blank" style={{ color: "#94a3b8", textDecoration: "none" }}>이용약관</a>
             {" · "}
-            <a href="/privacy.html" target="_blank" style={{ color: "#475569", textDecoration: "none" }}>개인정보처리방침</a>
+            <a href="/privacy.html" target="_blank" style={{ color: "#94a3b8", textDecoration: "none" }}>개인정보처리방침</a>
           </div>
         </div>
 
