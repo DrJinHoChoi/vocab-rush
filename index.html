@@ -50,6 +50,78 @@
   </head>
   <body>
     <div id="root"></div>
+
+    <!-- SEO: 검색엔진 크롤러용 정적 콘텐츠 -->
+    <noscript>
+      <div style="max-width:720px;margin:0 auto;padding:40px 20px;font-family:sans-serif;color:#cbd5e1;line-height:1.8;">
+        <h1>VOCAB RUSH - 영어 어휘 챌린지 게임</h1>
+        <p>직장인과 학생을 위한 타이머 기반 학습 챌린지 게임입니다. 회원가입 없이 무료로 이용할 수 있습니다.</p>
+
+        <h2>학습 모드</h2>
+        <h3>영어 어휘 (Vocabulary)</h3>
+        <p>5,000개 이상의 영어 단어를 CEFR 기준 A1(기초)부터 C2(최상급)까지 수준별로 학습합니다. SAT/GRE 수준의 고급 어휘와 IT/테크 분야 전문 용어도 포함되어 있습니다. 영어 발음 듣기, 한국어 뜻 보기, 4지선다 퀴즈 형태로 학습하며, 예문과 힌트 기능으로 문맥 속 학습이 가능합니다.</p>
+
+        <h3>수학 (Math)</h3>
+        <p>사칙연산, 분수, 방정식, 기하학 등 다양한 수학 분야의 문제를 풀어볼 수 있습니다. 프로그래밍 관련 수학(진법 변환, 비트 연산)과 실생활 응용 문제도 포함되어 있습니다.</p>
+
+        <h3>한국어 (Korean)</h3>
+        <p>맞춤법, 사자성어, 속담, IT/비즈니스 용어 등 한국어 어휘력과 문법 실력을 테스트합니다.</p>
+
+        <h2>주요 기능</h2>
+        <ul>
+          <li>3단계 난이도: Easy(15초) / Medium(10초) / Hard(6초)</li>
+          <li>콤보 시스템: 3연속 정답 시 보너스 점수</li>
+          <li>통계 추적: 누적 정답 수, 최고 점수, 연속 정답 기록</li>
+          <li>뱃지 시스템: 다양한 도전 과제 달성</li>
+          <li>음성 지원: 영어 단어 발음 듣기 (Web Speech API)</li>
+          <li>오프라인 지원: PWA로 인터넷 없이도 플레이 가능</li>
+        </ul>
+
+        <h2>이런 분들에게 추천합니다</h2>
+        <ul>
+          <li>출퇴근 시간에 짧게 영어 단어를 외우고 싶은 직장인</li>
+          <li>TOEIC, TOEFL, 수능 영어를 준비하는 학생</li>
+          <li>IT 분야 영어 용어를 익히고 싶은 개발자</li>
+          <li>한국어 맞춤법과 어휘력을 키우고 싶은 분</li>
+          <li>수학 기초 실력을 게임처럼 즐기며 키우고 싶은 분</li>
+        </ul>
+
+        <p>이 앱을 사용하려면 JavaScript를 활성화해 주세요.</p>
+
+        <nav>
+          <a href="/about.html">소개</a> |
+          <a href="/terms.html">이용약관</a> |
+          <a href="/privacy.html">개인정보처리방침</a>
+        </nav>
+        <p>&copy; 2025 DataPD. All rights reserved. 문의: admin@datapd.ai</p>
+      </div>
+    </noscript>
+
     <script type="module" src="/src/main.jsx"></script>
+
+    <!-- 구조화된 데이터 (JSON-LD) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "VOCAB RUSH",
+      "url": "https://www.datapd.ai",
+      "description": "직장인과 학생을 위한 영어 어휘, 수학, 한국어 타이머 챌린지 게임. 5,000+ 단어 수록.",
+      "applicationCategory": "EducationalApplication",
+      "operatingSystem": "Web Browser",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "KRW"
+      },
+      "author": {
+        "@type": "Organization",
+        "name": "DataPD",
+        "url": "https://www.datapd.ai"
+      },
+      "inLanguage": ["ko", "en"],
+      "browserRequirements": "Requires JavaScript"
+    }
+    </script>
   </body>
 </html>
