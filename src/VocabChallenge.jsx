@@ -77,6 +77,7 @@ const CATEGORIES = [
   { key: "C1", icon: "🔴", label: "고급 C1" },
   { key: "C2", icon: "🏆", label: "SAT/최상급" },
   { key: "tech", icon: "💻", label: "테크" },
+  { key: "toeic", icon: "📋", label: "TOEIC" },
 ];
 
 const DIFFICULTY = {
@@ -572,8 +573,8 @@ export default function VocabChallenge() {
               {gameMode === "math"
                 ? "12개 카테고리 · 무한 문제 생성 · AI/CS 수학 포함 🔢"
                 : gameMode === "korean"
-                ? `11개 카테고리 · 1,000+ 문제 · AI 시대 국어 실력 ✏️`
-                : `총 ${allWords.length.toLocaleString()}개 단어 · CEFR A1~C2 + AI/Tech 🔊`}
+                ? `14개 카테고리 · 1,100+ 문제 · AI 시대 국어 실력 ✏️`
+                : `총 ${allWords.length.toLocaleString()}개 단어 · CEFR A1~C2 + TOEIC + Tech 🔊`}
             </p>
             <p style={{ fontSize: 10, color: "#6ee7b7", marginTop: 4, letterSpacing: 0.5 }}>
               🤖 AI 도구 활용에 필요한 국 · 영 · 수 실력을 게임으로!
@@ -732,8 +733,8 @@ export default function VocabChallenge() {
             {/* AI 도구 활용 팁 */}
             {(() => {
               const aiCat = (gameMode === "math" && ["ai_math", "binary", "logic", "cs_math"].includes(mathCategory))
-                || (gameMode === "korean" && ["ai_tool", "it_term", "it_spell"].includes(koreanCategory))
-                || (gameMode === "vocab" && category === "tech");
+                || (gameMode === "korean" && ["ai_tool", "it_term", "it_spell", "prompt", "prefix", "study"].includes(koreanCategory))
+                || (gameMode === "vocab" && ["tech", "toeic"].includes(category));
               if (!aiCat) return null;
               const tips = {
                 ai_math: "💡 AI 모델의 핵심 수학 — sigmoid, ReLU, softmax, CNN, Attention 등",
@@ -743,7 +744,11 @@ export default function VocabChallenge() {
                 ai_tool: "💡 ChatGPT, Claude 등 AI 도구를 200% 활용하는 지식",
                 it_term: "💡 개발자와 소통하려면 IT 용어부터!",
                 it_spell: "💡 알고리즘? 알고리듬? AI 시대 올바른 표기법",
+                prompt: "💡 프롬프트 엔지니어링 — AI를 200% 활용하는 핵심 스킬",
+                prefix: "💡 접두사·접미사를 알면 모르는 영단어도 뜻을 추론 가능!",
+                study: "💡 과학적 학습법 — 간격 반복, 능동적 회상으로 효율 UP",
                 tech: "💡 AI/ML, 클라우드, 보안 등 테크 영어 어휘력 UP",
+                toeic: "💡 TOEIC 비즈니스 영어 — 회의·계약·인사·금융 핵심 어휘",
               };
               const key = gameMode === "math" ? mathCategory : gameMode === "korean" ? koreanCategory : category;
               return (
@@ -1191,8 +1196,8 @@ export default function VocabChallenge() {
           {/* AI 도구 활용 격려 메시지 */}
           {(() => {
             const isAiRelated = (gameMode === "math" && ["ai_math", "binary", "logic", "cs_math"].includes(mathCategory))
-              || (gameMode === "korean" && ["ai_tool", "it_term", "it_spell"].includes(koreanCategory))
-              || (gameMode === "vocab" && category === "tech");
+              || (gameMode === "korean" && ["ai_tool", "it_term", "it_spell", "prompt", "prefix", "study"].includes(koreanCategory))
+              || (gameMode === "vocab" && ["tech", "toeic"].includes(category));
             if (!isAiRelated) return null;
             const msgs = pct >= 80
               ? ["🤖 AI 시대를 이끌 실력이 갖춰지고 있어요!", "🚀 AI 도구를 자유자재로 활용할 준비 완료!"]
