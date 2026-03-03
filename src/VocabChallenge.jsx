@@ -884,13 +884,13 @@ export default function VocabChallenge() {
 
           {/* 학습 가이드 */}
           <div style={{
-            marginTop: 16, padding: "14px 12px", borderRadius: 12,
+            marginTop: 16, padding: "16px 14px", borderRadius: 12,
             background: "rgba(96,165,250,0.04)", border: "1px solid rgba(96,165,250,0.1)",
           }}>
-            <div style={{ fontSize: 13, fontWeight: 700, color: "#e2e8f0", marginBottom: 8 }}>
+            <div style={{ fontSize: 15, fontWeight: 700, color: "#e2e8f0", marginBottom: 10 }}>
               📚 학습 가이드
             </div>
-            <div style={{ display: "flex", flexWrap: "wrap", gap: "4px 10px" }}>
+            <div style={{ display: "flex", flexWrap: "wrap", gap: "6px 14px" }}>
               {[
                 { href: "/guide-ai.html", label: "AI 도구" },
                 { href: "/guide-prompt.html", label: "프롬프트" },
@@ -905,7 +905,7 @@ export default function VocabChallenge() {
                 { href: "/guide-study-tips.html", label: "학습법" },
               ].map(g => (
                 <a key={g.href} href={g.href} target="_blank" rel="noopener noreferrer"
-                  style={{ fontSize: 11, color: "#60a5fa", textDecoration: "none", lineHeight: "22px" }}
+                  style={{ fontSize: 14, color: "#60a5fa", textDecoration: "none", lineHeight: "28px" }}
                 >{g.label}</a>
               ))}
             </div>
