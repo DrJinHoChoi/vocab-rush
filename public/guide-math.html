@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="프로그래밍과 AI에 필요한 수학 학습 가이드. 진법 변환, 비트 연산, 논리 연산, 선형대수, 확률과 통계, 알고리즘 시간 복잡도까지." />
+  <meta property="og:title" content="수학 학습 가이드 - VOCAB RUSH" />
+  <meta property="og:description" content="개발자와 AI 엔지니어를 위한 수학 기초. 진법 변환, 부울 대수, 선형대수, 시간 복잡도를 게임으로 학습하세요." />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://www.datapd.ai/guide-math.html" />
+  <meta name="keywords" content="프로그래밍 수학, AI 수학, 진법 변환, 비트 연산, 논리 연산, 선형대수, 확률 통계, 시간 복잡도, Big-O, 코딩 테스트, 알고리즘" />
+  <title>수학 학습 가이드 - VOCAB RUSH</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Noto Sans KR', -apple-system, BlinkMacSystemFont, sans-serif; background: #0a0a1a; color: #cbd5e1; line-height: 1.9; }
+    .wrap { max-width: 720px; margin: 0 auto; padding: 0 20px 60px; }
+    nav { background: rgba(255,255,255,0.03); border-bottom: 1px solid rgba(255,255,255,0.08); padding: 12px 20px; margin-bottom: 32px; }
+    nav .inner { max-width: 720px; margin: 0 auto; display: flex; flex-wrap: wrap; gap: 8px 16px; align-items: center; }
+    nav a { color: #94a3b8; text-decoration: none; font-size: 13px; transition: color 0.2s; }
+    nav a:hover { color: #60a5fa; }
+    nav .brand { color: #f1f5f9; font-weight: 700; font-size: 15px; margin-right: 12px; }
+    h1 { color: #f1f5f9; font-size: 28px; margin-bottom: 8px; }
+    h2 { color: #e2e8f0; font-size: 22px; margin: 36px 0 14px; border-left: 4px solid #60a5fa; padding-left: 12px; }
+    h3 { color: #e2e8f0; font-size: 18px; margin: 24px 0 10px; }
+    p { margin-bottom: 14px; font-size: 16px; }
+    ul, ol { margin: 0 0 14px 20px; font-size: 16px; }
+    li { margin-bottom: 6px; }
+    a { color: #60a5fa; }
+    .subtitle { color: #94a3b8; font-size: 15px; margin-bottom: 32px; }
+    .card { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 20px; margin-bottom: 16px; }
+    .highlight { background: rgba(96,165,250,0.08); border: 1px solid rgba(96,165,250,0.15); border-radius: 10px; padding: 16px; margin: 16px 0; }
+    .cta { display: inline-block; margin-top: 24px; padding: 12px 24px; background: linear-gradient(135deg, #3b82f6, #2563eb); color: #fff; text-decoration: none; border-radius: 10px; font-weight: 700; }
+    .cta:hover { opacity: 0.9; }
+    footer { margin-top: 48px; padding-top: 24px; border-top: 1px solid rgba(255,255,255,0.08); font-size: 13px; color: #64748b; }
+    footer a { color: #94a3b8; }
+    strong { color: #e2e8f0; }
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="inner">
+      <a class="brand" href="/">VOCAB RUSH</a>
+      <a href="/guide-ai.html">AI 도구</a>
+      <a href="/guide-vocab.html">영어</a>
+      <a href="/guide-math.html">수학</a>
+      <a href="/guide-korean.html">한국어</a>
+      <a href="/guide-study-tips.html">학습법</a>
+      <a href="/about.html">소개</a>
+    </div>
+  </nav>
+  <div class="wrap">
+    <h1>수학 학습 가이드</h1>
+    <p class="subtitle">프로그래밍과 AI를 위한 핵심 수학, 게임으로 마스터하기</p>
+
+    <h2>프로그래밍에 필요한 수학</h2>
+    <p>많은 개발자 지망생들이 "코딩에 수학이 필요한가?"라고 질문합니다. 결론부터 말하면, <strong>수학적 사고력은 좋은 개발자의 핵심 역량</strong>입니다. 복잡한 수식을 암기하는 것이 아니라, 문제를 논리적으로 분석하고 효율적인 해결책을 설계하는 능력이 중요합니다.</p>
+    <p>웹 개발에서도 레이아웃 계산, 애니메이션 물리 엔진, 데이터 정렬 및 필터링에 수학이 사용됩니다. 게임 개발에서는 벡터, 삼각함수, 물리 시뮬레이션이 필수이며, 데이터 분석과 AI 분야에서는 통계, 선형대수, 미적분이 핵심 도구입니다. 프로그래밍에 필요한 수학은 크게 <strong>이산수학</strong>(논리, 집합, 그래프), <strong>선형대수</strong>(행렬, 벡터), <strong>확률과 통계</strong>, <strong>미적분 기초</strong>로 나뉩니다.</p>
+
+    <h2>진법 변환과 비트 연산</h2>
+    <p>컴퓨터는 내부적으로 모든 데이터를 <strong>2진법(0과 1)</strong>으로 처리합니다. 개발자가 2진법과 16진법을 이해해야 하는 이유는 메모리 구조, 네트워크 프로토콜, 색상 코드(#FF5733) 등 실무 곳곳에서 진법 개념이 등장하기 때문입니다.</p>
+
+    <div class="card">
+      <h3>진법의 기초</h3>
+      <p><strong>10진법 → 2진법:</strong> 10진수 13은 2진수 1101입니다 (8+4+0+1). <strong>10진법 → 16진법:</strong> 10진수 255는 16진수 FF입니다. 16진법은 2진수 4자리를 한 자리로 표현할 수 있어 메모리 주소, 색상 코드, 유니코드 등에 널리 사용됩니다.</p>
+    </div>
+
+    <div class="card">
+      <h3>비트 연산의 실무 활용</h3>
+      <p>비트 연산은 단순히 이론이 아닌 실무에서 강력하게 활용됩니다. <strong>권한 관리</strong>에서 읽기(4), 쓰기(2), 실행(1) 권한을 비트로 표현하여 chmod 755와 같이 관리합니다. <strong>플래그 관리</strong>에서는 여러 상태를 하나의 정수에 비트 OR로 합치고, 비트 AND로 특정 플래그를 확인합니다. 게임 개발에서 캐릭터 상태(무적, 독, 화상 등)를 비트 플래그로 관리하면 메모리를 절약하면서 빠르게 상태를 확인할 수 있습니다.</p>
+    </div>
+
+    <h2>논리 연산과 부울 대수</h2>
+    <p>프로그래밍의 모든 조건문과 분기 로직은 <strong>부울 대수(Boolean Algebra)</strong>에 기반합니다. 논리 연산을 정확히 이해하면 복잡한 조건문을 간결하게 작성하고, 버그를 줄일 수 있습니다.</p>
+
+    <div class="card">
+      <h3>기본 논리 연산자</h3>
+      <ul>
+        <li><strong>AND (&&):</strong> 두 조건이 모두 참이면 참. "로그인 상태 AND 관리자 권한"이면 관리 페이지 접근 허용</li>
+        <li><strong>OR (||):</strong> 하나라도 참이면 참. "이메일 인증 OR 전화 인증"이면 본인 확인 완료</li>
+        <li><strong>NOT (!):</strong> 참과 거짓을 반전. "NOT 로그인 상태"이면 로그인 페이지로 리다이렉트</li>
+        <li><strong>XOR (^):</strong> 두 값이 다르면 참. 암호화, 토글 기능, 데이터 무결성 검사 등에 활용</li>
+      </ul>
+    </div>
+
+    <div class="highlight">
+      <h3>드모르간 법칙</h3>
+      <p>프로그래밍에서 가장 실용적인 논리 법칙입니다. <strong>NOT (A AND B) = (NOT A) OR (NOT B)</strong>, 그리고 <strong>NOT (A OR B) = (NOT A) AND (NOT B)</strong>입니다. 복잡한 부정 조건을 단순화할 때 필수적으로 사용됩니다. 예를 들어 !(a && b)를 !a || !b로 변환하면 코드 가독성이 크게 향상됩니다.</p>
+    </div>
+
+    <h2>AI/ML에 필요한 수학</h2>
+    <p>인공지능과 머신러닝을 깊이 이해하려면 수학적 기반이 필수입니다. 라이브러리를 사용하면 코드 한 줄로 모델을 만들 수 있지만, <strong>왜 그렇게 동작하는지</strong> 이해하려면 수학이 필요합니다.</p>
+
+    <div class="card">
+      <h3>선형대수 — 행렬과 벡터</h3>
+      <p>딥러닝의 핵심은 <strong>행렬 연산</strong>입니다. 뉴럴 네트워크의 각 레이어는 입력 벡터에 가중치 행렬을 곱하고 편향 벡터를 더하는 연산(y = Wx + b)으로 구성됩니다. 이미지 데이터를 행렬로 표현하고, 단어를 벡터로 임베딩하며, Transformer의 어텐션 메커니즘도 행렬 곱셈 기반입니다. NumPy의 행렬 연산이 AI의 기초 도구인 이유입니다.</p>
+    </div>
+
+    <div class="card">
+      <h3>확률과 통계</h3>
+      <p>머신러닝 모델은 본질적으로 <strong>확률적 예측 도구</strong>입니다. 베이즈 정리는 사전 확률과 관측 데이터를 결합하여 사후 확률을 계산합니다. 정규분포, 표준편차, 분산은 데이터의 특성을 파악하는 기본 도구이며, 최대우도추정(MLE)은 모델 파라미터를 최적화하는 핵심 기법입니다. A/B 테스트의 통계적 유의성 검증에도 확률 지식이 필수입니다.</p>
+    </div>
+
+    <div class="card">
+      <h3>미적분 기초</h3>
+      <p>딥러닝 학습의 핵심 알고리즘인 <strong>역전파(Backpropagation)</strong>는 미분의 연쇄 법칙(Chain Rule)에 기반합니다. 경사하강법(Gradient Descent)은 손실 함수의 기울기(미분값)를 따라 파라미터를 업데이트합니다. 학습률(Learning Rate) 조정, 모멘텀, Adam 옵티마이저 등 최적화 기법의 원리도 미적분에 뿌리를 두고 있습니다.</p>
+    </div>
+
+    <div class="highlight">
+      <h3>활성화 함수</h3>
+      <p>뉴럴 네트워크에 비선형성을 부여하는 핵심 요소입니다. <strong>Sigmoid</strong>는 출력을 0~1 사이로 압축하여 이진 분류에 사용됩니다. <strong>ReLU</strong>(Rectified Linear Unit)는 음수를 0으로 변환하며, 계산이 빠르고 기울기 소실 문제를 완화합니다. <strong>Softmax</strong>는 다중 클래스 분류에서 각 클래스의 확률을 출력합니다. 이 함수들의 수학적 특성을 이해하면 모델 설계 능력이 향상됩니다.</p>
+    </div>
+
+    <h2>알고리즘과 시간 복잡도</h2>
+    <p>효율적인 코드를 작성하려면 <strong>알고리즘의 성능을 수학적으로 분석하는 능력</strong>이 필요합니다. 동일한 문제를 O(n²)으로 풀 수도 있고, O(n log n)으로 풀 수도 있습니다. 이 차이가 데이터 규모가 커질수록 치명적인 성능 차이를 만듭니다.</p>
+
+    <div class="card">
+      <h3>Big-O 표기법</h3>
+      <p>알고리즘의 최악의 경우 수행 시간을 입력 크기 n의 함수로 표현합니다. 자주 등장하는 복잡도를 효율 순서대로 나열하면 다음과 같습니다.</p>
+      <ul>
+        <li><strong>O(1):</strong> 상수 시간. 해시맵 조회, 배열 인덱스 접근</li>
+        <li><strong>O(log n):</strong> 이진 탐색. 정렬된 데이터에서 검색</li>
+        <li><strong>O(n):</strong> 선형 탐색. 배열을 한 번 순회</li>
+        <li><strong>O(n log n):</strong> 효율적인 정렬. 병합 정렬, 퀵 정렬</li>
+        <li><strong>O(n²):</strong> 이중 반복문. 버블 정렬, 선택 정렬</li>
+        <li><strong>O(2ⁿ):</strong> 지수 시간. 모든 부분집합 탐색, 피보나치(재귀)</li>
+      </ul>
+    </div>
+
+    <div class="highlight">
+      <h3>코딩 테스트 대비</h3>
+      <p>대부분의 코딩 테스트는 <strong>시간 복잡도 제약</strong> 안에서 문제를 풀어야 합니다. 입력 크기가 10만이면 O(n log n) 이하, 1,000이면 O(n²)까지 가능하다는 감각을 기르는 것이 중요합니다. 자료구조(스택, 큐, 힙, 트리, 그래프)별 연산의 시간 복잡도를 외우면 문제를 보자마자 접근 방법을 떠올릴 수 있습니다.</p>
+    </div>
+
+    <h2>VOCAB RUSH로 수학 학습하기</h2>
+    <p>VOCAB RUSH는 프로그래밍과 AI에 필요한 수학을 <strong>12개 카테고리</strong>로 체계적으로 다룹니다. 사칙연산부터 AI 수학까지, 단순 암기가 아닌 반복 풀이를 통해 수학적 직관을 키울 수 있습니다.</p>
+
+    <div class="card">
+      <h3>12개 수학 카테고리</h3>
+      <ul>
+        <li><strong>사칙연산:</strong> 덧셈, 뺄셈, 곱셈, 나눗셈 — 암산 속도와 정확도 향상</li>
+        <li><strong>분수/소수:</strong> 분수의 사칙연산, 소수점 계산, 분수-소수 변환</li>
+        <li><strong>거듭제곱/제곱근:</strong> 지수 법칙, 제곱근 계산, 과학적 표기법</li>
+        <li><strong>단위 변환:</strong> 길이, 무게, 부피, 온도, 데이터 용량 단위 변환</li>
+        <li><strong>비율/백분율:</strong> 비율 계산, 할인율, 증가율, 농도 등 실생활 문제</li>
+        <li><strong>진법 변환:</strong> 2진법, 8진법, 10진법, 16진법 간 변환 연습</li>
+        <li><strong>비트 연산:</strong> AND, OR, XOR, NOT, 시프트 연산 실전 문제</li>
+        <li><strong>논리 연산:</strong> 부울 대수, 진리표, 드모르간 법칙 적용</li>
+        <li><strong>집합과 확률:</strong> 합집합, 교집합, 여집합, 조건부 확률, 베이즈 정리</li>
+        <li><strong>통계 기초:</strong> 평균, 중앙값, 최빈값, 표준편차, 분산 계산</li>
+        <li><strong>시간 복잡도:</strong> Big-O 분석, 알고리즘 복잡도 비교, 코딩 테스트 대비</li>
+        <li><strong>AI 수학:</strong> 행렬 연산, 활성화 함수, 손실 함수, 경사하강법 개념</li>
+      </ul>
+    </div>
+
+    <p>VOCAB RUSH의 수학 모드는 <strong>무한 문제 생성</strong> 방식으로 동작합니다. 같은 유형이라도 매번 다른 숫자와 조건이 출력되기 때문에 답을 외울 수 없으며, 진짜 계산 능력이 길러집니다. 제한 시간 내에 풀어야 하는 <strong>암산 특화 모드</strong>로, 실전 코딩 테스트에서 계산 시간을 줄이는 데 직접적인 도움이 됩니다.</p>
+
+    <a class="cta" href="/">VOCAB RUSH로 수학 실력 키우기 &rarr;</a>
+
+    <footer>
+      <p>&copy; 2025 DataPD. All rights reserved.</p>
+      <p style="margin-top: 8px;">
+        <a href="/">게임 시작</a> &middot;
+        <a href="/about.html">소개</a> &middot;
+        <a href="/terms.html">이용약관</a> &middot;
+        <a href="/privacy.html">개인정보처리방침</a> &middot;
+        <a href="mailto:jinho.choi1010@gmail.com">문의</a>
+      </p>
+    </footer>
+  </div>
+</body>
+</html>
