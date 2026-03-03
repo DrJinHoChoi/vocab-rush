@@ -15,6 +15,7 @@ const AD_CONFIG = {
   slots: {
     menuBanner:   "1234567890", // 메뉴 하단 배너 — AdSense 승인 후 실제 슬롯 ID로 교체
     resultBanner: "1234567891", // 결과 화면 배너 — AdSense 승인 후 실제 슬롯 ID로 교체
+    sidebarAd:    "1234567892", // PC 왼쪽 사이드바 — AdSense 승인 후 실제 슬롯 ID로 교체
   },
 };
 
@@ -674,6 +675,9 @@ export default function VocabChallenge() {
           >
             🏅 업적 & 보상 보기 ({stats.unlockedIds.length}개 달성)
           </button>
+
+          {/* PC 왼쪽 사이드바 광고 */}
+          {isWide && <AdBanner slot={AD_CONFIG.slots.sidebarAd} style={{ margin: "12px 0 0" }} />}
 
           </div>{/* end left panel */}
 
