@@ -882,8 +882,39 @@ export default function VocabChallenge() {
             </a>
           </div>
 
+          {/* 학습 가이드 */}
+          <div style={{
+            marginTop: 16, padding: "14px 12px", borderRadius: 12,
+            background: "rgba(96,165,250,0.04)", border: "1px solid rgba(96,165,250,0.1)",
+          }}>
+            <div style={{ fontSize: 13, fontWeight: 700, color: "#e2e8f0", marginBottom: 8 }}>
+              📚 학습 가이드
+            </div>
+            <div style={{ display: "flex", flexWrap: "wrap", gap: "4px 10px" }}>
+              {[
+                { href: "/guide-ai.html", label: "AI 도구" },
+                { href: "/guide-prompt.html", label: "프롬프트" },
+                { href: "/guide-vocab.html", label: "영어 어휘" },
+                { href: "/guide-toeic.html", label: "TOEIC" },
+                { href: "/guide-prefix.html", label: "접두사·접미사" },
+                { href: "/guide-math.html", label: "수학" },
+                { href: "/guide-coding-math.html", label: "코딩 수학" },
+                { href: "/guide-base-conversion.html", label: "진법 변환" },
+                { href: "/guide-korean.html", label: "한국어" },
+                { href: "/guide-spelling.html", label: "맞춤법 50" },
+                { href: "/guide-study-tips.html", label: "학습법" },
+              ].map(g => (
+                <a key={g.href} href={g.href} target="_blank" rel="noopener noreferrer"
+                  style={{ fontSize: 11, color: "#60a5fa", textDecoration: "none", lineHeight: "22px" }}
+                >{g.label}</a>
+              ))}
+            </div>
+          </div>
+
           <div style={{ display: "block", textAlign: "center", fontSize: 11, color: "#94a3b8", marginTop: 8 }}>
             <a href="/about.html" target="_blank" style={{ color: "#94a3b8", textDecoration: "none" }}>소개</a>
+            {" · "}
+            <a href="/contact.html" target="_blank" style={{ color: "#94a3b8", textDecoration: "none" }}>문의</a>
             {" · "}
             <a href="/terms.html" target="_blank" style={{ color: "#94a3b8", textDecoration: "none" }}>이용약관</a>
             {" · "}
