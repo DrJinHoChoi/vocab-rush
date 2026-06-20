@@ -326,6 +326,37 @@
   .member-badge{ display:inline-flex; align-items:center; gap:4px; background:var(--ink); color:var(--gold); font-size:10px; font-weight:800; padding:3px 9px; border-radius:999px; margin-left:6px; vertical-align:middle; }
   @media (max-width:760px){ .subs-grid{ grid-template-columns:1fr; } }
 
+  /* ---------- 쇼핑 게임화: 도유 컬렉트 ---------- */
+  .collect{ padding-bottom:8px; }
+  .cx-sub{ margin-left:auto; font-size:12.5px; color:var(--muted); font-weight:600; }
+  .lvl{ font-size:11px; font-weight:800; background:var(--accent-soft); color:var(--accent-ink); padding:3px 9px; border-radius:999px; margin-left:6px; }
+  .collect-grid{ display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+  .cx-card{ padding:18px; }
+  .cx-head{ display:flex; justify-content:space-between; align-items:baseline; margin-bottom:14px; }
+  .cx-head h3{ font-size:16px; font-weight:800; }
+  .cx-head span{ font-size:12.5px; font-weight:800; color:var(--accent-ink); }
+  .dex{ display:grid; grid-template-columns:repeat(4,1fr); gap:10px; }
+  .dex-item{ text-align:center; }
+  .dex-card{ aspect-ratio:1; border:2px solid var(--ink); border-radius:12px; display:grid; place-items:center; font-size:26px; background:#F3EFE7; position:relative; }
+  .dex-card.got{ background:var(--accent-soft); }
+  .dex-card.locked{ filter:grayscale(1); opacity:.45; }
+  .dex-card .chk{ position:absolute; top:-7px; right:-7px; width:20px; height:20px; border-radius:50%; background:var(--good); color:#fff; font-size:11px; display:grid; place-items:center; border:2px solid var(--surface); }
+  .dex-name{ font-size:11px; font-weight:700; margin-top:5px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .dex-btn{ font-size:11px; font-weight:800; margin-top:6px; padding:5px 0; width:100%; border-radius:7px; border:1.5px solid var(--ink); background:#fff; color:var(--ink); cursor:pointer; }
+  .dex-btn:disabled{ opacity:.45; border-color:var(--line); cursor:default; }
+  .mission-bar{ height:8px; border-radius:999px; background:#EEE9E2; overflow:hidden; margin-bottom:12px; }
+  .mission-bar > i{ display:block; height:100%; background:var(--accent); border-radius:999px; transition:width .3s; }
+  .mission{ display:flex; align-items:center; gap:11px; padding:9px 0; border-top:1px solid var(--line); }
+  .mission:first-child{ border-top:none; }
+  .mission .mi{ width:34px; height:34px; border-radius:9px; background:#F3EFE7; display:grid; place-items:center; font-size:18px; flex:none; }
+  .mission .mtxt{ flex:1; font-size:13px; font-weight:600; }
+  .mission.done .mtxt{ color:var(--muted2); text-decoration:line-through; }
+  .mission .mbtn{ font-size:12px; font-weight:800; padding:6px 12px; border-radius:8px; border:1.5px solid var(--ink); background:#fff; color:var(--ink); cursor:pointer; }
+  .mission .mdone{ font-size:12px; font-weight:800; color:var(--good); }
+  .gacha-card{ display:flex; align-items:center; gap:16px; padding:18px; margin-top:16px; }
+  .gacha-info{ flex:1; } .gacha-info h3{ font-size:16px; font-weight:800; } .gacha-info p{ font-size:12.5px; color:var(--muted); margin-top:4px; }
+  @media (max-width:760px){ .collect-grid{ grid-template-columns:1fr; } .gacha-card{ flex-direction:column; align-items:stretch; } }
+
   /* ---------- Toast / footer ---------- */
   #toast{ position:fixed; bottom:24px; left:50%; transform:translateX(-50%) translateY(20px);
     background:var(--ink); color:#fff; padding:12px 20px; border-radius:12px; font-size:14px; font-weight:600;
@@ -610,6 +641,25 @@
       </aside>
     </div>
 
+    <section class="collect">
+      <div class="subs-head"><h2>도유 컬렉트 <span class="lvl" id="lvlChip"></span></h2><span class="cx-sub">브랜드 모으고 미션 깨서 스탬프 적립 · 쇼핑이 곧 게임</span></div>
+      <div class="collect-grid">
+        <div class="card cx-card">
+          <div class="cx-head"><h3>📒 브랜드 도감</h3><span id="dexProg">0/4 수집</span></div>
+          <div class="dex" id="dex"></div>
+        </div>
+        <div class="card cx-card">
+          <div class="cx-head"><h3>🎯 이번 주 미션</h3><span id="msProg">0/3</span></div>
+          <div class="mission-bar"><i id="msBar" style="width:0%"></i></div>
+          <div id="missions"></div>
+        </div>
+      </div>
+      <div class="card gacha-card">
+        <div class="gacha-info"><h3>🎰 스탬프 뽑기</h3><p>스탬프 3개로 랜덤 보상 — 쿠폰 · 굿즈 · 큐레이션 박스 체험권 · 보너스!</p></div>
+        <button class="btn btn-primary" id="gachaBtn" style="width:auto">뽑기 (스탬프 3)</button>
+      </div>
+    </section>
+
     <section class="subs">
       <div class="subs-head"><h2>DOYOU CLUB 멤버십 <span id="memberStatus"></span></h2><a class="more" href="doyou-business.html">구독 모델 보기 →</a></div>
       <div class="subs-grid" id="clubTiers"></div>
@@ -681,7 +731,7 @@ let applications = [
   { id:'a'+(UID++), brand:'무드캔들', category:'라이프스타일', type:'단독 부스', month:'2026-08', budget:3500000, spaceId:'z4', status:'대기' },
 ];
 
-const state = { mode:'brand', opTab:'apps', stamps:0, sponsor:0, member:false,
+const state = { mode:'brand', opTab:'apps', stamps:0, sponsor:0, member:false, collected:[], missions:{},
   q:{ brand:'', category:'패션', type:'상관없음', month:'2026-07', budget:3000000 } };
 
 /* ============== 저장소 (localStorage · 백엔드 교체 지점) ============== */
@@ -704,6 +754,8 @@ function hydrate(){
   const st = STORE.get(STORE.stamps, null);
   if(st!=null) state.stamps = st;
   state.member = STORE.get('doyou.member.v2', false);
+  state.collected = STORE.get('doyou.collected.v2', []);
+  state.missions = STORE.get('doyou.missions.v2', {});
   const ids = applications.map(a=> parseInt(String(a.id).replace(/\D/g,''))||0);
   UID = Math.max(UID, ...(ids.length?ids:[100])) + 1;
 }
@@ -868,6 +920,7 @@ function initModal(){
   $('#modalX').addEventListener('click', ()=> $('#applyModal').hidden=true);
   $('#applyModal').addEventListener('click', e=>{ if(e.target.id==='applyModal') $('#applyModal').hidden=true; });
   document.querySelectorAll('[data-brandpass]').forEach(b=> b.addEventListener('click',()=> toast('BRAND PASS 구독 문의가 접수됐어요! 곧 연락드릴게요 (데모)')));
+  const gb=document.getElementById('gachaBtn'); if(gb) gb.addEventListener('click', doGacha);
 }
 
 function renderMyApps(){
@@ -1133,6 +1186,7 @@ function mgAnswer(choice, btn){
 }
 function mgEnd(){
   mg.playing=false;
+  completeMission('game', true);
   const host=document.getElementById('miniGame'); if(!host) return;
   host.innerHTML =
     `<div class="mg-end">
@@ -1167,9 +1221,10 @@ function exchange(i){
 function updateStamps(){
   const el=document.getElementById('stampNum'); if(el) el.textContent=state.stamps;
   STORE.set(STORE.stamps, state.stamps);
+  const lc=document.getElementById('lvlChip'); if(lc) lc.textContent='🏅 '+levelOf(state.stamps)+' 컬렉터';
   renderRewards();
 }
-function renderVisitor(){ renderQR(); renderSponsors(); renderClub(); updateStamps(); mgStart(); }
+function renderVisitor(){ renderQR(); renderSponsors(); renderCollect(); renderClub(); updateStamps(); mgStart(); }
 
 /* ============== 구독: DOYOU CLUB (방문객 멤버십) ============== */
 const CLUB = [
@@ -1202,6 +1257,77 @@ function subscribeClub(key){
   else { state.member=key; toast(`DOYOU CLUB ${key==='box'?'클럽+박스':'멤버'} 가입! 게임 스탬프 2배 적용`); }
   STORE.set('doyou.member.v2', state.member);
   renderClub(); updateStamps();
+}
+
+/* ============== 쇼핑 게임화: 도유 컬렉트 (도감·미션·뽑기) ============== */
+const MISSIONS = [
+  { key:'photo', icon:'📸', label:'포토월에서 인증샷 찍기', reward:2 },
+  { key:'visit', icon:'🛍️', label:'입점 브랜드 1곳 체험하기', reward:2 },
+  { key:'game',  icon:'⚡', label:'Vocab Rush 게임 1판 플레이', reward:2 },
+];
+const GACHA = [
+  { emoji:'🎟️', label:'입점 브랜드 10% 쿠폰' },
+  { emoji:'🎁', label:'시그니처 굿즈 증정' },
+  { emoji:'📦', label:'큐레이션 박스 체험권' },
+  { emoji:'⭐', label:'스탬프 +3 보너스', bonus:3 },
+  { emoji:'🍀', label:'꽝 — 다음 기회에!' },
+];
+function levelOf(s){ return s>=150?'플래티넘':s>=80?'골드':s>=30?'실버':'브론즈'; }
+function gainStamp(n){ state.stamps += n; updateStamps(); }
+function renderCollect(){ renderDex(); renderMissions(); }
+function renderDex(){
+  const host=document.getElementById('dex'); if(!host) return;
+  host.innerHTML = SPONSORS.map((s,i)=>{
+    const got = state.collected.includes(i);
+    return `<div class="dex-item">
+      <div class="dex-card ${got?'got':'locked'}">${s.emoji}${got?'<span class="chk">✓</span>':''}</div>
+      <div class="dex-name">${s.brand}</div>
+      <button class="dex-btn" data-collect="${i}" ${got?'disabled':''}>${got?'수집됨':'체크인'}</button>
+    </div>`;
+  }).join('');
+  host.querySelectorAll('[data-collect]').forEach(b=> b.addEventListener('click',()=>collectBrand(Number(b.dataset.collect))));
+  const p=document.getElementById('dexProg'); if(p) p.textContent=`${state.collected.length}/${SPONSORS.length} 수집`;
+}
+function collectBrand(i){
+  if(state.collected.includes(i)) return;
+  state.collected.push(i);
+  STORE.set('doyou.collected.v2', state.collected);
+  const full = state.collected.length===SPONSORS.length;
+  gainStamp(2 + (full?5:0));
+  toast(`${SPONSORS[i].brand} 수집! +2 스탬프${full?' · 컬렉션 완성 보너스 +5 🎉':''}`);
+  renderDex();
+}
+function renderMissions(){
+  const host=document.getElementById('missions'); if(!host) return;
+  const done = MISSIONS.filter(m=>state.missions[m.key]).length;
+  host.innerHTML = MISSIONS.map(m=>{
+    const d=!!state.missions[m.key];
+    return `<div class="mission ${d?'done':''}">
+      <div class="mi">${m.icon}</div><div class="mtxt">${m.label}</div>
+      ${d?'<span class="mdone">완료 ✓</span>':`<button class="mbtn" data-mission="${m.key}">완료</button>`}
+    </div>`;
+  }).join('');
+  host.querySelectorAll('[data-mission]').forEach(b=> b.addEventListener('click',()=>completeMission(b.dataset.mission)));
+  const bar=document.getElementById('msBar'); if(bar) bar.style.width=(done/MISSIONS.length*100)+'%';
+  const p=document.getElementById('msProg'); if(p) p.textContent=`${done}/${MISSIONS.length}`;
+}
+function completeMission(key, silent){
+  if(state.missions[key]) return;
+  state.missions[key]=true;
+  STORE.set('doyou.missions.v2', state.missions);
+  const m=MISSIONS.find(x=>x.key===key);
+  gainStamp(m?m.reward:2);
+  const allDone=MISSIONS.every(x=>state.missions[x.key]);
+  if(!silent) toast(`미션 완료! +${m?m.reward:2} 스탬프${allDone?' · 전 미션 클리어 🎉':''}`);
+  renderMissions();
+}
+function doGacha(){
+  if(state.stamps<3){ toast('스탬프가 부족해요 (3개 필요)'); return; }
+  state.stamps-=3;
+  const r=GACHA[Math.floor(Math.random()*GACHA.length)];
+  if(r.bonus) state.stamps+=r.bonus;
+  updateStamps();
+  toast(`🎰 ${r.emoji} ${r.label}`);
 }
 
 /* ============== 모드 전환 ============== */
