@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>DOYOU POP-UP STORE — 허브</title>
+<style>
+  :root{
+    --bg:#FAF5EB; --surface:#FFFEFB; --ink:#141413; --line:#E3DCCB;
+    --muted:#7C766B; --muted2:#A79E88; --gold:#F5B60B; --blue:#5B7FA6; --terra:#C75D3A; --cream:#FAF5EB;
+    --shadow:0 1px 2px rgba(20,16,12,.05), 0 12px 30px rgba(20,16,12,.08);
+  }
+  *{ box-sizing:border-box; margin:0; padding:0; }
+  body{ font-family:'Pretendard','Apple SD Gothic Neo','Malgun Gothic',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+    background:var(--bg); color:var(--ink); line-height:1.55; -webkit-font-smoothing:antialiased; min-height:100vh; }
+  .wrap{ max-width:960px; margin:0 auto; padding:0 24px; }
+
+  .hero{ text-align:center; padding:54px 0 26px; }
+  .hero-face{ width:106px; height:106px; }
+  .hero-letters{ height:62px; width:auto; display:block; margin:12px auto 0; max-width:90%; }
+  .hero-pill{ display:inline-block; background:var(--ink); color:var(--gold); font-size:13px; font-weight:800;
+    letter-spacing:6px; padding:6px 16px; border-radius:999px; margin-top:14px; }
+  .hero-tag{ color:var(--terra); font-weight:700; font-size:17px; margin-top:18px; }
+  .hero-handle{ color:var(--muted2); font-size:13px; margin-top:7px; font-weight:600; }
+
+  .cards{ display:grid; grid-template-columns:repeat(3,1fr); gap:18px; padding:16px 0 40px; }
+  .card{ background:var(--surface); border:2px solid var(--ink); border-radius:18px; box-shadow:var(--shadow);
+    padding:22px; text-decoration:none; color:var(--ink); display:flex; flex-direction:column; transition:transform .16s; }
+  .card:hover{ transform:translateY(-4px); }
+  .card .ic{ width:52px; height:52px; border-radius:14px; border:2px solid var(--ink); display:grid; place-items:center; font-size:26px; }
+  .card .tg{ font-size:10.5px; font-weight:800; letter-spacing:1.5px; margin-top:15px; }
+  .card h3{ font-size:18px; font-weight:900; margin-top:5px; letter-spacing:-.02em; }
+  .card p{ font-size:13px; color:var(--muted); margin-top:9px; flex:1; }
+  .card .go{ font-weight:800; font-size:13.5px; margin-top:16px; color:var(--terra); }
+
+  footer{ text-align:center; border-top:2px solid var(--ink); padding:28px 0 46px; }
+  .bf-name{ font-weight:900; font-size:26px; letter-spacing:1px; }
+  .bf-pill{ display:inline-block; background:var(--ink); color:var(--gold); font-size:10px; font-weight:800;
+    letter-spacing:4px; padding:4px 12px; border-radius:999px; margin-left:8px; vertical-align:middle; }
+  .bf-meta{ color:var(--muted2); font-size:12.5px; margin-top:12px; }
+
+  @media (max-width:760px){ .cards{ grid-template-columns:1fr; } }
+</style>
+</head>
+<body>
+  <main class="wrap">
+    <section class="hero">
+      <svg class="hero-face" viewBox="305 222 488 620" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <g stroke="#141413" stroke-width="14" stroke-linejoin="round" stroke-linecap="round">
+          <path d="M540,235 C690,235 770,360 770,540 C770,720 680,825 540,825 C400,825 320,710 320,540 C320,360 390,235 540,235 Z" fill="#F5B60B"/>
+          <path d="M540,250 C610,250 670,300 700,360 C672,430 690,440 778,478 C840,512 838,520 800,548 C742,560 760,585 786,600 C740,628 742,632 720,648 C760,672 742,690 700,742 C648,790 600,805 540,810 L540,250 Z" fill="#FAF5EB"/>
+          <path d="M540,540 L320,540 C328,690 410,795 540,812 Z" fill="#5B7FA6"/>
+          <path d="M540,235 C430,235 360,300 335,395 C400,360 470,350 540,355 C560,300 560,265 540,235 Z" fill="#141413"/>
+          <ellipse cx="445" cy="470" rx="62" ry="42" fill="#FAF5EB"/><circle cx="462" cy="470" r="22" fill="#141413"/>
+          <path d="M628,452 C660,432 705,438 724,460 C700,478 660,480 628,452 Z" fill="#FAF5EB"/><circle cx="690" cy="458" r="13" fill="#141413"/>
+          <polygon points="540,470 600,640 470,640" fill="#C75D3A"/>
+          <path d="M455,705 C500,690 560,690 600,705 C560,742 500,742 455,705 Z" fill="#C75D3A"/>
+        </g>
+      </svg>
+      <svg class="hero-letters" viewBox="85 185 930 275" xmlns="http://www.w3.org/2000/svg" aria-label="DOYOU">
+        <g stroke="#141413" stroke-width="11" stroke-linejoin="round" stroke-linecap="round">
+          <g transform="translate(70,180) rotate(-3 90 140)" fill="#F5B60B"><path fill-rule="evenodd" d="M20,22 L102,26 Q176,40 174,142 Q172,250 96,256 L22,250 Z M70,78 L100,80 Q124,92 123,142 Q122,196 98,202 L70,200 Z"/></g>
+          <g transform="translate(258,168) rotate(2 95 140)" fill="#5B7FA6"><path fill-rule="evenodd" d="M96,22 Q172,26 170,142 Q168,256 95,256 Q22,256 20,140 Q22,24 96,22 Z M95,80 Q122,82 121,142 Q120,200 95,200 Q70,200 70,140 Q71,82 95,80 Z"/></g>
+          <g transform="translate(448,188) rotate(-2 95 140)" fill="#C75D3A"><path d="M18,24 L74,20 L98,120 L126,22 L182,26 L122,168 L120,256 L78,254 L80,166 Z"/></g>
+          <g transform="translate(632,172) rotate(3 95 140)" fill="#F5B60B"><path fill-rule="evenodd" d="M96,22 Q172,26 170,142 Q168,256 95,256 Q22,256 20,140 Q22,24 96,22 Z M95,80 Q122,82 121,142 Q120,200 95,200 Q70,200 70,140 Q71,82 95,80 Z"/></g>
+          <g transform="translate(820,184) rotate(-1 95 140)" fill="#141413"><path d="M18,22 L72,24 L70,186 Q70,206 100,206 Q130,206 128,186 L128,24 L184,22 L182,192 Q180,260 100,262 Q20,260 20,192 Z"/></g>
+        </g>
+      </svg>
+      <div><span class="hero-pill">POP-UP STORE</span></div>
+      <p class="hero-tag">DO YOU? — 매주 새로운 브랜드를 만나는 공간</p>
+      <p class="hero-handle">@doyou_popup_store · 게임 서비스 by DataPD.ai</p>
+    </section>
+
+    <div class="cards">
+      <a class="card" href="doyu-popup-match.html">
+        <div class="ic" style="background:var(--gold)">🛍️</div>
+        <div class="tg" style="color:#8A6608">INTERACTIVE DEMO</div>
+        <h3>입점 &amp; 게임 데모</h3>
+        <p>브랜드 입점 매칭 · 운영자 콘솔 · 방문객 Vocab Rush 게임까지 3개 모드를 한 화면에서.</p>
+        <div class="go">열기 →</div>
+      </a>
+      <a class="card" href="doyou-precon.html">
+        <div class="ic" style="background:var(--blue);color:#fff">🏗️</div>
+        <div class="tg" style="color:#36506A">PRE-CON BOARD</div>
+        <h3>공간 프리콘 보드</h3>
+        <p>성수 10평 시공 전 비주얼 — 투시도 · 평면도 · 마감재 · 사이니지 · 파사드 · 스펙.</p>
+        <div class="go">열기 →</div>
+      </a>
+      <a class="card" href="https://www.datapd.ai" target="_blank" rel="noopener">
+        <div class="ic" style="background:var(--terra);color:#fff">⚡</div>
+        <div class="tg" style="color:#8A3A20">LIVE GAME</div>
+        <h3>Vocab Rush</h3>
+        <p>도유가 제공하는 단어 챌린지 게임. 실제 서비스(datapd.ai)로 이동합니다.</p>
+        <div class="go">datapd.ai ↗</div>
+      </a>
+    </div>
+
+    <footer>
+      <div><span class="bf-name">DOYOU</span><span class="bf-pill">POP-UP STORE</span></div>
+      <p class="bf-meta">DO YOU? — 매주 새로운 브랜드를 만나는 공간 · @doyou_popup_store · 게임 서비스 DataPD.ai · 2026</p>
+    </footer>
+  </main>
+</body>
+</html>

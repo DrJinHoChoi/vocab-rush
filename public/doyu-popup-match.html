@@ -1,0 +1,1146 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>DOYOU POP-UP STORE · 입점 매칭 &amp; 게임 서비스</title>
+<style>
+  :root{
+    --bg:#FAF5EB; --surface:#FFFEFB; --line:#E3DCCB; --line2:#EFE9DA;
+    --ink:#141413; --muted:#7C766B; --muted2:#A79E88;
+    --gold:#F5B60B; --blue:#5B7FA6; --terra:#C75D3A; --cream:#FAF5EB;
+    --good:#3E8E5A; --good-soft:#E4F0E7;
+    --warn:#C2901A; --warn-soft:#FAEFCF;
+    --bad:#C75D3A; --bad-soft:#F6E2D9;
+    --accent:#F5B60B; --accent-soft:#FCEFC9; --accent-ink:#8A6608; --accent-on:#141413;
+    --radius:16px; --shadow:0 1px 2px rgba(20,16,12,.05), 0 10px 26px rgba(20,16,12,.07);
+  }
+  body[data-mode="brand"]   { --accent:#F5B60B; --accent-soft:#FCEFC9; --accent-ink:#8A6608; --accent-on:#141413; }
+  body[data-mode="operator"]{ --accent:#5B7FA6; --accent-soft:#E3EAF1; --accent-ink:#36506A; --accent-on:#FFFFFF; }
+  body[data-mode="visitor"] { --accent:#C75D3A; --accent-soft:#F6E2D9; --accent-ink:#8A3A20; --accent-on:#FFFFFF; }
+  *{ box-sizing:border-box; }
+  html,body{ margin:0; padding:0; }
+  body{
+    font-family:'Pretendard','Apple SD Gothic Neo','Malgun Gothic',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+    background:var(--bg); color:var(--ink); line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3,h4,p{ margin:0; }
+  button{ font-family:inherit; cursor:pointer; border:none; background:none; }
+  .wrap{ max-width:1120px; margin:0 auto; padding:0 22px; }
+
+  /* ---------- Topbar ---------- */
+  .topbar{
+    position:sticky; top:0; z-index:40; background:rgba(250,245,235,.88);
+    backdrop-filter:saturate(1.4) blur(10px); border-bottom:2px solid var(--ink);
+  }
+  .topbar-in{ display:flex; align-items:center; gap:18px; height:64px; }
+  .logo{ display:flex; align-items:center; gap:11px; letter-spacing:-.02em; }
+  .logo-face{ width:42px; height:42px; flex:none; }
+  .logo-letters{ height:30px; width:auto; display:block; }
+  .logo-txt{ display:flex; flex-direction:column; gap:3px; line-height:1; }
+  .logo-name{ font-weight:900; font-size:20px; letter-spacing:.5px; }
+  .logo-pill{ background:var(--ink); color:var(--gold); font-size:9px; font-weight:800; letter-spacing:2px;
+    padding:3px 8px; border-radius:999px; width:-moz-fit-content; width:fit-content; }
+  .logo small{ font-weight:600; color:var(--muted); font-size:11.5px; letter-spacing:0; }
+  .hublink{ margin-left:auto; font-size:12px; font-weight:800; color:var(--muted); text-decoration:none; border:1.5px solid var(--line); padding:6px 11px; border-radius:8px; white-space:nowrap; }
+  .hublink:hover{ border-color:var(--ink); color:var(--ink); }
+  .hublink + .seg{ margin-left:10px; }
+  .seg{ margin-left:auto; display:flex; background:var(--surface); border:2px solid var(--ink); border-radius:13px; padding:3px; gap:2px; }
+  .seg button{ padding:8px 14px; border-radius:9px; font-weight:700; font-size:13.5px; color:var(--ink); transition:.16s; }
+  .seg button.active{ background:var(--ink); color:var(--cream); }
+
+  /* ---------- Hero ---------- */
+  .hero{ padding:30px 0 14px; }
+  .hero h1{ font-size:30px; letter-spacing:-.03em; font-weight:800; }
+  .hero h1 b{ color:var(--terra); }
+  .hero p{ color:var(--muted); margin-top:8px; font-size:15px; }
+  .tag{ display:inline-flex; align-items:center; gap:6px; background:var(--accent-soft); color:var(--accent-ink);
+    font-size:12px; font-weight:700; padding:5px 11px; border-radius:999px; margin-bottom:12px; }
+
+  /* ---------- Brand layout ---------- */
+  .brand-grid{ display:grid; grid-template-columns:340px 1fr; gap:24px; align-items:start; padding-bottom:40px; }
+  .card{ background:var(--surface); border:1px solid var(--line); border-radius:var(--radius); box-shadow:var(--shadow); }
+  .filter{ position:sticky; top:84px; padding:20px; }
+  .filter h3{ font-size:13px; font-weight:800; letter-spacing:.02em; color:var(--muted); text-transform:uppercase; }
+  .fblock{ margin-top:18px; }
+  .fblock:first-of-type{ margin-top:14px; }
+  .flabel{ font-size:13px; font-weight:700; margin-bottom:9px; display:flex; justify-content:space-between; align-items:baseline; }
+  .flabel span{ color:var(--accent-ink); font-weight:800; }
+  .chips{ display:flex; flex-wrap:wrap; gap:7px; }
+  .chip{ border:1px solid var(--line); background:#fff; color:var(--muted); font-size:13px; font-weight:600;
+    padding:7px 12px; border-radius:999px; transition:.15s; }
+  .chip:hover{ border-color:var(--accent); color:var(--ink); }
+  .chip.active{ background:var(--accent); border-color:var(--ink); color:var(--accent-on); }
+  input[type=range]{ width:100%; accent-color:var(--accent); margin-top:4px; }
+  .field{ width:100%; border:1px solid var(--line); border-radius:10px; padding:10px 12px; font-size:14px;
+    font-family:inherit; color:var(--ink); background:#fff; }
+  .field:focus{ outline:none; border-color:var(--accent); }
+  .hint{ font-size:12px; color:var(--muted2); margin-top:7px; }
+
+  /* ---------- Results ---------- */
+  .results-head{ display:flex; align-items:baseline; gap:10px; margin-bottom:14px; }
+  .results-head h2{ font-size:18px; font-weight:800; letter-spacing:-.02em; }
+  .results-head .count{ color:var(--muted); font-size:14px; font-weight:600; }
+  .grid-cards{ display:grid; gap:16px; }
+  .space-card{ background:var(--surface); border:1px solid var(--line); border-radius:var(--radius);
+    box-shadow:var(--shadow); overflow:hidden; display:grid; grid-template-columns:108px 1fr 150px; }
+  .space-card.best{ border-color:var(--accent); box-shadow:0 0 0 1px var(--accent), var(--shadow); }
+  .space-emoji{ position:relative; background:linear-gradient(160deg,#FBF6EA,#EEE4CE); display:grid; place-items:center; font-size:42px; }
+  body[data-mode] .space-emoji{ }
+  .best-ribbon{ position:absolute; top:10px; left:-2px; background:var(--ink); color:var(--gold); font-size:10px;
+    font-weight:800; letter-spacing:.06em; padding:3px 9px; border-radius:0 6px 6px 0; }
+  .space-body{ padding:16px 16px 14px; min-width:0; }
+  .space-head{ display:flex; align-items:center; gap:8px; flex-wrap:wrap; }
+  .space-head h3{ font-size:16px; font-weight:800; letter-spacing:-.02em; }
+  .branch{ font-size:12px; font-weight:700; color:var(--accent-ink); background:var(--accent-soft); padding:3px 8px; border-radius:999px; }
+  .space-desc{ color:var(--muted); font-size:13px; margin-top:6px; }
+  .tagrow{ display:flex; flex-wrap:wrap; gap:6px; margin-top:11px; }
+  .mini{ font-size:11.5px; font-weight:700; padding:3px 8px; border-radius:6px; background:#F3EFE9; color:#6F665C; }
+  .mini.cat{ background:#E9EEF3; color:#43586E; }
+  .meta{ display:flex; flex-wrap:wrap; gap:14px; margin-top:12px; font-size:12.5px; color:var(--muted); }
+  .meta b{ color:var(--ink); font-weight:700; }
+  .reasons{ display:flex; flex-wrap:wrap; gap:6px; margin-top:12px; }
+  .reason{ font-size:11.5px; font-weight:700; padding:4px 9px; border-radius:999px; display:inline-flex; align-items:center; gap:4px; }
+  .reason.ok{ background:var(--good-soft); color:var(--good); }
+  .reason.no{ background:#F1EEE9; color:var(--muted2); }
+  .space-foot{ border-left:1px solid var(--line2); padding:16px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:12px; text-align:center; }
+  .score{ font-weight:800; }
+  .score .num{ font-size:30px; letter-spacing:-.03em; line-height:1; }
+  .score .lab{ font-size:11px; font-weight:700; color:var(--muted); display:block; margin-top:4px; }
+  .score.good .num{ color:var(--good); } .score.mid .num{ color:var(--warn); } .score.low .num{ color:var(--muted2); }
+  .btn{ width:100%; padding:10px 14px; border-radius:10px; font-weight:800; font-size:13.5px; transition:.15s; }
+  .btn-primary{ background:var(--ink); color:var(--cream); border:2px solid var(--ink); }
+  .btn-primary:hover{ background:#000; }
+  .btn-primary:disabled{ background:#E7E1D3; color:var(--muted2); border-color:#E7E1D3; cursor:default; }
+  .btn-ghost{ background:#fff; border:1px solid var(--line); color:var(--ink); }
+  .btn-ghost:hover{ border-color:var(--accent); }
+
+  /* ---------- My applications ---------- */
+  .section-title{ font-size:18px; font-weight:800; letter-spacing:-.02em; margin:34px 0 14px; }
+  .myapps{ display:grid; grid-template-columns:repeat(auto-fill,minmax(250px,1fr)); gap:14px; }
+  .appcard{ background:var(--surface); border:1px solid var(--line); border-radius:14px; padding:15px; box-shadow:var(--shadow); }
+  .appcard .row1{ display:flex; justify-content:space-between; align-items:flex-start; gap:8px; }
+  .appcard h4{ font-size:15px; font-weight:800; }
+  .appcard .sub{ font-size:12.5px; color:var(--muted); margin-top:3px; }
+  .badge{ font-size:11.5px; font-weight:800; padding:4px 9px; border-radius:999px; white-space:nowrap; }
+  .badge.wait{ background:var(--warn-soft); color:var(--warn); }
+  .badge.ok{ background:var(--good-soft); color:var(--good); }
+  .badge.no{ background:var(--bad-soft); color:var(--bad); }
+  .empty{ background:var(--surface); border:1px dashed var(--line); border-radius:14px; padding:30px; text-align:center; color:var(--muted); font-size:14px; }
+
+  /* ---------- Operator ---------- */
+  .stats{ display:grid; grid-template-columns:repeat(4,1fr); gap:14px; margin:6px 0 22px; }
+  .stat{ background:var(--surface); border:1px solid var(--line); border-radius:14px; padding:16px 18px; box-shadow:var(--shadow); }
+  .stat .n{ font-size:26px; font-weight:800; letter-spacing:-.03em; }
+  .stat .l{ font-size:12.5px; color:var(--muted); font-weight:600; margin-top:2px; }
+  .stat .n.accent{ color:var(--accent); }
+  .optabs{ display:flex; gap:8px; margin-bottom:16px; border-bottom:1px solid var(--line); }
+  .optab{ padding:11px 4px; margin-right:14px; font-weight:700; font-size:15px; color:var(--muted); border-bottom:2px solid transparent; margin-bottom:-1px; }
+  .optab.active{ color:var(--ink); border-color:var(--accent); }
+  .applist{ display:flex; flex-direction:column; gap:12px; padding-bottom:40px; }
+  .approw{ background:var(--surface); border:1px solid var(--line); border-radius:14px; box-shadow:var(--shadow);
+    display:grid; grid-template-columns:1.4fr 1.6fr .9fr auto; gap:16px; align-items:center; padding:16px 18px; }
+  .approw .who h4{ font-size:15.5px; font-weight:800; display:flex; align-items:center; gap:7px; }
+  .approw .who .sub{ font-size:12.5px; color:var(--muted); margin-top:3px; }
+  .approw .target{ font-size:13.5px; }
+  .approw .target b{ font-weight:800; }
+  .approw .target .sub{ font-size:12.5px; color:var(--muted); margin-top:3px; }
+  .approw .cond{ font-size:12.5px; color:var(--muted); }
+  .approw .cond b{ color:var(--ink); font-weight:700; }
+  .approw .act{ display:flex; flex-direction:column; gap:8px; align-items:flex-end; min-width:150px; }
+  .fitpill{ font-size:12px; font-weight:800; padding:4px 10px; border-radius:999px; }
+  .fitpill.good{ background:var(--good-soft); color:var(--good); }
+  .fitpill.mid{ background:var(--warn-soft); color:var(--warn); }
+  .fitpill.low{ background:#F1EEE9; color:var(--muted2); }
+  .act-btns{ display:flex; gap:8px; }
+  .btn-sm{ padding:8px 14px; border-radius:9px; font-weight:800; font-size:13px; }
+  .btn-approve{ background:var(--good); color:#fff; }
+  .btn-reject{ background:#fff; border:1px solid var(--line); color:var(--bad); }
+  .btn-approve:hover{ filter:brightness(.95);} .btn-reject:hover{ border-color:var(--bad); }
+
+  .spacegrid{ display:grid; grid-template-columns:repeat(auto-fill,minmax(290px,1fr)); gap:16px; padding-bottom:40px; }
+  .sp-card{ background:var(--surface); border:1px solid var(--line); border-radius:16px; padding:18px; box-shadow:var(--shadow); }
+  .sp-card .top{ display:flex; gap:12px; align-items:center; }
+  .sp-card .ico{ width:46px; height:46px; border-radius:12px; background:linear-gradient(160deg,#FBF6EA,#EEE4CE); border:1.5px solid var(--ink); display:grid; place-items:center; font-size:24px; }
+  .sp-card h4{ font-size:15.5px; font-weight:800; }
+  .sp-card .loc{ font-size:12px; color:var(--muted); margin-top:2px; }
+  .occ{ margin-top:14px; }
+  .occ-bar{ height:7px; border-radius:999px; background:#EEE9E2; overflow:hidden; }
+  .occ-bar > i{ display:block; height:100%; background:var(--accent); border-radius:999px; }
+  .occ-lab{ font-size:12px; color:var(--muted); margin-top:7px; display:flex; justify-content:space-between; }
+  .months{ display:flex; flex-wrap:wrap; gap:6px; margin-top:13px; }
+  .mchip{ font-size:11.5px; font-weight:700; padding:4px 9px; border-radius:7px; }
+  .mchip.free{ background:var(--good-soft); color:var(--good); }
+  .mchip.booked{ background:#F1EEE9; color:var(--muted2); text-decoration:line-through; }
+
+  /* ---------- Visitor · 게임 서비스 ---------- */
+  .visitor-grid{ display:grid; grid-template-columns:1fr 340px; gap:24px; align-items:start; }
+  .game-card{ padding:20px; }
+  .game-top{ display:flex; justify-content:space-between; align-items:center; gap:14px; flex-wrap:wrap; }
+  .game-id{ display:flex; gap:12px; align-items:center; }
+  .game-ico{ width:48px; height:48px; border-radius:13px; background:var(--accent); color:var(--accent-on); border:2px solid var(--ink); display:grid; place-items:center; font-size:24px; }
+  .game-id h3{ font-size:18px; font-weight:800; letter-spacing:-.02em; }
+  .by{ font-size:11px; font-weight:800; color:var(--accent-ink); background:var(--accent-soft); padding:2px 7px; border-radius:6px; margin-left:5px; }
+  .game-sub{ font-size:13px; color:var(--muted); margin-top:3px; }
+  .fullbtn{ width:auto; padding:10px 16px; text-decoration:none; display:inline-block; }
+
+  .mg-bar{ height:8px; border-radius:999px; background:#EEE9E2; overflow:hidden; margin-top:22px; }
+  .mg-bar>i{ display:block; height:100%; background:var(--accent); border-radius:999px; transition:width .1s linear; }
+  .mg-stat{ display:flex; gap:18px; margin-top:12px; font-size:13px; color:var(--muted); }
+  .mg-stat b{ color:var(--ink); font-weight:800; }
+  .mg-prompt{ text-align:center; color:var(--muted); font-size:13px; margin-top:24px; font-weight:600; }
+  .mg-word{ text-align:center; font-size:42px; font-weight:800; letter-spacing:-.02em; margin:6px 0 24px; }
+  .mg-opts{ display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+  .mg-opt{ padding:16px; border-radius:12px; border:1px solid var(--line); background:#fff; font-size:16px; font-weight:700; color:var(--ink); transition:.12s; }
+  .mg-opt:hover:not(:disabled){ border-color:var(--accent); }
+  .mg-opt.right{ background:var(--good-soft); border-color:var(--good); color:var(--good); }
+  .mg-opt.wrong{ background:var(--bad-soft); border-color:var(--bad); color:var(--bad); }
+  .mg-end{ text-align:center; padding:34px 10px; }
+  .mg-end-ico{ font-size:50px; }
+  .mg-end h3{ font-size:22px; font-weight:800; margin-top:8px; }
+  .mg-end p{ color:var(--muted); margin-top:8px; }
+  .mg-end p b{ color:var(--ink); }
+  .mg-end-btns{ display:flex; gap:10px; justify-content:center; margin-top:20px; flex-wrap:wrap; }
+  .mg-end-btns .btn{ width:auto; padding:11px 18px; text-decoration:none; }
+
+  .reward-card{ padding:20px; }
+  .reward-head{ display:flex; justify-content:space-between; gap:10px; align-items:flex-start; }
+  .reward-head h3{ font-size:16px; font-weight:800; }
+  .reward-sub{ font-size:12.5px; color:var(--muted); margin-top:4px; }
+  .stamp-count{ text-align:center; background:var(--accent-soft); border-radius:12px; padding:8px 12px; min-width:66px; }
+  .stamp-count span{ font-size:24px; font-weight:800; color:var(--accent-ink); display:block; line-height:1.1; }
+  .stamp-count small{ font-size:11px; color:var(--accent-ink); font-weight:700; }
+  #rewardList{ margin-top:16px; display:flex; flex-direction:column; gap:10px; }
+  .reward{ display:flex; align-items:center; gap:12px; padding:12px; border:1px solid var(--line); border-radius:12px; }
+  .reward-ico{ width:38px; height:38px; border-radius:10px; background:#F3EFE9; display:grid; place-items:center; font-size:20px; flex:none; }
+  .reward-info{ flex:1; min-width:0; }
+  .reward-info h4{ font-size:14px; font-weight:800; }
+  .reward-info p{ font-size:12.5px; color:var(--muted); }
+  .reward-btn{ background:var(--accent); color:var(--accent-on); border:1.5px solid var(--ink); white-space:nowrap; }
+  .reward-btn.off{ background:#EEE9E2; color:var(--muted2); cursor:default; }
+  .reward-note{ font-size:11.5px; color:var(--muted2); margin-top:14px; line-height:1.6; }
+
+  .howit{ padding-bottom:44px; }
+  .how-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:16px; }
+  .how{ background:var(--surface); border:1px solid var(--line); border-radius:16px; padding:20px; box-shadow:var(--shadow); }
+  .how .hn{ width:30px; height:30px; border-radius:9px; background:var(--accent-soft); color:var(--accent-ink); font-weight:800; display:grid; place-items:center; }
+  .how h4{ font-size:15px; font-weight:800; margin-top:13px; }
+  .how p{ font-size:13px; color:var(--muted); margin-top:6px; }
+  @media (max-width:900px){
+    .visitor-grid{ grid-template-columns:1fr; }
+    .how-grid{ grid-template-columns:1fr; }
+    .mg-opts{ grid-template-columns:1fr 1fr; }
+  }
+
+  /* ---------- Space concept showcase (brand) ---------- */
+  .space-show{ display:grid; grid-template-columns:minmax(0,1.05fr) 1fr; gap:0; overflow:hidden; margin-bottom:24px; border:2px solid var(--ink); }
+  .space-illust{ background:#FAF5EB; border-right:2px solid var(--ink); min-height:240px; }
+  .space-illust svg{ display:block; width:100%; height:100%; }
+  .space-info{ padding:22px 24px; }
+  .space-info .tag{ margin-bottom:0; }
+  .space-info h2{ font-size:20px; font-weight:800; letter-spacing:-.02em; margin-top:11px; }
+  .space-info h2 b{ color:var(--terra); }
+  .space-info p{ font-size:13.5px; color:var(--muted); margin-top:8px; }
+  .space-legend{ display:grid; grid-template-columns:1fr 1fr; gap:9px; margin-top:16px; }
+  .space-legend span{ display:flex; align-items:center; gap:8px; font-size:12.5px; font-weight:600; }
+  .space-legend i{ width:16px; height:16px; border-radius:4px; flex:none; border:1.5px solid var(--ink); }
+  .space-brands{ margin-top:16px; font-size:13px; color:var(--muted); }
+  .space-brands b{ color:var(--ink); font-weight:800; }
+
+  /* ---------- Visitor check-in (QR) ---------- */
+  .checkin{ display:flex; gap:18px; align-items:center; background:var(--surface); border:2px solid var(--ink);
+    border-radius:18px; padding:16px 20px; margin-bottom:22px; box-shadow:var(--shadow); }
+  .qr{ width:94px; height:94px; flex:none; background:#fff; border:2px solid var(--ink); border-radius:10px; padding:6px; }
+  .checkin-body{ min-width:0; }
+  .checkin-tag{ font-size:12px; font-weight:800; color:var(--accent-ink); background:var(--accent-soft); padding:3px 10px; border-radius:999px; }
+  .checkin-body h3{ font-size:17px; font-weight:800; margin-top:9px; letter-spacing:-.01em; }
+  .checkin-body p{ font-size:13px; color:var(--muted); margin-top:5px; }
+  .checkin-steps{ display:flex; gap:8px; margin-top:12px; flex-wrap:wrap; }
+  .cstep{ font-size:12px; font-weight:700; padding:5px 11px; border-radius:999px; background:#F1ECE0; color:var(--muted); border:1.5px solid transparent; }
+  .cstep.done{ background:var(--accent-soft); color:var(--accent-ink); border-color:var(--ink); }
+
+  /* ---------- Sponsor / theme ---------- */
+  .sponsor-row{ display:flex; align-items:center; gap:10px; margin-top:16px; flex-wrap:wrap; }
+  .sponsor-label{ font-size:12.5px; font-weight:800; color:var(--muted); }
+  .sponsor-chips{ display:flex; gap:8px; flex-wrap:wrap; }
+  .sp-chip{ font-size:12.5px; font-weight:700; padding:7px 12px; border-radius:999px; border:1.5px solid var(--line);
+    background:#fff; color:var(--muted); transition:.14s; }
+  .sp-chip:hover{ border-color:var(--ink); color:var(--ink); }
+  .sp-chip.active{ background:var(--accent); border-color:var(--ink); color:var(--accent-on); }
+  .mg-theme{ text-align:center; font-size:12px; font-weight:800; color:var(--accent-ink); margin-top:18px; }
+  .reward.spon{ border-color:var(--ink); background:var(--accent-soft); }
+  .spon-badge{ font-size:10.5px; font-weight:800; color:var(--cream); background:var(--ink); padding:2px 7px; border-radius:999px; margin-left:5px; vertical-align:middle; }
+
+  @media (max-width:760px){
+    .space-show{ grid-template-columns:1fr; }
+    .space-illust{ border-right:none; border-bottom:2px solid var(--ink); }
+    .checkin{ flex-direction:column; align-items:flex-start; }
+  }
+
+  /* ---------- MVP: modal / gate / op-bar ---------- */
+  .modal{ position:fixed; inset:0; z-index:90; background:rgba(20,16,12,.45); display:grid; place-items:center; padding:20px; }
+  .modal[hidden]{ display:none; }
+  .modal-card{ background:var(--surface); border:2px solid var(--ink); border-radius:18px; box-shadow:0 24px 60px rgba(0,0,0,.32);
+    width:100%; max-width:440px; padding:24px; position:relative; max-height:92vh; overflow:auto; }
+  .modal-x{ position:absolute; top:10px; right:14px; font-size:26px; line-height:1; color:var(--muted); background:none; cursor:pointer; }
+  .modal-card h3{ font-size:19px; font-weight:800; padding-right:24px; }
+  .am-sub{ font-size:13px; color:var(--muted); margin-top:5px; }
+  .am-field{ margin-top:14px; }
+  .am-field label{ display:block; font-size:12.5px; font-weight:700; margin-bottom:6px; }
+  .am-summary{ margin-top:16px; background:var(--accent-soft); border:1px solid var(--line); border-radius:10px; padding:12px 13px; font-size:12.5px; color:var(--accent-ink); font-weight:700; }
+  .gate{ max-width:380px; margin:24px auto; text-align:center; background:var(--surface); border:2px solid var(--ink); border-radius:16px; padding:30px 26px; box-shadow:var(--shadow); }
+  .gate-ico{ font-size:38px; }
+  .gate h3{ font-size:19px; font-weight:800; margin-top:8px; }
+  .gate p{ font-size:13px; color:var(--muted); margin-top:8px; }
+  .gate .field{ margin-top:16px; text-align:center; }
+  .gate .btn{ width:100%; margin-top:12px; }
+  .gate-hint{ font-size:11.5px; color:var(--muted2); margin-top:14px; }
+  .op-bar{ display:flex; gap:8px; justify-content:flex-end; margin:-4px 0 14px; flex-wrap:wrap; }
+  .op-act{ background:#fff; border:1.5px solid var(--line); color:var(--muted); border-radius:9px; padding:8px 12px; font-weight:800; font-size:12.5px; cursor:pointer; }
+  .op-act:hover{ border-color:var(--ink); color:var(--ink); }
+  .approw .who .contact{ font-size:12px; color:var(--accent-ink); font-weight:700; margin-top:4px; }
+
+  /* ---------- Toast / footer ---------- */
+  #toast{ position:fixed; bottom:24px; left:50%; transform:translateX(-50%) translateY(20px);
+    background:var(--ink); color:#fff; padding:12px 20px; border-radius:12px; font-size:14px; font-weight:600;
+    opacity:0; pointer-events:none; transition:.25s; z-index:80; box-shadow:0 10px 30px rgba(0,0,0,.2); }
+  #toast.show{ opacity:1; transform:translateX(-50%) translateY(0); }
+  footer{ border-top:1px solid var(--line); color:var(--muted2); font-size:12.5px; padding:20px 0 36px; }
+  .brand-footer{ text-align:center; padding:34px 0 44px; border-top:2px solid var(--ink); }
+  .bf-lockup{ display:inline-flex; flex-direction:column; align-items:center; gap:6px; }
+  .bf-lockup .logo-name{ font-weight:900; font-size:32px; letter-spacing:1px; color:var(--ink); }
+  .bf-lockup .logo-pill{ background:var(--ink); color:var(--gold); font-size:12px; font-weight:800;
+    letter-spacing:5px; padding:5px 14px; border-radius:999px; }
+  .bf-tag{ color:var(--terra); font-weight:700; font-size:15px; margin-top:15px; }
+  .bf-meta{ color:var(--muted2); font-size:12.5px; margin-top:8px; }
+
+  @media (max-width:900px){
+    .brand-grid{ grid-template-columns:1fr; }
+    .filter{ position:static; }
+    .space-card{ grid-template-columns:1fr; }
+    .space-emoji{ height:88px; }
+    .space-foot{ border-left:none; border-top:1px solid var(--line2); flex-direction:row; }
+    .stats{ grid-template-columns:repeat(2,1fr); }
+    .approw{ grid-template-columns:1fr; gap:12px; }
+    .approw .act{ align-items:stretch; }
+  }
+</style>
+</head>
+<body data-mode="brand">
+
+  <!-- Topbar -->
+  <div class="topbar">
+    <div class="wrap topbar-in">
+      <div class="logo">
+        <svg class="logo-face" viewBox="305 222 488 620" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <g stroke="#141413" stroke-width="14" stroke-linejoin="round" stroke-linecap="round">
+            <path d="M540,235 C690,235 770,360 770,540 C770,720 680,825 540,825 C400,825 320,710 320,540 C320,360 390,235 540,235 Z" fill="#F5B60B"/>
+            <path d="M540,250 C610,250 670,300 700,360 C672,430 690,440 778,478 C840,512 838,520 800,548 C742,560 760,585 786,600 C740,628 742,632 720,648 C760,672 742,690 700,742 C648,790 600,805 540,810 L540,250 Z" fill="#FAF5EB"/>
+            <path d="M540,540 L320,540 C328,690 410,795 540,812 Z" fill="#5B7FA6"/>
+            <path d="M540,235 C430,235 360,300 335,395 C400,360 470,350 540,355 C560,300 560,265 540,235 Z" fill="#141413"/>
+            <ellipse cx="445" cy="470" rx="62" ry="42" fill="#FAF5EB"/>
+            <circle cx="462" cy="470" r="22" fill="#141413"/>
+            <path d="M388,408 C430,388 490,392 512,410" fill="none"/>
+            <path d="M628,452 C660,432 705,438 724,460 C700,478 660,480 628,452 Z" fill="#FAF5EB"/>
+            <circle cx="690" cy="458" r="13" fill="#141413"/>
+            <polygon points="540,470 600,640 470,640" fill="#C75D3A"/>
+            <path d="M455,705 C500,690 560,690 600,705 C560,742 500,742 455,705 Z" fill="#C75D3A"/>
+          </g>
+        </svg>
+        <div class="logo-txt">
+          <svg class="logo-letters" viewBox="85 185 930 275" xmlns="http://www.w3.org/2000/svg" aria-label="DOYOU">
+            <g stroke="#141413" stroke-width="11" stroke-linejoin="round" stroke-linecap="round">
+              <g transform="translate(70,180) rotate(-3 90 140)" fill="#F5B60B"><path fill-rule="evenodd" d="M20,22 L102,26 Q176,40 174,142 Q172,250 96,256 L22,250 Z M70,78 L100,80 Q124,92 123,142 Q122,196 98,202 L70,200 Z"/></g>
+              <g transform="translate(258,168) rotate(2 95 140)" fill="#5B7FA6"><path fill-rule="evenodd" d="M96,22 Q172,26 170,142 Q168,256 95,256 Q22,256 20,140 Q22,24 96,22 Z M95,80 Q122,82 121,142 Q120,200 95,200 Q70,200 70,140 Q71,82 95,80 Z"/></g>
+              <g transform="translate(448,188) rotate(-2 95 140)" fill="#C75D3A"><path d="M18,24 L74,20 L98,120 L126,22 L182,26 L122,168 L120,256 L78,254 L80,166 Z"/></g>
+              <g transform="translate(632,172) rotate(3 95 140)" fill="#F5B60B"><path fill-rule="evenodd" d="M96,22 Q172,26 170,142 Q168,256 95,256 Q22,256 20,140 Q22,24 96,22 Z M95,80 Q122,82 121,142 Q120,200 95,200 Q70,200 70,140 Q71,82 95,80 Z"/></g>
+              <g transform="translate(820,184) rotate(-1 95 140)" fill="#141413"><path d="M18,22 L72,24 L70,186 Q70,206 100,206 Q130,206 128,186 L128,24 L184,22 L182,192 Q180,260 100,262 Q20,260 20,192 Z"/></g>
+            </g>
+          </svg>
+          <span class="logo-pill">POP-UP STORE</span>
+        </div>
+      </div>
+      <a class="hublink" href="doyou-hub.html">← 허브</a>
+      <div class="seg" id="seg">
+        <button data-mode="brand" class="active">브랜드 입점</button>
+        <button data-mode="operator">운영자</button>
+        <button data-mode="visitor">방문객 게임</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ BRAND VIEW ============ -->
+  <main id="brandView" class="wrap">
+    <section class="hero">
+      <span class="tag">🎨 도유 1호점 · 성수 본점 · 매주 브랜드 로테이션</span>
+      <h1>우리 브랜드에 딱 맞는 <b>도유 본점 입점 존</b>을 찾아보세요</h1>
+      <p>도유 1호점(성수 본점)은 큐비즘 × 도화지 컨셉의 10평 팝업. 성격 · 입점 존 · 희망 기간 · 예산만 고르면 맞는 입점 존을 추천해드려요.</p>
+    </section>
+
+    <section class="space-show card">
+      <div class="space-illust">
+        <svg viewBox="58 138 968 712" xmlns="http://www.w3.org/2000/svg" aria-label="도유 팝업 인테리어">
+          <g stroke="#141413" stroke-width="3" stroke-linejoin="round">
+            <polygon points="70,150 1010,150 700,360 380,360" fill="#2A2722"/>
+            <polygon points="70,150 380,360 380,640 70,840" fill="#F4EEDF"/>
+            <polygon points="1010,150 700,360 700,640 1010,840" fill="#EFE9DA"/>
+            <polygon points="70,840 1010,840 700,640 380,640" fill="#E7DDC8"/>
+            <polygon points="380,360 700,360 700,640 380,640" fill="#F5B60B"/>
+          </g>
+          <g stroke="#141413" stroke-width="2.5" stroke-linejoin="round">
+            <polygon points="70,840 380,640 540,640 330,840" fill="#F5B60B" opacity="0.92"/>
+            <polygon points="560,840 540,640 700,640 1010,840" fill="#C75D3A" opacity="0.92"/>
+            <polygon points="330,840 540,640 560,840" fill="#5B7FA6" opacity="0.85"/>
+          </g>
+          <g stroke="#C2901A" stroke-width="4" stroke-dasharray="14 10">
+            <line x1="300" y1="200" x2="455" y2="360"/><line x1="540" y1="190" x2="540" y2="360"/><line x1="780" y1="200" x2="625" y2="360"/>
+          </g>
+          <g fill="#F5B60B" stroke="#141413" stroke-width="2">
+            <circle cx="455" cy="300" r="8"/><circle cx="540" cy="290" r="8"/><circle cx="625" cy="300" r="8"/>
+          </g>
+          <polygon points="70,150 300,150 200,260 110,210" fill="#F5B60B" opacity="0.85" stroke="#141413" stroke-width="2"/>
+          <g stroke="#141413" stroke-width="3">
+            <polygon points="1010,300 860,330 860,800 1010,840" fill="#2A2722"/>
+            <polygon points="998,318 876,344 876,786 998,818" fill="#C6D3D8"/>
+            <line x1="892" y1="560" x2="892" y2="640" stroke="#3A352E" stroke-width="8"/>
+          </g>
+          <g transform="translate(308,278) scale(0.40)">
+            <g stroke="#141413" stroke-width="9" stroke-linejoin="round" stroke-linecap="round">
+              <path d="M540,235 C690,235 770,360 770,540 C770,720 680,825 540,825 C400,825 320,710 320,540 C320,360 390,235 540,235 Z" fill="#F5B60B"/>
+              <path d="M540,250 C610,250 670,300 700,360 C672,430 690,440 778,478 C840,512 838,520 800,548 C742,560 760,585 786,600 C740,628 742,632 720,648 C760,672 742,690 700,742 C648,790 600,805 540,810 L540,250 Z" fill="#FAF5EB"/>
+              <path d="M540,540 L320,540 C328,690 410,795 540,812 Z" fill="#5B7FA6"/>
+              <path d="M540,235 C430,235 360,300 335,395 C400,360 470,350 540,355 C560,300 560,265 540,235 Z" fill="#141413"/>
+              <ellipse cx="445" cy="470" rx="62" ry="42" fill="#FAF5EB"/><circle cx="462" cy="470" r="22" fill="#141413"/>
+              <path d="M628,452 C660,432 705,438 724,460 C700,478 660,480 628,452 Z" fill="#FAF5EB"/><circle cx="690" cy="458" r="13" fill="#141413"/>
+              <polygon points="540,470 600,640 470,640" fill="#C75D3A"/>
+              <path d="M455,705 C500,690 560,690 600,705 C560,742 500,742 455,705 Z" fill="#C75D3A"/>
+            </g>
+          </g>
+          <g stroke="#141413" stroke-width="3" stroke-linejoin="round">
+            <polygon points="470,720 540,720 560,760 490,760" fill="#F7C638"/>
+            <polygon points="470,720 490,760 490,800 470,760" fill="#E0A615"/>
+            <polygon points="540,720 560,760 560,800 540,760" fill="#D89A12"/>
+            <polygon points="490,760 560,760 560,800 490,800" fill="#F5B60B"/>
+            <path d="M608,740 L608,792 A42,14 0 0 0 692,792 L692,740" fill="#C75D3A"/>
+            <ellipse cx="650" cy="740" rx="42" ry="14" fill="#D2613C"/>
+          </g>
+        </svg>
+      </div>
+      <div class="space-info">
+        <span class="tag">🏠 도유 1호점 · 성수 본점 (10평)</span>
+        <h2>브랜드는 <b>“프레임”</b>, 입점 브랜드는 <b>“캔버스”</b></h2>
+        <p>큐비즘 × 도화지 컨셉. 골드 포토월(인증샷)은 그대로 두고, 중립 도화지 벽은 입점 브랜드가 자유롭게 연출해요.</p>
+        <div class="space-legend">
+          <span><i style="background:#F5B60B"></i>포토월 · 인증샷</span>
+          <span><i style="background:#F4EEDF"></i>도화지 벽 · 자유 연출</span>
+          <span><i style="background:#C75D3A"></i>큐비즘 페인티드 바닥</span>
+          <span><i style="background:#2A2722"></i>다크 천장 · 트랙조명</span>
+        </div>
+        <div class="space-brands">이번 주 입점: <b>올리브뷰티</b> · <b>무드캔들</b> · <b>스트릿웨이브</b></div>
+      </div>
+    </section>
+
+    <div class="brand-grid">
+      <!-- Filter -->
+      <aside class="card filter">
+        <h3>입점 조건</h3>
+
+        <div class="fblock">
+          <div class="flabel">브랜드명 <span style="color:var(--muted2);font-weight:600">선택</span></div>
+          <input class="field" id="brandName" placeholder="예) 무드무드 스튜디오" />
+        </div>
+
+        <div class="fblock">
+          <div class="flabel">브랜드 성격</div>
+          <div class="chips" id="catChips"></div>
+        </div>
+
+        <div class="fblock">
+          <div class="flabel">입점 종류</div>
+          <div class="chips" id="typeChips"></div>
+        </div>
+
+        <div class="fblock">
+          <div class="flabel">희망 기간 <span id="monthLab"></span></div>
+          <div class="chips" id="monthChips"></div>
+        </div>
+
+        <div class="fblock">
+          <div class="flabel">월 예산 <span id="budgetLab"></span></div>
+          <input type="range" id="budget" min="1500000" max="8000000" step="250000" value="3000000" />
+          <div class="hint">슬라이더를 움직이면 매칭이 실시간으로 갱신돼요.</div>
+        </div>
+      </aside>
+
+      <!-- Results -->
+      <section>
+        <div class="results-head">
+          <h2>추천 입점 존</h2>
+          <span class="count" id="resCount"></span>
+        </div>
+        <div class="grid-cards" id="results"></div>
+
+        <h2 class="section-title">내 입점 신청 내역</h2>
+        <div id="myApps"></div>
+      </section>
+    </div>
+  </main>
+
+  <!-- ============ OPERATOR VIEW ============ -->
+  <main id="operatorView" class="wrap" hidden>
+    <section class="hero">
+      <span class="tag">🏬 DOYOU 성수 본점 · 운영자 콘솔</span>
+      <h1>입점 신청 관리 &amp; 공간 현황</h1>
+      <p>DOYOU 팝업스토어에 입점하려는 브랜드의 신청을 매칭 점수와 함께 검토하고, 승인 한 번으로 해당 기간을 배정하세요.</p>
+    </section>
+
+    <div class="stats" id="stats"></div>
+
+    <div class="optabs" id="opTabs">
+      <button class="optab active" data-tab="apps">입점 신청 관리</button>
+      <button class="optab" data-tab="spaces">공간 현황</button>
+    </div>
+    <div class="op-bar" id="opBar"></div>
+    <div id="opContent"></div>
+  </main>
+
+  <!-- ============ VISITOR · GAME VIEW ============ -->
+  <main id="visitorView" class="wrap" hidden>
+    <section class="hero">
+      <span class="tag">🎮 DOYOU POP-UP STORE · 게임 서비스</span>
+      <h1><b>Vocab Rush</b> · 도유 팝업이 지루하지 않게</h1>
+      <p>매주 바뀌는 팝업을 둘러보고 기다리는 시간, 타이머 단어 게임 한 판으로 즐겁게. 점수만큼 스탬프를 모아 입점 브랜드 혜택으로 바꿔보세요.</p>
+    </section>
+
+    <section class="checkin">
+      <div class="qr" id="qrBox"></div>
+      <div class="checkin-body">
+        <span class="checkin-tag">📍 도유 성수 팝업스토어 · 입장 QR</span>
+        <h3>QR 체크인하면 바로 게임이 시작돼요</h3>
+        <p>매장 입구 QR 스캔 → 체크인 완료 → Vocab Rush 플레이 → 스탬프로 입점 브랜드 혜택 교환.</p>
+        <div class="checkin-steps">
+          <span class="cstep done">① QR 체크인 완료</span>
+          <span class="cstep">② 게임 플레이</span>
+          <span class="cstep">③ 스탬프 교환</span>
+        </div>
+      </div>
+    </section>
+
+    <div class="visitor-grid">
+      <!-- 게임 -->
+      <section class="card game-card">
+        <div class="game-top">
+          <div class="game-id">
+            <div class="game-ico">⚡</div>
+            <div>
+              <h3>Vocab Rush <span class="by">by DOYOU</span></h3>
+              <p class="game-sub">도유 팝업 스토어가 제공 · 개발 DataPD.ai</p>
+            </div>
+          </div>
+          <a class="btn btn-primary fullbtn" href="https://www.datapd.ai" target="_blank" rel="noopener">풀 버전 플레이 ↗</a>
+        </div>
+        <div class="sponsor-row">
+          <span class="sponsor-label">이번 주 팝업</span>
+          <div class="sponsor-chips" id="sponsorChips"></div>
+        </div>
+        <div id="miniGame"></div>
+      </section>
+
+      <!-- 리워드 -->
+      <aside class="card reward-card">
+        <div class="reward-head">
+          <div>
+            <h3>스탬프 리워드</h3>
+            <p class="reward-sub">게임 점수로 모은 스탬프를 입점 브랜드 혜택으로 교환</p>
+          </div>
+          <div class="stamp-count"><span id="stampNum">0</span><small>스탬프</small></div>
+        </div>
+        <div id="rewardList"></div>
+        <p class="reward-note">※ 스탬프는 현재 <b>도유 성수 본점</b> 입점 브랜드에서 사용할 수 있어요.</p>
+      </aside>
+    </div>
+
+    <section class="howit">
+      <h2 class="section-title">도유 팝업 × Vocab Rush, 이렇게 연결돼요</h2>
+      <div class="how-grid">
+        <div class="how"><div class="hn">1</div><h4>방문객이 즐겨요</h4><p>팝업을 둘러보며 단어 게임으로 체류 시간을 자연스럽게 늘려요.</p></div>
+        <div class="how"><div class="hn">2</div><h4>스탬프를 모아요</h4><p>점수만큼 스탬프 적립 → 입점 브랜드 쿠폰으로 교환해요.</p></div>
+        <div class="how"><div class="hn">3</div><h4>브랜드가 노출돼요</h4><p>리워드가 입점 브랜드 구매 전환까지 이어지는 선순환.</p></div>
+      </div>
+    </section>
+  </main>
+
+  <!-- 입점 신청 폼 모달 -->
+  <div id="applyModal" class="modal" hidden>
+    <div class="modal-card">
+      <button class="modal-x" id="modalX" aria-label="닫기">×</button>
+      <h3 id="amTitle">입점 신청</h3>
+      <p class="am-sub" id="amSub"></p>
+      <div class="am-field"><label>브랜드명 *</label><input id="amBrand" class="field" placeholder="브랜드명" /></div>
+      <div class="am-field"><label>담당자명 *</label><input id="amContact" class="field" placeholder="담당자 이름" /></div>
+      <div class="am-field"><label>연락처 (이메일 또는 전화) *</label><input id="amPhone" class="field" placeholder="email@brand.com / 010-0000-0000" /></div>
+      <div class="am-field"><label>한 줄 소개</label><input id="amNote" class="field" placeholder="브랜드·제품 한 줄 소개 (선택)" /></div>
+      <div class="am-summary" id="amSummary"></div>
+      <button class="btn btn-primary" id="amSubmit" style="width:100%;margin-top:16px">입점 신청 제출</button>
+    </div>
+  </div>
+
+  <div id="toast"></div>
+  <footer class="wrap brand-footer">
+    <div class="bf-lockup"><span class="logo-name">DOYOU</span><span class="logo-pill">POP-UP STORE</span></div>
+    <p class="bf-tag">DO YOU? — 매주 새로운 브랜드를 만나는 공간</p>
+    <p class="bf-meta">@doyou_popup_store · 게임 서비스 개발 DataPD.ai · 인터랙티브 프로토타입 2026</p>
+  </footer>
+
+<script>
+/* ============== 데이터 ============== */
+const CATEGORIES = ['패션','뷰티','F&B','굿즈/캐릭터','라이프스타일','주얼리/액세서리','스트리트','디자이너'];
+const TYPES = ['상관없음','단독 존','벽면 부스','단독 부스'];
+const MONTHS = ['2026-07','2026-08','2026-09','2026-10'];
+const STORE_NAME = '도유 1호점 · 성수 본점';
+
+// 1호점(성수 본점) 한 곳의 입점 존만 운영
+const SPACES = [
+  { id:'z1', name:'포토월존', branch:'성수 본점', loc:'정면 백월 · 프리미엄', emoji:'📸',
+    types:['단독 존'], categories:['패션','뷰티','디자이너'], area:6, foot:'매우 높음',
+    price:4500000, months:['2026-07','2026-08','2026-09'], booked:[],
+    desc:'정면 골드 포토월 단독 존. 인증샷 핵심 자리, 브랜드 단독 연출에 최적.' },
+  { id:'z2', name:'도화지 벽 A', branch:'성수 본점', loc:'좌측 측벽', emoji:'🎨',
+    types:['벽면 부스'], categories:['뷰티','라이프스타일','주얼리/액세서리'], area:4, foot:'높음',
+    price:2200000, months:['2026-07','2026-08','2026-09','2026-10'], booked:[],
+    desc:'무광 화이트 도화지 벽. 픽처레일·타공으로 자유롭게 연출하는 벽면 부스.' },
+  { id:'z3', name:'도화지 벽 B', branch:'성수 본점', loc:'우측 측벽', emoji:'🎨',
+    types:['벽면 부스'], categories:['패션','스트리트','굿즈/캐릭터'], area:4, foot:'높음',
+    price:2200000, months:['2026-07','2026-09','2026-10'], booked:[],
+    desc:'우측 도화지 벽면 부스. 룩북·행거 등 디스플레이 자유도가 높아요.' },
+  { id:'z4', name:'센터 단독존', branch:'성수 본점', loc:'중앙 아일랜드', emoji:'🧊',
+    types:['단독 부스'], categories:['F&B','라이프스타일','디자이너'], area:5, foot:'높음',
+    price:3200000, months:['2026-08','2026-09','2026-10'], booked:[],
+    desc:'중앙 독립 아일랜드. 사방 노출되는 단독 부스, 시식·체험형에 적합.' },
+];
+
+let UID = 100;
+let applications = [
+  { id:'a'+(UID++), brand:'올리브뷰티', category:'뷰티', type:'벽면 부스', month:'2026-07', budget:2500000, spaceId:'z2', status:'대기' },
+  { id:'a'+(UID++), brand:'스트릿웨이브', category:'스트리트', type:'벽면 부스', month:'2026-09', budget:2500000, spaceId:'z3', status:'대기' },
+  { id:'a'+(UID++), brand:'무드캔들', category:'라이프스타일', type:'단독 부스', month:'2026-08', budget:3500000, spaceId:'z4', status:'대기' },
+];
+
+const state = { mode:'brand', opTab:'apps', stamps:0, sponsor:0,
+  q:{ brand:'', category:'패션', type:'상관없음', month:'2026-07', budget:3000000 } };
+
+/* ============== 저장소 (localStorage · 백엔드 교체 지점) ============== */
+const STORE = {
+  apps:'doyou.apps.v2', spaces:'doyou.spaces.v2', stamps:'doyou.stamps.v2',
+  get(k,f){ try{ const v=localStorage.getItem(k); return v?JSON.parse(v):f; }catch(e){ return f; } },
+  set(k,v){ try{ localStorage.setItem(k, JSON.stringify(v)); }catch(e){} },
+};
+const nowStamp = ()=>{ try{ return new Date().toISOString().slice(0,16).replace('T',' '); }catch(e){ return ''; } };
+function persist(){
+  STORE.set(STORE.apps, applications);
+  STORE.set(STORE.spaces, SPACES.map(s=>({ id:s.id, months:s.months, booked:s.booked })));
+  STORE.set(STORE.stamps, state.stamps);
+}
+function hydrate(){
+  const sa = STORE.get(STORE.apps, null);
+  if(sa){ applications.length=0; applications.push(...sa); } else { STORE.set(STORE.apps, applications); }
+  const ss = STORE.get(STORE.spaces, null);
+  if(ss){ ss.forEach(x=>{ const sp=spaceById(x.id); if(sp){ sp.months=x.months; sp.booked=x.booked; } }); }
+  const st = STORE.get(STORE.stamps, null);
+  if(st!=null) state.stamps = st;
+  const ids = applications.map(a=> parseInt(String(a.id).replace(/\D/g,''))||0);
+  UID = Math.max(UID, ...(ids.length?ids:[100])) + 1;
+}
+function resetData(){
+  if(!confirm('모든 신청·예약·스탬프 데이터를 초기화할까요? (되돌릴 수 없어요)')) return;
+  [STORE.apps, STORE.spaces, STORE.stamps].forEach(k=>{ try{ localStorage.removeItem(k); }catch(e){} });
+  location.reload();
+}
+/* MVP 운영자 게이트 + CSV */
+const OP_PASS = 'doyou';
+const opUnlocked = ()=> sessionStorage.getItem('doyou.op')==='1';
+function exportCSV(){
+  const head=['신청일시','브랜드','담당자','연락처','성격','희망종류','공간','지점','기간','예산','상태','한줄소개'];
+  const rows=applications.map(a=>{ const s=spaceById(a.spaceId)||{}; return [a.ts||'', a.brand, a.contact||'', a.phone||'', a.category, a.type, s.name||'', s.branch||'', mlabel(a.month), a.budget, a.status, a.note||'']; });
+  const csv=[head,...rows].map(r=> r.map(c=>`"${String(c).replace(/"/g,'""')}"`).join(',')).join('\r\n');
+  const blob=new Blob(['﻿'+csv], {type:'text/csv;charset=utf-8'});
+  const url=URL.createObjectURL(blob); const el=document.createElement('a'); el.href=url; el.download='doyou_입점신청.csv'; el.click(); URL.revokeObjectURL(url);
+}
+
+/* ============== 유틸 ============== */
+const $ = s => document.querySelector(s);
+const won = n => n>=10000 ? (n/10000).toLocaleString('ko-KR')+'만원' : n.toLocaleString('ko-KR')+'원';
+const mlabel = m => Number(m.split('-')[1])+'월';
+const spaceById = id => SPACES.find(s=>s.id===id);
+function toast(msg){ const t=$('#toast'); t.textContent=msg; t.classList.add('show'); clearTimeout(t._t); t._t=setTimeout(()=>t.classList.remove('show'),2200); }
+function scoreClass(s){ return s>=80?'good':s>=60?'mid':'low'; }
+
+/* ============== 매칭 점수 ============== */
+function scoreMatch(space, q){
+  let score=0; const reasons=[];
+  // 성격 40
+  if(space.categories.includes(q.category)){ score+=40; reasons.push({ok:true,t:'성격 일치'}); }
+  else { score+=10; reasons.push({ok:false,t:'성격 부분 적합'}); }
+  // 입점 종류 25
+  if(q.type==='상관없음' || space.types.includes(q.type)){ score+=25; reasons.push({ok:true,t:'입점 종류 가능'}); }
+  else { score+=5; reasons.push({ok:false,t:'종류 불일치'}); }
+  // 기간 20
+  if(space.months.includes(q.month)){ score+=20; reasons.push({ok:true,t:mlabel(q.month)+' 입점 가능'}); }
+  else { reasons.push({ok:false,t:mlabel(q.month)+' 불가'}); }
+  // 예산 15
+  const r = q.budget/space.price;
+  if(r>=1){ score+=15; reasons.push({ok:true,t:'예산 충분'}); }
+  else if(r>=0.8){ score+=10; reasons.push({ok:true,t:'예산 근접'}); }
+  else if(r>=0.6){ score+=5; reasons.push({ok:false,t:'예산 다소 부족'}); }
+  else { reasons.push({ok:false,t:'예산 부족'}); }
+  return { score, reasons };
+}
+
+/* ============== 필터 렌더 (1회) ============== */
+function buildChips(host, items, key){
+  host.innerHTML = items.map(v=>{
+    const val = key==='month'? v : v;
+    const label = key==='month'? mlabel(v) : v;
+    const active = state.q[key]===val ? ' active':'';
+    return `<button class="chip${active}" data-key="${key}" data-val="${val}">${label}</button>`;
+  }).join('');
+}
+function initFilters(){
+  buildChips($('#catChips'), CATEGORIES, 'category');
+  buildChips($('#typeChips'), TYPES, 'type');
+  buildChips($('#monthChips'), MONTHS, 'month');
+  document.querySelectorAll('.filter .chip').forEach(()=>{}); // placeholder
+  $('#monthLab').textContent = mlabel(state.q.month);
+  $('#budgetLab').textContent = won(state.q.budget);
+
+  // chip clicks
+  ['#catChips','#typeChips','#monthChips'].forEach(sel=>{
+    $(sel).addEventListener('click', e=>{
+      const b = e.target.closest('.chip'); if(!b) return;
+      const key=b.dataset.key, val=b.dataset.val;
+      state.q[key]=val;
+      $(sel).querySelectorAll('.chip').forEach(c=>c.classList.toggle('active', c===b));
+      if(key==='month') $('#monthLab').textContent = mlabel(val);
+      renderResults();
+    });
+  });
+  $('#budget').addEventListener('input', e=>{
+    state.q.budget = Number(e.target.value);
+    $('#budgetLab').textContent = won(state.q.budget);
+    renderResults();
+  });
+  $('#brandName').addEventListener('input', e=>{ state.q.brand = e.target.value.trim(); });
+}
+
+/* ============== 브랜드: 결과 렌더 ============== */
+function renderResults(){
+  const ranked = SPACES.map(s=>({ s, ...scoreMatch(s, state.q) }))
+                       .sort((a,b)=> b.score-a.score);
+  $('#resCount').textContent = `${STORE_NAME} · 입점 존 ${ranked.length}곳 · 매칭률 높은 순`;
+  const best = ranked[0].score;
+
+  $('#results').innerHTML = ranked.map(({s,score,reasons})=>{
+    const isBest = score===best && score>=60;
+    const myName = state.q.brand || '내 브랜드';
+    const applied = applications.find(a=>a.spaceId===s.id && a.month===state.q.month && a.status!=='거절' && a.brand===myName);
+    const cats = s.categories.map(c=>`<span class="mini cat">${c}</span>`).join('');
+    const types = s.types.map(t=>`<span class="mini">${t}</span>`).join('');
+    const rs = reasons.map(r=>`<span class="reason ${r.ok?'ok':'no'}">${r.ok?'✓':'·'} ${r.t}</span>`).join('');
+    return `
+    <article class="space-card ${isBest?'best':''}">
+      <div class="space-emoji">${isBest?'<span class="best-ribbon">BEST</span>':''}${s.emoji}</div>
+      <div class="space-body">
+        <div class="space-head"><h3>${s.name}</h3><span class="branch">${s.branch}</span></div>
+        <p class="space-desc">${s.desc}</p>
+        <div class="tagrow">${types}${cats}</div>
+        <div class="meta">
+          <span>📍 <b>${s.loc}</b></span>
+          <span>면적 <b>${s.area}㎡</b></span>
+          <span>유동인구 <b>${s.foot}</b></span>
+          <span>가능 <b>${s.months.map(mlabel).join('·')||'없음'}</b></span>
+        </div>
+        <div class="reasons">${rs}</div>
+      </div>
+      <div class="space-foot">
+        <div class="score ${scoreClass(score)}"><span class="num">${score}</span><span class="lab">매칭 점수</span></div>
+        <div style="font-weight:800;font-size:14px">월 ${won(s.price)}</div>
+        <button class="btn btn-primary" data-apply="${s.id}" ${applied?'disabled':''}>
+          ${applied? (applied.status==='승인'?'입점 확정 ✓':'신청 완료'):'입점 신청'}
+        </button>
+      </div>
+    </article>`;
+  }).join('');
+
+  document.querySelectorAll('[data-apply]').forEach(btn=>{
+    btn.addEventListener('click', ()=> applyToSpace(btn.dataset.apply));
+  });
+  renderMyApps();
+}
+
+let applyTarget = null;
+function applyToSpace(spaceId){
+  const s = spaceById(spaceId);
+  if(!s.months.includes(state.q.month)){ toast(`${mlabel(state.q.month)}에는 ${s.branch} 공간이 마감됐어요`); return; }
+  applyTarget = s;
+  $('#amTitle').textContent = `${s.name} 입점 신청`;
+  $('#amSub').textContent = `${s.branch} · ${mlabel(state.q.month)} · ${state.q.type==='상관없음'?s.types[0]:state.q.type}`;
+  $('#amBrand').value = state.q.brand || '';
+  $('#amContact').value=''; $('#amPhone').value=''; $('#amNote').value='';
+  $('#amSummary').innerHTML = `신청 조건 · 성격 <b>${state.q.category}</b> · 예산 <b>${won(state.q.budget)}</b> · 제안가 월 <b>${won(s.price)}</b>`;
+  $('#applyModal').hidden = false;
+  setTimeout(()=>$('#amBrand').focus(), 40);
+}
+function submitApplication(){
+  const s = applyTarget; if(!s) return;
+  const brand=$('#amBrand').value.trim(), contact=$('#amContact').value.trim(), phone=$('#amPhone').value.trim(), note=$('#amNote').value.trim();
+  if(!brand || !contact || !phone){ toast('브랜드명 · 담당자 · 연락처는 필수예요'); return; }
+  if(!s.months.includes(state.q.month)){ toast('해당 기간이 마감됐어요'); $('#applyModal').hidden=true; return; }
+  state.q.brand = brand;
+  applications.unshift({
+    id:'a'+(UID++), brand, contact, phone, note, ts: nowStamp(),
+    category: state.q.category, type: state.q.type==='상관없음'?s.types[0]:state.q.type,
+    month: state.q.month, budget: state.q.budget, spaceId: s.id, status:'대기'
+  });
+  persist();
+  $('#applyModal').hidden = true;
+  const bn=$('#brandName'); if(bn) bn.value = brand;
+  toast(`${s.name} · ${mlabel(state.q.month)} 입점 신청 완료! 운영자 검토 대기중`);
+  renderResults();
+}
+function initModal(){
+  $('#amSubmit').addEventListener('click', submitApplication);
+  $('#modalX').addEventListener('click', ()=> $('#applyModal').hidden=true);
+  $('#applyModal').addEventListener('click', e=>{ if(e.target.id==='applyModal') $('#applyModal').hidden=true; });
+}
+
+function renderMyApps(){
+  const mine = applications.filter(a=> a.brand===(state.q.brand||'내 브랜드') || a.brand==='내 브랜드');
+  const host = $('#myApps');
+  if(!mine.length){
+    host.innerHTML = `<div class="empty">아직 신청한 팝업이 없어요. 위 추천 카드에서 <b>입점 신청</b>을 눌러보세요.</div>`;
+    return;
+  }
+  host.className='myapps';
+  host.innerHTML = mine.map(a=>{
+    const s = spaceById(a.spaceId);
+    const bd = a.status==='승인'?'ok':a.status==='거절'?'no':'wait';
+    return `<div class="appcard">
+      <div class="row1">
+        <div><h4>${s.name}</h4><div class="sub">${s.branch} · ${mlabel(a.month)} · ${a.type}</div></div>
+        <span class="badge ${bd}">${a.status==='대기'?'검토 대기':a.status}</span>
+      </div>
+      <div class="sub" style="margin-top:10px">예산 ${won(a.budget)} · 성격 ${a.category}</div>
+    </div>`;
+  }).join('');
+}
+
+/* ============== 운영자 렌더 ============== */
+function renderOperator(){
+  if(!opUnlocked()){
+    $('#stats').innerHTML=''; $('#opTabs').style.display='none'; $('#opBar').innerHTML='';
+    $('#opContent').className='';
+    $('#opContent').innerHTML = `
+      <div class="gate">
+        <div class="gate-ico">🔒</div>
+        <h3>운영자 콘솔</h3>
+        <p>도유 운영자만 입점 신청을 검토·승인할 수 있어요.</p>
+        <input id="opPass" class="field" type="password" placeholder="패스코드" />
+        <button class="btn btn-primary" id="opEnter">입장</button>
+        <p class="gate-hint">MVP 데모 패스코드: <b>doyou</b></p>
+      </div>`;
+    const tryEnter=()=>{ if($('#opPass').value.trim()===OP_PASS){ sessionStorage.setItem('doyou.op','1'); renderOperator(); } else toast('패스코드가 틀려요'); };
+    $('#opEnter').addEventListener('click', tryEnter);
+    $('#opPass').addEventListener('keydown', e=>{ if(e.key==='Enter') tryEnter(); });
+    setTimeout(()=>$('#opPass').focus(),40);
+    return;
+  }
+  $('#opTabs').style.display='';
+  const wait = applications.filter(a=>a.status==='대기').length;
+  const ok = applications.filter(a=>a.status==='승인').length;
+  const totalSlots = SPACES.reduce((n,s)=>n+s.months.length+s.booked.length,0);
+  const bookedSlots = SPACES.reduce((n,s)=>n+s.booked.length,0);
+  $('#stats').innerHTML = `
+    <div class="stat"><div class="n">${SPACES.length}</div><div class="l">본점 입점 존</div></div>
+    <div class="stat"><div class="n accent">${wait}</div><div class="l">검토 대기 신청</div></div>
+    <div class="stat"><div class="n">${ok}</div><div class="l">승인 완료</div></div>
+    <div class="stat"><div class="n">${bookedSlots}/${totalSlots}</div><div class="l">예약된 기간 슬롯</div></div>`;
+  $('#opBar').innerHTML = `
+    <button class="op-act" id="opExport">⤓ 신청 CSV 내보내기</button>
+    <button class="op-act" id="opReset">데이터 초기화</button>
+    <button class="op-act" id="opLock">🔒 잠금</button>`;
+  $('#opExport').addEventListener('click', exportCSV);
+  $('#opReset').addEventListener('click', resetData);
+  $('#opLock').addEventListener('click', ()=>{ sessionStorage.removeItem('doyou.op'); renderOperator(); });
+  if(state.opTab==='apps') renderOpApps(); else renderOpSpaces();
+}
+
+function renderOpApps(){
+  const sorted = [...applications].sort((a,b)=>{
+    const order={대기:0,승인:1,거절:2};
+    if(order[a.status]!==order[b.status]) return order[a.status]-order[b.status];
+    return scoreMatch(spaceById(b.spaceId),b).score - scoreMatch(spaceById(a.spaceId),a).score;
+  });
+  if(!sorted.length){ $('#opContent').innerHTML = `<div class="empty">아직 들어온 입점 신청이 없어요.</div>`; return; }
+  $('#opContent').className='applist';
+  $('#opContent').innerHTML = sorted.map(a=>{
+    const s = spaceById(a.spaceId);
+    const {score} = scoreMatch(s,a);
+    const fit = scoreClass(score);
+    const bd = a.status==='승인'?'ok':a.status==='거절'?'no':'wait';
+    const actions = a.status==='대기'
+      ? `<div class="act-btns">
+           <button class="btn-sm btn-reject" data-reject="${a.id}">거절</button>
+           <button class="btn-sm btn-approve" data-approve="${a.id}">승인</button>
+         </div>`
+      : `<span class="badge ${bd}">${a.status} 완료</span>`;
+    return `<div class="approw">
+      <div class="who">
+        <h4>${a.brand} <span class="mini cat">${a.category}</span></h4>
+        <div class="sub">희망 종류 · ${a.type}</div>
+        ${a.contact?`<div class="contact">👤 ${a.contact}${a.phone?' · '+a.phone:''}</div>`:''}
+        ${a.note?`<div class="sub" style="margin-top:3px">“${a.note}”</div>`:''}
+      </div>
+      <div class="target">
+        <b>${s.name}</b>
+        <div class="sub">${s.branch} · ${s.loc}</div>
+      </div>
+      <div class="cond">
+        기간 <b>${mlabel(a.month)}</b><br/>예산 <b>${won(a.budget)}</b><br/>제안가 ${won(s.price)}
+      </div>
+      <div class="act">
+        <span class="fitpill ${fit}">매칭 ${score}점</span>
+        ${actions}
+      </div>
+    </div>`;
+  }).join('');
+
+  document.querySelectorAll('[data-approve]').forEach(b=> b.addEventListener('click',()=>decide(b.dataset.approve,'승인')));
+  document.querySelectorAll('[data-reject]').forEach(b=> b.addEventListener('click',()=>decide(b.dataset.reject,'거절')));
+}
+
+function decide(id, status){
+  const a = applications.find(x=>x.id===id); if(!a) return;
+  a.status = status;
+  const s = spaceById(a.spaceId);
+  if(status==='승인' && s.months.includes(a.month)){
+    s.months = s.months.filter(m=>m!==a.month);
+    s.booked.push(a.month);
+    toast(`${a.brand} 승인 · ${s.name} ${mlabel(a.month)} 배정 완료`);
+  } else if(status==='거절'){
+    toast(`${a.brand} 신청을 거절했어요`);
+  }
+  persist();
+  renderOperator();
+}
+
+function renderOpSpaces(){
+  $('#opContent').className='spacegrid';
+  $('#opContent').innerHTML = SPACES.map(s=>{
+    const all = [...s.months, ...s.booked].sort();
+    const total = all.length || 1;
+    const pct = Math.round(s.booked.length/total*100);
+    const chips = all.map(m=> s.booked.includes(m)
+      ? `<span class="mchip booked">${mlabel(m)}</span>`
+      : `<span class="mchip free">${mlabel(m)}</span>`).join('');
+    return `<div class="sp-card">
+      <div class="top">
+        <div class="ico">${s.emoji}</div>
+        <div><h4>${s.name}</h4><div class="loc">${s.branch} · ${s.types.join('·')} · 월 ${won(s.price)}</div></div>
+      </div>
+      <div class="occ">
+        <div class="occ-bar"><i style="width:${pct}%"></i></div>
+        <div class="occ-lab"><span>예약률 ${pct}%</span><span>${s.booked.length} / ${total} 기간</span></div>
+      </div>
+      <div class="months">${chips}</div>
+    </div>`;
+  }).join('');
+}
+
+/* ============== 방문객: 게임 서비스 (Vocab Rush) ============== */
+const WORD_SETS = {
+  general: [
+    { en:'abundant', ko:'풍부한', opts:['풍부한','희귀한','어두운','조용한'] },
+    { en:'reluctant', ko:'꺼리는', opts:['꺼리는','기쁜','빠른','용감한'] },
+    { en:'meticulous', ko:'꼼꼼한', opts:['꼼꼼한','게으른','거대한','달콤한'] },
+    { en:'vivid', ko:'생생한', opts:['생생한','흐릿한','느린','무거운'] },
+    { en:'concise', ko:'간결한', opts:['간결한','복잡한','시끄러운','비싼'] },
+    { en:'genuine', ko:'진짜의', opts:['진짜의','가짜의','둥근','늦은'] },
+  ],
+  beauty: [
+    { en:'radiant', ko:'빛나는', opts:['빛나는','칙칙한','거친','차가운'] },
+    { en:'hydrate', ko:'수분을 주다', opts:['수분을 주다','건조시키다','태우다','자르다'] },
+    { en:'glow', ko:'광채', opts:['광채','그림자','소음','무게'] },
+    { en:'soothe', ko:'진정시키다', opts:['진정시키다','자극하다','늘리다','섞다'] },
+    { en:'matte', ko:'무광의', opts:['무광의','반짝이는','투명한','두꺼운'] },
+    { en:'tint', ko:'옅은 색조', opts:['옅은 색조','강한 향','큰 소리','찬 바람'] },
+  ],
+  fashion: [
+    { en:'sleek', ko:'세련된', opts:['세련된','촌스러운','무거운','시끄러운'] },
+    { en:'tailored', ko:'맞춤의', opts:['맞춤의','헐렁한','부서진','마른'] },
+    { en:'vintage', ko:'빈티지의', opts:['빈티지의','최신의','가짜의','조용한'] },
+    { en:'layered', ko:'겹겹의', opts:['겹겹의','단순한','텅 빈','젖은'] },
+    { en:'bold', ko:'대담한', opts:['대담한','소심한','흐릿한','느린'] },
+    { en:'minimal', ko:'미니멀한', opts:['미니멀한','복잡한','화려한','요란한'] },
+  ],
+  food: [
+    { en:'savory', ko:'풍미 있는', opts:['풍미 있는','싱거운','딱딱한','차가운'] },
+    { en:'crisp', ko:'바삭한', opts:['바삭한','눅눅한','미지근한','매운'] },
+    { en:'aroma', ko:'향', opts:['향','소음','무게','그림자'] },
+    { en:'brew', ko:'우려내다', opts:['우려내다','얼리다','튀기다','자르다'] },
+    { en:'tender', ko:'부드러운', opts:['부드러운','질긴','매운','신'] },
+    { en:'zest', ko:'풍미', opts:['풍미','지루함','침묵','피로'] },
+  ],
+};
+const SPONSORS = [
+  { brand:'올리브뷰티',   cat:'뷰티',       theme:'beauty',  emoji:'💄', perk:'전 품목 15% 쿠폰',   cost:3, week:'뷰티 위크' },
+  { brand:'스트릿웨이브', cat:'스트리트',   theme:'fashion', emoji:'🧢', perk:'한정 굿즈 증정',     cost:8, week:'패션 위크' },
+  { brand:'한입키친',     cat:'F&B',        theme:'food',    emoji:'🥪', perk:'시그니처 메뉴 1+1',  cost:4, week:'미식 위크' },
+  { brand:'무드캔들',     cat:'라이프스타일', theme:'general', emoji:'🕯️', perk:'시그니처 캔들 1+1',  cost:5, week:'리빙 위크' },
+];
+const mg = { idx:0, score:0, streak:0, stamps:0, time:10, timer:null, playing:false, order:[], cur:null, words:[] };
+const shuffle = a => a.map(x=>[Math.random(),x]).sort((p,q)=>p[0]-q[0]).map(p=>p[1]);
+const sponsor = () => SPONSORS[state.sponsor] || SPONSORS[0];
+
+function renderQR(){
+  const host=document.getElementById('qrBox'); if(!host) return;
+  const N=21, c=5; let r='';
+  const finder=(ox,oy)=>{ let s='';
+    for(let i=0;i<7;i++)for(let j=0;j<7;j++){
+      if(i===0||i===6||j===0||j===6||(i>=2&&i<=4&&j>=2&&j<=4))
+        s+=`<rect x="${(ox+j)*c}" y="${(oy+i)*c}" width="${c}" height="${c}"/>`;
+    } return s; };
+  for(let y=0;y<N;y++)for(let x=0;x<N;x++){
+    if((x<8&&y<8)||(x>N-9&&y<8)||(x<8&&y>N-9)) continue;
+    if(((x*3 + y*5 + x*y*2) % 7) < 3) r+=`<rect x="${x*c}" y="${y*c}" width="${c}" height="${c}"/>`;
+  }
+  r += finder(0,0)+finder(N-7,0)+finder(0,N-7);
+  host.innerHTML = `<svg viewBox="0 0 ${N*c} ${N*c}" width="100%" height="100%"><g fill="#141413">${r}</g></svg>`;
+}
+function renderSponsors(){
+  const host=document.getElementById('sponsorChips'); if(!host) return;
+  host.innerHTML = SPONSORS.map((s,i)=>
+    `<button class="sp-chip ${i===state.sponsor?'active':''}" data-sp="${i}">${s.emoji} ${s.brand} · ${s.week}</button>`).join('');
+  host.querySelectorAll('[data-sp]').forEach(b=> b.addEventListener('click',()=>{
+    state.sponsor=Number(b.dataset.sp); renderSponsors(); updateStamps(); mgStart();
+  }));
+}
+
+function mgStart(){
+  clearInterval(mg.timer);
+  mg.words = WORD_SETS[sponsor().theme] || WORD_SETS.general;
+  mg.idx=0; mg.score=0; mg.streak=0; mg.stamps=0; mg.playing=true;
+  mg.order = shuffle([...Array(mg.words.length).keys()]);
+  mgNext();
+}
+function mgNext(){
+  clearInterval(mg.timer);
+  if(mg.idx>=mg.order.length){ mgEnd(); return; }
+  mg.time=10; mgRenderQuestion();
+  mg.timer = setInterval(()=>{
+    mg.time-=0.1;
+    const bar=document.getElementById('mgTime'); if(bar) bar.style.width=Math.max(0,mg.time/10*100)+'%';
+    if(mg.time<=0){ clearInterval(mg.timer); mgAnswer(null,null); }
+  },100);
+}
+function mgRenderQuestion(){
+  const w = mg.words[mg.order[mg.idx]]; mg.cur=w;
+  const opts = shuffle([...w.opts]);
+  const host = document.getElementById('miniGame');
+  if(!host) return;
+  host.innerHTML =
+    `<div class="mg-theme">${sponsor().emoji} ${sponsor().week} · ${sponsor().brand} 스폰서 단어</div>
+     <div class="mg-bar"><i id="mgTime" style="width:100%"></i></div>
+     <div class="mg-stat">
+       <span>문제 <b>${mg.idx+1}/${mg.order.length}</b></span>
+       <span>점수 <b>${mg.score}</b></span>
+       <span>콤보 <b>${mg.streak}</b>🔥</span>
+     </div>
+     <div class="mg-prompt">이 단어의 뜻은?</div>
+     <div class="mg-word">${w.en}</div>
+     <div class="mg-opts">${opts.map(o=>`<button class="mg-opt" data-ko="${o}">${o}</button>`).join('')}</div>`;
+  host.querySelectorAll('.mg-opt').forEach(b=> b.addEventListener('click',()=>mgAnswer(b.dataset.ko,b)));
+}
+function mgAnswer(choice, btn){
+  if(!mg.playing) return;
+  clearInterval(mg.timer);
+  const w = mg.cur, correct = choice===w.ko;
+  document.querySelectorAll('.mg-opt').forEach(b=>{
+    b.disabled=true;
+    if(b.dataset.ko===w.ko) b.classList.add('right');
+    else if(b===btn) b.classList.add('wrong');
+  });
+  if(correct){ const bonus=mg.streak>=2?5:0; mg.streak++; mg.score+=10+bonus; mg.stamps++; state.stamps++; updateStamps(); }
+  else { mg.streak=0; }
+  mg.idx++;
+  setTimeout(()=>{ if(mg.playing) mgNext(); }, 650);
+}
+function mgEnd(){
+  mg.playing=false;
+  const host=document.getElementById('miniGame'); if(!host) return;
+  host.innerHTML =
+    `<div class="mg-end">
+       <div class="mg-end-ico">🎉</div>
+       <h3>게임 종료!</h3>
+       <p>최종 점수 <b>${mg.score}점</b> · 이번 판 스탬프 <b>${mg.stamps}개</b> 획득</p>
+       <div class="mg-end-btns">
+         <button class="btn btn-ghost" id="mgRetry">다시 하기</button>
+         <a class="btn btn-primary" href="https://www.datapd.ai" target="_blank" rel="noopener">풀 버전에서 계속 ↗</a>
+       </div>
+     </div>`;
+  const r=document.getElementById('mgRetry'); if(r) r.addEventListener('click', mgStart);
+}
+function renderRewards(){
+  const host=document.getElementById('rewardList'); if(!host) return;
+  host.innerHTML = SPONSORS.map((r,i)=>{
+    const can = state.stamps>=r.cost, active = i===state.sponsor;
+    return `<div class="reward ${active?'spon':''}">
+      <div class="reward-ico">${r.emoji}</div>
+      <div class="reward-info"><h4>${r.brand}${active?'<span class="spon-badge">이번 주</span>':''}</h4><p>${r.perk}</p></div>
+      <button class="btn-sm reward-btn ${can?'':'off'}" data-reward="${i}" ${can?'':'disabled'}>${r.cost}스탬프</button>
+    </div>`;
+  }).join('');
+  host.querySelectorAll('[data-reward]').forEach(b=> b.addEventListener('click',()=>exchange(Number(b.dataset.reward))));
+}
+function exchange(i){
+  const r=SPONSORS[i]; if(!r) return;
+  if(state.stamps<r.cost){ toast('스탬프가 부족해요'); return; }
+  state.stamps-=r.cost; updateStamps();
+  toast(`${r.brand} · ${r.perk} 쿠폰 발급 완료!`);
+}
+function updateStamps(){
+  const el=document.getElementById('stampNum'); if(el) el.textContent=state.stamps;
+  STORE.set(STORE.stamps, state.stamps);
+  renderRewards();
+}
+function renderVisitor(){ renderQR(); renderSponsors(); updateStamps(); mgStart(); }
+
+/* ============== 모드 전환 ============== */
+$('#seg').addEventListener('click', e=>{
+  const b=e.target.closest('button'); if(!b) return;
+  state.mode=b.dataset.mode;
+  document.body.dataset.mode=state.mode;
+  $('#seg').querySelectorAll('button').forEach(x=>x.classList.toggle('active', x===b));
+  $('#brandView').hidden = state.mode!=='brand';
+  $('#operatorView').hidden = state.mode!=='operator';
+  $('#visitorView').hidden = state.mode!=='visitor';
+  clearInterval(mg.timer); mg.playing=false;
+  if(state.mode==='operator') renderOperator();
+  else if(state.mode==='visitor') renderVisitor();
+  else renderResults();
+});
+$('#opTabs').addEventListener('click', e=>{
+  const b=e.target.closest('.optab'); if(!b) return;
+  state.opTab=b.dataset.tab;
+  $('#opTabs').querySelectorAll('.optab').forEach(x=>x.classList.toggle('active', x===b));
+  renderOperator();
+});
+
+/* ============== 시작 ============== */
+hydrate();
+initFilters();
+initModal();
+renderResults();
+</script>
+</body>
+</html>
