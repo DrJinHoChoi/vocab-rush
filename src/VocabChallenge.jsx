@@ -580,6 +580,15 @@ export default function VocabChallenge() {
             <p style={{ fontSize: 10, color: "#6ee7b7", marginTop: 4, letterSpacing: 0.5 }}>
               🤖 AI 도구 활용에 필요한 국 · 영 · 수 실력을 게임으로!
             </p>
+            <a href="https://www.instagram.com/doyou_popup_store" target="_blank" rel="noopener noreferrer"
+              style={{
+                display: "inline-flex", alignItems: "center", gap: 6, marginTop: 12,
+                padding: "5px 12px", borderRadius: 999, textDecoration: "none",
+                background: "rgba(245,182,11,0.12)", border: "1px solid rgba(245,182,11,0.45)",
+                fontSize: 11, fontWeight: 700, color: "#f5b60b", letterSpacing: 0.3,
+              }}>
+              🏬 DOYOU POP-UP STORE가 제공하는 게임
+            </a>
           </div>
 
           {/* 게임 모드 탭 */}
