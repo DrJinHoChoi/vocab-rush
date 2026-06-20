@@ -23,7 +23,7 @@
   .topbar{ position:sticky; top:0; z-index:30; background:rgba(250,245,235,.9); backdrop-filter:blur(10px);
     border-bottom:2px solid var(--ink); }
   .topbar-in{ display:flex; align-items:center; gap:12px; height:62px; }
-  .logo{ display:flex; align-items:center; gap:11px; }
+  .logo{ display:flex; align-items:center; gap:11px; text-decoration:none; color:inherit; cursor:pointer; }
   .logo-face{ width:40px; height:40px; flex:none; }
   .logo-letters{ height:28px; width:auto; display:block; }
   .logo-pill{ background:var(--ink); color:var(--gold); font-size:8.5px; font-weight:800; letter-spacing:2px;
@@ -157,7 +157,7 @@
 
   <!-- Topbar -->
   <div class="topbar"><div class="wrap topbar-in">
-    <div class="logo">
+    <a class="logo" href="doyou-hub.html" title="도유 허브로">
       <svg class="logo-face" viewBox="305 222 488 620" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
         <g stroke="#141413" stroke-width="14" stroke-linejoin="round" stroke-linecap="round">
           <path d="M540,235 C690,235 770,360 770,540 C770,720 680,825 540,825 C400,825 320,710 320,540 C320,360 390,235 540,235 Z" fill="#F5B60B"/>
@@ -182,8 +182,8 @@
         </svg>
         <span class="logo-pill">POP-UP STORE</span>
       </div>
-    </div>
-    <a class="hublink" href="doyou-hub.html">← DOYOU 허브</a>
+    </a>
+    <a class="hublink" href="doyou-hub.html">← 도유 허브</a>
     <span class="precon-tag">PRE-CON BOARD</span>
   </div></div>
 

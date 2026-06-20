@@ -37,7 +37,7 @@
     backdrop-filter:saturate(1.4) blur(10px); border-bottom:2px solid var(--ink);
   }
   .topbar-in{ display:flex; align-items:center; gap:18px; height:64px; }
-  .logo{ display:flex; align-items:center; gap:11px; letter-spacing:-.02em; }
+  .logo{ display:flex; align-items:center; gap:11px; letter-spacing:-.02em; text-decoration:none; color:inherit; cursor:pointer; }
   .logo-face{ width:42px; height:42px; flex:none; }
   .logo-letters{ height:30px; width:auto; display:block; }
   .logo-txt{ display:flex; flex-direction:column; gap:3px; line-height:1; }
@@ -357,7 +357,7 @@
   <!-- Topbar -->
   <div class="topbar">
     <div class="wrap topbar-in">
-      <div class="logo">
+      <a class="logo" href="doyou-hub.html" title="도유 허브로">
         <svg class="logo-face" viewBox="305 222 488 620" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
           <g stroke="#141413" stroke-width="14" stroke-linejoin="round" stroke-linecap="round">
             <path d="M540,235 C690,235 770,360 770,540 C770,720 680,825 540,825 C400,825 320,710 320,540 C320,360 390,235 540,235 Z" fill="#F5B60B"/>
@@ -385,8 +385,8 @@
           </svg>
           <span class="logo-pill">POP-UP STORE</span>
         </div>
-      </div>
-      <a class="hublink" href="doyou-hub.html">← 허브</a>
+      </a>
+      <a class="hublink" href="doyou-hub.html">← 도유 허브</a>
       <div class="seg" id="seg">
         <button data-mode="brand" class="active">브랜드 입점</button>
         <button data-mode="operator">운영자</button>
