@@ -306,6 +306,27 @@
         </div>
       </div>
     </section>
+
+    <!-- 06 partner revenue share → rent rebate -->
+    <section class="board">
+      <div class="sec-head"><div class="sec-num">06</div><div><h2>입점 파트너 수익 배분 (임대료 차감)</h2><div class="en">REVENUE SHARE → RENT REBATE</div></div></div>
+      <div class="card" style="padding:18px 20px; margin-bottom:16px">
+        <p style="font-size:14px; color:var(--muted); margin:0">게임 광고만 쪼개지 않고 <b style="color:var(--ink)">전체 매출(광고+구독+박스)의 일정 %를 '파트너 풀'</b>로 떼서 입점 브랜드의 <b style="color:var(--ink)">다음 달 임대료에서 차감</b>해요. 배분 가중치는 <b style="color:var(--ink)">게임 참여도(도감 수집·부스 체크인·스폰서)</b> — 손님을 더 끌어온 브랜드가 더 깎입니다. 현금 지급이 아니라 임대료 차감이라 ① 정산 단순 ② 다음 달 재입점 락인 ③ AdSense 정책 안전.</p>
+      </div>
+      <div class="sim">
+        <div class="card sim-inputs" id="rebInputs"></div>
+        <div class="sim-out">
+          <h3>입점 파트너 배분 풀</h3>
+          <div class="mrr"><span id="rebPool">₩0</span><small> /월</small></div>
+          <div class="split">
+            <div class="sp"><span>브랜드당 임대료 차감</span><b id="rebPer">₩0</b></div>
+            <div class="sp"><span>실효 임대료(차감 후)</span><b id="rebEff">₩0</b></div>
+            <div class="sp"><span>임대료 절감율</span><b id="rebCut">0%</b></div>
+          </div>
+          <p class="sim-note">※ 균등 배분 가정 — 실제론 게임 참여도 비례 + BRAND PASS 티어 가중. "임대료만 받는 곳 → 같이 벌어주는 플랫폼" 전환의 핵심 장치.</p>
+        </div>
+      </div>
+    </section>
   </main>
 
   <footer>
@@ -353,6 +374,38 @@
   }
   SIM.forEach(s=> val[s.key]=s.def);
   render();
+
+  /* ===== 06 파트너 임대료 차감 시뮬 ===== */
+  const REB = { rev:17000000, pct:10, brands:5, rent:2500000 };
+  const REB_CFG = [
+    { key:'rev',    label:'월 총매출 (광고+구독+박스)', min:5000000,  max:40000000, step:500000, unit:'won' },
+    { key:'pct',    label:'파트너 배분 풀 비율',          min:0,        max:30,       step:1,      unit:'%'   },
+    { key:'brands', label:'입점 브랜드 수',               min:1,        max:12,       step:1,      unit:'개'  },
+    { key:'rent',   label:'브랜드 평균 월 임대료',        min:1000000,  max:5000000,  step:100000, unit:'won' },
+  ];
+  function rebShow(c){ return c.unit==='%' ? REB[c.key]+'%' : c.unit==='개' ? REB[c.key]+'개' : fmt(REB[c.key]); }
+  function rebRender(){
+    const host=document.getElementById('rebInputs'); if(!host) return;
+    host.innerHTML = REB_CFG.map(c=>`
+      <div class="sim-row">
+        <div class="top"><span class="lab">${c.label}</span><span class="val"><b id="rv-${c.key}">${rebShow(c)}</b></span></div>
+        <input type="range" min="${c.min}" max="${c.max}" step="${c.step}" value="${REB[c.key]}" data-rk="${c.key}" />
+      </div>`).join('');
+    host.querySelectorAll('input').forEach(i=> i.addEventListener('input', e=>{ REB[e.target.dataset.rk]=Number(e.target.value); rebCalc(); }));
+    rebCalc();
+  }
+  function rebCalc(){
+    REB_CFG.forEach(c=>{ const el=document.getElementById('rv-'+c.key); if(el) el.textContent=rebShow(c); });
+    const pool = REB.rev * REB.pct/100;
+    const per  = REB.brands>0 ? pool/REB.brands : 0;
+    const eff  = Math.max(0, REB.rent - per);
+    const cut  = REB.rent>0 ? per/REB.rent*100 : 0;
+    document.getElementById('rebPool').textContent = fmt(pool);
+    document.getElementById('rebPer').textContent  = fmt(per);
+    document.getElementById('rebEff').textContent  = fmt(eff);
+    document.getElementById('rebCut').textContent  = '−'+cut.toFixed(0)+'%';
+  }
+  rebRender();
 </script>
 </body>
 </html>
