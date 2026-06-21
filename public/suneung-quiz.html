@@ -90,13 +90,16 @@
     <h2>난이도별 시간 모델 (데이터 분석 기반)</h2>
     <p class="muted">수능 실제 배분(국어 1'47"/문항, 영어 독해 ~1'15", 수학 ~3'20")을 토대로 유형별 기준 시간을 잡고, Easy ×1.4 / Medium ×1.0 / Hard ×0.7로 적용했습니다.</p>
     <table>
-      <tr><th>유형</th><th>Easy</th><th>Medium</th><th>Hard</th></tr>
-      <tr><td>영어 빈칸추론</td><td>2:06</td><td>1:30</td><td>1:03</td></tr>
-      <tr><td>영어 주제/요지</td><td>1:24</td><td>1:00</td><td>0:42</td></tr>
-      <tr><td>국어 독서 지문</td><td>2:13</td><td>1:35</td><td>1:07</td></tr>
-      <tr><td>국어 어법/맞춤법</td><td>0:35</td><td>0:25</td><td>0:18</td></tr>
-      <tr><td>수학 기본(2~3점)</td><td>1:45</td><td>1:15</td><td>0:53</td></tr>
-      <tr><td>수학 응용(4점)</td><td>3:30</td><td>2:30</td><td>1:45</td></tr>
+      <tr><th>과목 · 유형</th><th>Easy</th><th>Medium</th><th>Hard</th></tr>
+      <tr><td>국어 · 독서(비문학)</td><td>2:13</td><td>1:35</td><td>1:07</td></tr>
+      <tr><td>국어 · 문학</td><td>1:45</td><td>1:15</td><td>0:53</td></tr>
+      <tr><td>국어 · 언어와 매체(어법)</td><td>0:49</td><td>0:35</td><td>0:25</td></tr>
+      <tr><td>영어 · 빈칸추론</td><td>2:06</td><td>1:30</td><td>1:03</td></tr>
+      <tr><td>영어 · 주제/요지</td><td>1:24</td><td>1:00</td><td>0:42</td></tr>
+      <tr><td>영어 · 어법</td><td>0:56</td><td>0:40</td><td>0:28</td></tr>
+      <tr><td>수학Ⅰ (지수로그·삼각함수·수열)</td><td>2:06</td><td>1:30</td><td>1:03</td></tr>
+      <tr><td>수학Ⅱ (극한·미분·적분)</td><td>2:48</td><td>2:00</td><td>1:24</td></tr>
+      <tr><td>확률과 통계</td><td>2:06</td><td>1:30</td><td>1:03</td></tr>
     </table>
 
     <footer>
@@ -107,42 +110,66 @@
 
 <script>
   // 유형별 기준 시간(초, Medium) — 데이터 분석 기반
-  const BASE = { '빈칸': 90, '주제': 60, '독서': 95, '어법': 25, '수학기본': 75, '수학응용': 150 };
+  // 고교 교육과정·수능 출제 범위 기준 유형별 기준 시간(초, Medium)
+  const BASE = { '독서':95, '문학':75, '문법':35, '빈칸':90, '주제':60, '어법':40, '수1':90, '수2':120, '확통':90 };
   const MULT = { easy: 1.4, medium: 1.0, hard: 0.7 };
   const fmt = s => Math.floor(s/60) + ':' + String(Math.round(s)%60).padStart(2,'0');
 
   // 예시 문제(원본). a = 정답 인덱스(0-base)
   const QB = [
-    { subj:'영어', type:'빈칸', label:'영어 · 빈칸추론',
-      passage:"Many people believe that motivation must come first and action follows. In reality, the opposite is often true. Taking a small action — writing one sentence, doing one push-up — creates a sense of progress that fuels motivation. Therefore, the most reliable way to stay motivated is to ____________.",
-      q:"빈칸에 들어갈 말로 가장 적절한 것은?",
-      opts:["begin with a small action","wait until you feel inspired","set extremely large goals","avoid making any mistakes","rely on others' praise"], a:0,
-      exp:"글은 '동기→행동'이 아니라 '행동→동기'를 주장(opposite). 빈칸은 Therefore 뒤 결론이므로 앞 근거(작은 행동이 동기를 만든다)와 일치 → ①. ②는 글이 반박한 통념." },
-    { subj:'영어', type:'주제', label:'영어 · 주제/요지',
-      passage:"Reading regularly does more than build knowledge. By following a character's thoughts, we practice imagining other minds, which strengthens empathy. It also trains sustained attention in an age of constant distraction. In short, reading exercises both the heart and the focus.",
-      q:"윗글의 요지로 가장 적절한 것은?",
-      opts:["독서는 지식 습득에만 쓸모가 있다","독서는 공감과 집중력을 함께 길러 준다","독서보다 영상이 집중에 유리하다","독서는 어휘력만 향상시킨다","독서는 시간 낭비가 될 수 있다"], a:1,
-      exp:"empathy(공감)와 attention/focus(집중)를 함께 기른다는 마지막 문장이 요지 → ②. ①은 'more than knowledge'와 반대." },
+    // 국어 — 독서 / 문학 / 언어와 매체
     { subj:'국어', type:'독서', label:'국어 · 독서(비문학)',
       passage:"경제학에서 '공유지의 비극'은 누구나 자유롭게 이용할 수 있는 자원이 결국 고갈되는 현상을 가리킨다. 가축을 한 마리 더 늘릴 때의 이익은 개인이 온전히 가져가지만, 목초지 황폐화라는 비용은 모두가 나눈다. 따라서 개인에게는 가축을 늘리는 것이 합리적이지만, 모두가 그러면 목초지는 못 쓰게 된다. 이를 막기 위해 자원에 사용 규칙을 두거나 소유권을 명확히 하는 제도가 제안된다.",
       q:"윗글의 내용과 일치하는 것은?",
       opts:["자원이 풍부할수록 비극이 심해진다","가축을 늘릴 때의 비용은 개인이 온전히 부담한다","개인의 합리적 선택이 공동체에 해가 될 수 있다","소유권을 없애면 문제가 해결된다","목축업자는 본래 비합리적이다"], a:2,
       exp:"'개인에게 합리적이지만 모두가 그러면 못 쓰게 된다'가 직접 근거 → ③. ②는 이익은 개인·비용은 모두라 반대, ④는 소유권을 '명확히' 한다 했지 없앤다가 아님." },
-    { subj:'국어', type:'어법', label:'국어 · 어법/맞춤법',
+    { subj:'국어', type:'문학', label:'국어 · 문학(표현)',
+      passage:"하늘은 한 장의 푸른 엽서 / 구름이 천천히 글씨를 쓴다",
+      q:"위 시구에 쓰인 표현 방법으로 가장 적절한 것은?",
+      opts:["은유법과 의인법","반어법","설의법","역설법","대구법만 사용"], a:0,
+      exp:"'하늘=엽서'는 은유, '구름이 글씨를 쓴다'는 의인 → ①. (원본 예시 시구)" },
+    { subj:'국어', type:'문법', label:'국어 · 언어와 매체(어법)',
       passage:null,
       q:"다음 중 맞춤법이 옳은 것은?",
       opts:["어떻게 됬어?","그러면 안 되요.","오랜만에 만났다.","금새 끝났다.","왠일로 왔니?"], a:2,
       exp:"'오랜만에'가 옳음(③). ①됐어, ②안 돼요, ④금세, ⑤웬일로 가 올바른 표기." },
-    { subj:'수학', type:'수학기본', label:'수학 · 기본(수열)',
+    // 영어 — 독해 유형(빈칸·주제·어법)
+    { subj:'영어', type:'빈칸', label:'영어 · 빈칸추론',
+      passage:"Many people believe that motivation must come first and action follows. In reality, the opposite is often true. Taking a small action — writing one sentence, doing one push-up — creates a sense of progress that fuels motivation. Therefore, the most reliable way to stay motivated is to ____________.",
+      q:"빈칸에 들어갈 말로 가장 적절한 것은?",
+      opts:["begin with a small action","wait until you feel inspired","set extremely large goals","avoid making any mistakes","rely on others' praise"], a:0,
+      exp:"글은 '동기→행동'이 아니라 '행동→동기'를 주장(opposite). 빈칸은 Therefore 뒤 결론이므로 앞 근거와 일치 → ①. ②는 글이 반박한 통념." },
+    { subj:'영어', type:'주제', label:'영어 · 주제/요지',
+      passage:"Reading regularly does more than build knowledge. By following a character's thoughts, we practice imagining other minds, which strengthens empathy. It also trains sustained attention in an age of constant distraction. In short, reading exercises both the heart and the focus.",
+      q:"윗글의 요지로 가장 적절한 것은?",
+      opts:["독서는 지식 습득에만 쓸모가 있다","독서는 공감과 집중력을 함께 길러 준다","독서보다 영상이 집중에 유리하다","독서는 어휘력만 향상시킨다","독서는 시간 낭비가 될 수 있다"], a:1,
+      exp:"empathy(공감)와 attention/focus(집중)를 함께 기른다는 마지막 문장이 요지 → ②. ①은 'more than knowledge'와 반대." },
+    { subj:'영어', type:'어법', label:'영어 · 어법',
+      passage:null,
+      q:"다음 중 어법상 옳은 문장은?",
+      opts:["She enjoys to read books.","He has lived here since 2010.","The news are surprising.","I look forward to meet you.","He is one of the student."], a:1,
+      exp:"② 현재완료+since 정확. ①enjoy+동명사(reading), ③news is, ④look forward to + -ing(meeting), ⑤one of the + 복수(students)." },
+    // 수학 — 공통(수Ⅰ·수Ⅱ) + 선택(확통)
+    { subj:'수학', type:'수1', label:'수학Ⅰ · 수열',
       passage:null,
       q:"등차수열 {aₙ}에서 a₂=7, a₅=19일 때, a₁₀의 값은?",
       opts:["35","37","39","41","43"], a:2,
-      exp:"aₙ=a₁+(n−1)d. a₂=a₁+d=7, a₅=a₁+4d=19 → 3d=12, d=4, a₁=3. a₁₀=3+9·4=39 → ③." },
-    { subj:'수학', type:'수학응용', label:'수학 · 응용(수열의 합)',
+      exp:"aₙ=a₁+(n−1)d. a₂=a₁+d=7, a₅=a₁+4d=19 → d=4, a₁=3. a₁₀=3+9·4=39 → ③." },
+    { subj:'수학', type:'수1', label:'수학Ⅰ · 수열의 합',
       passage:null,
       q:"수열 {aₙ}이 a₁=2, aₙ₊₁=aₙ+3 일 때, a₁+a₂+⋯+a₁₀ 의 값은?",
       opts:["150","155","160","165","170"], a:1,
-      exp:"공차 3인 등차수열. aₙ=3n−1, a₁=2, a₁₀=29. 합=(2+29)·10/2=31·5=155 → ②." },
+      exp:"공차 3인 등차수열. a₁=2, a₁₀=29. 합=(2+29)·10/2=155 → ②." },
+    { subj:'수학', type:'수2', label:'수학Ⅱ · 미분(극값)',
+      passage:null,
+      q:"함수 f(x)=x³−3x 의 극솟값은?",
+      opts:["−2","−1","0","1","2"], a:0,
+      exp:"f′(x)=3x²−3=0 → x=±1. x=1에서 극소(f″>0), f(1)=1−3=−2 → ①." },
+    { subj:'수학', type:'확통', label:'확률과 통계 · 확률',
+      passage:null,
+      q:"서로 다른 두 개의 주사위를 던질 때 나온 두 눈의 합이 7일 확률은?",
+      opts:["1/6","1/9","5/36","1/12","7/36"], a:0,
+      exp:"합이 7: (1,6)…(6,1) 6가지 / 전체 36 = 1/6 → ①." },
   ];
 
   let diff = 'medium', subj = 'all';
