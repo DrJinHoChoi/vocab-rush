@@ -905,9 +905,12 @@ export default function VocabChallenge() {
             marginTop: 16, padding: "16px 14px", borderRadius: 12,
             background: "rgba(96,165,250,0.04)", border: "1px solid rgba(96,165,250,0.1)",
           }}>
-            <div style={{ fontSize: 15, fontWeight: 700, color: "#e2e8f0", marginBottom: 10 }}>
+            <div style={{ fontSize: 15, fontWeight: 700, color: "#e2e8f0", marginBottom: 4 }}>
               📚 학습 가이드
             </div>
+            <p style={{ fontSize: 12.5, color: "#94a3b8", marginBottom: 10, lineHeight: 1.6 }}>
+              AI 시대에 필요한 국·영·수 실력을 키우는 무료 학습 글 — CEFR 어휘 전략, 프롬프트, 코딩 수학, 맞춤법까지 11편.
+            </p>
             <div style={{ display: "flex", flexWrap: "wrap", gap: "6px 14px" }}>
               {[
                 { href: "/guide-ai.html", label: "AI 도구" },
@@ -927,6 +930,7 @@ export default function VocabChallenge() {
                 >{g.label}</a>
               ))}
             </div>
+            <a href="/guides.html" target="_blank" rel="noopener noreferrer" style={{ display: "inline-block", marginTop: 10, fontSize: 13, fontWeight: 700, color: "#60a5fa", textDecoration: "none" }}>📖 전체 학습 가이드 보기 →</a>
           </div>
 
           <div style={{ display: "block", textAlign: "center", fontSize: 11, color: "#94a3b8", marginTop: 8 }}>
