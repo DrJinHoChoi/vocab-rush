@@ -941,7 +941,8 @@ export default function VocabChallenge() {
               🎓 수능 대비:{" "}
               <a href="/suneung-korean.html" target="_blank" rel="noopener noreferrer" style={{ color: "#60a5fa", textDecoration: "none" }}>수능 국어</a>{" · "}
               <a href="/suneung-english.html" target="_blank" rel="noopener noreferrer" style={{ color: "#60a5fa", textDecoration: "none" }}>수능 영어</a>{" · "}
-              <a href="/suneung-math.html" target="_blank" rel="noopener noreferrer" style={{ color: "#60a5fa", textDecoration: "none" }}>수능 수학</a>
+              <a href="/suneung-math.html" target="_blank" rel="noopener noreferrer" style={{ color: "#60a5fa", textDecoration: "none" }}>수능 수학</a>{" · "}
+              <a href="/suneung-quiz.html" target="_blank" rel="noopener noreferrer" style={{ color: "#60a5fa", textDecoration: "none", fontWeight: 700 }}>🎮 수능 게임</a>
             </div>
           </div>
 
