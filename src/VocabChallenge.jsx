@@ -907,6 +907,17 @@ export default function VocabChallenge() {
             </div>
           </div>
 
+          {/* 소개 + FAQ (SEO 콘텐츠) */}
+          <div style={{ marginTop: 16, padding: "16px 14px", borderRadius: 12, background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.08)", fontSize: 12.5, color: "#94a3b8", lineHeight: 1.75, textAlign: "left" }}>
+            <div style={{ fontSize: 15, fontWeight: 700, color: "#e2e8f0", marginBottom: 8 }}>STUDY RUSH — 고등학교 수능 학습 게임</div>
+            <p style={{ marginBottom: 10 }}>STUDY RUSH는 국어·영어·수학을 게임으로 공부하며 수능을 준비하는 무료 학습 플랫폼입니다. 영어 단어, 수학 연산, 국어 어휘·맞춤법 같은 기초를 타이머 게임으로 빠르게 다지고, 실제 수능 유형의 문제를 제한 시간 안에 푸는 <a href="/suneung-quiz.html" target="_blank" rel="noopener noreferrer" style={{ color: "#60a5fa", textDecoration: "none" }}>수능 연습 게임</a>으로 마무리합니다. 회원가입이나 결제 없이 누구나 바로 시작할 수 있습니다.</p>
+            <p style={{ marginBottom: 10 }}>수능은 아는 것을 넘어 정해진 시간 안에 정확히 푸는 시험입니다. 기초가 자동화되어야 어려운 문항에 쓸 시간이 생깁니다. STUDY RUSH는 ‘기초 게임 → 레벨업 → 수능 연습’ 단계로 그 실전 감각을 자연스럽게 길러 줍니다. 단계별 순서는 <a href="/learn.html" target="_blank" rel="noopener noreferrer" style={{ color: "#60a5fa", textDecoration: "none" }}>학습 로드맵</a>에서 확인하세요.</p>
+            <div style={{ fontSize: 14, fontWeight: 700, color: "#e2e8f0", margin: "14px 0 6px" }}>자주 묻는 질문</div>
+            <p style={{ marginBottom: 8 }}><strong style={{ color: "#cbd5e1" }}>Q. 무료인가요?</strong><br />네. 모든 게임과 학습 자료를 무료로 이용할 수 있습니다.</p>
+            <p style={{ marginBottom: 8 }}><strong style={{ color: "#cbd5e1" }}>Q. 어떤 과목을 공부하나요?</strong><br />국어(어휘·맞춤법·독해), 영어(어휘·독해), 수학(연산·수학Ⅰ·Ⅱ·확률과 통계)을 게임으로 공부합니다.</p>
+            <p style={{ margin: 0 }}><strong style={{ color: "#cbd5e1" }}>Q. 어디서부터 시작하나요?</strong><br />기초가 약하면 위의 과목 게임부터, 유형 연습이 필요하면 수능 연습 게임부터 시작하세요.</p>
+          </div>
+
           <div style={{ display: "block", textAlign: "center", fontSize: 11, color: "#94a3b8", marginTop: 8 }}>
             <a href="/about.html" target="_blank" style={{ color: "#94a3b8", textDecoration: "none" }}>소개</a>
             {" · "}
