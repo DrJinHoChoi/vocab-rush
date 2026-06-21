@@ -596,20 +596,26 @@ export default function VocabChallenge() {
             </a>
           </div>
 
-          {/* 학습 경로 (랜딩) */}
-          <a href="/learn.html" target="_blank" rel="noopener noreferrer" style={{
-            display: "block", textDecoration: "none", margin: "0 0 14px",
-            padding: "12px 14px", borderRadius: 12,
-            background: "rgba(96,165,250,0.06)", border: "1px solid rgba(96,165,250,0.18)",
+          {/* 수능 연습 게임 (메인 콘텐츠) */}
+          <div style={{
+            margin: "0 0 14px", padding: "14px", borderRadius: 12,
+            background: "rgba(96,165,250,0.08)", border: "1px solid rgba(96,165,250,0.28)",
           }}>
-            <div style={{ fontSize: 11, color: "#94a3b8", marginBottom: 6, fontWeight: 700, letterSpacing: 0.3 }}>🎓 고등학교 수능 학습 경로</div>
-            <div style={{ display: "flex", alignItems: "stretch", gap: 6 }}>
+            <div style={{ fontSize: 11.5, color: "#93c5fd", marginBottom: 9, fontWeight: 800, letterSpacing: 0.3 }}>🎓 datapd.ai 수능 연습 게임</div>
+            <div style={{ display: "flex", alignItems: "stretch", gap: 6, marginBottom: 11 }}>
               <span style={{ flex: 1, textAlign: "center", whiteSpace: "nowrap", padding: "7px 2px", borderRadius: 8, background: "rgba(255,255,255,0.05)", fontSize: 11.5, fontWeight: 700, color: "#e2e8f0" }}>① 기초</span>
               <span style={{ flex: 1, textAlign: "center", whiteSpace: "nowrap", padding: "7px 2px", borderRadius: 8, background: "rgba(255,255,255,0.05)", fontSize: 11.5, fontWeight: 700, color: "#e2e8f0" }}>② 레벨업</span>
-              <span style={{ flex: 1, textAlign: "center", whiteSpace: "nowrap", padding: "7px 2px", borderRadius: 8, background: "rgba(96,165,250,0.15)", fontSize: 11.5, fontWeight: 700, color: "#93c5fd" }}>③ 수능</span>
+              <span style={{ flex: 1, textAlign: "center", whiteSpace: "nowrap", padding: "7px 2px", borderRadius: 8, background: "rgba(96,165,250,0.18)", fontSize: 11.5, fontWeight: 800, color: "#93c5fd" }}>③ 수능</span>
             </div>
-            <div style={{ textAlign: "right", marginTop: 6, fontSize: 11, fontWeight: 700, color: "#60a5fa" }}>전체 로드맵 →</div>
-          </a>
+            <a href="/suneung-quiz.html" style={{
+              display: "block", textAlign: "center", padding: "12px", borderRadius: 10,
+              background: "linear-gradient(135deg,#3b82f6,#2563eb)", color: "#fff",
+              fontWeight: 800, fontSize: 14, textDecoration: "none",
+            }}>🎓 수능 연습 게임 시작 →</a>
+            <a href="/learn.html" target="_blank" rel="noopener noreferrer" style={{
+              display: "block", textAlign: "center", marginTop: 8, fontSize: 11, fontWeight: 700, color: "#60a5fa", textDecoration: "none",
+            }}>학습 로드맵 보기 →</a>
+          </div>
 
           {/* 게임 모드 탭 */}
           <div style={{
