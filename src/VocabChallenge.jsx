@@ -931,6 +931,12 @@ export default function VocabChallenge() {
               ))}
             </div>
             <a href="/guides.html" target="_blank" rel="noopener noreferrer" style={{ display: "inline-block", marginTop: 10, fontSize: 13, fontWeight: 700, color: "#60a5fa", textDecoration: "none" }}>📖 전체 학습 가이드 보기 →</a>
+            <div style={{ marginTop: 8, fontSize: 12.5, color: "#94a3b8" }}>
+              게임 소개:{" "}
+              <a href="/play-vocab.html" target="_blank" rel="noopener noreferrer" style={{ color: "#60a5fa", textDecoration: "none" }}>영어 게임</a>{" · "}
+              <a href="/play-math.html" target="_blank" rel="noopener noreferrer" style={{ color: "#60a5fa", textDecoration: "none" }}>수학 게임</a>{" · "}
+              <a href="/play-korean.html" target="_blank" rel="noopener noreferrer" style={{ color: "#60a5fa", textDecoration: "none" }}>한국어 게임</a>
+            </div>
           </div>
 
           <div style={{ display: "block", textAlign: "center", fontSize: 11, color: "#94a3b8", marginTop: 8 }}>
