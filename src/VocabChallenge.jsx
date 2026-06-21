@@ -561,54 +561,39 @@ export default function VocabChallenge() {
           <div style={{ ...S.logoArea, ...(isWide ? { marginBottom: 16 } : {}) }}>
             <div style={{ ...S.logoIcon, ...(isWide ? { fontSize: 28, marginBottom: 6 } : {}) }}>⚡</div>
             <h1 style={{ ...S.title, ...(isWide ? { fontSize: 24, letterSpacing: 4 } : {}) }}>STUDY RUSH</h1>
-            <p style={S.subtitle}>
-              {gameMode === "math"
-                ? "암산 · 수학Ⅰ·Ⅱ · 수능 대비 타이머 게임"
-                : gameMode === "korean"
-                ? "어휘 · 맞춤법 · 수능 국어 타이머 게임"
-                : "영어 어휘 · CEFR · 수능 대비 타이머 게임"}
+            <p style={{ fontSize: 13, color: "#94a3b8", marginTop: 8, fontWeight: 600, letterSpacing: 0.3 }}>
+              고등학교 국·영·수 수능 학습 게임
             </p>
-            <p style={S.wordCount}>
-              {gameMode === "math"
-                ? "기초 연산부터 수학Ⅰ·Ⅱ까지 🔢"
-                : gameMode === "korean"
-                ? `어휘 · 맞춤법 · 사자성어 ✏️`
-                : `총 ${allWords.length.toLocaleString()}개 단어 · CEFR A1~C2 🔊`}
-            </p>
-            <p style={{ fontSize: 10, color: "#6ee7b7", marginTop: 4, letterSpacing: 0.5 }}>
-              🎯 국 · 영 · 수, 기초부터 수능까지 게임으로!
-            </p>
-            <a href="https://www.instagram.com/doyou_popup_store" target="_blank" rel="noopener noreferrer"
-              style={{
-                display: "inline-flex", alignItems: "center", gap: 6, marginTop: 12,
-                padding: "5px 12px", borderRadius: 999, textDecoration: "none",
-                background: "rgba(245,182,11,0.12)", border: "1px solid rgba(245,182,11,0.45)",
-                fontSize: 11, fontWeight: 700, color: "#f5b60b", letterSpacing: 0.3,
-              }}>
-              🏬 DOYOU POP-UP STORE가 제공하는 게임
-            </a>
           </div>
 
           {/* 수능 연습 게임 (메인 콘텐츠) */}
           <div style={{
-            margin: "0 0 14px", padding: "14px", borderRadius: 12,
-            background: "rgba(96,165,250,0.08)", border: "1px solid rgba(96,165,250,0.28)",
+            margin: "0 0 18px", padding: 16, borderRadius: 14,
+            background: "rgba(96,165,250,0.08)", border: "1px solid rgba(96,165,250,0.3)",
           }}>
-            <div style={{ fontSize: 11.5, color: "#93c5fd", marginBottom: 9, fontWeight: 800, letterSpacing: 0.3 }}>🎓 datapd.ai 수능 연습 게임</div>
-            <div style={{ display: "flex", alignItems: "stretch", gap: 6, marginBottom: 11 }}>
-              <span style={{ flex: 1, textAlign: "center", whiteSpace: "nowrap", padding: "7px 2px", borderRadius: 8, background: "rgba(255,255,255,0.05)", fontSize: 11.5, fontWeight: 700, color: "#e2e8f0" }}>① 기초</span>
-              <span style={{ flex: 1, textAlign: "center", whiteSpace: "nowrap", padding: "7px 2px", borderRadius: 8, background: "rgba(255,255,255,0.05)", fontSize: 11.5, fontWeight: 700, color: "#e2e8f0" }}>② 레벨업</span>
-              <span style={{ flex: 1, textAlign: "center", whiteSpace: "nowrap", padding: "7px 2px", borderRadius: 8, background: "rgba(96,165,250,0.18)", fontSize: 11.5, fontWeight: 800, color: "#93c5fd" }}>③ 수능</span>
+            <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 11 }}>
+              <div style={{ fontSize: 13.5, color: "#fff", fontWeight: 800 }}>🎓 수능 연습 게임</div>
+              <div style={{ fontSize: 11, color: "#93c5fd", fontWeight: 700, padding: "3px 9px", borderRadius: 999, background: "rgba(96,165,250,0.15)" }}>국·영·수 58문항</div>
+            </div>
+            <div style={{ display: "flex", alignItems: "stretch", gap: 6, marginBottom: 12 }}>
+              <span style={{ flex: 1, textAlign: "center", whiteSpace: "nowrap", padding: "7px 2px", borderRadius: 8, background: "rgba(255,255,255,0.05)", fontSize: 11.5, fontWeight: 700, color: "#cbd5e1" }}>① 기초</span>
+              <span style={{ flex: 1, textAlign: "center", whiteSpace: "nowrap", padding: "7px 2px", borderRadius: 8, background: "rgba(255,255,255,0.05)", fontSize: 11.5, fontWeight: 700, color: "#cbd5e1" }}>② 레벨업</span>
+              <span style={{ flex: 1, textAlign: "center", whiteSpace: "nowrap", padding: "7px 2px", borderRadius: 8, background: "rgba(96,165,250,0.2)", fontSize: 11.5, fontWeight: 800, color: "#93c5fd" }}>③ 수능</span>
             </div>
             <a href="/suneung-quiz.html" style={{
-              display: "block", textAlign: "center", padding: "12px", borderRadius: 10,
+              display: "block", textAlign: "center", padding: "13px", borderRadius: 10,
               background: "linear-gradient(135deg,#3b82f6,#2563eb)", color: "#fff",
-              fontWeight: 800, fontSize: 14, textDecoration: "none",
+              fontWeight: 800, fontSize: 15, textDecoration: "none",
             }}>🎓 수능 연습 게임 시작 →</a>
             <a href="/learn.html" target="_blank" rel="noopener noreferrer" style={{
-              display: "block", textAlign: "center", marginTop: 8, fontSize: 11, fontWeight: 700, color: "#60a5fa", textDecoration: "none",
+              display: "block", textAlign: "center", marginTop: 9, fontSize: 11.5, fontWeight: 700, color: "#60a5fa", textDecoration: "none",
             }}>학습 로드맵 보기 →</a>
           </div>
+
+          {/* 과목별 기초 게임 */}
+          <p style={{ fontSize: 12, color: "#94a3b8", fontWeight: 700, margin: "0 0 8px", letterSpacing: 0.3 }}>
+            과목별 기초 게임 — 어휘·연산으로 워밍업
+          </p>
 
           {/* 게임 모드 탭 */}
           <div style={{
