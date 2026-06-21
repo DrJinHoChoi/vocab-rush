@@ -930,6 +930,7 @@ export default function VocabChallenge() {
                 >{g.label}</a>
               ))}
             </div>
+            <a href="/learn.html" target="_blank" rel="noopener noreferrer" style={{ display: "inline-block", marginTop: 10, marginRight: 14, fontSize: 13, fontWeight: 800, color: "#60a5fa", textDecoration: "none" }}>🗺️ 수능 학습 로드맵 →</a>
             <a href="/guides.html" target="_blank" rel="noopener noreferrer" style={{ display: "inline-block", marginTop: 10, fontSize: 13, fontWeight: 700, color: "#60a5fa", textDecoration: "none" }}>📖 전체 학습 가이드 보기 →</a>
             <div style={{ marginTop: 8, fontSize: 12.5, color: "#94a3b8" }}>
               게임 소개:{" "}
