@@ -921,7 +921,7 @@ export default function VocabChallenge() {
                 { href: "/guide-math.html", label: "수학" },
                 { href: "/guide-coding-math.html", label: "코딩 수학" },
                 { href: "/guide-base-conversion.html", label: "진법 변환" },
-                { href: "/guide-korean.html", label: "한국어" },
+                { href: "/guide-korean.html", label: "국어" },
                 { href: "/guide-spelling.html", label: "맞춤법 50" },
                 { href: "/guide-study-tips.html", label: "학습법" },
               ].map(g => (
@@ -935,7 +935,13 @@ export default function VocabChallenge() {
               게임 소개:{" "}
               <a href="/play-vocab.html" target="_blank" rel="noopener noreferrer" style={{ color: "#60a5fa", textDecoration: "none" }}>영어 게임</a>{" · "}
               <a href="/play-math.html" target="_blank" rel="noopener noreferrer" style={{ color: "#60a5fa", textDecoration: "none" }}>수학 게임</a>{" · "}
-              <a href="/play-korean.html" target="_blank" rel="noopener noreferrer" style={{ color: "#60a5fa", textDecoration: "none" }}>한국어 게임</a>
+              <a href="/play-korean.html" target="_blank" rel="noopener noreferrer" style={{ color: "#60a5fa", textDecoration: "none" }}>국어 게임</a>
+            </div>
+            <div style={{ marginTop: 6, fontSize: 12.5, color: "#94a3b8" }}>
+              🎓 수능 대비:{" "}
+              <a href="/suneung-korean.html" target="_blank" rel="noopener noreferrer" style={{ color: "#60a5fa", textDecoration: "none" }}>수능 국어</a>{" · "}
+              <a href="/suneung-english.html" target="_blank" rel="noopener noreferrer" style={{ color: "#60a5fa", textDecoration: "none" }}>수능 영어</a>{" · "}
+              <a href="/suneung-math.html" target="_blank" rel="noopener noreferrer" style={{ color: "#60a5fa", textDecoration: "none" }}>수능 수학</a>
             </div>
           </div>
 
