@@ -1,5 +1,5 @@
 // MATH RUSH - Dynamic Math Problem Generator
-// Categories: add_sub, multiply, divide, mixed, fraction, percent, power, binary, logic, cs_math, ai_math, random
+// Categories: add_sub, multiply, divide, mixed, fraction, percent, power, random (수능 전용 — 기초 연산)
 
 function rand(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -1189,10 +1189,6 @@ const generators = {
   fraction: genFraction,
   percent: genPercent,
   power: genPower,
-  binary: genBinary,
-  logic: genLogic,
-  cs_math: genCsMath,
-  ai_math: genAiMath,
 };
 
 const allGeneratorKeys = Object.keys(generators);
@@ -1238,8 +1234,4 @@ export const MATH_CATEGORIES = [
   { key: "fraction", icon: "📊", label: "분수·소수" },
   { key: "percent",  icon: "💯", label: "퍼센트" },
   { key: "power",    icon: "⚡", label: "거듭제곱" },
-  { key: "binary",   icon: "🔟", label: "진법변환" },
-  { key: "logic",    icon: "🧠", label: "논리연산" },
-  { key: "cs_math",  icon: "🖥️", label: "CS수학" },
-  { key: "ai_math",  icon: "🤖", label: "AI수학" },
 ];

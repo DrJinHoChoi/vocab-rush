@@ -77,14 +77,7 @@ const CATEGORIES = [
   { key: "B2", icon: "🟠", label: "중상급 B2" },
   { key: "C1", icon: "🔴", label: "고급 C1" },
   { key: "C2", icon: "🏆", label: "SAT/최상급" },
-  { key: "tech", icon: "💻", label: "테크" },
-  { key: "toeic", icon: "📋", label: "TOEIC" },
 ];
-
-// 수능 전용: 비수능 카테고리(테크/TOEIC, 진법/논리/CS/AI수학, IT/AI/프롬프트/학습법)는 숨김 — 데이터는 보존, 키만 노출
-const SUNEUNG_VOCAB = ["random", "A1", "A2", "B1", "B2", "C1", "C2"];
-const SUNEUNG_MATH = ["random", "add_sub", "multiply", "divide", "mixed", "fraction", "percent", "power"];
-const SUNEUNG_KOREAN = ["random", "spelling", "spacing", "idiom", "proverb", "synonym", "antonym", "honorific", "prefix"];
 
 const DIFFICULTY = {
   easy: { time: 15, label: "Easy", points: 10, color: "#4ade80" },
@@ -722,7 +715,7 @@ export default function VocabChallenge() {
             <p style={S.sectionLabel}>카테고리</p>
             <div style={S.catGrid}>
               {gameMode === "math" ? (
-                MATH_CATEGORIES.filter((c) => SUNEUNG_MATH.includes(c.key)).map((c) => (
+                MATH_CATEGORIES.map((c) => (
                   <button
                     key={c.key}
                     onClick={() => setMathCategory(c.key)}
@@ -737,7 +730,7 @@ export default function VocabChallenge() {
                   </button>
                 ))
               ) : gameMode === "korean" ? (
-                KOREAN_CATEGORIES.filter((c) => SUNEUNG_KOREAN.includes(c.key)).map((c) => (
+                KOREAN_CATEGORIES.map((c) => (
                   <button
                     key={c.key}
                     onClick={() => setKoreanCategory(c.key)}
@@ -751,7 +744,7 @@ export default function VocabChallenge() {
                   </button>
                 ))
               ) : (
-                CATEGORIES.filter((c) => SUNEUNG_VOCAB.includes(c.key)).map((c) => (
+                CATEGORIES.map((c) => (
                   <button
                     key={c.key}
                     onClick={() => setCategory(c.key)}

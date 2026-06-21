@@ -1,5 +1,5 @@
 // KOREAN RUSH - Korean Language Quiz Data
-// Categories: spelling, spacing, idiom, proverb, synonym, antonym, honorific, random
+// Categories: spelling, spacing, idiom, proverb, synonym, antonym, honorific, prefix, random (수능 전용)
 
 function shuffle(arr) {
   const a = [...arr];
@@ -1271,12 +1271,7 @@ const DATA_MAP = {
   synonym: SYNONYM_DATA,
   antonym: ANTONYM_DATA,
   honorific: HONORIFIC_DATA,
-  it_term: IT_TERM_DATA,
-  it_spell: IT_SPELL_DATA,
-  ai_tool: AI_TOOL_DATA,
-  prompt: PROMPT_DATA,
   prefix: PREFIX_DATA,
-  study: STUDY_DATA,
 };
 
 const allCategoryKeys = Object.keys(DATA_MAP);
@@ -1319,10 +1314,5 @@ export const KOREAN_CATEGORIES = [
   { key: "synonym",  icon: "🔄", label: "유의어" },
   { key: "antonym",  icon: "↔️", label: "반의어" },
   { key: "honorific", icon: "🎩", label: "높임말" },
-  { key: "it_term",  icon: "💻", label: "IT용어" },
-  { key: "it_spell", icon: "⌨️", label: "IT맞춤법" },
-  { key: "ai_tool",  icon: "🤖", label: "AI도구" },
-  { key: "prompt",  icon: "💬", label: "프롬프트" },
   { key: "prefix",  icon: "🔤", label: "접두사·접미사" },
-  { key: "study",   icon: "🧠", label: "학습법" },
 ];
