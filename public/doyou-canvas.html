@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="icon" type="image/svg+xml" href="doyou-favicon.svg" />
+<meta name="theme-color" content="#F5B60B" />
+<meta name="robots" content="noindex, follow" />
+<title>DOYOU 비즈니스 모델 캔버스</title>
+<style>
+  :root{
+    --bg:#FAF5EB; --surface:#FFFEFB; --line:#E3DCCB; --ink:#141413;
+    --muted:#7C766B; --muted2:#A79E88; --gold:#F5B60B; --blue:#5B7FA6; --terra:#C75D3A; --cream:#FAF5EB;
+    --shadow:0 1px 2px rgba(20,16,12,.05), 0 10px 26px rgba(20,16,12,.07);
+  }
+  *{ box-sizing:border-box; margin:0; padding:0; }
+  body{ font-family:'Pretendard','Apple SD Gothic Neo','Malgun Gothic',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+    background:var(--bg); color:var(--ink); line-height:1.5; -webkit-font-smoothing:antialiased; }
+  .wrap{ max-width:1180px; margin:0 auto; padding:0 22px; }
+  h1,h2,h3,h4,p{ margin:0; }
+
+  .topbar{ position:sticky; top:0; z-index:30; background:rgba(250,245,235,.9); backdrop-filter:blur(10px); border-bottom:2px solid var(--ink); }
+  .topbar-in{ display:flex; align-items:center; gap:12px; height:62px; }
+  .logo{ display:flex; align-items:center; gap:11px; text-decoration:none; color:inherit; cursor:pointer; }
+  .logo-face{ width:40px; height:40px; flex:none; }
+  .logo-letters{ height:28px; width:auto; display:block; }
+  .logo-pill{ background:var(--ink); color:var(--gold); font-size:8.5px; font-weight:800; letter-spacing:2px; padding:3px 8px; border-radius:999px; width:-moz-fit-content; width:fit-content; }
+  .logo-txt{ display:flex; flex-direction:column; gap:3px; line-height:1; }
+  .hublink{ font-size:12px; font-weight:800; color:var(--muted); text-decoration:none; border:1.5px solid var(--line); padding:6px 11px; border-radius:8px; }
+  .hublink:hover{ border-color:var(--ink); color:var(--ink); }
+  .biz-tag{ margin-left:auto; font-size:11px; font-weight:800; letter-spacing:1.5px; color:var(--ink); border:2px solid var(--ink); border-radius:8px; padding:6px 11px; }
+
+  .cover{ padding:30px 0 6px; }
+  .kicker{ display:inline-flex; gap:7px; background:var(--ink); color:var(--gold); font-size:12px; font-weight:800; letter-spacing:1.5px; padding:6px 13px; border-radius:999px; }
+  .cover h1{ font-size:32px; font-weight:900; letter-spacing:-.03em; margin-top:14px; }
+  .cover h1 b{ color:var(--terra); }
+  .cover .sub{ color:var(--muted); font-size:15px; margin-top:9px; }
+
+  /* growth-dividend strip */
+  .dividend{ background:var(--ink); color:var(--cream); border-radius:14px; padding:16px 20px; margin:18px 0 16px; display:flex; flex-wrap:wrap; align-items:center; gap:10px 22px; }
+  .dividend b{ color:var(--gold); font-weight:900; font-size:15px; }
+  .dividend span{ font-size:13px; } .dividend span i{ color:var(--gold); font-style:normal; font-weight:800; }
+
+  /* BMC */
+  .bmc-top{ display:grid; grid-template-columns:repeat(5,1fr); gap:12px; }
+  .bmc-bottom{ display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:12px; }
+  .blk{ background:var(--surface); border:2px solid var(--ink); border-radius:12px; padding:14px; }
+  .blk.kp{ grid-column:1; grid-row:1/3; }
+  .blk.ka{ grid-column:2; grid-row:1; }
+  .blk.kr{ grid-column:2; grid-row:2; }
+  .blk.vp{ grid-column:3; grid-row:1/3; background:#FCEFC9; }
+  .blk.cr{ grid-column:4; grid-row:1; }
+  .blk.ch{ grid-column:4; grid-row:2; }
+  .blk.cs{ grid-column:5; grid-row:1/3; }
+  .blk h3{ font-size:13px; font-weight:900; display:flex; align-items:center; gap:6px; letter-spacing:-.01em; }
+  .blk .en{ font-size:9.5px; font-weight:700; color:var(--muted2); letter-spacing:.05em; margin:2px 0 2px 22px; }
+  .blk ul{ margin:8px 0 0; padding-left:15px; font-size:12px; color:#3f3a33; }
+  .blk li{ margin-top:5px; } .blk li b{ color:var(--terra); font-weight:800; }
+  .blk.vp li b{ color:#9E2C16; }
+  .blk .grp{ font-size:11px; font-weight:800; color:var(--blue); margin-top:9px; }
+  .blk.vp .grp{ color:#8A6608; }
+
+  footer{ text-align:center; padding:30px 0 46px; border-top:2px solid var(--ink); margin-top:22px; }
+  .bf-name{ font-weight:900; font-size:26px; letter-spacing:1px; }
+  .bf-pill{ display:inline-block; background:var(--ink); color:var(--gold); font-size:10px; font-weight:800; letter-spacing:4px; padding:4px 12px; border-radius:999px; margin-left:8px; vertical-align:middle; }
+  .bf-meta{ color:var(--muted2); font-size:12.5px; margin-top:12px; }
+
+  @media (max-width:980px){
+    .bmc-top{ grid-template-columns:1fr 1fr; }
+    .blk.kp,.blk.ka,.blk.kr,.blk.vp,.blk.cr,.blk.ch,.blk.cs{ grid-column:auto; grid-row:auto; }
+  }
+  @media (max-width:560px){ .bmc-top,.bmc-bottom{ grid-template-columns:1fr; } .cover h1{ font-size:25px; } }
+</style>
+</head>
+<body>
+  <div class="topbar"><div class="wrap topbar-in">
+    <a class="logo" href="doyou-hub.html" title="도유 허브로">
+      <svg class="logo-face" viewBox="305 222 488 620" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <g stroke="#141413" stroke-width="14" stroke-linejoin="round" stroke-linecap="round">
+          <path d="M540,235 C690,235 770,360 770,540 C770,720 680,825 540,825 C400,825 320,710 320,540 C320,360 390,235 540,235 Z" fill="#F5B60B"/>
+          <path d="M540,250 C610,250 670,300 700,360 C672,430 690,440 778,478 C840,512 838,520 800,548 C742,560 760,585 786,600 C740,628 742,632 720,648 C760,672 742,690 700,742 C648,790 600,805 540,810 L540,250 Z" fill="#FAF5EB"/>
+          <path d="M540,540 L320,540 C328,690 410,795 540,812 Z" fill="#5B7FA6"/>
+          <path d="M540,235 C430,235 360,300 335,395 C400,360 470,350 540,355 C560,300 560,265 540,235 Z" fill="#141413"/>
+          <ellipse cx="445" cy="470" rx="62" ry="42" fill="#FAF5EB"/><circle cx="462" cy="470" r="22" fill="#141413"/>
+          <path d="M628,452 C660,432 705,438 724,460 C700,478 660,480 628,452 Z" fill="#FAF5EB"/><circle cx="690" cy="458" r="13" fill="#141413"/>
+          <polygon points="540,470 600,640 470,640" fill="#C75D3A"/>
+          <path d="M455,705 C500,690 560,690 600,705 C560,742 500,742 455,705 Z" fill="#C75D3A"/>
+        </g>
+      </svg>
+      <div class="logo-txt">
+        <svg class="logo-letters" viewBox="85 185 930 275" xmlns="http://www.w3.org/2000/svg" aria-label="DOYOU">
+          <g stroke="#141413" stroke-width="11" stroke-linejoin="round" stroke-linecap="round">
+            <g transform="translate(70,180) rotate(-3 90 140)" fill="#F5B60B"><path fill-rule="evenodd" d="M20,22 L102,26 Q176,40 174,142 Q172,250 96,256 L22,250 Z M70,78 L100,80 Q124,92 123,142 Q122,196 98,202 L70,200 Z"/></g>
+            <g transform="translate(258,168) rotate(2 95 140)" fill="#5B7FA6"><path fill-rule="evenodd" d="M96,22 Q172,26 170,142 Q168,256 95,256 Q22,256 20,140 Q22,24 96,22 Z M95,80 Q122,82 121,142 Q120,200 95,200 Q70,200 70,140 Q71,82 95,80 Z"/></g>
+            <g transform="translate(448,188) rotate(-2 95 140)" fill="#C75D3A"><path d="M18,24 L74,20 L98,120 L126,22 L182,26 L122,168 L120,256 L78,254 L80,166 Z"/></g>
+            <g transform="translate(632,172) rotate(3 95 140)" fill="#F5B60B"><path fill-rule="evenodd" d="M96,22 Q172,26 170,142 Q168,256 95,256 Q22,256 20,140 Q22,24 96,22 Z M95,80 Q122,82 121,142 Q120,200 95,200 Q70,200 70,140 Q71,82 95,80 Z"/></g>
+            <g transform="translate(820,184) rotate(-1 95 140)" fill="#141413"><path d="M18,22 L72,24 L70,186 Q70,206 100,206 Q130,206 128,186 L128,24 L184,22 L182,192 Q180,260 100,262 Q20,260 20,192 Z"/></g>
+          </g>
+        </svg>
+        <span class="logo-pill">POP-UP STORE</span>
+      </div>
+    </a>
+    <a class="hublink" href="doyou-hub.html">← 도유 허브</a>
+    <span class="biz-tag">BUSINESS CANVAS</span>
+  </div></div>
+
+  <main class="wrap">
+    <section class="cover">
+      <span class="kicker">🧩 BUSINESS MODEL CANVAS · 범어점 기반</span>
+      <h1>도유 <b>비즈니스 모델 캔버스</b></h1>
+      <p class="sub">팝업 입점 + 게임(Vocab/Shopping Rush) + 구독 + 가맹 — 한 장으로.</p>
+    </section>
+
+    <div class="dividend">
+      <b>💸 성장 배당 (Growth Dividend)</b>
+      <span><i>입점</i> = 임대료 차감</span>
+      <span><i>가맹</i> = 로열티 차감 + 가맹비 성과 환급</span>
+      <span><i>고객</i> = 스탬프·리워드</span>
+      <span style="color:#C9C3B5">— 모두 '참여도(트래픽·매출)' 비례로 돌려받음</span>
+    </div>
+
+    <div class="bmc-top">
+      <div class="blk kp">
+        <h3>🤝 핵심 파트너</h3><div class="en">KEY PARTNERS</div>
+        <ul>
+          <li><b>입점 브랜드</b> (공급+파트너)</li>
+          <li><b>DataPD.ai</b> — 게임·플랫폼 기술</li>
+          <li><b>가맹점주</b> — 가맹 확장</li>
+          <li>로컬 상권·건물주</li>
+          <li>물류(박스)·결제 PG·Google(광고)</li>
+        </ul>
+      </div>
+      <div class="blk ka">
+        <h3>⚙️ 핵심 활동</h3><div class="en">KEY ACTIVITIES</div>
+        <ul>
+          <li>매주 <b>브랜드 큐레이션·매칭</b></li>
+          <li>게임·플랫폼 운영(Vocab/Shopping Rush)</li>
+          <li>공간 운영(프리콘→시공→운영)</li>
+          <li>멤버십·큐레이션 박스 운영</li>
+          <li>가맹 모집·교육·지원</li>
+        </ul>
+      </div>
+      <div class="blk kr">
+        <h3>🧱 핵심 자원</h3><div class="en">KEY RESOURCES</div>
+        <ul>
+          <li>DOYOU 브랜드(큐비즘 IP)</li>
+          <li>게임·매칭·구독 플랫폼</li>
+          <li>입점 브랜드 네트워크</li>
+          <li>매장 공간(범어 본점→가맹)</li>
+          <li>방문·게임·구매 <b>데이터</b> + 멤버</li>
+        </ul>
+      </div>
+      <div class="blk vp">
+        <h3>💎 가치 제안</h3><div class="en">VALUE PROPOSITIONS</div>
+        <div class="grp">입점 브랜드</div>
+        <ul><li>저비용 오프라인 데뷔 무대 + 발견·노출</li><li><b>임대료 리베이트(같이 번다)</b> + 데이터</li></ul>
+        <div class="grp">방문객</div>
+        <ul><li>매주 새 브랜드 발견 + 게임·리워드</li><li>멤버십(DOYOU CLUB) 혜택</li></ul>
+        <div class="grp">가맹점주</div>
+        <ul><li>브랜드+게임+구독 <b>턴키</b> + 본사 네트워크</li><li><b>로열티 리베이트 · 가맹비 성과 환급</b></li></ul>
+      </div>
+      <div class="blk cr">
+        <h3>❤️ 고객 관계</h3><div class="en">RELATIONSHIPS</div>
+        <ul>
+          <li>게임·스탬프·<b>DOYOU CLUB</b> = 습관·리텐션</li>
+          <li>로컬 커뮤니티·씬·이벤트</li>
+          <li>입점/가맹 <b>수익 공유</b> 파트너십</li>
+        </ul>
+      </div>
+      <div class="blk ch">
+        <h3>📡 채널</h3><div class="en">CHANNELS</div>
+        <ul>
+          <li>오프라인 팝업 매장(범어→가맹)</li>
+          <li>앱·웹(datapd.ai)·인스타 @doyou_popup_store</li>
+          <li>게임 = 유입·리텐션 채널 / 큐레이션 박스(배송)</li>
+        </ul>
+      </div>
+      <div class="blk cs">
+        <h3>🎯 고객 세그먼트</h3><div class="en">CUSTOMER SEGMENTS</div>
+        <ul>
+          <li><b>입점 브랜드</b> (신생·성장 브랜드)</li>
+          <li><b>방문객·고객</b> (2030 로컬, 발견·경험)</li>
+          <li><b>가맹점주</b> (창업 희망자)</li>
+          <li>광고주 (게임 내 노출)</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="bmc-bottom">
+      <div class="blk">
+        <h3>💸 비용 구조</h3><div class="en">COST STRUCTURE</div>
+        <ul>
+          <li>매장 임차·시공(프리콘 인테리어) · 인건비</li>
+          <li>게임·플랫폼 개발/유지 · 마케팅</li>
+          <li>박스 원가·물류 · 결제 수수료</li>
+          <li><b>파트너 리베이트 풀</b>(입점 임대료·가맹 로열티 차감)</li>
+        </ul>
+      </div>
+      <div class="blk">
+        <h3>💰 수익원</h3><div class="en">REVENUE STREAMS</div>
+        <ul>
+          <li><b>입점 임대료</b> (단발 + BRAND PASS 구독)</li>
+          <li><b>멤버십 구독</b> (DOYOU CLUB)</li>
+          <li><b>큐레이션 박스</b> (구독 커머스)</li>
+          <li>게임 광고(AdSense)</li>
+          <li><b>가맹 수익</b> (가맹비 + 로열티 + 시스템 사용료)</li>
+        </ul>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <div><span class="bf-name">DOYOU</span><span class="bf-pill">POP-UP STORE</span></div>
+    <p class="bf-meta">비즈니스 모델 캔버스 · 범어점 기반 · @doyou_popup_store · DataPD.ai · 2026</p>
+  </footer>
+</body>
+</html>
