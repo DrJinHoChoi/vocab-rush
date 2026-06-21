@@ -762,27 +762,13 @@ export default function VocabChallenge() {
                 ))
               )}
             </div>
-            {/* AI 도구 활용 팁 */}
+            {/* 카테고리 안내 */}
             {(() => {
-              const aiCat = (gameMode === "math" && ["ai_math", "binary", "logic", "cs_math"].includes(mathCategory))
-                || (gameMode === "korean" && ["ai_tool", "it_term", "it_spell", "prompt", "prefix", "study"].includes(koreanCategory))
-                || (gameMode === "vocab" && ["tech", "toeic"].includes(category));
-              if (!aiCat) return null;
               const tips = {
-                ai_math: "💡 AI 모델의 핵심 수학 — sigmoid, ReLU, softmax, CNN, Attention 등",
-                binary: "💡 컴퓨터의 언어 — 2진법, 16진법은 프로그래밍의 기초",
-                logic: "💡 논리 연산은 AI 회로와 알고리즘의 핵심 원리",
-                cs_math: "💡 순열·조합·확률은 AI 알고리즘 분석의 필수 수학",
-                ai_tool: "💡 ChatGPT, Claude 등 AI 도구를 200% 활용하는 지식",
-                it_term: "💡 개발자와 소통하려면 IT 용어부터!",
-                it_spell: "💡 알고리즘? 알고리듬? AI 시대 올바른 표기법",
-                prompt: "💡 프롬프트 엔지니어링 — AI를 200% 활용하는 핵심 스킬",
                 prefix: "💡 접두사·접미사를 알면 모르는 영단어도 뜻을 추론 가능!",
-                study: "💡 과학적 학습법 — 간격 반복, 능동적 회상으로 효율 UP",
-                tech: "💡 AI/ML, 클라우드, 보안 등 테크 영어 어휘력 UP",
-                toeic: "💡 TOEIC 비즈니스 영어 — 회의·계약·인사·금융 핵심 어휘",
               };
               const key = gameMode === "math" ? mathCategory : gameMode === "korean" ? koreanCategory : category;
+              if (!tips[key]) return null;
               return (
                 <div style={{
                   marginTop: 8, padding: "8px 12px", borderRadius: 8,
