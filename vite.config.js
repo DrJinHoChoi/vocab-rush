@@ -9,9 +9,9 @@ export default defineConfig({
       registerType: 'autoUpdate',
       includeAssets: ['favicon.svg', 'icon-192.png', 'icon-512.png', 'apple-touch-icon.png'],
       manifest: {
-        name: 'VOCAB RUSH - 영어 어휘 챌린지',
-        short_name: 'VOCAB RUSH',
-        description: '직장인을 위한 영어 어휘 타이머 챌린지 게임',
+        name: 'STUDY RUSH - 국영수 수능 학습 게임',
+        short_name: 'STUDY RUSH',
+        description: '국·영·수 기초부터 수능까지, 무료 수능 학습 게임',
         theme_color: '#0a0a1a',
         background_color: '#0a0a1a',
         display: 'standalone',

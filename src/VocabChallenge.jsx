@@ -562,23 +562,23 @@ export default function VocabChallenge() {
           <div style={isWide ? { flex: 1, minWidth: 0 } : {}}>
           <div style={{ ...S.logoArea, ...(isWide ? { marginBottom: 16 } : {}) }}>
             <div style={{ ...S.logoIcon, ...(isWide ? { fontSize: 28, marginBottom: 6 } : {}) }}>⚡</div>
-            <h1 style={{ ...S.title, ...(isWide ? { fontSize: 24, letterSpacing: 4 } : {}) }}>{gameMode === "math" ? "MATH RUSH" : gameMode === "korean" ? "KOREAN RUSH" : "VOCAB RUSH"}</h1>
+            <h1 style={{ ...S.title, ...(isWide ? { fontSize: 24, letterSpacing: 4 } : {}) }}>STUDY RUSH</h1>
             <p style={S.subtitle}>
               {gameMode === "math"
-                ? "암산 · CS수학 · AI수학 타이머 챌린지"
+                ? "암산 · 수학Ⅰ·Ⅱ · 수능 대비 타이머 게임"
                 : gameMode === "korean"
-                ? "맞춤법 · IT용어 · AI도구 타이머 챌린지"
-                : "영어 어휘 · AI 도구 활용 타이머 챌린지"}
+                ? "어휘 · 맞춤법 · 수능 국어 타이머 게임"
+                : "영어 어휘 · CEFR · 수능 대비 타이머 게임"}
             </p>
             <p style={S.wordCount}>
               {gameMode === "math"
-                ? "12개 카테고리 · 무한 문제 생성 · AI/CS 수학 포함 🔢"
+                ? "기초 연산부터 수학Ⅰ·Ⅱ까지 🔢"
                 : gameMode === "korean"
-                ? `14개 카테고리 · 1,100+ 문제 · AI 시대 국어 실력 ✏️`
-                : `총 ${allWords.length.toLocaleString()}개 단어 · CEFR A1~C2 + TOEIC + Tech 🔊`}
+                ? `어휘 · 맞춤법 · 사자성어 ✏️`
+                : `총 ${allWords.length.toLocaleString()}개 단어 · CEFR A1~C2 🔊`}
             </p>
             <p style={{ fontSize: 10, color: "#6ee7b7", marginTop: 4, letterSpacing: 0.5 }}>
-              🤖 AI 도구 활용에 필요한 국 · 영 · 수 실력을 게임으로!
+              🎯 국 · 영 · 수, 기초부터 수능까지 게임으로!
             </p>
             <a href="https://www.instagram.com/doyou_popup_store" target="_blank" rel="noopener noreferrer"
               style={{
@@ -909,20 +909,13 @@ export default function VocabChallenge() {
               📚 학습 가이드
             </div>
             <p style={{ fontSize: 12.5, color: "#94a3b8", marginBottom: 10, lineHeight: 1.6 }}>
-              AI 시대에 필요한 국·영·수 실력을 키우는 무료 학습 글 — CEFR 어휘 전략, 프롬프트, 코딩 수학, 맞춤법까지 11편.
+              국·영·수 수능 학습 글 — 어휘 전략 · 어원 · 맞춤법 · 학습법.
             </p>
             <div style={{ display: "flex", flexWrap: "wrap", gap: "6px 14px" }}>
               {[
-                { href: "/guide-ai.html", label: "AI 도구" },
-                { href: "/guide-prompt.html", label: "프롬프트" },
                 { href: "/guide-vocab.html", label: "영어 어휘" },
-                { href: "/guide-toeic.html", label: "TOEIC" },
                 { href: "/guide-prefix.html", label: "접두사·접미사" },
-                { href: "/guide-math.html", label: "수학" },
-                { href: "/guide-coding-math.html", label: "코딩 수학" },
-                { href: "/guide-base-conversion.html", label: "진법 변환" },
-                { href: "/guide-korean.html", label: "국어" },
-                { href: "/guide-spelling.html", label: "맞춤법 50" },
+                { href: "/guide-spelling.html", label: "맞춤법" },
                 { href: "/guide-study-tips.html", label: "학습법" },
               ].map(g => (
                 <a key={g.href} href={g.href} target="_blank" rel="noopener noreferrer"
