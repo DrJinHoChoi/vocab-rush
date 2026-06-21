@@ -867,44 +867,6 @@ export default function VocabChallenge() {
           {/* 메뉴 하단 배너 광고 */}
           <AdBanner slot={AD_CONFIG.slots.menuBanner} />
 
-          {/* DataPD 서비스 */}
-          <div style={{
-            display: "flex", gap: 8, marginTop: 12,
-          }}>
-            <a
-              href="https://study.datapd.ai"
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{
-                flex: 1, padding: "12px 10px", borderRadius: 12, textDecoration: "none",
-                background: "rgba(96,165,250,0.06)", border: "1px solid rgba(96,165,250,0.15)",
-                display: "flex", alignItems: "center", gap: 8,
-              }}
-            >
-              <span style={{ fontSize: 20 }}>📖</span>
-              <div>
-                <div style={{ fontSize: 12, fontWeight: 600, color: "#e2e8f0" }}>AI 학습</div>
-                <div style={{ fontSize: 10, color: "#64748b" }}>study.datapd.ai</div>
-              </div>
-            </a>
-            <a
-              href="https://finance.datapd.ai"
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{
-                flex: 1, padding: "12px 10px", borderRadius: 12, textDecoration: "none",
-                background: "rgba(74,222,128,0.06)", border: "1px solid rgba(74,222,128,0.15)",
-                display: "flex", alignItems: "center", gap: 8,
-              }}
-            >
-              <span style={{ fontSize: 20 }}>💹</span>
-              <div>
-                <div style={{ fontSize: 12, fontWeight: 600, color: "#e2e8f0" }}>AI 금융</div>
-                <div style={{ fontSize: 10, color: "#64748b" }}>finance.datapd.ai</div>
-              </div>
-            </a>
-          </div>
-
           {/* 학습 가이드 */}
           <div style={{
             marginTop: 16, padding: "16px 14px", borderRadius: 12,
@@ -1576,18 +1538,6 @@ export default function VocabChallenge() {
                   </div>
                 </div>
               ))}
-              <a
-                href="https://study.datapd.ai"
-                target="_blank"
-                rel="noopener noreferrer"
-                style={{
-                  display: "block", marginTop: 10, padding: "8px 12px", borderRadius: 8,
-                  background: "rgba(251,191,36,0.08)", textDecoration: "none", textAlign: "center",
-                  fontSize: 12, color: "#fbbf24",
-                }}
-              >
-                🎓 DataPD에서 AI로 더 공부하기 →
-              </a>
             </div>
           )}
 
@@ -1601,42 +1551,6 @@ export default function VocabChallenge() {
             <span>{stats.totalGames}게임</span>
             <span>·</span>
             <span>{stats.unlockedIds.length}업적</span>
-          </div>
-
-          {/* DataPD 추천 — 결과에 따라 다른 문구 */}
-          <div style={{
-            display: "flex", gap: 8, marginTop: 16,
-          }}>
-            <a
-              href="https://study.datapd.ai"
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{
-                flex: 1, padding: "10px 8px", borderRadius: 10, textDecoration: "none",
-                background: "rgba(96,165,250,0.06)", border: "1px solid rgba(96,165,250,0.12)",
-                textAlign: "center",
-              }}
-            >
-              <span style={{ fontSize: 16 }}>📖</span>
-              <div style={{ fontSize: 11, color: "#94a3b8", marginTop: 4 }}>
-                {pct >= 80 ? "실력 업그레이드" : "더 공부하기"}
-              </div>
-            </a>
-            <a
-              href="https://finance.datapd.ai"
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{
-                flex: 1, padding: "10px 8px", borderRadius: 10, textDecoration: "none",
-                background: "rgba(74,222,128,0.06)", border: "1px solid rgba(74,222,128,0.12)",
-                textAlign: "center",
-              }}
-            >
-              <span style={{ fontSize: 16 }}>💹</span>
-              <div style={{ fontSize: 11, color: "#94a3b8", marginTop: 4 }}>
-                {pct >= 80 ? "오늘의 금융 트렌드" : "잠깐 쉬어가기"}
-              </div>
-            </a>
           </div>
 
           {/* 결과 화면 배너 광고 */}
