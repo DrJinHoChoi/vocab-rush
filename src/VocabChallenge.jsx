@@ -544,15 +544,30 @@ export default function VocabChallenge() {
   // ========================= MENU =========================
   if (screen === "menu") {
     return (
-      <div style={{ ...S.container, ...(isWide ? { alignItems: "center", padding: 12 } : {}) }}>
+      <div style={{ ...S.container, display: "block", padding: 0, alignItems: "stretch", justifyContent: "flex-start" }}>
+        {/* 상단 네비게이션 (웹사이트형) */}
+        <nav style={{ position: "sticky", top: 0, zIndex: 50, background: "rgba(10,10,26,0.92)", borderBottom: "1px solid rgba(255,255,255,0.08)", padding: "11px 18px" }}>
+          <div style={{ maxWidth: 1080, margin: "0 auto", display: "flex", alignItems: "center", gap: 14, flexWrap: "wrap" }}>
+            <span style={{ fontWeight: 900, letterSpacing: 1, color: "#f8fafc", fontSize: 15, marginRight: 4 }}>⚡ STUDY RUSH</span>
+            <a href="/suneung-quiz.html" style={{ color: "#93c5fd", textDecoration: "none", fontSize: 13, fontWeight: 700 }}>수능 게임</a>
+            <a href="/learn.html" target="_blank" rel="noopener noreferrer" style={{ color: "#94a3b8", textDecoration: "none", fontSize: 13 }}>학습 로드맵</a>
+            <a href="/guides.html" target="_blank" rel="noopener noreferrer" style={{ color: "#94a3b8", textDecoration: "none", fontSize: 13 }}>학습 자료</a>
+            <a href="/about.html" target="_blank" rel="noopener noreferrer" style={{ color: "#94a3b8", textDecoration: "none", fontSize: 13 }}>소개</a>
+          </div>
+        </nav>
         <div style={{
           ...S.menuCard,
+          maxWidth: isWide ? 1080 : 480,
+          margin: "0 auto",
+          background: "transparent",
+          border: "none",
+          boxShadow: "none",
+          borderRadius: 0,
+          padding: isWide ? "28px 20px 16px" : "20px 16px 16px",
           ...(isWide ? {
-            maxWidth: 860,
-            padding: "20px 22px",
             display: "flex",
             flexWrap: "wrap",
-            gap: 20,
+            gap: 28,
             alignItems: "flex-start",
           } : {}),
         }}>
@@ -914,6 +929,21 @@ export default function VocabChallenge() {
           </div>
           </div>{/* end bottom section */}
         </div>
+
+        {/* 푸터 (풀폭 웹사이트형) */}
+        <footer style={{ borderTop: "1px solid rgba(255,255,255,0.08)", padding: "22px 18px", marginTop: 4 }}>
+          <div style={{ maxWidth: 1080, margin: "0 auto", textAlign: "center", fontSize: 12, color: "#64748b", lineHeight: 1.9 }}>
+            <div style={{ fontWeight: 800, color: "#94a3b8", marginBottom: 4 }}>⚡ STUDY RUSH</div>
+            고등학교 국·영·수 수능 학습 게임 · 무료
+            <div style={{ marginTop: 6 }}>
+              <a href="/learn.html" target="_blank" rel="noopener noreferrer" style={{ color: "#94a3b8", textDecoration: "none" }}>학습 로드맵</a>{" · "}
+              <a href="/suneung-quiz.html" style={{ color: "#94a3b8", textDecoration: "none" }}>수능 게임</a>{" · "}
+              <a href="/guides.html" target="_blank" rel="noopener noreferrer" style={{ color: "#94a3b8", textDecoration: "none" }}>학습 자료</a>{" · "}
+              <a href="/about.html" target="_blank" rel="noopener noreferrer" style={{ color: "#94a3b8", textDecoration: "none" }}>소개</a>
+            </div>
+            <div style={{ marginTop: 6 }}>© 2025 DataPD · datapd.ai</div>
+          </div>
+        </footer>
 
         {/* 배지 모달 */}
         {showBadges && <BadgesModal stats={stats} onClose={() => setShowBadges(false)} />}
