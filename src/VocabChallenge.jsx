@@ -555,35 +555,17 @@ export default function VocabChallenge() {
             <a href="/about.html" target="_blank" rel="noopener noreferrer" style={{ color: "#94a3b8", textDecoration: "none", fontSize: 13 }}>소개</a>
           </div>
         </nav>
-        <div style={{
-          ...S.menuCard,
-          maxWidth: isWide ? 1080 : 480,
-          margin: "0 auto",
-          background: "transparent",
-          border: "none",
-          boxShadow: "none",
-          borderRadius: 0,
-          padding: isWide ? "28px 20px 16px" : "20px 16px 16px",
-          ...(isWide ? {
-            display: "flex",
-            flexWrap: "wrap",
-            gap: 28,
-            alignItems: "flex-start",
-          } : {}),
-        }}>
-          {/* 왼쪽 패널 (PC) / 상단 (모바일): 로고+통계+규칙 */}
-          <div style={isWide ? { flex: 1, minWidth: 0 } : {}}>
-          <div style={{ ...S.logoArea, ...(isWide ? { marginBottom: 16 } : {}) }}>
-            <div style={{ ...S.logoIcon, ...(isWide ? { fontSize: 28, marginBottom: 6 } : {}) }}>⚡</div>
-            <h1 style={{ ...S.title, ...(isWide ? { fontSize: 24, letterSpacing: 4 } : {}) }}>STUDY RUSH</h1>
-            <p style={{ fontSize: 13, color: "#94a3b8", marginTop: 8, fontWeight: 600, letterSpacing: 0.3 }}>
+        {/* 히어로 (풀폭 중앙) */}
+        <header style={{ maxWidth: 1080, margin: "0 auto", width: "100%", padding: isWide ? "34px 20px 12px" : "20px 16px 8px" }}>
+          <div style={{ ...S.logoArea, marginBottom: 16, textAlign: "center" }}>
+            <div style={{ ...S.logoIcon, fontSize: isWide ? 38 : 30, marginBottom: 6 }}>⚡</div>
+            <h1 style={{ ...S.title, fontSize: isWide ? 34 : 26, letterSpacing: isWide ? 7 : 4 }}>STUDY RUSH</h1>
+            <p style={{ fontSize: 14, color: "#94a3b8", marginTop: 8, fontWeight: 600, letterSpacing: 0.3 }}>
               고등학교 국·영·수 수능 학습 게임
             </p>
           </div>
-
-          {/* 수능 연습 게임 (메인 콘텐츠) */}
           <div style={{
-            margin: "0 0 18px", padding: 16, borderRadius: 14,
+            maxWidth: 560, margin: "0 auto", padding: 16, borderRadius: 14,
             background: "rgba(96,165,250,0.08)", border: "1px solid rgba(96,165,250,0.3)",
           }}>
             <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 11 }}>
@@ -604,6 +586,27 @@ export default function VocabChallenge() {
               display: "block", textAlign: "center", marginTop: 9, fontSize: 11.5, fontWeight: 700, color: "#60a5fa", textDecoration: "none",
             }}>학습 로드맵 보기 →</a>
           </div>
+        </header>
+
+        {/* 메인: 게임 + 교육 */}
+        <div style={{
+          ...S.menuCard,
+          maxWidth: isWide ? 1080 : 480,
+          margin: "0 auto",
+          background: "transparent",
+          border: "none",
+          boxShadow: "none",
+          borderRadius: 0,
+          padding: isWide ? "8px 20px 16px" : "8px 16px 16px",
+          ...(isWide ? {
+            display: "flex",
+            flexWrap: "wrap",
+            gap: 28,
+            alignItems: "flex-start",
+          } : {}),
+        }}>
+          {/* 게임 컬럼 (PC 왼쪽) */}
+          <div style={isWide ? { flex: 1, minWidth: 0 } : {}}>
 
           {/* 과목별 기초 게임 */}
           <p style={{ fontSize: 12, color: "#94a3b8", fontWeight: 700, margin: "0 0 8px", letterSpacing: 0.3 }}>
