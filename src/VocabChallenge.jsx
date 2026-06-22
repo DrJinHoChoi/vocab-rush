@@ -69,14 +69,12 @@ function AdBanner({ slot, format = "auto", style = {} }) {
   );
 }
 
+// 초·중·고 학년 그룹 — 영어 CEFR 매핑(초등 A1·A2 / 중등 B1·B2 / 고등 C1·C2)
+const ENG_LEVELS = { elem: ["A1", "A2"], mid: ["B1", "B2"], high: ["C1", "C2"] };
 const CATEGORIES = [
-  { key: "random", icon: "🎲", label: "랜덤 믹스" },
-  { key: "A1", icon: "🟢", label: "기초 A1" },
-  { key: "A2", icon: "🔵", label: "초급 A2" },
-  { key: "B1", icon: "🟡", label: "중급 B1" },
-  { key: "B2", icon: "🟠", label: "중상급 B2" },
-  { key: "C1", icon: "🔴", label: "고급 C1" },
-  { key: "C2", icon: "🏆", label: "SAT/최상급" },
+  { key: "elem", icon: "🟢", label: "초등" },
+  { key: "mid", icon: "🟡", label: "중등" },
+  { key: "high", icon: "🔴", label: "고등" },
 ];
 
 const DIFFICULTY = {
@@ -320,9 +318,9 @@ export default function VocabChallenge() {
 
   const [screen, setScreen] = useState("menu");
   const [gameMode, setGameMode] = useState("vocab"); // "vocab" | "math"
-  const [category, setCategory] = useState("random");
-  const [mathCategory, setMathCategory] = useState("random");
-  const [koreanCategory, setKoreanCategory] = useState("random");
+  const [category, setCategory] = useState("elem");
+  const [mathCategory, setMathCategory] = useState("elem");
+  const [koreanCategory, setKoreanCategory] = useState("elem");
   const [difficulty, setDifficulty] = useState("medium");
   const [roundSize, setRoundSize] = useState(10);
   const [soundOn, setSoundOn] = useState(true);
@@ -390,7 +388,7 @@ export default function VocabChallenge() {
         choices: kq.choices.map(c => ({ en: c.label, label: c.label, _isCorrect: c.isCorrect })),
       }));
     } else {
-      const pool = category === "random" ? allWords : VOCAB_DATA[category];
+      const pool = ENG_LEVELS[category] ? ENG_LEVELS[category].flatMap((k) => VOCAB_DATA[k]) : allWords;
       const words = shuffle(pool).slice(0, roundSize);
       qs = words.map((w) => ({
         word: w,
@@ -759,7 +757,7 @@ export default function VocabChallenge() {
                     <span style={{ fontSize: 20 }}>{c.icon}</span>
                     <span style={{ fontSize: 12, marginTop: 3 }}>{c.label}</span>
                     <span style={{ fontSize: 10, color: "#64748b" }}>
-                      {c.key === "random" ? allWords.length : VOCAB_DATA[c.key].length}개
+                      {(ENG_LEVELS[c.key] ? ENG_LEVELS[c.key].reduce((n, k) => n + VOCAB_DATA[k].length, 0) : allWords.length)}개
                     </span>
                   </button>
                 ))

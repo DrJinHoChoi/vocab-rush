@@ -1275,16 +1275,14 @@ const DATA_MAP = {
 };
 
 const allCategoryKeys = Object.keys(DATA_MAP);
+// 초·중·고 학년 그룹 (초등 맞춤법·띄어쓰기 / 중등 어휘 / 고등 높임말·접두사)
+const KOR_LEVELS = { elem: ["spelling", "spacing"], mid: ["synonym", "antonym", "idiom", "proverb"], high: ["honorific", "prefix"] };
 
 export function generateKoreanQuestions(category, count) {
-  let pool;
-  if (category === "random") {
-    pool = [];
-    for (const key of allCategoryKeys) {
-      pool.push(...DATA_MAP[key].map(item => ({ ...item, _cat: key })));
-    }
-  } else {
-    pool = DATA_MAP[category].map(item => ({ ...item, _cat: category }));
+  let pool = [];
+  const keys = KOR_LEVELS[category] || (category === "random" ? allCategoryKeys : [category]);
+  for (const key of keys) {
+    pool.push(...DATA_MAP[key].map(item => ({ ...item, _cat: key })));
   }
 
   const shuffled = shuffle(pool);
@@ -1300,19 +1298,13 @@ export function generateKoreanQuestions(category, count) {
       answer: item.correct,
       choices,
       hint: item.hint,
-      category: category === "random" ? item._cat : category,
+      category: item._cat,
     };
   });
 }
 
 export const KOREAN_CATEGORIES = [
-  { key: "random",   icon: "🎲", label: "랜덤 믹스" },
-  { key: "spelling", icon: "✏️", label: "맞춤법" },
-  { key: "spacing",  icon: "📏", label: "띄어쓰기" },
-  { key: "idiom",    icon: "📜", label: "사자성어" },
-  { key: "proverb",  icon: "🗣️", label: "속담" },
-  { key: "synonym",  icon: "🔄", label: "유의어" },
-  { key: "antonym",  icon: "↔️", label: "반의어" },
-  { key: "honorific", icon: "🎩", label: "높임말" },
-  { key: "prefix",  icon: "🔤", label: "접두사·접미사" },
+  { key: "elem", icon: "🟢", label: "초등" },
+  { key: "mid",  icon: "🟡", label: "중등" },
+  { key: "high", icon: "🔴", label: "고등" },
 ];

@@ -1192,13 +1192,14 @@ const generators = {
 };
 
 const allGeneratorKeys = Object.keys(generators);
+// 초·중·고 학년 그룹 (초등 기초 연산 / 중등 혼합·분수·퍼센트 / 고등 거듭제곱)
+const MATH_LEVELS = { elem: ["add_sub", "multiply", "divide"], mid: ["mixed", "fraction", "percent"], high: ["power"] };
 
 export function generateMathQuestions(category, count) {
   const questions = [];
   for (let i = 0; i < count; i++) {
-    const gen = category === "random"
-      ? generators[allGeneratorKeys[rand(0, allGeneratorKeys.length - 1)]]
-      : generators[category];
+    const lvlKeys = MATH_LEVELS[category] || allGeneratorKeys;
+    const gen = generators[lvlKeys[rand(0, lvlKeys.length - 1)]];
     const raw = gen();
     const isFrac = raw.isFraction;
     const isBin = raw.isBinary;
@@ -1226,12 +1227,7 @@ export function generateMathQuestions(category, count) {
 }
 
 export const MATH_CATEGORIES = [
-  { key: "random",   icon: "🎲", label: "랜덤 믹스" },
-  { key: "add_sub",  icon: "➕", label: "덧셈·뺄셈" },
-  { key: "multiply", icon: "✖️", label: "곱셈" },
-  { key: "divide",   icon: "➗", label: "나눗셈" },
-  { key: "mixed",    icon: "🔢", label: "혼합계산" },
-  { key: "fraction", icon: "📊", label: "분수·소수" },
-  { key: "percent",  icon: "💯", label: "퍼센트" },
-  { key: "power",    icon: "⚡", label: "거듭제곱" },
+  { key: "elem", icon: "🟢", label: "초등" },
+  { key: "mid",  icon: "🟡", label: "중등" },
+  { key: "high", icon: "🔴", label: "고등" },
 ];
