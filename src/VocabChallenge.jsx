@@ -72,9 +72,9 @@ function AdBanner({ slot, format = "auto", style = {} }) {
 // 초·중·고 학년 그룹 — 영어 CEFR 매핑(초등 A1·A2 / 중등 B1·B2 / 고등 C1·C2)
 const ENG_LEVELS = { elem: ["A1", "A2"], mid: ["B1", "B2"], high: ["C1", "C2"] };
 const CATEGORIES = [
-  { key: "elem", icon: "🟢", label: "초등" },
-  { key: "mid", icon: "🟡", label: "중등" },
-  { key: "high", icon: "🔴", label: "고등" },
+  { key: "elem", icon: "🟢", label: "개념" },
+  { key: "mid", icon: "🟡", label: "기본" },
+  { key: "high", icon: "🔴", label: "응용" },
 ];
 
 const DIFFICULTY = {

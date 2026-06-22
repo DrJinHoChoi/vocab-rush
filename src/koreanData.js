@@ -1304,7 +1304,7 @@ export function generateKoreanQuestions(category, count) {
 }
 
 export const KOREAN_CATEGORIES = [
-  { key: "elem", icon: "🟢", label: "초등" },
-  { key: "mid",  icon: "🟡", label: "중등" },
-  { key: "high", icon: "🔴", label: "고등" },
+  { key: "elem", icon: "🟢", label: "개념" },
+  { key: "mid",  icon: "🟡", label: "기본" },
+  { key: "high", icon: "🔴", label: "응용" },
 ];
