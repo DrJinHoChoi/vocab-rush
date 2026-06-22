@@ -1,0 +1,57 @@
+{
+  "date": "2026-06-23",
+  "generated_by": "seed",
+  "count": 5,
+  "problems": [
+    {
+      "subj": "국어",
+      "type": "독서",
+      "label": "국어 · 독서(과학)",
+      "passage": "물질이 상태를 바꿀 때 흡수하거나 방출하는 열을 숨은열(잠열)이라 한다. 얼음이 0℃에서 같은 온도의 물로 녹을 때, 온도는 변하지 않지만 열을 흡수한다. 이 열은 온도를 높이는 데 쓰이지 않고 분자 사이의 결합을 끊는 데 쓰이기 때문이다. 반대로 물이 얼 때는 같은 양의 열을 방출한다. 그래서 한겨울 과수원에서 물을 뿌리면, 물이 얼면서 내놓는 숨은열이 과실의 온도가 더 내려가는 것을 막아 준다.",
+      "q": "윗글의 내용과 일치하는 것은?",
+      "opts": ["얼음이 물로 녹을 때 온도가 함께 올라간다", "숨은열은 분자 사이의 결합을 끊거나 만드는 데 쓰인다", "물이 얼 때는 열을 흡수한다", "과수원에 물을 뿌리면 과실의 온도가 더 빨리 내려간다", "숨은열은 물질의 온도를 직접 높이는 열이다"],
+      "a": 1,
+      "exp": "숨은열은 온도 변화 없이 분자 결합을 끊거나(융해) 만드는(응고) 데 쓰인다 → ②. ①녹을 때 온도는 일정, ③얼 때는 방출, ④물이 얼며 내놓는 열이 온도 하강을 막음, ⑤온도를 직접 높이는 열이 아님."
+    },
+    {
+      "subj": "영어",
+      "type": "빈칸",
+      "label": "영어 · 빈칸추론",
+      "passage": "We tend to think feedback is most useful when it tells us what we did wrong. Yet research on skill learning shows the opposite: pointing out what a learner did well, and why it worked, helps them repeat it deliberately. Criticism alone tells you to stop something but not what to do instead. Effective coaching, therefore, focuses less on errors and more on ____________.",
+      "q": "빈칸에 들어갈 말로 가장 적절한 것은?",
+      "opts": ["reinforcing what already works", "avoiding all mistakes", "increasing the difficulty", "reducing practice time", "comparing learners to others"],
+      "a": 0,
+      "exp": "글은 '무엇을 잘했는지' 짚어 주는 것이 반복 학습에 효과적이라고 함 → 효과적 코칭은 '이미 잘 되는 것을 강화'에 초점 → ①. ②는 비판 중심의 통념."
+    },
+    {
+      "subj": "수학",
+      "type": "수1",
+      "label": "수학Ⅰ · 수열",
+      "passage": "",
+      "q": "등차수열 {aₙ}에서 a₃ = 11, a₇ = 27 일 때, a₁₂ 의 값은?",
+      "opts": ["43", "45", "47", "49", "51"],
+      "a": 2,
+      "exp": "공차 d = (27−11)/(7−3) = 4. a₁ = a₃ − 2d = 11 − 8 = 3. a₁₂ = 3 + 11·4 = 47 → ③."
+    },
+    {
+      "subj": "과학",
+      "type": "통합과학",
+      "label": "과학 · 통합과학(화학)",
+      "passage": "",
+      "q": "다음 중 산화 반응에 해당하는 것은?",
+      "opts": ["철이 녹슬어 산화철이 된다", "수증기가 응결하여 물이 된다", "소금이 물에 녹는다", "얼음이 녹아 물이 된다", "설탕이 물에 녹는다"],
+      "a": 0,
+      "exp": "산화는 산소와 결합하거나 전자를 잃는 반응. 철이 산소와 결합해 산화철이 됨 → ①. ②④는 상태 변화, ③⑤는 용해(물리 변화)."
+    },
+    {
+      "subj": "사회",
+      "type": "통합사회",
+      "label": "사회 · 통합사회(경제)",
+      "passage": "어떤 상품의 가격이 오르자, 그 상품을 사려는 양은 줄고 팔려는 양은 늘었다.",
+      "q": "윗글에 대한 설명으로 옳은 것은?",
+      "opts": ["가격이 오르면 수요량은 늘어난다", "가격이 오르면 공급량은 줄어든다", "수요 법칙과 공급 법칙에 모두 부합한다", "가격과 수요량은 비례한다", "공급량은 가격과 무관하다"],
+      "a": 2,
+      "exp": "가격↑ → 수요량↓(수요 법칙), 공급량↑(공급 법칙) → 둘 다 부합 → ③. ①④는 수요 법칙과 반대, ②⑤는 공급 법칙과 반대."
+    }
+  ]
+}

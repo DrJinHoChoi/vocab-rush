@@ -89,10 +89,13 @@
           <button class="chip" data-subj="국어">국어</button>
           <button class="chip" data-subj="영어">영어</button>
           <button class="chip" data-subj="수학">수학</button>
+          <button class="chip" data-subj="과학">과학</button>
+          <button class="chip" data-subj="사회">사회</button>
         </div>
       </div>
     </div>
 
+    <div id="dailyBanner" style="display:none; margin:0 0 12px; padding:11px 14px; border-radius:10px; background:rgba(96,165,250,0.1); border:1px solid rgba(96,165,250,0.3); font-size:13px; color:#cbd5e1;"></div>
     <div class="game" id="game"></div>
 
     <h2>난이도별 시간 모델 (데이터 분석 기반)</h2>
@@ -441,7 +444,7 @@
   const $ = s => document.querySelector(s);
   const shuffle = a => a.map(x=>[Math.random(),x]).sort((p,q)=>p[0]-q[0]).map(p=>p[1]);
 
-  function timeFor(item){ return Math.round(BASE[item.type] * MULT[diff]); }
+  function timeFor(item){ const base = BASE[item.type] || item.t || 90; return Math.round(base * MULT[diff]); }
 
   function start(){
     const pool = QB.filter(q => subj==='all' || q.subj===subj);
@@ -498,6 +501,16 @@
     subj=b.dataset.subj; document.querySelectorAll('#subjChips .chip').forEach(c=>c.classList.toggle('on',c===b)); start(); });
 
   start();
+
+  // 오늘의 문제 — AI 에이전트가 매일 생성한 국·영·수·과·사 문제를 합쳐서 출제
+  fetch('/daily/today.json?cb=' + Date.now()).then(r => r.ok ? r.json() : null).then(d => {
+    if (d && Array.isArray(d.problems) && d.problems.length) {
+      d.problems.forEach(p => QB.push({ ...p, daily: true }));
+      const el = document.getElementById('dailyBanner');
+      if (el) { el.style.display = 'block'; el.innerHTML = '🆕 <b>오늘의 문제</b> ' + d.problems.length + '개 추가 · ' + d.date + ' <span style="color:#94a3b8">(AI가 매일 생성)</span>'; }
+      start();
+    }
+  }).catch(() => {});
 </script>
 </body>
 </html>
