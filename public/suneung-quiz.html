@@ -13,43 +13,43 @@
   <title>수능 연습 게임 — 유형별·난이도별 타이머 | STUDY RUSH</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { font-family: 'Noto Sans KR', -apple-system, BlinkMacSystemFont, sans-serif; background: #0a0a1a; color: #cbd5e1; line-height: 1.8; }
-    nav { background: rgba(255,255,255,0.03); border-bottom: 1px solid rgba(255,255,255,0.08); padding: 12px 20px; }
+    body { font-family: 'Noto Sans KR', -apple-system, BlinkMacSystemFont, sans-serif; background: #FAF5EB; color: #3F3A33; line-height: 1.8; }
+    nav { background: #FFFEFB; border-bottom: 1px solid #E3DCCB; padding: 12px 20px; }
     nav .inner { max-width: 720px; margin: 0 auto; display: flex; flex-wrap: wrap; gap: 8px 16px; align-items: center; }
-    nav a { color: #94a3b8; text-decoration: none; font-size: 13px; } nav a:hover { color: #60a5fa; }
-    nav .brand { color: #f1f5f9; font-weight: 700; font-size: 15px; margin-right: 12px; }
+    nav a { color: #7C766B; text-decoration: none; font-size: 13px; } nav a:hover { color: #43618A; }
+    nav .brand { color: #141413; font-weight: 700; font-size: 15px; margin-right: 12px; }
     .wrap { max-width: 720px; margin: 0 auto; padding: 28px 20px 60px; }
-    h1 { color: #f1f5f9; font-size: 26px; margin-bottom: 8px; }
-    .subtitle { color: #94a3b8; font-size: 15px; margin-bottom: 22px; }
-    h2 { color: #e2e8f0; font-size: 20px; margin: 36px 0 14px; border-left: 4px solid #60a5fa; padding-left: 12px; }
+    h1 { color: #141413; font-size: 26px; margin-bottom: 8px; }
+    .subtitle { color: #7C766B; font-size: 15px; margin-bottom: 22px; }
+    h2 { color: #141413; font-size: 20px; margin: 36px 0 14px; border-left: 4px solid #43618A; padding-left: 12px; }
     .controls { display: flex; flex-wrap: wrap; gap: 18px; margin-bottom: 18px; }
-    .ctl { } .ctl .lab { font-size: 12px; color: #94a3b8; font-weight: 700; margin-bottom: 6px; }
+    .ctl { } .ctl .lab { font-size: 12px; color: #7C766B; font-weight: 700; margin-bottom: 6px; }
     .chips { display: flex; gap: 6px; flex-wrap: wrap; }
-    .chip { font-size: 13px; font-weight: 700; padding: 7px 13px; border-radius: 999px; border: 1px solid rgba(255,255,255,0.14); background: rgba(255,255,255,0.03); color: #cbd5e1; cursor: pointer; }
-    .chip.on { background: #2563eb; border-color: #2563eb; color: #fff; }
-    .game { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); border-radius: 16px; padding: 20px; margin-top: 8px; }
-    .bar { height: 8px; border-radius: 999px; background: rgba(255,255,255,0.08); overflow: hidden; }
+    .chip { font-size: 13px; font-weight: 700; padding: 7px 13px; border-radius: 999px; border: 1px solid #141413; background: #FFFEFB; color: #3F3A33; cursor: pointer; }
+    .chip.on { background: #F5B60B; border-color: #141413; color: #141413; }
+    .game { background: #FFFEFB; border: 1px solid #141413; border-radius: 16px; padding: 20px; margin-top: 8px; }
+    .bar { height: 8px; border-radius: 999px; background: #E3DCCB; overflow: hidden; }
     .bar > i { display: block; height: 100%; background: linear-gradient(90deg,#22c55e,#eab308,#ef4444); border-radius: 999px; transition: width .25s linear; }
-    .meta { display: flex; justify-content: space-between; align-items: center; margin-top: 10px; font-size: 13px; color: #94a3b8; }
-    .meta .time { font-weight: 800; font-size: 18px; color: #f1f5f9; font-variant-numeric: tabular-nums; }
-    .tag { font-size: 11px; font-weight: 700; padding: 3px 9px; border-radius: 999px; background: rgba(96,165,250,0.12); color: #60a5fa; }
-    .passage { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 10px; padding: 16px; margin: 14px 0; font-size: 15px; line-height: 1.95; }
-    .q { font-size: 16px; font-weight: 700; color: #f1f5f9; margin: 14px 0 12px; }
+    .meta { display: flex; justify-content: space-between; align-items: center; margin-top: 10px; font-size: 13px; color: #7C766B; }
+    .meta .time { font-weight: 800; font-size: 18px; color: #141413; font-variant-numeric: tabular-nums; }
+    .tag { font-size: 11px; font-weight: 700; padding: 3px 9px; border-radius: 999px; background: #DCE6F1; color: #43618A; }
+    .passage { background: #FBF8F0; border: 1px solid #E3DCCB; border-radius: 10px; padding: 16px; margin: 14px 0; font-size: 15px; line-height: 1.95; }
+    .q { font-size: 16px; font-weight: 700; color: #141413; margin: 14px 0 12px; }
     .opts { display: flex; flex-direction: column; gap: 9px; }
-    .opt { text-align: left; padding: 13px 15px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.12); background: rgba(255,255,255,0.02); color: #e2e8f0; font-size: 15px; cursor: pointer; }
-    .opt:hover:not(:disabled) { border-color: #60a5fa; }
-    .opt.correct { background: rgba(74,222,128,0.12); border-color: #4ade80; color: #4ade80; }
-    .opt.wrong { background: rgba(239,68,68,0.12); border-color: #ef4444; color: #fca5a5; }
-    .exp { margin-top: 14px; background: rgba(74,222,128,0.06); border: 1px solid rgba(74,222,128,0.22); border-radius: 10px; padding: 14px; font-size: 14px; display: none; }
-    .exp.show { display: block; } .exp .tg { color: #4ade80; font-weight: 800; }
+    .opt { text-align: left; padding: 13px 15px; border-radius: 10px; border: 1px solid #141413; background: #FFFEFB; color: #141413; font-size: 15px; cursor: pointer; }
+    .opt:hover:not(:disabled) { border-color: #43618A; }
+    .opt.correct { background: #E6F4EC; border-color: #15803D; color: #15803D; }
+    .opt.wrong { background: #FBEAEA; border-color: #ef4444; color: #DC2626; }
+    .exp { margin-top: 14px; background: #EAF5EF; border: 1px solid #9ED9C0; border-radius: 10px; padding: 14px; font-size: 14px; display: none; }
+    .exp.show { display: block; } .exp .tg { color: #15803D; font-weight: 800; }
     .btn { margin-top: 14px; width: 100%; padding: 13px; border-radius: 10px; border: none; background: linear-gradient(135deg,#3b82f6,#2563eb); color: #fff; font-weight: 800; font-size: 15px; cursor: pointer; }
     .end { text-align: center; padding: 20px 6px; }
-    .end .sc { font-size: 38px; font-weight: 900; color: #f1f5f9; }
+    .end .sc { font-size: 38px; font-weight: 900; color: #141413; }
     table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 14px; }
-    th, td { border: 1px solid rgba(255,255,255,0.1); padding: 8px 10px; text-align: center; }
-    th { background: rgba(255,255,255,0.04); color: #e2e8f0; } td:first-child { text-align: left; color: #cbd5e1; }
-    footer { margin-top: 44px; padding-top: 22px; border-top: 1px solid rgba(255,255,255,0.08); font-size: 13px; color: #64748b; } footer a { color: #94a3b8; }
-    .muted { color:#94a3b8; font-size:13px; }
+    th, td { border: 1px solid #141413; padding: 8px 10px; text-align: center; }
+    th { background: #FBF8F0; color: #141413; } td:first-child { text-align: left; color: #3F3A33; }
+    footer { margin-top: 44px; padding-top: 22px; border-top: 1px solid #E3DCCB; font-size: 13px; color: #6E6657; } footer a { color: #7C766B; }
+    .muted { color:#7C766B; font-size:13px; }
   </style>
   <script type="application/ld+json">
   {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
@@ -96,11 +96,11 @@
     </div>
 
     <div style="display:flex; gap:8px; align-items:center; flex-wrap:wrap; margin:0 0 12px;">
-      <button class="chip" id="noteBtn" style="border-color:rgba(251,146,60,.45); color:#fdba74;">📒 오답노트 <b id="noteCount">0</b></button>
-      <span style="font-size:11.5px; color:#64748b;">틀린 문제가 자동으로 쌓여요 — 다시 풀고 정복하기</span>
+      <button class="chip" id="noteBtn" style="border-color:#141413; color:#C75D3A;">📒 오답노트 <b id="noteCount">0</b></button>
+      <span style="font-size:11.5px; color:#6E6657;">틀린 문제가 자동으로 쌓여요 — 다시 풀고 정복하기</span>
     </div>
 
-    <div id="dailyBanner" style="display:none; margin:0 0 12px; padding:11px 14px; border-radius:10px; background:rgba(96,165,250,0.1); border:1px solid rgba(96,165,250,0.3); font-size:13px; color:#cbd5e1;"></div>
+    <div id="dailyBanner" style="display:none; margin:0 0 12px; padding:11px 14px; border-radius:10px; background:rgba(96,165,250,0.1); border:1px solid #141413; font-size:13px; color:#3F3A33;"></div>
     <div class="game" id="game"></div>
 
     <h2>난이도별 시간 모델 (데이터 분석 기반)</h2>
@@ -130,25 +130,25 @@
     </ol>
 
     <h2>과목별 출제 유형</h2>
-    <h3 style="color:#e2e8f0;margin:18px 0 6px;font-size:17px">국어</h3>
+    <h3 style="color:#141413;margin:18px 0 6px;font-size:17px">국어</h3>
     <p><strong>독서(비문학)</strong>는 인문·사회·과학·기술·예술 지문에서 ‘정답의 근거를 지문에서 찾는’ 능력을, <strong>문학</strong>은 화자의 정서와 표현법(은유·반어·의인·대구 등)을, <strong>언어와 매체</strong>는 맞춤법·띄어쓰기·음운·문장 구조 같은 어법 지식을 평가합니다.</p>
-    <h3 style="color:#e2e8f0;margin:18px 0 6px;font-size:17px">영어</h3>
+    <h3 style="color:#141413;margin:18px 0 6px;font-size:17px">영어</h3>
     <p><strong>빈칸추론</strong>은 글의 논리 흐름을 따라 빠진 결론을 채우는 최고난도 유형, <strong>주제·요지</strong>는 글 전체를 관통하는 한 문장을 잡는 유형, <strong>어법</strong>은 가정법·관계대명사·수일치 등 문법 정확성을 묻는 유형입니다.</p>
-    <h3 style="color:#e2e8f0;margin:18px 0 6px;font-size:17px">수학</h3>
+    <h3 style="color:#141413;margin:18px 0 6px;font-size:17px">수학</h3>
     <p><strong>수학Ⅰ</strong>(지수·로그·삼각함수·수열), <strong>수학Ⅱ</strong>(함수의 극한·미분·적분), <strong>확률과 통계</strong>(순열·조합·확률)에서 개념을 정확히 적용해 정해진 시간 안에 계산하는 능력을 훈련합니다.</p>
 
     <h2>왜 ‘시간’이 중요한가</h2>
     <p>수능은 아는 것을 넘어 <strong>제한된 시간 안에 정확히</strong> 풀어야 하는 시험입니다. 국어는 한 문항에 평균 약 1분 47초, 영어 독해는 약 1분 15초, 수학은 약 3분 20초가 주어집니다. 기초 개념이 자동화되어 있어야 어려운 킬러 문항에 쓸 시간이 생깁니다. 이 게임의 분·초 타이머는 그 실전 감각을 미리 만들어 줍니다. 위의 <strong>시간 모델 표</strong>는 실제 수능 배분을 데이터로 분석해 유형별 기준 시간을 잡고, 난이도 배율(Easy ×1.4 / Medium ×1.0 / Hard ×0.7)을 적용한 것입니다.</p>
 
     <h2>자주 묻는 질문</h2>
-    <h3 style="color:#e2e8f0;margin:18px 0 6px;font-size:16px">정말 무료인가요?</h3>
+    <h3 style="color:#141413;margin:18px 0 6px;font-size:16px">정말 무료인가요?</h3>
     <p>네. 회원가입이나 결제 없이 모든 문제를 무료로 풀 수 있습니다.</p>
-    <h3 style="color:#e2e8f0;margin:18px 0 6px;font-size:16px">실제 수능 기출 문제인가요?</h3>
+    <h3 style="color:#141413;margin:18px 0 6px;font-size:16px">실제 수능 기출 문제인가요?</h3>
     <p>아닙니다. 저작권 보호를 위해 기출을 그대로 쓰지 않고, 같은 유형·난이도의 <strong>원본 예시 문항</strong>을 직접 제작했습니다. 풀이 방법과 사고 과정은 실제 수능과 동일하게 훈련됩니다.</p>
-    <h3 style="color:#e2e8f0;margin:18px 0 6px;font-size:16px">기초가 부족하면 어떻게 하나요?</h3>
-    <p>먼저 <a href="/" style="color:#60a5fa">기초 게임(STUDY RUSH)</a>으로 영어 어휘·수학 연산·국어 어휘를 다진 뒤 이 수능 게임으로 넘어오는 것을 추천합니다. <a href="/learn.html" style="color:#60a5fa">학습 로드맵</a>에서 단계별 순서를 확인할 수 있습니다.</p>
-    <h3 style="color:#e2e8f0;margin:18px 0 6px;font-size:16px">과목별 풀이 기술을 더 배우고 싶어요.</h3>
-    <p><a href="/suneung-korean.html" style="color:#60a5fa">수능 국어</a>, <a href="/suneung-english.html" style="color:#60a5fa">수능 영어</a>, <a href="/suneung-math.html" style="color:#60a5fa">수능 수학</a> 가이드에서 유형별 풀이 기술과 예시 문제·해설을 자세히 다룹니다.</p>
+    <h3 style="color:#141413;margin:18px 0 6px;font-size:16px">기초가 부족하면 어떻게 하나요?</h3>
+    <p>먼저 <a href="/" style="color:#43618A">기초 게임(STUDY RUSH)</a>으로 영어 어휘·수학 연산·국어 어휘를 다진 뒤 이 수능 게임으로 넘어오는 것을 추천합니다. <a href="/learn.html" style="color:#43618A">학습 로드맵</a>에서 단계별 순서를 확인할 수 있습니다.</p>
+    <h3 style="color:#141413;margin:18px 0 6px;font-size:16px">과목별 풀이 기술을 더 배우고 싶어요.</h3>
+    <p><a href="/suneung-korean.html" style="color:#43618A">수능 국어</a>, <a href="/suneung-english.html" style="color:#43618A">수능 영어</a>, <a href="/suneung-math.html" style="color:#43618A">수능 수학</a> 가이드에서 유형별 풀이 기술과 예시 문제·해설을 자세히 다룹니다.</p>
 
     <footer>
       <p>© 2025 DataPD. 무료 학습 플랫폼 · 예시 문제는 저작권 보호를 위한 원본입니다 · 문의 jinho.choi1010@gmail.com</p>
@@ -512,8 +512,8 @@
     else { saveWrong(it, i); }
     const exp = $('#exp'); exp.classList.add('show');
     exp.innerHTML = `<span class="tg">${correct?'정답!':(i===-1?'시간 초과':'오답')} · 정답 ${'①②③④⑤'[it.a]}</span><br/>${it.exp}`
-      + (it.reason ? `<div style="margin-top:10px;padding-top:10px;border-top:1px solid rgba(255,255,255,.1)">🧠 <b style="color:#a78bfa">사고과정</b><br/><span style="color:#cbd5e1">${it.reason}</span></div>` : '')
-      + (it.followups && it.followups.length ? `<div style="margin-top:10px">❓ <b style="color:#fbbf24">예상 질문</b><ul style="margin:4px 0 0 18px;padding:0;color:#cbd5e1">${it.followups.map(f=>`<li>${f}</li>`).join('')}</ul></div>` : '');
+      + (it.reason ? `<div style="margin-top:10px;padding-top:10px;border-top:1px solid rgba(255,255,255,.1)">🧠 <b style="color:#6D28D9">사고과정</b><br/><span style="color:#3F3A33">${it.reason}</span></div>` : '')
+      + (it.followups && it.followups.length ? `<div style="margin-top:10px">❓ <b style="color:#A16207">예상 질문</b><ul style="margin:4px 0 0 18px;padding:0;color:#3F3A33">${it.followups.map(f=>`<li>${f}</li>`).join('')}</ul></div>` : '');
     $('#time').textContent = fmt(Math.max(0,timeLeft));
     const nb = $('#nextBtn'); nb.style.display='block'; nb.textContent = (idx+1>=order.length) ? '결과 보기 →' : '다음 →';
   }
@@ -564,18 +564,18 @@
     }
     const cards = list.map((w, wi) => {
       const opts = w.opts.map((o,i) => {
-        const st = i===w.a ? ' style="color:#34d399;font-weight:700"' : (i===w.pick ? ' style="color:#f87171;text-decoration:line-through"' : '');
+        const st = i===w.a ? ' style="color:#15803D;font-weight:700"' : (i===w.pick ? ' style="color:#f87171;text-decoration:line-through"' : '');
         return `<div${st}>${'①②③④⑤'[i]} ${escH(o)}</div>`;
       }).join('');
-      return `<div style="text-align:left;padding:13px;border:1px solid rgba(255,255,255,.08);border-radius:12px;margin-bottom:10px;background:rgba(255,255,255,.02)">
-        <div style="font-size:11px;color:#fdba74;font-weight:700;margin-bottom:6px">${escH(w.label)}</div>
+      return `<div style="text-align:left;padding:13px;border:1px solid #E3DCCB;border-radius:12px;margin-bottom:10px;background:#FFFEFB">
+        <div style="font-size:11px;color:#C75D3A;font-weight:700;margin-bottom:6px">${escH(w.label)}</div>
         ${w.passage ? `<div class="muted" style="font-size:12px;margin-bottom:6px;line-height:1.6">${escH(w.passage)}</div>` : ''}
         <div style="font-size:14px;margin-bottom:8px">${escH(w.q)}</div>
         <div style="font-size:13px;line-height:1.9;margin-bottom:8px">${opts}</div>
-        <div style="font-size:12.5px;color:#cbd5e1;background:rgba(96,165,250,.08);border-radius:8px;padding:8px 10px;line-height:1.6"><b style="color:#93c5fd">해설</b> ${escH(w.exp)}</div>
-        ${w.reason ? `<div style="font-size:12px;color:#cbd5e1;margin-top:6px"><b style="color:#a78bfa">🧠 사고과정</b> ${escH(w.reason)}</div>` : ''}
-        ${(w.followups && w.followups.length) ? `<div style="font-size:12px;color:#cbd5e1;margin-top:6px"><b style="color:#fbbf24">❓ 예상 질문</b><ul style="margin:3px 0 0 16px;padding:0">${w.followups.map(f => `<li>${escH(f)}</li>`).join('')}</ul></div>` : ''}
-        <button class="chip noteDel" data-idx="${wi}" style="margin-top:8px;border-color:rgba(52,211,153,.4);color:#34d399">✓ 정복(삭제)</button>
+        <div style="font-size:12.5px;color:#3F3A33;background:#EEF3F8;border-radius:8px;padding:8px 10px;line-height:1.6"><b style="color:#43618A">해설</b> ${escH(w.exp)}</div>
+        ${w.reason ? `<div style="font-size:12px;color:#3F3A33;margin-top:6px"><b style="color:#6D28D9">🧠 사고과정</b> ${escH(w.reason)}</div>` : ''}
+        ${(w.followups && w.followups.length) ? `<div style="font-size:12px;color:#3F3A33;margin-top:6px"><b style="color:#A16207">❓ 예상 질문</b><ul style="margin:3px 0 0 16px;padding:0">${w.followups.map(f => `<li>${escH(f)}</li>`).join('')}</ul></div>` : ''}
+        <button class="chip noteDel" data-idx="${wi}" style="margin-top:8px;border-color:#15803D;color:#15803D">✓ 정복(삭제)</button>
       </div>`;
     }).join('');
     $('#game').innerHTML = `<div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px">
@@ -602,7 +602,7 @@
     if (d && Array.isArray(d.problems) && d.problems.length) {
       d.problems.forEach(p => QB.push({ ...p, daily: true }));
       const el = document.getElementById('dailyBanner');
-      if (el) { el.style.display = 'block'; el.innerHTML = '🆕 <b>오늘의 문제</b> ' + d.problems.length + '개 추가 · ' + d.date + ' <span style="color:#94a3b8">(AI가 매일 생성)</span>'; }
+      if (el) { el.style.display = 'block'; el.innerHTML = '🆕 <b>오늘의 문제</b> ' + d.problems.length + '개 추가 · ' + d.date + ' <span style="color:#7C766B">(AI가 매일 생성)</span>'; }
       if (viewMode !== 'note') start();
     }
   }).catch(() => {});
