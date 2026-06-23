@@ -15,7 +15,7 @@
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body { font-family: 'Noto Sans KR', -apple-system, BlinkMacSystemFont, sans-serif; background: #FAF5EB; color: #3F3A33; line-height: 1.8; }
-    nav { background: #FFFEFB; border-bottom: 1px solid #E3DCCB; padding: 12px 20px; }
+    nav { position: sticky; top: 0; z-index: 60; background: #FFFEFB; border-bottom: 1px solid #E3DCCB; padding: 12px 20px; }
     nav .inner { max-width: 720px; margin: 0 auto; display: flex; flex-wrap: wrap; gap: 8px 16px; align-items: center; }
     nav a { color: #7C766B; text-decoration: none; font-size: 13px; } nav a:hover { color: #43618A; }
     nav .brand { color: #141413; font-weight: 700; font-size: 15px; margin-right: 12px; }
@@ -28,10 +28,10 @@
     .chips { display: flex; gap: 6px; flex-wrap: wrap; }
     .chip { font-size: 13px; font-weight: 700; padding: 7px 13px; border-radius: 999px; border: 1px solid #141413; background: #FFFEFB; color: #3F3A33; cursor: pointer; }
     .chip.on { background: #F5B60B; border-color: #141413; color: #141413; }
-    .game { background: #FFFEFB; border: 1px solid #141413; border-radius: 16px; padding: 20px; margin-top: 8px; }
+    .game { background: #FFFEFB; border: 1px solid #141413; border-radius: 16px; padding: 20px; margin-top: 8px; scroll-margin-top: 52px; }
     .bar { height: 8px; border-radius: 999px; background: #E3DCCB; overflow: hidden; }
     .bar > i { display: block; height: 100%; background: linear-gradient(90deg,#22c55e,#eab308,#ef4444); border-radius: 999px; transition: width .25s linear; }
-    .meta { display: flex; justify-content: space-between; align-items: center; margin-top: 10px; font-size: 13px; color: #7C766B; }
+    .meta { position: sticky; top: 46px; z-index: 40; display: flex; justify-content: space-between; align-items: center; margin: 0 -20px; padding: 9px 20px; font-size: 13px; color: #7C766B; background: #FFFEFB; border-bottom: 1px solid #E3DCCB; }
     .meta .time { font-weight: 800; font-size: 18px; color: #141413; font-variant-numeric: tabular-nums; }
     .tag { font-size: 11px; font-weight: 700; padding: 3px 9px; border-radius: 999px; background: #DCE6F1; color: #43618A; }
     .passage { background: #FBF8F0; border: 1px solid #E3DCCB; border-radius: 10px; padding: 16px; margin: 14px 0; font-size: 15px; line-height: 1.95; }
@@ -494,7 +494,7 @@
       <div class="exp" id="exp"></div>
       <button class="btn" id="nextBtn" style="display:none">다음 →</button>`;
     document.querySelectorAll('#opts .opt').forEach(b=> b.addEventListener('click', ()=>answer(Number(b.dataset.i))));
-    $('#nextBtn').addEventListener('click', ()=>{ idx++; next(); });
+    $('#nextBtn').addEventListener('click', ()=>{ idx++; next(); document.querySelector('.game')?.scrollIntoView({ behavior: 'smooth', block: 'start' }); });
     timer = setInterval(()=>{
       timeLeft -= 0.25;
       const bar = $('#bar'); if(bar) bar.style.width = Math.max(0, timeLeft/totalT*100) + '%';
