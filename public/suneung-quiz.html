@@ -616,6 +616,13 @@
       d.problems.forEach(p => QB.push(p));
     }
   }).catch(() => {});
+
+  // 수능형 문제 은행 (국·영·수·과·사 대량 — build-suneung-bank.mjs 가 생성)
+  fetch('/daily/bank-suneung.json').then(r => r.ok ? r.json() : null).then(d => {
+    if (d && Array.isArray(d.problems) && d.problems.length) {
+      d.problems.forEach(p => QB.push(p));
+    }
+  }).catch(() => {});
 </script>
 </body>
 </html>
