@@ -620,6 +620,8 @@ export default function VocabChallenge() {
             <a href="/learn.html" target="_blank" rel="noopener noreferrer" style={{ color: "#7C766B", textDecoration: "none", fontSize: 13 }}>학습 로드맵</a>
             <a href="/guides.html" target="_blank" rel="noopener noreferrer" style={{ color: "#7C766B", textDecoration: "none", fontSize: 13 }}>학습 자료</a>
             <a href="/about.html" target="_blank" rel="noopener noreferrer" style={{ color: "#7C766B", textDecoration: "none", fontSize: 13 }}>소개</a>
+            {isWide && <a href="/suneung-quiz.html?note=1" style={{ color: "#7C766B", textDecoration: "none", fontSize: 13 }}>오답노트</a>}
+            {isWide && <a href="/plan.html" style={{ color: "#7C766B", textDecoration: "none", fontSize: 13 }}>플래너</a>}
             <span style={{ marginLeft: "auto", display: "inline-flex", alignItems: "center", gap: 12, fontSize: 13, fontWeight: 800 }}>
               <span style={{ color: "#C75D3A" }} title="연속 학습일">🔥 {dayStreak}</span>
               <span style={{ color: "#43618A" }} title="누적 XP">💎 {(stats.totalScore || 0).toLocaleString()}</span>
@@ -632,30 +634,32 @@ export default function VocabChallenge() {
             <div style={{ ...S.logoIcon, fontSize: isWide ? 38 : 30, marginBottom: 6 }}>⚡</div>
             <h1 style={{ ...S.title, fontSize: isWide ? 34 : 26, letterSpacing: isWide ? 7 : 4 }}>STUDY RUSH</h1>
             <p style={{ fontSize: 14, color: "#7C766B", marginTop: 8, fontWeight: 600, letterSpacing: 0.3 }}>
-              고등학교 국·영·수 수능 학습 게임
+고등 내신 · 수능 학습 게임 — 국·영·수·과·사
             </p>
           </div>
-          <div style={{
-            maxWidth: 560, margin: "0 auto", padding: 16, borderRadius: 14,
-            background: "#EEF3F8", border: "1px solid #141413",
-          }}>
-            <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 11 }}>
-              <div style={{ fontSize: 13.5, color: "#141413", fontWeight: 800 }}>🎓 수능 연습 게임</div>
-              <div style={{ fontSize: 11, color: "#43618A", fontWeight: 700, padding: "3px 9px", borderRadius: 999, background: "#DCE6F1" }}>국·영·수 58문항</div>
-            </div>
-            <div style={{ display: "flex", alignItems: "stretch", gap: 6, marginBottom: 12 }}>
-              <span style={{ flex: 1, textAlign: "center", whiteSpace: "nowrap", padding: "7px 2px", borderRadius: 8, background: "#F0EADB", fontSize: 11.5, fontWeight: 700, color: "#3F3A33" }}>① 기초</span>
-              <span style={{ flex: 1, textAlign: "center", whiteSpace: "nowrap", padding: "7px 2px", borderRadius: 8, background: "#F0EADB", fontSize: 11.5, fontWeight: 700, color: "#3F3A33" }}>② 레벨업</span>
-              <span style={{ flex: 1, textAlign: "center", whiteSpace: "nowrap", padding: "7px 2px", borderRadius: 8, background: "#DCE6F1", fontSize: 11.5, fontWeight: 800, color: "#43618A" }}>③ 수능</span>
-            </div>
+          <div style={{ maxWidth: 640, margin: "0 auto", display: "flex", gap: 12, flexWrap: "wrap" }}>
+            {/* 내신 트랙 */}
+            <button onClick={() => document.getElementById("learn-anchor")?.scrollIntoView({ behavior: "smooth", block: "start" })} style={{
+              flex: 1, minWidth: 236, textAlign: "left", cursor: "pointer", font: "inherit",
+              background: "#FFFEFB", border: "2px solid #141413", borderRadius: 16, padding: 16,
+              boxShadow: "0 8px 20px rgba(20,16,12,0.07)",
+            }}>
+              <span style={{ display: "inline-block", fontSize: 11, fontWeight: 800, color: "#43618A", background: "#DCE6F1", borderRadius: 999, padding: "3px 10px" }}>📘 내신 대비</span>
+              <div style={{ fontSize: 16, fontWeight: 900, color: "#141413", marginTop: 9 }}>과목별 기초로 학교 시험</div>
+              <div style={{ fontSize: 12.5, color: "#7C766B", marginTop: 5, lineHeight: 1.6 }}>영어 어휘 · 수학 연산 · 국어 — 개념부터 단계별로</div>
+              <div style={{ fontSize: 13, fontWeight: 800, color: "#C75D3A", marginTop: 12 }}>시작하기 →</div>
+            </button>
+            {/* 수능 트랙 */}
             <a href="/suneung-quiz.html" style={{
-              display: "block", textAlign: "center", padding: "13px", borderRadius: 10,
-              background: "linear-gradient(135deg,#3b82f6,#2563eb)", color: "#fff",
-              fontWeight: 800, fontSize: 15, textDecoration: "none",
-            }}>🎓 수능 연습 게임 시작 →</a>
-            <a href="/learn.html" target="_blank" rel="noopener noreferrer" style={{
-              display: "block", textAlign: "center", marginTop: 9, fontSize: 11.5, fontWeight: 700, color: "#43618A", textDecoration: "none",
-            }}>학습 로드맵 보기 →</a>
+              flex: 1, minWidth: 236, textDecoration: "none", display: "block",
+              background: "#F5B60B", border: "2px solid #141413", borderRadius: 16, padding: 16,
+              boxShadow: "0 8px 20px rgba(20,16,12,0.14)",
+            }}>
+              <span style={{ display: "inline-block", fontSize: 11, fontWeight: 800, color: "#141413", background: "#FFFEFB", border: "1px solid #141413", borderRadius: 999, padding: "3px 10px" }}>🎯 수능 대비</span>
+              <div style={{ fontSize: 16, fontWeight: 900, color: "#141413", marginTop: 9 }}>수능형 5지선다 + 오늘의 문제</div>
+              <div style={{ fontSize: 12.5, color: "#3F3A33", marginTop: 5, lineHeight: 1.6 }}>타이머 실전 · 사고과정 해설 · 3,000+ 문제 은행</div>
+              <div style={{ fontSize: 13, fontWeight: 800, color: "#141413", marginTop: 12 }}>시작하기 →</div>
+            </a>
           </div>
         </header>
 
@@ -703,7 +707,7 @@ export default function VocabChallenge() {
 
           {/* 과목별 기초 게임 */}
           <p id="learn-anchor" style={{ fontSize: 12, color: "#7C766B", fontWeight: 700, margin: "0 0 8px", letterSpacing: 0.3 }}>
-            과목별 기초 게임 — 어휘·연산으로 워밍업
+📘 내신 대비 — 과목별 기초 (어휘 · 연산 · 국어)
           </p>
 
           {/* 게임 모드 탭 */}
@@ -1026,7 +1030,8 @@ export default function VocabChallenge() {
           </div>{/* end bottom section */}
         </div>
 
-        {/* 하단 탭 네비 (게임 앱 셸) */}
+        {/* 하단 탭 네비 (모바일 전용 — PC는 상단 내비 사용) */}
+        {!isWide && (
         <div style={{ position: "sticky", bottom: 0, zIndex: 50, background: "rgba(250,245,235,0.97)", borderTop: "1px solid #141413", padding: "8px 0 calc(8px + env(safe-area-inset-bottom))" }}>
           <div style={{ maxWidth: 480, margin: "0 auto", display: "flex", justifyContent: "space-around" }}>
             {[
@@ -1042,6 +1047,7 @@ export default function VocabChallenge() {
             ))}
           </div>
         </div>
+        )}
 
         {/* 푸터 (풀폭 웹사이트형) */}
         <footer style={{ borderTop: "1px solid #E3DCCB", padding: "22px 18px", marginTop: 4 }}>
