@@ -390,6 +390,20 @@ export default function VocabChallenge() {
   const [showDef, setShowDef] = useState(false);
   const [notifyOn, setNotifyOn] = useState(() => { try { return localStorage.getItem("rest.notify") === "1"; } catch (e) { return false; } });
   useEffect(() => { if (notifyOn) scheduleBreakNotifications(); }, [notifyOn]);
+  const [dayStreak, setDayStreak] = useState(0);
+  useEffect(() => {
+    try {
+      const kst = (off) => new Date(Date.now() + 9 * 3600 * 1000 - (off || 0)).toISOString().slice(0, 10);
+      const today = kst(0), last = localStorage.getItem("gx.lastDay");
+      let s = parseInt(localStorage.getItem("gx.streak") || "0", 10) || 0;
+      if (last !== today) {
+        s = last === kst(86400000) ? s + 1 : 1;
+        localStorage.setItem("gx.streak", String(s));
+        localStorage.setItem("gx.lastDay", today);
+      }
+      setDayStreak(s);
+    } catch (e) {}
+  }, []);
   const [results, setResults] = useState([]);
   const [comboFlash, setComboFlash] = useState(false);
   const [gameCount, setGameCount] = useState(0);
@@ -606,6 +620,10 @@ export default function VocabChallenge() {
             <a href="/learn.html" target="_blank" rel="noopener noreferrer" style={{ color: "#94a3b8", textDecoration: "none", fontSize: 13 }}>학습 로드맵</a>
             <a href="/guides.html" target="_blank" rel="noopener noreferrer" style={{ color: "#94a3b8", textDecoration: "none", fontSize: 13 }}>학습 자료</a>
             <a href="/about.html" target="_blank" rel="noopener noreferrer" style={{ color: "#94a3b8", textDecoration: "none", fontSize: 13 }}>소개</a>
+            <span style={{ marginLeft: "auto", display: "inline-flex", alignItems: "center", gap: 12, fontSize: 13, fontWeight: 800 }}>
+              <span style={{ color: "#fb923c" }} title="연속 학습일">🔥 {dayStreak}</span>
+              <span style={{ color: "#60a5fa" }} title="누적 XP">💎 {(stats.totalScore || 0).toLocaleString()}</span>
+            </span>
           </div>
         </nav>
         {/* 히어로 (풀폭 중앙) */}
@@ -684,7 +702,7 @@ export default function VocabChallenge() {
           <div style={isWide ? { flex: 1, minWidth: 0 } : {}}>
 
           {/* 과목별 기초 게임 */}
-          <p style={{ fontSize: 12, color: "#94a3b8", fontWeight: 700, margin: "0 0 8px", letterSpacing: 0.3 }}>
+          <p id="learn-anchor" style={{ fontSize: 12, color: "#94a3b8", fontWeight: 700, margin: "0 0 8px", letterSpacing: 0.3 }}>
             과목별 기초 게임 — 어휘·연산으로 워밍업
           </p>
 
@@ -744,7 +762,7 @@ export default function VocabChallenge() {
           {(() => {
             const ms = stats[gameMode] || DEFAULT_MODE_STATS;
             return (
-              <div style={{
+              <div id="me-anchor" style={{
                 display: "grid", gridTemplateColumns: "1fr 1fr 1fr 1fr", gap: 8,
                 margin: "12px 0 8px", padding: "14px 8px", borderRadius: 14,
                 background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.06)",
@@ -1006,6 +1024,23 @@ export default function VocabChallenge() {
             <a href="/privacy.html" target="_blank" style={{ color: "#94a3b8", textDecoration: "none" }}>개인정보처리방침</a>
           </div>
           </div>{/* end bottom section */}
+        </div>
+
+        {/* 하단 탭 네비 (게임 앱 셸) */}
+        <div style={{ position: "sticky", bottom: 0, zIndex: 50, background: "rgba(10,10,26,0.96)", borderTop: "1px solid rgba(255,255,255,0.1)", padding: "8px 0 calc(8px + env(safe-area-inset-bottom))" }}>
+          <div style={{ maxWidth: 480, margin: "0 auto", display: "flex", justifyContent: "space-around" }}>
+            {[
+              { ic: "🏠", lab: "홈", act: () => window.scrollTo({ top: 0, behavior: "smooth" }) },
+              { ic: "🎴", lab: "학습", act: () => document.getElementById("learn-anchor")?.scrollIntoView({ behavior: "smooth", block: "start" }) },
+              { ic: "📒", lab: "오답노트", act: () => alert("📒 오답노트 — 틀린 문제 자동 복습, 곧 공개돼요!") },
+              { ic: "📅", lab: "플랜", act: () => alert("📅 스케줄 플래너 — 수능 D-day 학습 계획, 곧 공개돼요!") },
+              { ic: "🙂", lab: "나", act: () => document.getElementById("me-anchor")?.scrollIntoView({ behavior: "smooth", block: "center" }) },
+            ].map((t) => (
+              <button key={t.lab} onClick={t.act} style={{ flex: 1, background: "none", border: "none", cursor: "pointer", display: "flex", flexDirection: "column", alignItems: "center", gap: 2, color: "#94a3b8", fontSize: 10.5, fontWeight: 700 }}>
+                <span style={{ fontSize: 19 }}>{t.ic}</span>{t.lab}
+              </button>
+            ))}
+          </div>
         </div>
 
         {/* 푸터 (풀폭 웹사이트형) */}
