@@ -38,7 +38,7 @@ jobs:
       - name: 생성 + 검증 + 누적
         run: node scripts/build-suneung-bank.mjs
         env:
-          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY || secrets.ANTROPIC_API_KEY }}
           MAX_NEW: ${{ github.event.inputs.max_new }}
           TARGET_PER_SUBJECT: ${{ github.event.inputs.target_per_subject }}
           GEN_MODEL: ${{ github.event.inputs.model }}

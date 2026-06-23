@@ -27,7 +27,7 @@ jobs:
 
       - name: Generate today's problems
         env:
-          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY || secrets.ANTROPIC_API_KEY }}
         run: node scripts/generate-daily.mjs
 
       - name: Commit & push
