@@ -451,10 +451,31 @@
 
   function timeFor(item){ const base = BASE[item.type] || item.t || 90; return Math.round(base * MULT[diff]); }
 
+  // ===== 안 겹치게 새 문제 (본 문제 기록 + 과목 균형) =====
+  const SEENKEY = 'srush.seen';
+  const ROUND = 20;
+  function loadSeen(){ try { return new Set(JSON.parse(localStorage.getItem(SEENKEY) || '[]')); } catch (e) { return new Set(); } }
+  function markSeen(q){ try { const s = loadSeen(); s.add(q); let a = [...s]; if (a.length > 6000) a = a.slice(a.length - 6000); localStorage.setItem(SEENKEY, JSON.stringify(a)); } catch (e) {} }
+  function pickFresh(arr, n, seen){
+    let fresh = shuffle(arr.filter(q => !seen.has(q.q)));
+    if (fresh.length < n) fresh = fresh.concat(shuffle(arr.filter(q => seen.has(q.q))));
+    return fresh.slice(0, n);
+  }
   function start(){
-    const pool = QB.filter(q => subj==='all' || q.subj===subj);
-    order = shuffle(pool.map((_,i)=>i)).map(i=>pool[i]);
-    if(!order.length){ $('#game').innerHTML = '<p class="muted">해당 과목 문제가 없습니다.</p>'; return; }
+    const all = QB.filter(q => subj === 'all' || q.subj === subj);
+    if(!all.length){ $('#game').innerHTML = '<p class="muted">해당 과목 문제가 없습니다.</p>'; return; }
+    const seen = loadSeen();
+    let picked;
+    if (subj === 'all') {
+      const subs = [...new Set(all.map(q => q.subj))];
+      const per = Math.max(1, Math.ceil(ROUND / subs.length));
+      picked = [];
+      subs.forEach(s => picked.push(...pickFresh(all.filter(q => q.subj === s), per, seen)));
+      picked = shuffle(picked).slice(0, ROUND);
+    } else {
+      picked = pickFresh(all, ROUND, seen);
+    }
+    order = picked;
     idx = 0; score = 0; next();
   }
   function next(){
@@ -483,6 +504,7 @@
   function answer(i){
     if(answered) return; answered = true; clearInterval(timer);
     const it = order[idx];
+    markSeen(it.q);
     document.querySelectorAll('#opts .opt').forEach((b,bi)=>{ b.disabled = true;
       if(bi===it.a) b.classList.add('correct'); else if(bi===i) b.classList.add('wrong'); });
     const correct = i===it.a;
@@ -582,6 +604,14 @@
       const el = document.getElementById('dailyBanner');
       if (el) { el.style.display = 'block'; el.innerHTML = '🆕 <b>오늘의 문제</b> ' + d.problems.length + '개 추가 · ' + d.date + ' <span style="color:#94a3b8">(AI가 매일 생성)</span>'; }
       if (viewMode !== 'note') start();
+    }
+  }).catch(() => {});
+
+  // 문제 은행 — 원본 어휘 대량(약 3,000) 합치기 → 안 겹치게 계속 새 문제
+  fetch('/bank.json').then(r => r.ok ? r.json() : null).then(d => {
+    if (d && Array.isArray(d.problems) && d.problems.length) {
+      d.problems.forEach(p => QB.push(p));
+      if (viewMode === 'game' && idx === 0 && !answered) start();
     }
   }).catch(() => {});
 </script>
