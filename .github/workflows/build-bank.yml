@@ -13,6 +13,10 @@ on:
         description: '과목당 목표 누적 수(총=과목수×목표)'
         required: false
         default: '1000'
+      model:
+        description: '모델 (비용 절감: claude-sonnet-4-6)'
+        required: false
+        default: 'claude-opus-4-8'
 
 permissions:
   contents: write
@@ -37,6 +41,7 @@ jobs:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           MAX_NEW: ${{ github.event.inputs.max_new }}
           TARGET_PER_SUBJECT: ${{ github.event.inputs.target_per_subject }}
+          GEN_MODEL: ${{ github.event.inputs.model }}
       - name: 커밋·푸시 (자동 배포 트리거)
         run: |
           git config user.name "github-actions[bot]"

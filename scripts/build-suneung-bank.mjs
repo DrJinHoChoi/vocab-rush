@@ -6,7 +6,7 @@
 import Anthropic from "@anthropic-ai/sdk";
 import { writeFileSync, readFileSync, existsSync, mkdirSync } from "node:fs";
 
-const MODEL = "claude-opus-4-8";
+const MODEL = process.env.GEN_MODEL || "claude-opus-4-8"; // 비용↓ 시 GEN_MODEL=claude-sonnet-4-6
 const TARGET = parseInt(process.env.TARGET_PER_SUBJECT || "1000", 10);
 const BATCH = parseInt(process.env.BATCH || "5", 10);
 const ONLY = (process.env.ONLY || "").split(",").map((x) => x.trim()).filter(Boolean);
