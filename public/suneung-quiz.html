@@ -499,8 +499,17 @@
     $('#game').innerHTML = `<div class="end">
       <div class="sc">${score}점</div>
       <p class="muted" style="margin:8px 0 16px">${order.length}문제 · ${diff.toUpperCase()} 난이도 완료</p>
+      <button class="btn" id="shareR" style="max-width:260px;margin:0 auto 10px;background:#7c3aed">🔗 결과 공유 · 친구에게 도전</button>
       <button class="btn" id="again" style="max-width:260px;margin:0 auto">다시 풀기</button></div>`;
     $('#again').addEventListener('click', start);
+    $('#shareR').addEventListener('click', () => shareResult(score, order.length));
+  }
+  function shareResult(sc, n){
+    const url = 'https://www.datapd.ai/suneung-quiz.html';
+    const text = `수능 게임에서 ${n}문제 풀고 ${sc}점! 너도 도전해봐 🎯 #STUDYRUSH`;
+    if (navigator.share) { navigator.share({ title: 'STUDY RUSH 수능 게임', text: text, url: url }).catch(() => {}); return; }
+    try { navigator.clipboard.writeText(text + ' ' + url); alert('결과 + 링크를 복사했어요! 친구에게 붙여넣기 하세요 🔗'); }
+    catch (e) { try { window.prompt('복사해서 공유하세요:', text + ' ' + url); } catch (e2) {} }
   }
 
   // ===== 오답노트 (틀린 문제 복습) =====
