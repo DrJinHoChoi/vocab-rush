@@ -10,6 +10,7 @@ const MODEL = "claude-opus-4-8";
 const TARGET = parseInt(process.env.TARGET_PER_SUBJECT || "1000", 10);
 const BATCH = parseInt(process.env.BATCH || "5", 10);
 const ONLY = (process.env.ONLY || "").split(",").map((x) => x.trim()).filter(Boolean);
+const MAX_NEW = parseInt(process.env.MAX_NEW || "1000000", 10); // 1회 실행당 신규 상한(CI 시간·비용 제어; 재실행으로 이어서 누적)
 const OUT = "public/daily/bank-suneung.json";
 const client = new Anthropic();
 
@@ -89,18 +90,21 @@ const countBy = (subj) => bank.problems.filter((p) => p.subj === subj).length;
 const save = () => writeFileSync(OUT, JSON.stringify({ generated_by: MODEL + " (bulk gen+verify)", count: bank.problems.length, problems: bank.problems }), "utf8");
 
 const subjects = Object.keys(TOPICS).filter((s) => !ONLY.length || ONLY.includes(s));
+let addedThisRun = 0;
+outer:
 for (const subj of subjects) {
   let ti = 0, stale = 0;
   while (countBy(subj) < TARGET && stale < 6) {
+    if (addedThisRun >= MAX_NEW) { console.log(`이번 실행 상한(${MAX_NEW}) 도달 — 중단(재실행하면 이어서 누적).`); break outer; }
     const topic = TOPICS[subj][ti % TOPICS[subj].length]; ti++;
     try {
       const verified = await genVerifiedTopic(subj, topic, BATCH);
       let added = 0;
-      for (const p of verified) { if (p.q && !seen.has(p.q)) { seen.add(p.q); bank.problems.push(p); added++; } }
+      for (const p of verified) { if (p.q && !seen.has(p.q)) { seen.add(p.q); bank.problems.push(p); added++; addedThisRun++; } }
       save();
       stale = added ? 0 : stale + 1;
-      console.log(`${subj}/${topic}: +${added} (누적 ${countBy(subj)}/${TARGET} · 총 ${bank.problems.length})`);
+      console.log(`${subj}/${topic}: +${added} (누적 ${countBy(subj)}/${TARGET} · 총 ${bank.problems.length} · 이번 ${addedThisRun})`);
     } catch (e) { stale++; console.error(`${subj}/${topic} 실패: ${e.message}`); }
   }
 }
-console.log(`완료: 총 ${bank.problems.length}문제 → ${OUT}`);
+console.log(`완료: 총 ${bank.problems.length}문제 (이번 +${addedThisRun}) → ${OUT}`);
