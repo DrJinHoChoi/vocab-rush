@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>수능 스케줄 플래너 — STUDY RUSH | D-day 맞춤 학습 계획</title>
+<meta name="description" content="수능 D-day와 목표 등급, 약점 과목을 입력하면 단계별 학습 로드맵과 과목별 시간 배분, 오늘 할 일까지 자동으로 짜주는 무료 수능 스케줄 플래너." />
+<meta name="keywords" content="수능 스케줄, 수능 계획표, 공부 계획, D-day 플래너, 수능 학습 로드맵, STUDY RUSH" />
+<link rel="canonical" href="https://www.datapd.ai/plan.html" />
+<meta name="theme-color" content="#0a0a1a" />
+<meta property="og:title" content="수능 스케줄 플래너 — STUDY RUSH" />
+<meta property="og:description" content="D-day 맞춤 단계별 학습 로드맵 + 과목 배분 + 오늘 할 일. 무료." />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://www.datapd.ai/plan.html" />
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: #0a0a1a; color: #e2e8f0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans KR", sans-serif; line-height: 1.6; }
+  a { color: #93c5fd; }
+  .wrap { max-width: 720px; margin: 0 auto; padding: 16px 16px 40px; }
+  nav { position: sticky; top: 0; z-index: 50; background: rgba(10,10,26,.92); border-bottom: 1px solid rgba(255,255,255,.08); padding: 11px 16px; display: flex; gap: 14px; align-items: center; flex-wrap: wrap; }
+  nav .brand { font-weight: 900; letter-spacing: 1px; color: #f8fafc; font-size: 15px; }
+  nav a { color: #94a3b8; text-decoration: none; font-size: 13px; }
+  h1 { font-size: 22px; font-weight: 900; margin: 18px 0 4px; }
+  .sub { color: #94a3b8; font-size: 13px; margin-bottom: 16px; }
+  .card { background: rgba(255,255,255,.03); border: 1px solid rgba(255,255,255,.07); border-radius: 14px; padding: 16px; margin-bottom: 14px; }
+  .lab { font-size: 12px; color: #94a3b8; font-weight: 700; margin-bottom: 8px; }
+  input[type=date], input[type=number] { background: #111827; border: 1px solid #1f2937; color: #e2e8f0; border-radius: 9px; padding: 9px 11px; font-size: 14px; width: 100%; }
+  .row { display: flex; gap: 10px; flex-wrap: wrap; }
+  .row > div { flex: 1; min-width: 130px; }
+  .chips { display: flex; gap: 7px; flex-wrap: wrap; }
+  .chip { background: #111827; border: 1px solid #1f2937; color: #cbd5e1; border-radius: 999px; padding: 7px 13px; font-size: 13px; cursor: pointer; }
+  .chip.on { background: rgba(96,165,250,.16); border-color: rgba(96,165,250,.5); color: #bfdbfe; }
+  .btn { background: #1d4ed8; color: #fff; border: none; border-radius: 11px; padding: 13px; font-size: 15px; font-weight: 800; cursor: pointer; width: 100%; }
+  .dday { text-align: center; padding: 18px; }
+  .dday b { font-size: 44px; font-weight: 900; color: #fb923c; display: block; line-height: 1.1; }
+  .dday small { color: #94a3b8; }
+  .phase { display: flex; gap: 11px; align-items: flex-start; padding: 11px 0; border-bottom: 1px solid rgba(255,255,255,.06); }
+  .phase:last-child { border-bottom: none; }
+  .dot { width: 11px; height: 11px; border-radius: 50%; background: #334155; margin-top: 6px; flex: none; }
+  .phase.now .dot { background: #22c55e; box-shadow: 0 0 0 4px rgba(34,197,94,.18); }
+  .phase .pn { font-weight: 800; font-size: 14.5px; }
+  .phase.now .pn { color: #4ade80; }
+  .phase .pd { font-size: 11.5px; color: #64748b; }
+  .phase .pt { font-size: 12.5px; color: #94a3b8; margin-top: 2px; }
+  .bar { height: 9px; border-radius: 99px; background: #1f2937; overflow: hidden; margin-top: 5px; }
+  .bar > i { display: block; height: 100%; background: #60a5fa; }
+  .task { display: flex; align-items: center; gap: 10px; padding: 9px 0; border-bottom: 1px solid rgba(255,255,255,.05); }
+  .task:last-child { border-bottom: none; }
+  .task .s { width: 42px; font-weight: 800; font-size: 13px; }
+  .task .n { flex: 1; font-size: 13px; color: #cbd5e1; }
+  .task a { font-size: 12px; font-weight: 700; white-space: nowrap; }
+  .muted { color: #64748b; font-size: 12px; }
+  h2 { font-size: 16px; margin: 2px 0 4px; }
+  .hint { font-size: 12px; color: #94a3b8; }
+</style>
+</head>
+<body>
+<nav>
+  <span class="brand">⚡ STUDY RUSH</span>
+  <a href="/">홈</a>
+  <a href="/suneung-quiz.html">수능 게임</a>
+  <a href="/learn.html">학습 로드맵</a>
+  <a href="/about.html">소개</a>
+</nav>
+<div class="wrap">
+  <h1>📅 수능 스케줄 플래너</h1>
+  <p class="sub">D-day·목표·약점만 넣으면 <b>단계별 로드맵 + 과목 배분 + 오늘 할 일</b>까지 자동으로. 쉬는 시간 알림과 함께 쓰면 최강.</p>
+
+  <div class="card">
+    <div class="lab">수능 날짜</div>
+    <input type="date" id="examDate" value="2026-11-19" />
+    <div class="row" style="margin-top:12px">
+      <div>
+        <div class="lab">목표 등급</div>
+        <select id="goal" style="background:#111827;border:1px solid #1f2937;color:#e2e8f0;border-radius:9px;padding:9px 11px;font-size:14px;width:100%">
+          <option value="1">1등급</option><option value="2">2등급</option><option value="3">3등급</option><option value="4">4등급</option>
+        </select>
+      </div>
+      <div>
+        <div class="lab">하루 학습 시간</div>
+        <input type="number" id="hours" value="4" min="1" max="16" step="0.5" />
+      </div>
+    </div>
+    <div class="lab" style="margin-top:12px">약점 과목 <span class="muted">(탭해서 선택 — 더 많은 시간 배분)</span></div>
+    <div class="chips" id="weakChips">
+      <button class="chip" data-s="국어">국어</button>
+      <button class="chip" data-s="영어">영어</button>
+      <button class="chip" data-s="수학">수학</button>
+      <button class="chip" data-s="과학">과학</button>
+      <button class="chip" data-s="사회">사회</button>
+    </div>
+    <button class="btn" id="gen" style="margin-top:16px">🚀 계획 생성</button>
+  </div>
+
+  <div id="out"></div>
+</div>
+<script>
+  const $ = s => document.querySelector(s);
+  const SUBJECTS = ['국어','영어','수학','과학','사회'];
+  const PKEY = 'srush.plan';
+  let weak = new Set();
+
+  // 저장된 입력 복원
+  try {
+    const sv = JSON.parse(localStorage.getItem(PKEY) || '{}');
+    if (sv.examDate) $('#examDate').value = sv.examDate;
+    if (sv.goal) $('#goal').value = sv.goal;
+    if (sv.hours) $('#hours').value = sv.hours;
+    if (Array.isArray(sv.weak)) weak = new Set(sv.weak);
+  } catch (e) {}
+
+  document.querySelectorAll('#weakChips .chip').forEach(b => {
+    if (weak.has(b.dataset.s)) b.classList.add('on');
+    b.addEventListener('click', () => { b.classList.toggle('on'); weak.has(b.dataset.s) ? weak.delete(b.dataset.s) : weak.add(b.dataset.s); });
+  });
+
+  function kstToday() { const d = new Date(Date.now() + 9 * 3600 * 1000); return new Date(Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate())); }
+  function fmtD(d) { return (d.getUTCMonth() + 1) + '/' + d.getUTCDate(); }
+  function addDays(d, n) { return new Date(d.getTime() + n * 86400000); }
+
+  function gen() {
+    const examV = $('#examDate').value;
+    const goal = parseInt($('#goal').value, 10) || 1;
+    const hours = Math.max(1, parseFloat($('#hours').value) || 4);
+    const exam = new Date(examV + 'T00:00:00Z');
+    const today = kstToday();
+    const dleft = Math.max(0, Math.round((exam - today) / 86400000));
+    localStorage.setItem(PKEY, JSON.stringify({ examDate: examV, goal, hours, weak: [...weak] }));
+
+    if (!examV || isNaN(exam) || dleft === 0) {
+      $('#out').innerHTML = '<div class="card"><b>🎯 수능 당일이거나 날짜가 지났어요.</b><p class="muted" style="margin-top:6px">오답노트 정리 + 컨디션 관리에 집중하세요. <a href="/suneung-quiz.html?note=1">오답노트 →</a></p></div>';
+      return;
+    }
+
+    // 단계(Phase) — 남은 기간을 비율로 분할
+    const defs = [
+      { n: '개념 다지기', f: 0.40, t: '기본 개념·공식·어휘 완성. 게임 ‘개념’ 단계로 매일 워밍업.' },
+      { n: '유형 훈련', f: 0.35, t: '유형별 풀이법 체화. 틀린 건 오답노트로 바로 복습.' },
+      { n: '실전·모의', f: 0.17, t: '시간 재고 실전 감각. 타이머 게임 Hard 난이도로.' },
+      { n: '파이널 정리', f: 0.08, t: '오답노트·취약 단원만. 새 문제집 X, 컨디션 관리.' },
+    ];
+    let acc = 0, cursor = today, phaseHTML = '';
+    defs.forEach((p, i) => {
+      const len = (i === defs.length - 1) ? (dleft - acc) : Math.max(1, Math.round(dleft * p.f));
+      const start = cursor, end = addDays(cursor, Math.max(0, len - 1));
+      const now = i === 0; // 계획은 오늘 시작 → 1단계가 현재
+      phaseHTML += `<div class="phase ${now ? 'now' : ''}"><div class="dot"></div><div style="flex:1">
+        <div class="pn">${i + 1}. ${p.n} ${now ? '<span style="font-size:11px;color:#4ade80">● 지금</span>' : ''}</div>
+        <div class="pd">${fmtD(start)} ~ ${fmtD(end)} · 약 ${len}일</div>
+        <div class="pt">${p.t}</div></div></div>`;
+      acc += len; cursor = addDays(cursor, len);
+    });
+
+    // 과목 시간 배분 — 약점 +60% 가중
+    const wts = SUBJECTS.map(s => 1 + (weak.has(s) ? 0.6 : 0));
+    const sum = wts.reduce((a, b) => a + b, 0);
+    const alloc = SUBJECTS.map((s, i) => {
+      const h = hours * wts[i] / sum;
+      return { s, h, probs: Math.max(2, Math.round(h * 3)), weak: weak.has(s), pct: Math.round(wts[i] / sum * 100) };
+    });
+    const maxPct = Math.max(...alloc.map(a => a.pct));
+    const allocHTML = alloc.map(a => `<div class="task">
+        <div class="s" style="color:${a.weak ? '#fb923c' : '#cbd5e1'}">${a.s}</div>
+        <div style="flex:1"><div class="bar"><i style="width:${Math.round(a.pct / maxPct * 100)}%;background:${a.weak ? '#fb923c' : '#60a5fa'}"></i></div></div>
+        <div class="hint" style="width:108px;text-align:right">${a.h.toFixed(1)}h · ${a.probs}문제${a.weak ? ' <b style="color:#fb923c">약점</b>' : ''}</div>
+      </div>`).join('');
+
+    // 오늘 할 일
+    const tasksHTML = alloc.map(a => `<div class="task">
+        <div class="s">${a.s}</div>
+        <div class="n">${a.probs}문제 풀기 (${a.h.toFixed(1)}시간)</div>
+        <a href="/suneung-quiz.html">풀기 →</a></div>`).join('');
+    const totalProbs = alloc.reduce((n, a) => n + a.probs, 0);
+
+    $('#out').innerHTML = `
+      <div class="card dday"><small>수능까지</small><b>D-${dleft}</b><small>${examV} · 목표 ${goal}등급 · 약 ${Math.ceil(dleft / 7)}주</small></div>
+      <div class="card"><h2>🗺️ 단계별 로드맵</h2><p class="hint" style="margin-bottom:8px">오늘부터 수능까지를 4단계로.</p>${phaseHTML}</div>
+      <div class="card"><h2>⚖️ 과목별 시간 배분</h2><p class="hint" style="margin-bottom:10px">하루 ${hours}시간 기준 · 약점 과목에 더 배분</p>${allocHTML}</div>
+      <div class="card"><h2>✅ 오늘 할 일 <span class="hint">· 총 ${totalProbs}문제</span></h2>${tasksHTML}
+        <p class="hint" style="margin-top:12px">💡 <a href="/">홈에서 쉬는 시간 알림</a>을 켜면, 쉬는 시간마다 한 문제씩 자동으로 챙겨줘요. 틀리면 <a href="/suneung-quiz.html?note=1">오답노트</a>에 쌓입니다.</p>
+      </div>
+      <p class="muted" style="text-align:center;margin-top:6px">계획은 자동 저장돼요. 매일 업데이트하며 쓰세요.</p>`;
+    $('#out').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  $('#gen').addEventListener('click', gen);
+  // 저장된 계획이 있으면 자동 생성
+  if (localStorage.getItem(PKEY)) gen();
+</script>
+</body>
+</html>

@@ -1033,7 +1033,7 @@ export default function VocabChallenge() {
               { ic: "🏠", lab: "홈", act: () => window.scrollTo({ top: 0, behavior: "smooth" }) },
               { ic: "🎴", lab: "학습", act: () => document.getElementById("learn-anchor")?.scrollIntoView({ behavior: "smooth", block: "start" }) },
               { ic: "📒", lab: "오답노트", act: () => { window.location.href = "/suneung-quiz.html?note=1"; } },
-              { ic: "📅", lab: "플랜", act: () => alert("📅 스케줄 플래너 — 수능 D-day 학습 계획, 곧 공개돼요!") },
+              { ic: "📅", lab: "플랜", act: () => { window.location.href = "/plan.html"; } },
               { ic: "🙂", lab: "나", act: () => document.getElementById("me-anchor")?.scrollIntoView({ behavior: "smooth", block: "center" }) },
             ].map((t) => (
               <button key={t.lab} onClick={t.act} style={{ flex: 1, background: "none", border: "none", cursor: "pointer", display: "flex", flexDirection: "column", alignItems: "center", gap: 2, color: "#94a3b8", fontSize: 10.5, fontWeight: 700 }}>
