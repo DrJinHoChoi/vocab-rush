@@ -85,6 +85,51 @@ const DIFFICULTY = {
 
 const ROUND_OPTIONS = [10, 15, 20, 25];
 
+// ===== 쉬는 시간 알림 =====
+const BREAK_TIMES = ["09:50", "10:50", "11:50", "13:50", "14:50", "15:50"]; // 한국 고교 쉬는 시간(예시)
+function notifySupported() {
+  return typeof window !== "undefined" && "Notification" in window && "serviceWorker" in navigator;
+}
+function restOpts(tag) {
+  return { tag: "rest-" + tag, body: "1분이면 풀어요 — 오늘의 수능 문제 한 개! 🎯", icon: "/icon-192.png", badge: "/icon-192.png", data: { url: "/suneung-quiz.html" } };
+}
+async function showRestNotification(reg, title, opts) {
+  if (reg && reg.showNotification) return reg.showNotification(title, opts);
+  if ("Notification" in window) return new Notification(title, opts);
+}
+async function scheduleBreakNotifications() {
+  if (!notifySupported() || Notification.permission !== "granted") return;
+  let reg = null;
+  try { reg = await navigator.serviceWorker.ready; } catch (e) {}
+  const now = Date.now();
+  BREAK_TIMES.forEach((t) => {
+    const [h, m] = t.split(":").map(Number);
+    const when = new Date(); when.setHours(h, m, 0, 0);
+    const ms = when.getTime() - now;
+    if (ms <= 0) return; // 이미 지난 시간
+    if (reg && typeof TimestampTrigger !== "undefined") {
+      try { reg.showNotification("🔔 쉬는 시간!", { ...restOpts(t), showTrigger: new TimestampTrigger(when.getTime()) }); return; } catch (e) {}
+    }
+    if (ms < 12 * 3600 * 1000) setTimeout(() => showRestNotification(reg, "🔔 쉬는 시간!", restOpts(t)), ms);
+  });
+}
+async function enableRestAlarm() {
+  if (!notifySupported()) { alert("이 브라우저는 알림을 지원하지 않아요."); return false; }
+  let perm = Notification.permission;
+  if (perm !== "granted") perm = await Notification.requestPermission();
+  if (perm !== "granted") return false;
+  try { localStorage.setItem("rest.notify", "1"); } catch (e) {}
+  await scheduleBreakNotifications();
+  return true;
+}
+async function fireTestNotification() {
+  if (!notifySupported() || Notification.permission !== "granted") {
+    const ok = await enableRestAlarm(); if (!ok) return;
+  }
+  let reg = null; try { reg = await navigator.serviceWorker.ready; } catch (e) {}
+  showRestNotification(reg, "🔔 쉬는 시간!", { body: "이렇게 알림이 와요 — 오늘의 문제 한 개! 🎯", icon: "/icon-192.png", data: { url: "/suneung-quiz.html" } });
+}
+
 // ============================================================
 // ACHIEVEMENT / REWARD SYSTEM
 // ============================================================
@@ -335,6 +380,8 @@ export default function VocabChallenge() {
   const [showHint, setShowHint] = useState(false);
   const [showExample, setShowExample] = useState(false);
   const [showDef, setShowDef] = useState(false);
+  const [notifyOn, setNotifyOn] = useState(() => { try { return localStorage.getItem("rest.notify") === "1"; } catch (e) { return false; } });
+  useEffect(() => { if (notifyOn) scheduleBreakNotifications(); }, [notifyOn]);
   const [results, setResults] = useState([]);
   const [comboFlash, setComboFlash] = useState(false);
   const [gameCount, setGameCount] = useState(0);
@@ -585,6 +632,23 @@ export default function VocabChallenge() {
             }}>학습 로드맵 보기 →</a>
           </div>
         </header>
+
+        {/* 쉬는 시간 알림 */}
+        <div style={{ maxWidth: 1080, margin: "0 auto 4px", width: "100%", padding: isWide ? "0 20px" : "0 16px" }}>
+          <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 10, flexWrap: "wrap", padding: "10px 14px", borderRadius: 12, background: "rgba(110,231,183,0.06)", border: "1px solid rgba(110,231,183,0.2)" }}>
+            <div style={{ fontSize: 12.5, color: "#a7f3d0", fontWeight: 700 }}>🔔 쉬는 시간 알림 <span style={{ color: "#94a3b8", fontWeight: 400 }}>— 쉬는 시간마다 오늘의 문제 한 개</span></div>
+            <div style={{ display: "flex", gap: 8 }}>
+              <button onClick={async () => { if (notifyOn) { try { localStorage.removeItem("rest.notify"); } catch (e) {} setNotifyOn(false); } else { const ok = await enableRestAlarm(); setNotifyOn(ok); } }}
+                style={{ padding: "6px 13px", borderRadius: 999, border: "1px solid rgba(110,231,183,0.4)", background: notifyOn ? "rgba(110,231,183,0.18)" : "transparent", color: "#6ee7b7", fontSize: 12, fontWeight: 800, cursor: "pointer" }}>
+                {notifyOn ? "✓ 켜짐 (끄기)" : "알림 켜기"}
+              </button>
+              <button onClick={fireTestNotification}
+                style={{ padding: "6px 13px", borderRadius: 999, border: "1px solid rgba(255,255,255,0.15)", background: "transparent", color: "#94a3b8", fontSize: 12, fontWeight: 700, cursor: "pointer" }}>
+                테스트
+              </button>
+            </div>
+          </div>
+        </div>
 
         {/* 메인: 게임 + 교육 */}
         <div style={{
