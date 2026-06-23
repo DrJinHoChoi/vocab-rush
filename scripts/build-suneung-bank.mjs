@@ -90,21 +90,25 @@ const countBy = (subj) => bank.problems.filter((p) => p.subj === subj).length;
 const save = () => writeFileSync(OUT, JSON.stringify({ generated_by: MODEL + " (bulk gen+verify)", count: bank.problems.length, problems: bank.problems }), "utf8");
 
 const subjects = Object.keys(TOPICS).filter((s) => !ONLY.length || ONLY.includes(s));
+const ti = {}; subjects.forEach((s) => (ti[s] = 0));
 let addedThisRun = 0;
-outer:
-for (const subj of subjects) {
-  let ti = 0, stale = 0;
-  while (countBy(subj) < TARGET && stale < 6) {
-    if (addedThisRun >= MAX_NEW) { console.log(`이번 실행 상한(${MAX_NEW}) 도달 — 중단(재실행하면 이어서 누적).`); break outer; }
-    const topic = TOPICS[subj][ti % TOPICS[subj].length]; ti++;
+// 라운드로빈: 한 패스에 과목마다 한 배치씩 → 과목이 고르게 누적
+roundrobin:
+while (addedThisRun < MAX_NEW) {
+  let progressed = false;
+  for (const subj of subjects) {
+    if (countBy(subj) >= TARGET) continue;
+    if (addedThisRun >= MAX_NEW) { console.log(`이번 실행 상한(${MAX_NEW}) 도달 — 중단(재실행하면 이어서 누적).`); break roundrobin; }
+    const topic = TOPICS[subj][ti[subj]++ % TOPICS[subj].length];
     try {
       const verified = await genVerifiedTopic(subj, topic, BATCH);
       let added = 0;
       for (const p of verified) { if (p.q && !seen.has(p.q)) { seen.add(p.q); bank.problems.push(p); added++; addedThisRun++; } }
       save();
-      stale = added ? 0 : stale + 1;
-      console.log(`${subj}/${topic}: +${added} (누적 ${countBy(subj)}/${TARGET} · 총 ${bank.problems.length} · 이번 ${addedThisRun})`);
-    } catch (e) { stale++; console.error(`${subj}/${topic} 실패: ${e.message}`); }
+      if (added) progressed = true;
+      console.log(`${subj}/${topic}: +${added} (${subj} ${countBy(subj)}/${TARGET} · 총 ${bank.problems.length} · 이번 ${addedThisRun})`);
+    } catch (e) { console.error(`${subj}/${topic} 실패: ${e.message}`); }
   }
+  if (!progressed) { console.log("이번 패스 추가 0 — 모든 과목 목표 도달 또는 생성 실패로 종료."); break; }
 }
 console.log(`완료: 총 ${bank.problems.length}문제 (이번 +${addedThisRun}) → ${OUT}`);
