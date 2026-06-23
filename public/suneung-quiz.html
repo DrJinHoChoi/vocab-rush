@@ -95,6 +95,11 @@
       </div>
     </div>
 
+    <div style="display:flex; gap:8px; align-items:center; flex-wrap:wrap; margin:0 0 12px;">
+      <button class="chip" id="noteBtn" style="border-color:rgba(251,146,60,.45); color:#fdba74;">📒 오답노트 <b id="noteCount">0</b></button>
+      <span style="font-size:11.5px; color:#64748b;">틀린 문제가 자동으로 쌓여요 — 다시 풀고 정복하기</span>
+    </div>
+
     <div id="dailyBanner" style="display:none; margin:0 0 12px; padding:11px 14px; border-radius:10px; background:rgba(96,165,250,0.1); border:1px solid rgba(96,165,250,0.3); font-size:13px; color:#cbd5e1;"></div>
     <div class="game" id="game"></div>
 
@@ -453,7 +458,7 @@
     idx = 0; score = 0; next();
   }
   function next(){
-    clearInterval(timer); answered = false;
+    clearInterval(timer); answered = false; viewMode = 'game';
     if(idx >= order.length){ return end(); }
     const it = order[idx];
     totalT = timeFor(it); timeLeft = totalT;
@@ -482,6 +487,7 @@
       if(bi===it.a) b.classList.add('correct'); else if(bi===i) b.classList.add('wrong'); });
     const correct = i===it.a;
     if(correct){ const bonus = Math.round(timeLeft/totalT*5); score += 10 + Math.max(0,bonus); }
+    else { saveWrong(it, i); }
     const exp = $('#exp'); exp.classList.add('show');
     exp.innerHTML = `<span class="tg">${correct?'정답!':(i===-1?'시간 초과':'오답')} · 정답 ${'①②③④⑤'[it.a]}</span><br/>${it.exp}`;
     $('#time').textContent = fmt(Math.max(0,timeLeft));
@@ -495,12 +501,66 @@
     $('#again').addEventListener('click', start);
   }
 
+  // ===== 오답노트 (틀린 문제 복습) =====
+  var viewMode = 'game';
+  const WKEY = 'srush.wrong';
+  function loadWrong(){ try { return JSON.parse(localStorage.getItem(WKEY) || '[]'); } catch (e) { return []; } }
+  function saveWrong(it, pick){
+    if (!it || !it.q) return;
+    let list = loadWrong().filter(w => w.q !== it.q);
+    list.unshift({ q: it.q, label: it.label || '', passage: it.passage || '', opts: it.opts, a: it.a, exp: it.exp || '', type: it.type, pick: pick });
+    if (list.length > 200) list = list.slice(0, 200);
+    try { localStorage.setItem(WKEY, JSON.stringify(list)); } catch (e) {}
+    updateNoteCount();
+  }
+  function removeNote(wi){ const l = loadWrong(); l.splice(wi, 1); try { localStorage.setItem(WKEY, JSON.stringify(l)); } catch (e) {} updateNoteCount(); openNotes(); }
+  function updateNoteCount(){ const el = $('#noteCount'); if (el) el.textContent = loadWrong().length; }
+  function escH(s){ return String(s == null ? '' : s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+  function startWrong(){
+    const list = loadWrong(); if (!list.length) return;
+    viewMode = 'game'; clearInterval(timer);
+    order = list.map(w => ({ ...w })); idx = 0; score = 0; next();
+  }
+  function openNotes(){
+    viewMode = 'note'; clearInterval(timer); answered = true;
+    const list = loadWrong();
+    if (!list.length){
+      $('#game').innerHTML = '<div class="end"><div style="font-size:40px">📒</div><p class="muted" style="margin:10px 0">오답노트가 비어 있어요.<br/>문제를 풀다 틀리면 자동으로 여기 쌓여요!</p><button class="btn" id="backG" style="max-width:260px;margin:0 auto">문제 풀러 가기 →</button></div>';
+      const bg = $('#backG'); if (bg) bg.addEventListener('click', () => { viewMode = 'game'; start(); });
+      return;
+    }
+    const cards = list.map((w, wi) => {
+      const opts = w.opts.map((o,i) => {
+        const st = i===w.a ? ' style="color:#34d399;font-weight:700"' : (i===w.pick ? ' style="color:#f87171;text-decoration:line-through"' : '');
+        return `<div${st}>${'①②③④⑤'[i]} ${escH(o)}</div>`;
+      }).join('');
+      return `<div style="text-align:left;padding:13px;border:1px solid rgba(255,255,255,.08);border-radius:12px;margin-bottom:10px;background:rgba(255,255,255,.02)">
+        <div style="font-size:11px;color:#fdba74;font-weight:700;margin-bottom:6px">${escH(w.label)}</div>
+        ${w.passage ? `<div class="muted" style="font-size:12px;margin-bottom:6px;line-height:1.6">${escH(w.passage)}</div>` : ''}
+        <div style="font-size:14px;margin-bottom:8px">${escH(w.q)}</div>
+        <div style="font-size:13px;line-height:1.9;margin-bottom:8px">${opts}</div>
+        <div style="font-size:12.5px;color:#cbd5e1;background:rgba(96,165,250,.08);border-radius:8px;padding:8px 10px;line-height:1.6"><b style="color:#93c5fd">해설</b> ${escH(w.exp)}</div>
+        <button class="chip noteDel" data-idx="${wi}" style="margin-top:8px;border-color:rgba(52,211,153,.4);color:#34d399">✓ 정복(삭제)</button>
+      </div>`;
+    }).join('');
+    $('#game').innerHTML = `<div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px">
+        <button class="btn" id="redoWrong" style="flex:1;min-width:160px">📒 오답 ${list.length}개 다시 풀기</button>
+        <button class="chip" id="backG2">← 게임으로</button>
+      </div>${cards}`;
+    $('#redoWrong').addEventListener('click', startWrong);
+    $('#backG2').addEventListener('click', () => { viewMode = 'game'; start(); });
+    document.querySelectorAll('#game .noteDel').forEach(b => b.addEventListener('click', () => removeNote(Number(b.dataset.idx))));
+  }
+
   $('#diffChips').addEventListener('click', e=>{ const b=e.target.closest('.chip'); if(!b) return;
     diff=b.dataset.diff; document.querySelectorAll('#diffChips .chip').forEach(c=>c.classList.toggle('on',c===b)); start(); });
   $('#subjChips').addEventListener('click', e=>{ const b=e.target.closest('.chip'); if(!b) return;
     subj=b.dataset.subj; document.querySelectorAll('#subjChips .chip').forEach(c=>c.classList.toggle('on',c===b)); start(); });
 
   start();
+  $('#noteBtn').addEventListener('click', openNotes);
+  updateNoteCount();
+  if (new URLSearchParams(location.search).get('note') === '1') openNotes();
 
   // 오늘의 문제 — AI 에이전트가 매일 생성한 국·영·수·과·사 문제를 합쳐서 출제
   fetch('/daily/today.json?cb=' + Date.now()).then(r => r.ok ? r.json() : null).then(d => {
@@ -508,7 +568,7 @@
       d.problems.forEach(p => QB.push({ ...p, daily: true }));
       const el = document.getElementById('dailyBanner');
       if (el) { el.style.display = 'block'; el.innerHTML = '🆕 <b>오늘의 문제</b> ' + d.problems.length + '개 추가 · ' + d.date + ' <span style="color:#94a3b8">(AI가 매일 생성)</span>'; }
-      start();
+      if (viewMode !== 'note') start();
     }
   }).catch(() => {});
 </script>
