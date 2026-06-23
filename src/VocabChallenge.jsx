@@ -611,8 +611,39 @@ export default function VocabChallenge() {
   // ========================= MENU =========================
   if (screen === "menu") {
     return (
-      <div style={{ ...S.container, display: "block", padding: 0, alignItems: "stretch", justifyContent: "flex-start" }}>
-        {/* 상단 네비게이션 (웹사이트형) */}
+      <div style={{ ...S.container, display: "block", padding: 0, paddingLeft: isWide ? 214 : 0, alignItems: "stretch", justifyContent: "flex-start" }}>
+        {/* PC 좌측 사이드바 (대시보드) */}
+        {isWide && (
+          <aside style={{ position: "fixed", left: 0, top: 0, height: "100vh", width: 214, background: "#FFFEFB", borderRight: "2px solid #141413", padding: "20px 14px", display: "flex", flexDirection: "column", zIndex: 60, boxSizing: "border-box", overflowY: "auto" }}>
+            <div style={{ fontWeight: 900, fontSize: 17, color: "#141413", letterSpacing: -0.3, marginBottom: 20, paddingLeft: 6 }}>⚡ STUDY RUSH</div>
+            {[
+              { ic: "🏠", lab: "홈", act: () => window.scrollTo({ top: 0, behavior: "smooth" }) },
+              { ic: "📘", lab: "내신 대비", act: () => document.getElementById("learn-anchor")?.scrollIntoView({ behavior: "smooth", block: "start" }) },
+              { ic: "🎯", lab: "수능 대비", act: () => { window.location.href = "/suneung-quiz.html"; } },
+              { ic: "📒", lab: "오답노트", act: () => { window.location.href = "/suneung-quiz.html?note=1"; } },
+              { ic: "📅", lab: "플래너", act: () => { window.location.href = "/plan.html"; } },
+              { ic: "🙂", lab: "통계", act: () => document.getElementById("me-anchor")?.scrollIntoView({ behavior: "smooth", block: "center" }) },
+            ].map((t) => (
+              <button key={t.lab} onClick={t.act}
+                onMouseEnter={(e) => { e.currentTarget.style.background = "#F0EADB"; }}
+                onMouseLeave={(e) => { e.currentTarget.style.background = "none"; }}
+                style={{ display: "flex", alignItems: "center", gap: 11, width: "100%", padding: "10px", marginBottom: 3, borderRadius: 10, border: "none", background: "none", cursor: "pointer", color: "#141413", fontSize: 14, fontWeight: 700, textAlign: "left" }}>
+                <span style={{ fontSize: 18 }}>{t.ic}</span>{t.lab}
+              </button>
+            ))}
+            <div style={{ borderTop: "1px solid #E3DCCB", margin: "10px 6px", paddingTop: 8 }}>
+              <a href="/learn.html" target="_blank" rel="noopener noreferrer" style={{ display: "block", color: "#7C766B", textDecoration: "none", fontSize: 12.5, padding: "5px 4px" }}>학습 로드맵</a>
+              <a href="/guides.html" target="_blank" rel="noopener noreferrer" style={{ display: "block", color: "#7C766B", textDecoration: "none", fontSize: 12.5, padding: "5px 4px" }}>학습 자료</a>
+              <a href="/about.html" target="_blank" rel="noopener noreferrer" style={{ display: "block", color: "#7C766B", textDecoration: "none", fontSize: 12.5, padding: "5px 4px" }}>소개</a>
+            </div>
+            <div style={{ marginTop: "auto", paddingTop: 14, borderTop: "2px solid #141413", display: "flex", gap: 14, paddingLeft: 6, fontSize: 14, fontWeight: 800 }}>
+              <span style={{ color: "#C75D3A" }} title="연속 학습일">🔥 {dayStreak}</span>
+              <span style={{ color: "#43618A" }} title="누적 XP">💎 {(stats.totalScore || 0).toLocaleString()}</span>
+            </div>
+          </aside>
+        )}
+        {/* 상단 네비게이션 (모바일 전용 — PC는 좌측 사이드바) */}
+        {!isWide && (
         <nav style={{ position: "sticky", top: 0, zIndex: 50, background: "rgba(250,245,235,0.92)", borderBottom: "1px solid #E3DCCB", padding: "11px 18px" }}>
           <div style={{ maxWidth: 1080, margin: "0 auto", display: "flex", alignItems: "center", gap: 14, flexWrap: "wrap" }}>
             <span style={{ fontWeight: 900, letterSpacing: 1, color: "#141413", fontSize: 15, marginRight: 4 }}>⚡ STUDY RUSH</span>
@@ -628,6 +659,7 @@ export default function VocabChallenge() {
             </span>
           </div>
         </nav>
+        )}
         {/* 히어로 (풀폭 중앙) */}
         <header style={{ maxWidth: 1080, margin: "0 auto", width: "100%", padding: isWide ? "34px 20px 12px" : "20px 16px 8px" }}>
           <div style={{ ...S.logoArea, marginBottom: 16, textAlign: "center" }}>
