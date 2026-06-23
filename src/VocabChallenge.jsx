@@ -43,11 +43,11 @@ function AdBanner({ slot, format = "auto", style = {} }) {
     return (
       <div style={{
         margin: "16px auto", padding: "20px 12px", textAlign: "center",
-        background: "rgba(96,165,250,0.08)", borderRadius: 12,
-        border: "1px solid rgba(96,165,250,0.25)", ...style,
+        background: "#EEF3F8", borderRadius: 12,
+        border: "1px solid #141413", ...style,
       }}>
-        <p style={{ fontSize: 11, color: "#94a3b8", letterSpacing: 2, fontWeight: 600 }}>AD</p>
-        <p style={{ fontSize: 13, color: "#94a3b8", marginTop: 6 }}>
+        <p style={{ fontSize: 11, color: "#7C766B", letterSpacing: 2, fontWeight: 600 }}>AD</p>
+        <p style={{ fontSize: 13, color: "#7C766B", marginTop: 6 }}>
           📢 광고 영역
         </p>
       </div>
@@ -78,9 +78,9 @@ const CATEGORIES = [
 ];
 
 const DIFFICULTY = {
-  easy: { time: 15, label: "Easy", points: 10, color: "#4ade80" },
-  medium: { time: 10, label: "Medium", points: 20, color: "#facc15" },
-  hard: { time: 6, label: "Hard", points: 35, color: "#f87171" },
+  easy: { time: 15, label: "Easy", points: 10, color: "#15803D" },
+  medium: { time: 10, label: "Medium", points: 20, color: "#A16207" },
+  hard: { time: 6, label: "Hard", points: 35, color: "#DC2626" },
 };
 
 const ROUND_OPTIONS = [10, 15, 20, 25];
@@ -604,7 +604,7 @@ export default function VocabChallenge() {
 
   const timerPercent = (timeLeft / DIFFICULTY[difficulty].time) * 100;
   const timerColor =
-    timerPercent > 50 ? "#4ade80" : timerPercent > 25 ? "#facc15" : "#ef4444";
+    timerPercent > 50 ? "#15803D" : timerPercent > 25 ? "#A16207" : "#ef4444";
   const totalTime = results.reduce((a, r) => a + r.timeUsed, 0);
   const correctCount = results.filter((r) => r.correct).length;
 
@@ -613,16 +613,16 @@ export default function VocabChallenge() {
     return (
       <div style={{ ...S.container, display: "block", padding: 0, alignItems: "stretch", justifyContent: "flex-start" }}>
         {/* 상단 네비게이션 (웹사이트형) */}
-        <nav style={{ position: "sticky", top: 0, zIndex: 50, background: "rgba(10,10,26,0.92)", borderBottom: "1px solid rgba(255,255,255,0.08)", padding: "11px 18px" }}>
+        <nav style={{ position: "sticky", top: 0, zIndex: 50, background: "rgba(250,245,235,0.92)", borderBottom: "1px solid #E3DCCB", padding: "11px 18px" }}>
           <div style={{ maxWidth: 1080, margin: "0 auto", display: "flex", alignItems: "center", gap: 14, flexWrap: "wrap" }}>
-            <span style={{ fontWeight: 900, letterSpacing: 1, color: "#f8fafc", fontSize: 15, marginRight: 4 }}>⚡ STUDY RUSH</span>
-            <a href="/suneung-quiz.html" style={{ color: "#93c5fd", textDecoration: "none", fontSize: 13, fontWeight: 700 }}>수능 게임</a>
-            <a href="/learn.html" target="_blank" rel="noopener noreferrer" style={{ color: "#94a3b8", textDecoration: "none", fontSize: 13 }}>학습 로드맵</a>
-            <a href="/guides.html" target="_blank" rel="noopener noreferrer" style={{ color: "#94a3b8", textDecoration: "none", fontSize: 13 }}>학습 자료</a>
-            <a href="/about.html" target="_blank" rel="noopener noreferrer" style={{ color: "#94a3b8", textDecoration: "none", fontSize: 13 }}>소개</a>
+            <span style={{ fontWeight: 900, letterSpacing: 1, color: "#141413", fontSize: 15, marginRight: 4 }}>⚡ STUDY RUSH</span>
+            <a href="/suneung-quiz.html" style={{ color: "#43618A", textDecoration: "none", fontSize: 13, fontWeight: 700 }}>수능 게임</a>
+            <a href="/learn.html" target="_blank" rel="noopener noreferrer" style={{ color: "#7C766B", textDecoration: "none", fontSize: 13 }}>학습 로드맵</a>
+            <a href="/guides.html" target="_blank" rel="noopener noreferrer" style={{ color: "#7C766B", textDecoration: "none", fontSize: 13 }}>학습 자료</a>
+            <a href="/about.html" target="_blank" rel="noopener noreferrer" style={{ color: "#7C766B", textDecoration: "none", fontSize: 13 }}>소개</a>
             <span style={{ marginLeft: "auto", display: "inline-flex", alignItems: "center", gap: 12, fontSize: 13, fontWeight: 800 }}>
-              <span style={{ color: "#fb923c" }} title="연속 학습일">🔥 {dayStreak}</span>
-              <span style={{ color: "#60a5fa" }} title="누적 XP">💎 {(stats.totalScore || 0).toLocaleString()}</span>
+              <span style={{ color: "#C75D3A" }} title="연속 학습일">🔥 {dayStreak}</span>
+              <span style={{ color: "#43618A" }} title="누적 XP">💎 {(stats.totalScore || 0).toLocaleString()}</span>
             </span>
           </div>
         </nav>
@@ -631,22 +631,22 @@ export default function VocabChallenge() {
           <div style={{ ...S.logoArea, marginBottom: 16, textAlign: "center" }}>
             <div style={{ ...S.logoIcon, fontSize: isWide ? 38 : 30, marginBottom: 6 }}>⚡</div>
             <h1 style={{ ...S.title, fontSize: isWide ? 34 : 26, letterSpacing: isWide ? 7 : 4 }}>STUDY RUSH</h1>
-            <p style={{ fontSize: 14, color: "#94a3b8", marginTop: 8, fontWeight: 600, letterSpacing: 0.3 }}>
+            <p style={{ fontSize: 14, color: "#7C766B", marginTop: 8, fontWeight: 600, letterSpacing: 0.3 }}>
               고등학교 국·영·수 수능 학습 게임
             </p>
           </div>
           <div style={{
             maxWidth: 560, margin: "0 auto", padding: 16, borderRadius: 14,
-            background: "rgba(96,165,250,0.08)", border: "1px solid rgba(96,165,250,0.3)",
+            background: "#EEF3F8", border: "1px solid #141413",
           }}>
             <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 11 }}>
-              <div style={{ fontSize: 13.5, color: "#fff", fontWeight: 800 }}>🎓 수능 연습 게임</div>
-              <div style={{ fontSize: 11, color: "#93c5fd", fontWeight: 700, padding: "3px 9px", borderRadius: 999, background: "rgba(96,165,250,0.15)" }}>국·영·수 58문항</div>
+              <div style={{ fontSize: 13.5, color: "#141413", fontWeight: 800 }}>🎓 수능 연습 게임</div>
+              <div style={{ fontSize: 11, color: "#43618A", fontWeight: 700, padding: "3px 9px", borderRadius: 999, background: "#DCE6F1" }}>국·영·수 58문항</div>
             </div>
             <div style={{ display: "flex", alignItems: "stretch", gap: 6, marginBottom: 12 }}>
-              <span style={{ flex: 1, textAlign: "center", whiteSpace: "nowrap", padding: "7px 2px", borderRadius: 8, background: "rgba(255,255,255,0.05)", fontSize: 11.5, fontWeight: 700, color: "#cbd5e1" }}>① 기초</span>
-              <span style={{ flex: 1, textAlign: "center", whiteSpace: "nowrap", padding: "7px 2px", borderRadius: 8, background: "rgba(255,255,255,0.05)", fontSize: 11.5, fontWeight: 700, color: "#cbd5e1" }}>② 레벨업</span>
-              <span style={{ flex: 1, textAlign: "center", whiteSpace: "nowrap", padding: "7px 2px", borderRadius: 8, background: "rgba(96,165,250,0.2)", fontSize: 11.5, fontWeight: 800, color: "#93c5fd" }}>③ 수능</span>
+              <span style={{ flex: 1, textAlign: "center", whiteSpace: "nowrap", padding: "7px 2px", borderRadius: 8, background: "#F0EADB", fontSize: 11.5, fontWeight: 700, color: "#3F3A33" }}>① 기초</span>
+              <span style={{ flex: 1, textAlign: "center", whiteSpace: "nowrap", padding: "7px 2px", borderRadius: 8, background: "#F0EADB", fontSize: 11.5, fontWeight: 700, color: "#3F3A33" }}>② 레벨업</span>
+              <span style={{ flex: 1, textAlign: "center", whiteSpace: "nowrap", padding: "7px 2px", borderRadius: 8, background: "#DCE6F1", fontSize: 11.5, fontWeight: 800, color: "#43618A" }}>③ 수능</span>
             </div>
             <a href="/suneung-quiz.html" style={{
               display: "block", textAlign: "center", padding: "13px", borderRadius: 10,
@@ -654,22 +654,22 @@ export default function VocabChallenge() {
               fontWeight: 800, fontSize: 15, textDecoration: "none",
             }}>🎓 수능 연습 게임 시작 →</a>
             <a href="/learn.html" target="_blank" rel="noopener noreferrer" style={{
-              display: "block", textAlign: "center", marginTop: 9, fontSize: 11.5, fontWeight: 700, color: "#60a5fa", textDecoration: "none",
+              display: "block", textAlign: "center", marginTop: 9, fontSize: 11.5, fontWeight: 700, color: "#43618A", textDecoration: "none",
             }}>학습 로드맵 보기 →</a>
           </div>
         </header>
 
         {/* 쉬는 시간 알림 */}
         <div style={{ maxWidth: 1080, margin: "0 auto 4px", width: "100%", padding: isWide ? "0 20px" : "0 16px" }}>
-          <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 10, flexWrap: "wrap", padding: "10px 14px", borderRadius: 12, background: "rgba(110,231,183,0.06)", border: "1px solid rgba(110,231,183,0.2)" }}>
-            <div style={{ fontSize: 12.5, color: "#a7f3d0", fontWeight: 700 }}>🔔 쉬는 시간 알림 <span style={{ color: "#94a3b8", fontWeight: 400 }}>— 쉬는 시간마다 오늘의 문제 한 개</span></div>
+          <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 10, flexWrap: "wrap", padding: "10px 14px", borderRadius: 12, background: "#EAF5EF", border: "1px solid #141413" }}>
+            <div style={{ fontSize: 12.5, color: "#0E6E55", fontWeight: 700 }}>🔔 쉬는 시간 알림 <span style={{ color: "#7C766B", fontWeight: 400 }}>— 쉬는 시간마다 오늘의 문제 한 개</span></div>
             <div style={{ display: "flex", gap: 8 }}>
               <button onClick={async () => { if (notifyOn) { try { localStorage.removeItem("rest.notify"); } catch (e) {} setNotifyOn(false); } else { const ok = await enableRestAlarm(); setNotifyOn(ok); } }}
-                style={{ padding: "6px 13px", borderRadius: 999, border: "1px solid rgba(110,231,183,0.4)", background: notifyOn ? "rgba(110,231,183,0.18)" : "transparent", color: "#6ee7b7", fontSize: 12, fontWeight: 800, cursor: "pointer" }}>
+                style={{ padding: "6px 13px", borderRadius: 999, border: "1px solid #141413", background: notifyOn ? "#D6EFE3" : "transparent", color: "#0E6E55", fontSize: 12, fontWeight: 800, cursor: "pointer" }}>
                 {notifyOn ? "✓ 켜짐 (끄기)" : "알림 켜기"}
               </button>
               <button onClick={fireTestNotification}
-                style={{ padding: "6px 13px", borderRadius: 999, border: "1px solid rgba(255,255,255,0.15)", background: "transparent", color: "#94a3b8", fontSize: 12, fontWeight: 700, cursor: "pointer" }}>
+                style={{ padding: "6px 13px", borderRadius: 999, border: "1px solid #141413", background: "transparent", color: "#7C766B", fontSize: 12, fontWeight: 700, cursor: "pointer" }}>
                 테스트
               </button>
             </div>
@@ -678,7 +678,7 @@ export default function VocabChallenge() {
 
         {/* 공유 (바이럴) */}
         <div style={{ maxWidth: 1080, margin: "0 auto 4px", width: "100%", padding: isWide ? "0 20px" : "0 16px" }}>
-          <button onClick={shareApp} style={{ width: "100%", padding: "10px", borderRadius: 12, border: "1px solid rgba(96,165,250,0.25)", background: "rgba(96,165,250,0.06)", color: "#93c5fd", fontSize: 13, fontWeight: 700, cursor: "pointer" }}>🔗 친구에게 공유 — 같이 수능 1등급 가자</button>
+          <button onClick={shareApp} style={{ width: "100%", padding: "10px", borderRadius: 12, border: "1px solid #141413", background: "#EEF3F8", color: "#43618A", fontSize: 13, fontWeight: 700, cursor: "pointer" }}>🔗 친구에게 공유 — 같이 수능 1등급 가자</button>
         </div>
 
         {/* 메인: 게임 + 교육 */}
@@ -702,23 +702,23 @@ export default function VocabChallenge() {
           <div style={isWide ? { flex: 1, minWidth: 0 } : {}}>
 
           {/* 과목별 기초 게임 */}
-          <p id="learn-anchor" style={{ fontSize: 12, color: "#94a3b8", fontWeight: 700, margin: "0 0 8px", letterSpacing: 0.3 }}>
+          <p id="learn-anchor" style={{ fontSize: 12, color: "#7C766B", fontWeight: 700, margin: "0 0 8px", letterSpacing: 0.3 }}>
             과목별 기초 게임 — 어휘·연산으로 워밍업
           </p>
 
           {/* 게임 모드 탭 */}
           <div style={{
             display: "flex", gap: 0, marginBottom: 12, borderRadius: 12, overflow: "hidden",
-            border: "1px solid rgba(255,255,255,0.1)", background: "rgba(0,0,0,0.2)",
+            border: "1px solid #141413", background: "#F0EADB",
           }}>
             <button
               onClick={() => setGameMode("vocab")}
               style={{
                 flex: 1, padding: "12px 0", border: "none", cursor: "pointer",
                 background: gameMode === "vocab"
-                  ? "linear-gradient(135deg, rgba(96,165,250,0.2), rgba(59,130,246,0.1))"
+                  ? "linear-gradient(135deg, #DCE6F1, rgba(59,130,246,0.1))"
                   : "transparent",
-                color: gameMode === "vocab" ? "#60a5fa" : "#64748b",
+                color: gameMode === "vocab" ? "#43618A" : "#6E6657",
                 fontSize: 14, fontWeight: 700,
                 borderBottom: gameMode === "vocab" ? "2px solid #60a5fa" : "2px solid transparent",
                 transition: "all 0.2s",
@@ -733,7 +733,7 @@ export default function VocabChallenge() {
                 background: gameMode === "math"
                   ? "linear-gradient(135deg, rgba(251,191,36,0.2), rgba(245,158,11,0.1))"
                   : "transparent",
-                color: gameMode === "math" ? "#fbbf24" : "#64748b",
+                color: gameMode === "math" ? "#8A6608" : "#6E6657",
                 fontSize: 14, fontWeight: 700,
                 borderBottom: gameMode === "math" ? "2px solid #fbbf24" : "2px solid transparent",
                 transition: "all 0.2s",
@@ -748,9 +748,9 @@ export default function VocabChallenge() {
                 background: gameMode === "korean"
                   ? "linear-gradient(135deg, rgba(74,222,128,0.2), rgba(34,197,94,0.1))"
                   : "transparent",
-                color: gameMode === "korean" ? "#4ade80" : "#64748b",
+                color: gameMode === "korean" ? "#15803D" : "#6E6657",
                 fontSize: 14, fontWeight: 700,
-                borderBottom: gameMode === "korean" ? "2px solid #4ade80" : "2px solid transparent",
+                borderBottom: gameMode === "korean" ? "2px solid #15803D" : "2px solid transparent",
                 transition: "all 0.2s",
               }}
             >
@@ -765,23 +765,23 @@ export default function VocabChallenge() {
               <div id="me-anchor" style={{
                 display: "grid", gridTemplateColumns: "1fr 1fr 1fr 1fr", gap: 8,
                 margin: "12px 0 8px", padding: "14px 8px", borderRadius: 14,
-                background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.06)",
+                background: "#FFFEFB", border: "1px solid #E7E0D0",
               }}>
                 <div style={{ textAlign: "center" }}>
-                  <div style={{ fontSize: 18, fontWeight: 700, color: "#4ade80" }}>{ms.totalCorrect.toLocaleString()}</div>
-                  <div style={{ fontSize: 10, color: "#64748b" }}>누적 정답</div>
+                  <div style={{ fontSize: 18, fontWeight: 700, color: "#15803D" }}>{ms.totalCorrect.toLocaleString()}</div>
+                  <div style={{ fontSize: 10, color: "#6E6657" }}>누적 정답</div>
                 </div>
                 <div style={{ textAlign: "center" }}>
-                  <div style={{ fontSize: 18, fontWeight: 700, color: "#facc15" }}>{ms.totalGames}</div>
-                  <div style={{ fontSize: 10, color: "#64748b" }}>총 게임</div>
+                  <div style={{ fontSize: 18, fontWeight: 700, color: "#A16207" }}>{ms.totalGames}</div>
+                  <div style={{ fontSize: 10, color: "#6E6657" }}>총 게임</div>
                 </div>
                 <div style={{ textAlign: "center" }}>
-                  <div style={{ fontSize: 18, fontWeight: 700, color: "#f87171" }}>{ms.bestStreakEver || 0}</div>
-                  <div style={{ fontSize: 10, color: "#64748b" }}>최고 연속</div>
+                  <div style={{ fontSize: 18, fontWeight: 700, color: "#DC2626" }}>{ms.bestStreakEver || 0}</div>
+                  <div style={{ fontSize: 10, color: "#6E6657" }}>최고 연속</div>
                 </div>
                 <div style={{ textAlign: "center" }}>
-                  <div style={{ fontSize: 18, fontWeight: 700, color: "#60a5fa" }}>{stats.unlockedIds.length}/{ACHIEVEMENTS.length}</div>
-                  <div style={{ fontSize: 10, color: "#64748b" }}>업적</div>
+                  <div style={{ fontSize: 18, fontWeight: 700, color: "#43618A" }}>{stats.unlockedIds.length}/{ACHIEVEMENTS.length}</div>
+                  <div style={{ fontSize: 10, color: "#6E6657" }}>업적</div>
                 </div>
               </div>
             );
@@ -791,8 +791,8 @@ export default function VocabChallenge() {
           <button
             onClick={() => setShowBadges(true)}
             style={{
-              width: "100%", padding: "10px", borderRadius: 12, border: "1px solid rgba(255,255,255,0.08)",
-              background: "rgba(255,255,255,0.03)", color: "#94a3b8", fontSize: 13,
+              width: "100%", padding: "10px", borderRadius: 12, border: "1px solid #E3DCCB",
+              background: "#FFFEFB", color: "#7C766B", fontSize: 13,
               cursor: "pointer", fontWeight: 500, marginBottom: 8,
               display: "flex", alignItems: "center", justifyContent: "center", gap: 6,
             }}
@@ -817,12 +817,12 @@ export default function VocabChallenge() {
                     onClick={() => setMathCategory(c.key)}
                     style={{
                       ...S.catBtn,
-                      ...(mathCategory === c.key ? { ...S.catBtnActive, borderColor: "#fbbf24", background: "rgba(251,191,36,0.12)" } : {}),
+                      ...(mathCategory === c.key ? { ...S.catBtnActive, borderColor: "#8A6608", background: "rgba(251,191,36,0.12)" } : {}),
                     }}
                   >
                     <span style={{ fontSize: 20 }}>{c.icon}</span>
                     <span style={{ fontSize: 12, marginTop: 3 }}>{c.label}</span>
-                    <span style={{ fontSize: 10, color: "#64748b" }}>∞</span>
+                    <span style={{ fontSize: 10, color: "#6E6657" }}>∞</span>
                   </button>
                 ))
               ) : gameMode === "korean" ? (
@@ -832,7 +832,7 @@ export default function VocabChallenge() {
                     onClick={() => setKoreanCategory(c.key)}
                     style={{
                       ...S.catBtn,
-                      ...(koreanCategory === c.key ? { ...S.catBtnActive, borderColor: "#4ade80", background: "rgba(74,222,128,0.12)" } : {}),
+                      ...(koreanCategory === c.key ? { ...S.catBtnActive, borderColor: "#15803D", background: "rgba(74,222,128,0.12)" } : {}),
                     }}
                   >
                     <span style={{ fontSize: 20 }}>{c.icon}</span>
@@ -851,7 +851,7 @@ export default function VocabChallenge() {
                   >
                     <span style={{ fontSize: 20 }}>{c.icon}</span>
                     <span style={{ fontSize: 12, marginTop: 3 }}>{c.label}</span>
-                    <span style={{ fontSize: 10, color: "#64748b" }}>
+                    <span style={{ fontSize: 10, color: "#6E6657" }}>
                       {(ENG_LEVELS[c.key] ? ENG_LEVELS[c.key].reduce((n, k) => n + VOCAB_DATA[k].length, 0) : allWords.length)}개
                     </span>
                   </button>
@@ -869,7 +869,7 @@ export default function VocabChallenge() {
                 <div style={{
                   marginTop: 8, padding: "8px 12px", borderRadius: 8,
                   background: "rgba(110,231,183,0.08)", border: "1px solid rgba(110,231,183,0.15)",
-                  fontSize: 11, color: "#6ee7b7", lineHeight: 1.5, textAlign: "center",
+                  fontSize: 11, color: "#0E6E55", lineHeight: 1.5, textAlign: "center",
                 }}>
                   {tips[key] || "💡 AI 도구 활용에 도움이 되는 문제들입니다"}
                 </div>
@@ -888,13 +888,13 @@ export default function VocabChallenge() {
                     ...S.optionBtn,
                     ...(difficulty === key ? S.optionBtnActive : {}),
                     borderColor:
-                      difficulty === key ? val.color : "rgba(255,255,255,0.1)",
+                      difficulty === key ? val.color : "#141413",
                   }}
                 >
-                  <span style={{ fontSize: 16, fontWeight: 700, color: difficulty === key ? val.color : "#aaa" }}>
+                  <span style={{ fontSize: 16, fontWeight: 700, color: difficulty === key ? val.color : "#6E6657" }}>
                     {val.time}s
                   </span>
-                  <span style={{ fontSize: 11, color: difficulty === key ? val.color : "#888" }}>
+                  <span style={{ fontSize: 11, color: difficulty === key ? val.color : "#6E6657" }}>
                     {val.label}
                   </span>
                 </button>
@@ -914,7 +914,7 @@ export default function VocabChallenge() {
                     ...(roundSize === n ? S.optionBtnActive : {}),
                   }}
                 >
-                  <span style={{ fontSize: 16, fontWeight: 700, color: roundSize === n ? "#60a5fa" : "#aaa" }}>
+                  <span style={{ fontSize: 16, fontWeight: 700, color: roundSize === n ? "#43618A" : "#6E6657" }}>
                     {n}
                   </span>
                 </button>
@@ -936,8 +936,8 @@ export default function VocabChallenge() {
               }}
               style={{
                 ...S.soundToggle,
-                background: soundOn ? "rgba(96,165,250,0.15)" : "rgba(255,255,255,0.05)",
-                borderColor: soundOn ? "#60a5fa" : "rgba(255,255,255,0.1)",
+                background: soundOn ? "#DCE6F1" : "#F0EADB",
+                borderColor: soundOn ? "#43618A" : "#141413",
               }}
             >
               {soundOn ? "🔊 ON" : "🔇 OFF"}
@@ -953,7 +953,7 @@ export default function VocabChallenge() {
           {/* 하단 공통: 규칙+광고+링크 (PC에서는 전체 너비) */}
           <div style={isWide ? { width: "100%", flexBasis: "100%" } : {}}>
           <div style={{ ...S.rules, ...(isWide ? { marginTop: 8, padding: 10, fontSize: 11 } : {}) }}>
-            <p style={{ fontWeight: 600, marginBottom: 6, color: "#ccc" }}>게임 규칙</p>
+            <p style={{ fontWeight: 600, marginBottom: 6, color: "#3F3A33" }}>게임 규칙</p>
             <p>🔊 영어 발음을 듣고 한국어 뜻을 보고 정답을 고르세요</p>
             <p>⚡ 빠를수록 보너스 점수!</p>
             <p>🔥 3연속 정답 시 콤보 보너스!</p>
@@ -966,12 +966,12 @@ export default function VocabChallenge() {
           {/* 학습 가이드 */}
           <div style={{
             marginTop: 16, padding: "16px 14px", borderRadius: 12,
-            background: "rgba(96,165,250,0.04)", border: "1px solid rgba(96,165,250,0.1)",
+            background: "rgba(96,165,250,0.04)", border: "1px solid #E0E9F3",
           }}>
-            <div style={{ fontSize: 15, fontWeight: 700, color: "#e2e8f0", marginBottom: 4 }}>
+            <div style={{ fontSize: 15, fontWeight: 700, color: "#141413", marginBottom: 4 }}>
               📚 학습 가이드
             </div>
-            <p style={{ fontSize: 12.5, color: "#94a3b8", marginBottom: 10, lineHeight: 1.6 }}>
+            <p style={{ fontSize: 12.5, color: "#7C766B", marginBottom: 10, lineHeight: 1.6 }}>
               국·영·수 수능 학습 글 — 어휘 전략 · 어원 · 맞춤법 · 학습법.
             </p>
             <div style={{ display: "flex", flexWrap: "wrap", gap: "6px 14px" }}>
@@ -982,52 +982,52 @@ export default function VocabChallenge() {
                 { href: "/guide-study-tips.html", label: "학습법" },
               ].map(g => (
                 <a key={g.href} href={g.href} target="_blank" rel="noopener noreferrer"
-                  style={{ fontSize: 14, color: "#60a5fa", textDecoration: "none", lineHeight: "28px" }}
+                  style={{ fontSize: 14, color: "#43618A", textDecoration: "none", lineHeight: "28px" }}
                 >{g.label}</a>
               ))}
             </div>
-            <a href="/learn.html" target="_blank" rel="noopener noreferrer" style={{ display: "inline-block", marginTop: 10, marginRight: 14, fontSize: 13, fontWeight: 800, color: "#60a5fa", textDecoration: "none" }}>🗺️ 수능 학습 로드맵 →</a>
-            <a href="/guides.html" target="_blank" rel="noopener noreferrer" style={{ display: "inline-block", marginTop: 10, fontSize: 13, fontWeight: 700, color: "#60a5fa", textDecoration: "none" }}>📖 전체 학습 가이드 보기 →</a>
-            <div style={{ marginTop: 8, fontSize: 12.5, color: "#94a3b8" }}>
+            <a href="/learn.html" target="_blank" rel="noopener noreferrer" style={{ display: "inline-block", marginTop: 10, marginRight: 14, fontSize: 13, fontWeight: 800, color: "#43618A", textDecoration: "none" }}>🗺️ 수능 학습 로드맵 →</a>
+            <a href="/guides.html" target="_blank" rel="noopener noreferrer" style={{ display: "inline-block", marginTop: 10, fontSize: 13, fontWeight: 700, color: "#43618A", textDecoration: "none" }}>📖 전체 학습 가이드 보기 →</a>
+            <div style={{ marginTop: 8, fontSize: 12.5, color: "#7C766B" }}>
               게임 소개:{" "}
-              <a href="/play-vocab.html" target="_blank" rel="noopener noreferrer" style={{ color: "#60a5fa", textDecoration: "none" }}>영어 게임</a>{" · "}
-              <a href="/play-math.html" target="_blank" rel="noopener noreferrer" style={{ color: "#60a5fa", textDecoration: "none" }}>수학 게임</a>{" · "}
-              <a href="/play-korean.html" target="_blank" rel="noopener noreferrer" style={{ color: "#60a5fa", textDecoration: "none" }}>국어 게임</a>
+              <a href="/play-vocab.html" target="_blank" rel="noopener noreferrer" style={{ color: "#43618A", textDecoration: "none" }}>영어 게임</a>{" · "}
+              <a href="/play-math.html" target="_blank" rel="noopener noreferrer" style={{ color: "#43618A", textDecoration: "none" }}>수학 게임</a>{" · "}
+              <a href="/play-korean.html" target="_blank" rel="noopener noreferrer" style={{ color: "#43618A", textDecoration: "none" }}>국어 게임</a>
             </div>
-            <div style={{ marginTop: 6, fontSize: 12.5, color: "#94a3b8" }}>
+            <div style={{ marginTop: 6, fontSize: 12.5, color: "#7C766B" }}>
               🎓 수능 대비:{" "}
-              <a href="/suneung-korean.html" target="_blank" rel="noopener noreferrer" style={{ color: "#60a5fa", textDecoration: "none" }}>수능 국어</a>{" · "}
-              <a href="/suneung-english.html" target="_blank" rel="noopener noreferrer" style={{ color: "#60a5fa", textDecoration: "none" }}>수능 영어</a>{" · "}
-              <a href="/suneung-math.html" target="_blank" rel="noopener noreferrer" style={{ color: "#60a5fa", textDecoration: "none" }}>수능 수학</a>{" · "}
-              <a href="/suneung-quiz.html" target="_blank" rel="noopener noreferrer" style={{ color: "#60a5fa", textDecoration: "none", fontWeight: 700 }}>🎮 수능 게임</a>
+              <a href="/suneung-korean.html" target="_blank" rel="noopener noreferrer" style={{ color: "#43618A", textDecoration: "none" }}>수능 국어</a>{" · "}
+              <a href="/suneung-english.html" target="_blank" rel="noopener noreferrer" style={{ color: "#43618A", textDecoration: "none" }}>수능 영어</a>{" · "}
+              <a href="/suneung-math.html" target="_blank" rel="noopener noreferrer" style={{ color: "#43618A", textDecoration: "none" }}>수능 수학</a>{" · "}
+              <a href="/suneung-quiz.html" target="_blank" rel="noopener noreferrer" style={{ color: "#43618A", textDecoration: "none", fontWeight: 700 }}>🎮 수능 게임</a>
             </div>
           </div>
 
           {/* 소개 + FAQ (SEO 콘텐츠) */}
-          <div style={{ marginTop: 16, padding: "16px 14px", borderRadius: 12, background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.08)", fontSize: 12.5, color: "#94a3b8", lineHeight: 1.75, textAlign: "left" }}>
-            <div style={{ fontSize: 15, fontWeight: 700, color: "#e2e8f0", marginBottom: 8 }}>STUDY RUSH — 고등학교 수능 학습 게임</div>
-            <p style={{ marginBottom: 10 }}>STUDY RUSH는 국어·영어·수학을 게임으로 공부하며 수능을 준비하는 무료 학습 플랫폼입니다. 영어 단어, 수학 연산, 국어 어휘·맞춤법 같은 기초를 타이머 게임으로 빠르게 다지고, 실제 수능 유형의 문제를 제한 시간 안에 푸는 <a href="/suneung-quiz.html" target="_blank" rel="noopener noreferrer" style={{ color: "#60a5fa", textDecoration: "none" }}>수능 연습 게임</a>으로 마무리합니다. 회원가입이나 결제 없이 누구나 바로 시작할 수 있습니다.</p>
-            <p style={{ marginBottom: 10 }}>수능은 아는 것을 넘어 정해진 시간 안에 정확히 푸는 시험입니다. 기초가 자동화되어야 어려운 문항에 쓸 시간이 생깁니다. STUDY RUSH는 ‘기초 게임 → 레벨업 → 수능 연습’ 단계로 그 실전 감각을 자연스럽게 길러 줍니다. 단계별 순서는 <a href="/learn.html" target="_blank" rel="noopener noreferrer" style={{ color: "#60a5fa", textDecoration: "none" }}>학습 로드맵</a>에서 확인하세요.</p>
-            <div style={{ fontSize: 14, fontWeight: 700, color: "#e2e8f0", margin: "14px 0 6px" }}>자주 묻는 질문</div>
-            <p style={{ marginBottom: 8 }}><strong style={{ color: "#cbd5e1" }}>Q. 무료인가요?</strong><br />네. 모든 게임과 학습 자료를 무료로 이용할 수 있습니다.</p>
-            <p style={{ marginBottom: 8 }}><strong style={{ color: "#cbd5e1" }}>Q. 어떤 과목을 공부하나요?</strong><br />국어(어휘·맞춤법·독해), 영어(어휘·독해), 수학(연산·수학Ⅰ·Ⅱ·확률과 통계)을 게임으로 공부합니다.</p>
-            <p style={{ margin: 0 }}><strong style={{ color: "#cbd5e1" }}>Q. 어디서부터 시작하나요?</strong><br />기초가 약하면 위의 과목 게임부터, 유형 연습이 필요하면 수능 연습 게임부터 시작하세요.</p>
+          <div style={{ marginTop: 16, padding: "16px 14px", borderRadius: 12, background: "rgba(255,255,255,0.02)", border: "1px solid #E3DCCB", fontSize: 12.5, color: "#7C766B", lineHeight: 1.75, textAlign: "left" }}>
+            <div style={{ fontSize: 15, fontWeight: 700, color: "#141413", marginBottom: 8 }}>STUDY RUSH — 고등학교 수능 학습 게임</div>
+            <p style={{ marginBottom: 10 }}>STUDY RUSH는 국어·영어·수학을 게임으로 공부하며 수능을 준비하는 무료 학습 플랫폼입니다. 영어 단어, 수학 연산, 국어 어휘·맞춤법 같은 기초를 타이머 게임으로 빠르게 다지고, 실제 수능 유형의 문제를 제한 시간 안에 푸는 <a href="/suneung-quiz.html" target="_blank" rel="noopener noreferrer" style={{ color: "#43618A", textDecoration: "none" }}>수능 연습 게임</a>으로 마무리합니다. 회원가입이나 결제 없이 누구나 바로 시작할 수 있습니다.</p>
+            <p style={{ marginBottom: 10 }}>수능은 아는 것을 넘어 정해진 시간 안에 정확히 푸는 시험입니다. 기초가 자동화되어야 어려운 문항에 쓸 시간이 생깁니다. STUDY RUSH는 ‘기초 게임 → 레벨업 → 수능 연습’ 단계로 그 실전 감각을 자연스럽게 길러 줍니다. 단계별 순서는 <a href="/learn.html" target="_blank" rel="noopener noreferrer" style={{ color: "#43618A", textDecoration: "none" }}>학습 로드맵</a>에서 확인하세요.</p>
+            <div style={{ fontSize: 14, fontWeight: 700, color: "#141413", margin: "14px 0 6px" }}>자주 묻는 질문</div>
+            <p style={{ marginBottom: 8 }}><strong style={{ color: "#3F3A33" }}>Q. 무료인가요?</strong><br />네. 모든 게임과 학습 자료를 무료로 이용할 수 있습니다.</p>
+            <p style={{ marginBottom: 8 }}><strong style={{ color: "#3F3A33" }}>Q. 어떤 과목을 공부하나요?</strong><br />국어(어휘·맞춤법·독해), 영어(어휘·독해), 수학(연산·수학Ⅰ·Ⅱ·확률과 통계)을 게임으로 공부합니다.</p>
+            <p style={{ margin: 0 }}><strong style={{ color: "#3F3A33" }}>Q. 어디서부터 시작하나요?</strong><br />기초가 약하면 위의 과목 게임부터, 유형 연습이 필요하면 수능 연습 게임부터 시작하세요.</p>
           </div>
 
-          <div style={{ display: "block", textAlign: "center", fontSize: 11, color: "#94a3b8", marginTop: 8 }}>
-            <a href="/about.html" target="_blank" style={{ color: "#94a3b8", textDecoration: "none" }}>소개</a>
+          <div style={{ display: "block", textAlign: "center", fontSize: 11, color: "#7C766B", marginTop: 8 }}>
+            <a href="/about.html" target="_blank" style={{ color: "#7C766B", textDecoration: "none" }}>소개</a>
             {" · "}
-            <a href="/contact.html" target="_blank" style={{ color: "#94a3b8", textDecoration: "none" }}>문의</a>
+            <a href="/contact.html" target="_blank" style={{ color: "#7C766B", textDecoration: "none" }}>문의</a>
             {" · "}
-            <a href="/terms.html" target="_blank" style={{ color: "#94a3b8", textDecoration: "none" }}>이용약관</a>
+            <a href="/terms.html" target="_blank" style={{ color: "#7C766B", textDecoration: "none" }}>이용약관</a>
             {" · "}
-            <a href="/privacy.html" target="_blank" style={{ color: "#94a3b8", textDecoration: "none" }}>개인정보처리방침</a>
+            <a href="/privacy.html" target="_blank" style={{ color: "#7C766B", textDecoration: "none" }}>개인정보처리방침</a>
           </div>
           </div>{/* end bottom section */}
         </div>
 
         {/* 하단 탭 네비 (게임 앱 셸) */}
-        <div style={{ position: "sticky", bottom: 0, zIndex: 50, background: "rgba(10,10,26,0.96)", borderTop: "1px solid rgba(255,255,255,0.1)", padding: "8px 0 calc(8px + env(safe-area-inset-bottom))" }}>
+        <div style={{ position: "sticky", bottom: 0, zIndex: 50, background: "rgba(250,245,235,0.97)", borderTop: "1px solid #141413", padding: "8px 0 calc(8px + env(safe-area-inset-bottom))" }}>
           <div style={{ maxWidth: 480, margin: "0 auto", display: "flex", justifyContent: "space-around" }}>
             {[
               { ic: "🏠", lab: "홈", act: () => window.scrollTo({ top: 0, behavior: "smooth" }) },
@@ -1036,7 +1036,7 @@ export default function VocabChallenge() {
               { ic: "📅", lab: "플랜", act: () => { window.location.href = "/plan.html"; } },
               { ic: "🙂", lab: "나", act: () => document.getElementById("me-anchor")?.scrollIntoView({ behavior: "smooth", block: "center" }) },
             ].map((t) => (
-              <button key={t.lab} onClick={t.act} style={{ flex: 1, background: "none", border: "none", cursor: "pointer", display: "flex", flexDirection: "column", alignItems: "center", gap: 2, color: "#94a3b8", fontSize: 10.5, fontWeight: 700 }}>
+              <button key={t.lab} onClick={t.act} style={{ flex: 1, background: "none", border: "none", cursor: "pointer", display: "flex", flexDirection: "column", alignItems: "center", gap: 2, color: "#7C766B", fontSize: 10.5, fontWeight: 700 }}>
                 <span style={{ fontSize: 19 }}>{t.ic}</span>{t.lab}
               </button>
             ))}
@@ -1044,15 +1044,15 @@ export default function VocabChallenge() {
         </div>
 
         {/* 푸터 (풀폭 웹사이트형) */}
-        <footer style={{ borderTop: "1px solid rgba(255,255,255,0.08)", padding: "22px 18px", marginTop: 4 }}>
-          <div style={{ maxWidth: 1080, margin: "0 auto", textAlign: "center", fontSize: 12, color: "#64748b", lineHeight: 1.9 }}>
-            <div style={{ fontWeight: 800, color: "#94a3b8", marginBottom: 4 }}>⚡ STUDY RUSH</div>
+        <footer style={{ borderTop: "1px solid #E3DCCB", padding: "22px 18px", marginTop: 4 }}>
+          <div style={{ maxWidth: 1080, margin: "0 auto", textAlign: "center", fontSize: 12, color: "#6E6657", lineHeight: 1.9 }}>
+            <div style={{ fontWeight: 800, color: "#7C766B", marginBottom: 4 }}>⚡ STUDY RUSH</div>
             고등학교 국·영·수 수능 학습 게임 · 무료
             <div style={{ marginTop: 6 }}>
-              <a href="/learn.html" target="_blank" rel="noopener noreferrer" style={{ color: "#94a3b8", textDecoration: "none" }}>학습 로드맵</a>{" · "}
-              <a href="/suneung-quiz.html" style={{ color: "#94a3b8", textDecoration: "none" }}>수능 게임</a>{" · "}
-              <a href="/guides.html" target="_blank" rel="noopener noreferrer" style={{ color: "#94a3b8", textDecoration: "none" }}>학습 자료</a>{" · "}
-              <a href="/about.html" target="_blank" rel="noopener noreferrer" style={{ color: "#94a3b8", textDecoration: "none" }}>소개</a>
+              <a href="/learn.html" target="_blank" rel="noopener noreferrer" style={{ color: "#7C766B", textDecoration: "none" }}>학습 로드맵</a>{" · "}
+              <a href="/suneung-quiz.html" style={{ color: "#7C766B", textDecoration: "none" }}>수능 게임</a>{" · "}
+              <a href="/guides.html" target="_blank" rel="noopener noreferrer" style={{ color: "#7C766B", textDecoration: "none" }}>학습 자료</a>{" · "}
+              <a href="/about.html" target="_blank" rel="noopener noreferrer" style={{ color: "#7C766B", textDecoration: "none" }}>소개</a>
             </div>
             <div style={{ marginTop: 6 }}>© 2025 DataPD · datapd.ai</div>
           </div>
@@ -1076,14 +1076,14 @@ export default function VocabChallenge() {
 
           <div style={S.gameHeader}>
             <div style={S.scoreDisplay}>
-              <span style={{ fontSize: 11, color: "#888" }}>SCORE</span>
+              <span style={{ fontSize: 11, color: "#6E6657" }}>SCORE</span>
               <span style={{ fontSize: 20, fontWeight: 800, color: "#fff" }}>{score}</span>
             </div>
             <div style={S.progressText}>
               {current + 1} / {questions.length}
             </div>
             <div style={S.streakDisplay}>
-              <span style={{ fontSize: 11, color: "#888" }}>STREAK</span>
+              <span style={{ fontSize: 11, color: "#6E6657" }}>STREAK</span>
               <span style={{
                 fontSize: 20,
                 fontWeight: 800,
@@ -1143,7 +1143,7 @@ export default function VocabChallenge() {
             ) : (
               <>
                 <p style={S.questionLabel}>이 뜻의 영어 단어는?</p>
-                {q.word.pos && <span style={{ fontSize: 12, color: "#60a5fa", fontWeight: 600, letterSpacing: 1 }}>{q.word.pos}</span>}
+                {q.word.pos && <span style={{ fontSize: 12, color: "#43618A", fontWeight: 600, letterSpacing: 1 }}>{q.word.pos}</span>}
                 <div style={S.koreanWord}>{q.word.ko}</div>
                 <button
                   onClick={() => { unlockAudio(); speakWord(q.word.en); }}
@@ -1171,7 +1171,7 @@ export default function VocabChallenge() {
                 </div>
                 {showHint && q.word.hint && <div style={S.hintBox}>💡 {q.word.hint}</div>}
                 {showExample && q.word.ex && (
-                  <div style={{ ...S.hintBox, borderColor: "rgba(96,165,250,0.3)", background: "rgba(96,165,250,0.08)", color: "#93c5fd" }}>
+                  <div style={{ ...S.hintBox, borderColor: "#141413", background: "#EEF3F8", color: "#43618A" }}>
                     📖 {q.word.ex}
                   </div>
                 )}
@@ -1203,8 +1203,8 @@ export default function VocabChallenge() {
             <>
               {selected && selected.en !== "__timeout__" && selected.en === q.word.en && (
                 <div style={S.revealBox}>
-                  <div>✅ <strong>{q.word.en}</strong> {q.word.pos && <span style={{ fontSize: 11, color: "#86efac" }}>({q.word.pos})</span>} — {q.word.ko}</div>
-                  {q.word.def && <div style={{ fontSize: 12, color: "#86efac", marginTop: 4, fontStyle: "italic" }}>{q.word.def}</div>}
+                  <div>✅ <strong>{q.word.en}</strong> {q.word.pos && <span style={{ fontSize: 11, color: "#0E6E55" }}>({q.word.pos})</span>} — {q.word.ko}</div>
+                  {q.word.def && <div style={{ fontSize: 12, color: "#0E6E55", marginTop: 4, fontStyle: "italic" }}>{q.word.def}</div>}
                 </div>
               )}
               {selected && (selected.en === "__timeout__" || selected.en !== q.word.en) && (
@@ -1223,19 +1223,19 @@ export default function VocabChallenge() {
                 : (selected && selected.en === ch.en);
               const isCorrect = (q.isMath || q.isKorean) ? ch._isCorrect : ch.en === q.word.en;
               const revealed = selected !== null;
-              let bg = "rgba(255,255,255,0.04)";
-              let border = "rgba(255,255,255,0.1)";
-              let textColor = "#e2e8f0";
+              let bg = "#FBF8F0";
+              let border = "#141413";
+              let textColor = "#141413";
 
               if (revealed) {
                 if (isCorrect) {
                   bg = "rgba(74,222,128,0.15)";
-                  border = "#4ade80";
-                  textColor = "#4ade80";
+                  border = "#15803D";
+                  textColor = "#15803D";
                 } else if (isSelected && !isCorrect) {
                   bg = "rgba(248,113,113,0.15)";
-                  border = "#f87171";
-                  textColor = "#f87171";
+                  border = "#DC2626";
+                  textColor = "#DC2626";
                 }
               }
 
@@ -1272,8 +1272,8 @@ export default function VocabChallenge() {
                   borderRadius: "50%",
                   backgroundColor:
                     i < results.length
-                      ? results[i].correct ? "#4ade80" : "#f87171"
-                      : i === current ? "#60a5fa" : "rgba(255,255,255,0.15)",
+                      ? results[i].correct ? "#15803D" : "#DC2626"
+                      : i === current ? "#43618A" : "#141413",
                   transition: "all 0.3s",
                 }}
               />
@@ -1289,12 +1289,12 @@ export default function VocabChallenge() {
     const pct = Math.round((correctCount / questions.length) * 100);
     const grade =
       pct >= 90
-        ? { emoji: "🏆", text: "완벽해요!", color: "#fbbf24" }
+        ? { emoji: "🏆", text: "완벽해요!", color: "#8A6608" }
         : pct >= 70
-        ? { emoji: "🌟", text: "훌륭해요!", color: "#4ade80" }
+        ? { emoji: "🌟", text: "훌륭해요!", color: "#15803D" }
         : pct >= 50
-        ? { emoji: "👍", text: "좋아요!", color: "#60a5fa" }
-        : { emoji: "💪", text: "다시 도전!", color: "#f87171" };
+        ? { emoji: "👍", text: "좋아요!", color: "#43618A" }
+        : { emoji: "💪", text: "다시 도전!", color: "#DC2626" };
 
     const wrongWords = results.filter((r) => !r.correct);
 
@@ -1337,9 +1337,9 @@ export default function VocabChallenge() {
             return (
               <div style={{
                 margin: "12px 0", padding: "10px 14px", borderRadius: 10,
-                background: "linear-gradient(135deg, rgba(110,231,183,0.08), rgba(96,165,250,0.08))",
+                background: "linear-gradient(135deg, rgba(110,231,183,0.08), #EEF3F8)",
                 border: "1px solid rgba(110,231,183,0.15)",
-                fontSize: 12, color: "#6ee7b7", textAlign: "center", lineHeight: 1.6,
+                fontSize: 12, color: "#0E6E55", textAlign: "center", lineHeight: 1.6,
               }}>
                 {msgs[Math.floor(Math.random() * msgs.length)]}
               </div>
@@ -1348,11 +1348,11 @@ export default function VocabChallenge() {
 
           {/* Wrong answers review */}
           <div style={S.resultList}>
-            <p style={{ fontWeight: 700, fontSize: 14, color: "#aaa", marginBottom: 10 }}>
+            <p style={{ fontWeight: 700, fontSize: 14, color: "#6E6657", marginBottom: 10 }}>
               오답 복습 {wrongWords.length > 0 && `(${wrongWords.length}개)`}
             </p>
             {wrongWords.length === 0 ? (
-              <p style={{ color: "#4ade80", fontSize: 14 }}>모두 정답! 완벽합니다 🎉</p>
+              <p style={{ color: "#15803D", fontSize: 14 }}>모두 정답! 완벽합니다 🎉</p>
             ) : wrongWords[0]?.question?.isMath || wrongWords[0]?.question?.isKorean || questions[0]?.isMath || questions[0]?.isKorean ? (
               wrongWords.map((r, i) => {
                 const rq = r.question;
@@ -1367,11 +1367,11 @@ export default function VocabChallenge() {
                         {qText}
                       </span>
                     </div>
-                    <div style={{ fontSize: 13, color: "#4ade80", marginTop: 4, marginLeft: 28 }}>
+                    <div style={{ fontSize: 13, color: "#15803D", marginTop: 4, marginLeft: 28 }}>
                       정답: {aText}
                     </div>
                     {hText && (
-                      <div style={{ fontSize: 12, color: "#fbbf24", marginTop: 2, marginLeft: 28 }}>
+                      <div style={{ fontSize: 12, color: "#8A6608", marginTop: 2, marginLeft: 28 }}>
                         💡 {hText}
                       </div>
                     )}
@@ -1389,14 +1389,14 @@ export default function VocabChallenge() {
                       🔊
                     </button>
                     <span style={{ color: "#fff", fontWeight: 600 }}>{r.word.en}</span>
-                    {r.word.pos && <span style={{ color: "#60a5fa", fontSize: 11 }}>({r.word.pos})</span>}
-                    <span style={{ color: "#888" }}>—</span>
-                    <span style={{ color: "#cbd5e1" }}>{r.word.ko}</span>
+                    {r.word.pos && <span style={{ color: "#43618A", fontSize: 11 }}>({r.word.pos})</span>}
+                    <span style={{ color: "#6E6657" }}>—</span>
+                    <span style={{ color: "#3F3A33" }}>{r.word.ko}</span>
                   </div>
                   {r.word.def && <div style={{ fontSize: 12, color: "#a78bfa", marginTop: 4, marginLeft: 36, fontStyle: "italic" }}>
                     {r.word.def}
                   </div>}
-                  {r.word.ex && <div style={{ fontSize: 12, color: "#94a3b8", marginTop: 2, marginLeft: 36 }}>
+                  {r.word.ex && <div style={{ fontSize: 12, color: "#7C766B", marginTop: 2, marginLeft: 36 }}>
                     {r.word.ex}
                   </div>}
                 </div>
@@ -1410,7 +1410,7 @@ export default function VocabChallenge() {
               onClick={() => { setReviewMode(true); setReviewIdx(0); setReviewFlipped(false); }}
               style={{
                 width: "100%", marginTop: 16, padding: "14px 0", borderRadius: 14,
-                background: "linear-gradient(135deg, rgba(168,85,247,0.15), rgba(96,165,250,0.1))",
+                background: "linear-gradient(135deg, rgba(168,85,247,0.15), #E0E9F3)",
                 border: "1px solid rgba(168,85,247,0.3)", color: "#c4b5fd",
                 fontSize: 15, fontWeight: 700, cursor: "pointer",
                 display: "flex", alignItems: "center", justifyContent: "center", gap: 8,
@@ -1435,7 +1435,7 @@ export default function VocabChallenge() {
                 <button
                   onClick={() => setReviewMode(false)}
                   style={{
-                    background: "none", border: "none", color: "#64748b",
+                    background: "none", border: "none", color: "#6E6657",
                     fontSize: 13, cursor: "pointer", padding: "4px 8px",
                   }}
                 >✕ 닫기</button>
@@ -1459,12 +1459,12 @@ export default function VocabChallenge() {
                     // ===== 앞면 (문제) =====
                     return isMath ? (
                       <>
-                        <div style={{ fontSize: 24, color: "#e2e8f0", fontWeight: 700, marginBottom: 10, fontFamily: "'JetBrains Mono', monospace" }}>
+                        <div style={{ fontSize: 24, color: "#141413", fontWeight: 700, marginBottom: 10, fontFamily: "'JetBrains Mono', monospace" }}>
                           {rq.mathQuestion}
                         </div>
                         {rq.mathHint && (
                           <div style={{
-                            fontSize: 12, color: "#fbbf24", marginBottom: 8,
+                            fontSize: 12, color: "#8A6608", marginBottom: 8,
                             padding: "8px 14px", borderRadius: 10,
                             background: "rgba(251,191,36,0.08)", border: "1px solid rgba(251,191,36,0.15)",
                           }}>
@@ -1475,7 +1475,7 @@ export default function VocabChallenge() {
                           marginTop: 10, padding: "10px 24px", borderRadius: 24,
                           background: "linear-gradient(135deg, rgba(251,191,36,0.2), rgba(245,158,11,0.15))",
                           border: "1px solid rgba(251,191,36,0.3)",
-                          color: "#fbbf24", fontSize: 14, fontWeight: 700,
+                          color: "#8A6608", fontSize: 14, fontWeight: 700,
                           animation: "pulse 2s infinite",
                         }}>
                           👆 탭하여 정답 확인
@@ -1483,7 +1483,7 @@ export default function VocabChallenge() {
                       </>
                     ) : isKorean ? (
                       <>
-                        <div style={{ fontSize: 18, color: "#e2e8f0", fontWeight: 700, marginBottom: 10, lineHeight: 1.6 }}>
+                        <div style={{ fontSize: 18, color: "#141413", fontWeight: 700, marginBottom: 10, lineHeight: 1.6 }}>
                           {rq.korQuestion}
                         </div>
                         <div style={{
@@ -1499,11 +1499,11 @@ export default function VocabChallenge() {
                     ) : (
                       <>
                         {rq.word.pos && (
-                          <span style={{ fontSize: 12, color: "#60a5fa", fontWeight: 600, marginBottom: 6 }}>
+                          <span style={{ fontSize: 12, color: "#43618A", fontWeight: 600, marginBottom: 6 }}>
                             {rq.word.pos}
                           </span>
                         )}
-                        <div style={{ fontSize: 22, color: "#e2e8f0", fontWeight: 700, marginBottom: 10 }}>
+                        <div style={{ fontSize: 22, color: "#141413", fontWeight: 700, marginBottom: 10 }}>
                           {rq.word.ko}
                         </div>
                         {rq.word.def && (
@@ -1518,9 +1518,9 @@ export default function VocabChallenge() {
                         )}
                         {rq.word.ex && (
                           <div style={{
-                            fontSize: 12, color: "#94a3b8", marginBottom: 8,
+                            fontSize: 12, color: "#7C766B", marginBottom: 8,
                             padding: "8px 14px", borderRadius: 10,
-                            background: "rgba(96,165,250,0.06)", border: "1px solid rgba(96,165,250,0.1)",
+                            background: "#EEF3F8", border: "1px solid #E0E9F3",
                             lineHeight: 1.5,
                           }}>
                             📖 {rq.word.ex.replace(
@@ -1531,7 +1531,7 @@ export default function VocabChallenge() {
                         )}
                         <div style={{
                           marginTop: 10, padding: "10px 24px", borderRadius: 24,
-                          background: "linear-gradient(135deg, rgba(168,85,247,0.2), rgba(96,165,250,0.15))",
+                          background: "linear-gradient(135deg, rgba(168,85,247,0.2), #DCE6F1)",
                           border: "1px solid rgba(168,85,247,0.3)",
                           color: "#c4b5fd", fontSize: 14, fontWeight: 700,
                           animation: "pulse 2s infinite",
@@ -1548,20 +1548,20 @@ export default function VocabChallenge() {
                           {rq.mathQuestion.replace("= ?", `= ${rq.mathAnswer}`)}
                         </div>
                         {rq.mathHint && (
-                          <div style={{ fontSize: 13, color: "#fbbf24", marginBottom: 6 }}>
+                          <div style={{ fontSize: 13, color: "#8A6608", marginBottom: 6 }}>
                             💡 {rq.mathHint}
                           </div>
                         )}
                         <div style={{
                           marginTop: 10, fontSize: 12, fontWeight: 600,
-                          color: results[reviewIdx]?.correct ? "#4ade80" : "#f87171",
+                          color: results[reviewIdx]?.correct ? "#15803D" : "#DC2626",
                         }}>
                           {results[reviewIdx]?.correct ? "✅ 정답" : "❌ 오답"}
                         </div>
                       </>
                     ) : isKorean ? (
                       <>
-                        <div style={{ fontSize: 16, color: "#94a3b8", marginBottom: 8, lineHeight: 1.5 }}>
+                        <div style={{ fontSize: 16, color: "#7C766B", marginBottom: 8, lineHeight: 1.5 }}>
                           {rq.korQuestion}
                         </div>
                         <div style={{ fontSize: 22, color: "#34d399", fontWeight: 800, marginBottom: 8 }}>
@@ -1569,7 +1569,7 @@ export default function VocabChallenge() {
                         </div>
                         {rq.korHint && (
                           <div style={{
-                            fontSize: 13, color: "#fbbf24", marginBottom: 6,
+                            fontSize: 13, color: "#8A6608", marginBottom: 6,
                             padding: "8px 14px", borderRadius: 10,
                             background: "rgba(251,191,36,0.08)", border: "1px solid rgba(251,191,36,0.15)",
                           }}>
@@ -1578,7 +1578,7 @@ export default function VocabChallenge() {
                         )}
                         <div style={{
                           marginTop: 10, fontSize: 12, fontWeight: 600,
-                          color: results[reviewIdx]?.correct ? "#4ade80" : "#f87171",
+                          color: results[reviewIdx]?.correct ? "#15803D" : "#DC2626",
                         }}>
                           {results[reviewIdx]?.correct ? "✅ 정답" : "❌ 오답"}
                         </div>
@@ -1594,10 +1594,10 @@ export default function VocabChallenge() {
                             {rq.word.en}
                           </span>
                           {rq.word.pos && (
-                            <span style={{ fontSize: 12, color: "#60a5fa" }}>({rq.word.pos})</span>
+                            <span style={{ fontSize: 12, color: "#43618A" }}>({rq.word.pos})</span>
                           )}
                         </div>
-                        <div style={{ fontSize: 16, color: "#cbd5e1", marginBottom: 8 }}>
+                        <div style={{ fontSize: 16, color: "#3F3A33", marginBottom: 8 }}>
                           {rq.word.ko}
                         </div>
                         {rq.word.def && (
@@ -1606,13 +1606,13 @@ export default function VocabChallenge() {
                           </div>
                         )}
                         {rq.word.ex && (
-                          <div style={{ fontSize: 12, color: "#94a3b8", marginTop: 4 }}>
+                          <div style={{ fontSize: 12, color: "#7C766B", marginTop: 4 }}>
                             📖 {rq.word.ex}
                           </div>
                         )}
                         <div style={{
                           marginTop: 10, fontSize: 12, fontWeight: 600,
-                          color: results[reviewIdx]?.correct ? "#4ade80" : "#f87171",
+                          color: results[reviewIdx]?.correct ? "#15803D" : "#DC2626",
                         }}>
                           {results[reviewIdx]?.correct ? "✅ 정답" : "❌ 오답"}
                         </div>
@@ -1631,8 +1631,8 @@ export default function VocabChallenge() {
                   onClick={() => { setReviewIdx(Math.max(0, reviewIdx - 1)); setReviewFlipped(false); }}
                   disabled={reviewIdx === 0}
                   style={{
-                    padding: "8px 20px", borderRadius: 10, border: "1px solid rgba(255,255,255,0.1)",
-                    background: "rgba(255,255,255,0.04)", color: reviewIdx === 0 ? "#333" : "#e2e8f0",
+                    padding: "8px 20px", borderRadius: 10, border: "1px solid #141413",
+                    background: "#FBF8F0", color: reviewIdx === 0 ? "#333" : "#141413",
                     fontSize: 14, cursor: reviewIdx === 0 ? "default" : "pointer", fontWeight: 600,
                   }}
                 >← 이전</button>
@@ -1662,7 +1662,7 @@ export default function VocabChallenge() {
               background: "linear-gradient(135deg, rgba(251,191,36,0.15), rgba(245,158,11,0.08))",
               border: "1px solid rgba(251,191,36,0.3)",
             }}>
-              <p style={{ fontSize: 14, fontWeight: 700, color: "#fbbf24", marginBottom: 10, textAlign: "center" }}>
+              <p style={{ fontSize: 14, fontWeight: 700, color: "#8A6608", marginBottom: 10, textAlign: "center" }}>
                 🎊 새 업적 달성!
               </p>
               {newAchievements.map(a => (
@@ -1673,7 +1673,7 @@ export default function VocabChallenge() {
                   <span style={{ fontSize: 28 }}>{a.icon}</span>
                   <div>
                     <div style={{ color: "#fff", fontWeight: 600, fontSize: 14 }}>{a.title}</div>
-                    <div style={{ color: "#94a3b8", fontSize: 12 }}>{a.desc}</div>
+                    <div style={{ color: "#7C766B", fontSize: 12 }}>{a.desc}</div>
                   </div>
                 </div>
               ))}
@@ -1683,7 +1683,7 @@ export default function VocabChallenge() {
           {/* 누적 통계 미니 */}
           <div style={{
             display: "flex", justifyContent: "center", gap: 16, marginTop: 12,
-            fontSize: 11, color: "#64748b",
+            fontSize: 11, color: "#6E6657",
           }}>
             <span>누적 {stats.totalCorrect.toLocaleString()}정답</span>
             <span>·</span>
@@ -1716,27 +1716,27 @@ function BadgesModal({ stats, onClose }) {
         background: "linear-gradient(180deg, #1e293b 0%, #0f172a 100%)",
         borderRadius: 20, padding: "24px 20px", maxWidth: 440, width: "100%",
         maxHeight: "80vh", overflow: "auto",
-        border: "1px solid rgba(255,255,255,0.08)",
+        border: "1px solid #E3DCCB",
         boxShadow: "0 25px 60px rgba(0,0,0,0.5)",
       }}>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 20 }}>
           <h2 style={{ color: "#f1f5f9", fontSize: 18, fontWeight: 700 }}>🏅 업적 & 보상</h2>
           <button onClick={onClose} style={{
-            background: "none", border: "none", color: "#64748b", fontSize: 22, cursor: "pointer",
+            background: "none", border: "none", color: "#6E6657", fontSize: 22, cursor: "pointer",
           }}>✕</button>
         </div>
 
         {/* Progress bar */}
         <div style={{ marginBottom: 20 }}>
-          <div style={{ display: "flex", justifyContent: "space-between", fontSize: 12, color: "#94a3b8", marginBottom: 6 }}>
+          <div style={{ display: "flex", justifyContent: "space-between", fontSize: 12, color: "#7C766B", marginBottom: 6 }}>
             <span>{stats.unlockedIds.length} / {ACHIEVEMENTS.length} 달성</span>
             <span>{Math.round(stats.unlockedIds.length / ACHIEVEMENTS.length * 100)}%</span>
           </div>
-          <div style={{ height: 6, background: "rgba(255,255,255,0.06)", borderRadius: 3 }}>
+          <div style={{ height: 6, background: "#E7E0D0", borderRadius: 3 }}>
             <div style={{
               height: "100%", borderRadius: 3,
               width: `${(stats.unlockedIds.length / ACHIEVEMENTS.length) * 100}%`,
-              background: "linear-gradient(90deg, #4ade80, #facc15)",
+              background: "linear-gradient(90deg, #15803D, #A16207)",
               transition: "width 0.5s",
             }} />
           </div>
@@ -1745,15 +1745,15 @@ function BadgesModal({ stats, onClose }) {
         {/* Next milestone */}
         {(() => {
           const next = ACHIEVEMENTS.find(a => !stats.unlockedIds.includes(a.id));
-          if (!next) return <p style={{ color: "#fbbf24", textAlign: "center", fontSize: 14, marginBottom: 16 }}>🎊 모든 업적 달성! 축하합니다!</p>;
+          if (!next) return <p style={{ color: "#8A6608", textAlign: "center", fontSize: 14, marginBottom: 16 }}>🎊 모든 업적 달성! 축하합니다!</p>;
           return (
             <div style={{
               padding: 12, borderRadius: 12, marginBottom: 16,
-              background: "rgba(96,165,250,0.08)", border: "1px solid rgba(96,165,250,0.2)",
+              background: "#EEF3F8", border: "1px solid #DCE6F1",
               textAlign: "center",
             }}>
-              <p style={{ fontSize: 11, color: "#64748b", marginBottom: 4 }}>다음 목표</p>
-              <p style={{ fontSize: 14, color: "#e2e8f0" }}>{next.icon} {next.title} — {next.desc}</p>
+              <p style={{ fontSize: 11, color: "#6E6657", marginBottom: 4 }}>다음 목표</p>
+              <p style={{ fontSize: 14, color: "#141413" }}>{next.icon} {next.title} — {next.desc}</p>
             </div>
           );
         })()}
@@ -1767,15 +1767,15 @@ function BadgesModal({ stats, onClose }) {
                 display: "flex", alignItems: "center", gap: 12, padding: "10px 12px",
                 borderRadius: 12,
                 background: unlocked ? "rgba(74,222,128,0.06)" : "rgba(255,255,255,0.02)",
-                border: `1px solid ${unlocked ? "rgba(74,222,128,0.15)" : "rgba(255,255,255,0.04)"}`,
+                border: `1px solid ${unlocked ? "rgba(74,222,128,0.15)" : "#FBF8F0"}`,
                 opacity: unlocked ? 1 : 0.5,
               }}>
                 <span style={{ fontSize: 26, filter: unlocked ? "none" : "grayscale(1)" }}>{a.icon}</span>
                 <div style={{ flex: 1 }}>
-                  <div style={{ color: unlocked ? "#fff" : "#64748b", fontWeight: 600, fontSize: 13 }}>{a.title}</div>
-                  <div style={{ color: unlocked ? "#94a3b8" : "#475569", fontSize: 11 }}>{a.desc}</div>
+                  <div style={{ color: unlocked ? "#fff" : "#6E6657", fontWeight: 600, fontSize: 13 }}>{a.title}</div>
+                  <div style={{ color: unlocked ? "#7C766B" : "#475569", fontSize: 11 }}>{a.desc}</div>
                 </div>
-                {unlocked && <span style={{ color: "#4ade80", fontSize: 16 }}>✓</span>}
+                {unlocked && <span style={{ color: "#15803D", fontSize: 16 }}>✓</span>}
               </div>
             );
           })}
@@ -1783,8 +1783,8 @@ function BadgesModal({ stats, onClose }) {
 
         <button onClick={onClose} style={{
           width: "100%", marginTop: 20, padding: "12px", borderRadius: 12,
-          background: "rgba(96,165,250,0.15)", border: "1px solid rgba(96,165,250,0.3)",
-          color: "#60a5fa", fontSize: 14, fontWeight: 600, cursor: "pointer",
+          background: "#DCE6F1", border: "1px solid #141413",
+          color: "#43618A", fontSize: 14, fontWeight: 600, cursor: "pointer",
         }}>
           닫기
         </button>
@@ -1802,7 +1802,7 @@ const S = {
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-    background: "linear-gradient(145deg, #0a0a1a 0%, #0f172a 50%, #0a0a1a 100%)",
+    background: "#FAF5EB",
     padding: 16,
     fontFamily: "'Noto Sans KR', -apple-system, BlinkMacSystemFont, sans-serif",
   },
@@ -1811,8 +1811,8 @@ const S = {
     maxWidth: 440,
     padding: "32px 24px",
     borderRadius: 24,
-    background: "linear-gradient(180deg, rgba(30,41,59,0.9) 0%, rgba(15,23,42,0.95) 100%)",
-    border: "1px solid rgba(255,255,255,0.08)",
+    background: "#FFFEFB",
+    border: "1px solid #E3DCCB",
     boxShadow: "0 25px 60px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.05)",
   },
   logoArea: { textAlign: "center", marginBottom: 28 },
@@ -1825,17 +1825,17 @@ const S = {
     fontSize: 30,
     fontWeight: 900,
     letterSpacing: 6,
-    color: "#f8fafc",
+    color: "#141413",
     margin: 0,
-    textShadow: "0 0 30px rgba(96,165,250,0.3)",
+    textShadow: "0 0 30px #141413",
   },
-  subtitle: { fontSize: 13, color: "#94a3b8", marginTop: 6, letterSpacing: 1 },
-  wordCount: { fontSize: 11, color: "#64748b", marginTop: 6 },
+  subtitle: { fontSize: 13, color: "#7C766B", marginTop: 6, letterSpacing: 1 },
+  wordCount: { fontSize: 11, color: "#6E6657", marginTop: 6 },
   section: { marginBottom: 20 },
   sectionLabel: {
     fontSize: 11,
     fontWeight: 600,
-    color: "#64748b",
+    color: "#6E6657",
     textTransform: "uppercase",
     letterSpacing: 2,
     marginBottom: 8,
@@ -1852,17 +1852,17 @@ const S = {
     justifyContent: "center",
     padding: "10px 4px",
     borderRadius: 12,
-    border: "1.5px solid rgba(255,255,255,0.1)",
-    background: "rgba(255,255,255,0.03)",
-    color: "#e2e8f0",
+    border: "1.5px solid #141413",
+    background: "#FFFEFB",
+    color: "#141413",
     cursor: "pointer",
     transition: "all 0.2s",
     gap: 2,
   },
   catBtnActive: {
-    background: "rgba(96,165,250,0.12)",
-    borderColor: "#60a5fa",
-    boxShadow: "0 0 16px rgba(96,165,250,0.15)",
+    background: "#F5B60B",
+    borderColor: "#43618A",
+    boxShadow: "0 0 16px #DCE6F1",
   },
   optionRow: { display: "flex", gap: 8 },
   optionBtn: {
@@ -1873,23 +1873,23 @@ const S = {
     justifyContent: "center",
     padding: "12px 6px",
     borderRadius: 12,
-    border: "1.5px solid rgba(255,255,255,0.1)",
-    background: "rgba(255,255,255,0.03)",
-    color: "#e2e8f0",
+    border: "1.5px solid #141413",
+    background: "#FFFEFB",
+    color: "#141413",
     cursor: "pointer",
     transition: "all 0.2s",
   },
   optionBtnActive: {
-    background: "rgba(96,165,250,0.12)",
-    borderColor: "#60a5fa",
-    boxShadow: "0 0 16px rgba(96,165,250,0.15)",
+    background: "#F5B60B",
+    borderColor: "#43618A",
+    boxShadow: "0 0 16px #DCE6F1",
   },
   soundToggle: {
     padding: "8px 16px",
     borderRadius: 10,
     border: "1.5px solid",
     background: "transparent",
-    color: "#e2e8f0",
+    color: "#141413",
     fontSize: 13,
     fontWeight: 600,
     cursor: "pointer",
@@ -1915,9 +1915,9 @@ const S = {
     marginTop: 20,
     padding: 14,
     borderRadius: 12,
-    background: "rgba(255,255,255,0.03)",
+    background: "#FFFEFB",
     fontSize: 12,
-    color: "#64748b",
+    color: "#6E6657",
     lineHeight: 1.9,
   },
   gameCard: {
@@ -1925,8 +1925,8 @@ const S = {
     maxWidth: 460,
     padding: "20px 20px 16px",
     borderRadius: 24,
-    background: "linear-gradient(180deg, rgba(30,41,59,0.9) 0%, rgba(15,23,42,0.95) 100%)",
-    border: "1px solid rgba(255,255,255,0.08)",
+    background: "#FFFEFB",
+    border: "1px solid #E3DCCB",
     boxShadow: "0 25px 60px rgba(0,0,0,0.5)",
     position: "relative",
     overflow: "hidden",
@@ -1938,7 +1938,7 @@ const S = {
     transform: "translate(-50%, -50%)",
     fontSize: 32,
     fontWeight: 900,
-    color: "#fbbf24",
+    color: "#8A6608",
     textShadow: "0 0 40px rgba(251,191,36,0.6)",
     zIndex: 20,
     pointerEvents: "none",
@@ -1951,13 +1951,13 @@ const S = {
     marginBottom: 12,
   },
   scoreDisplay: { display: "flex", flexDirection: "column", alignItems: "flex-start" },
-  progressText: { fontSize: 13, color: "#64748b", fontWeight: 600 },
+  progressText: { fontSize: 13, color: "#6E6657", fontWeight: 600 },
   streakDisplay: { display: "flex", flexDirection: "column", alignItems: "flex-end" },
   timerBarBg: {
     width: "100%",
     height: 5,
     borderRadius: 3,
-    background: "rgba(255,255,255,0.06)",
+    background: "#E7E0D0",
     marginBottom: 6,
     overflow: "hidden",
   },
@@ -1970,11 +1970,11 @@ const S = {
     justifyContent: "center",
   },
   questionArea: { textAlign: "center", marginBottom: 14 },
-  questionLabel: { fontSize: 14, color: "#e2e8f0", marginBottom: 8, fontWeight: 600 },
+  questionLabel: { fontSize: 14, color: "#141413", marginBottom: 8, fontWeight: 600 },
   koreanWord: {
     fontSize: 32,
     fontWeight: 800,
-    color: "#f8fafc",
+    color: "#141413",
     letterSpacing: 2,
     textShadow: "0 0 30px rgba(248,250,252,0.1)",
   },
@@ -1982,9 +1982,9 @@ const S = {
     marginTop: 8,
     padding: "6px 14px",
     borderRadius: 10,
-    border: "1px solid rgba(96,165,250,0.3)",
-    background: "rgba(96,165,250,0.1)",
-    color: "#93c5fd",
+    border: "1px solid #141413",
+    background: "#E0E9F3",
+    color: "#43618A",
     fontSize: 18,
     cursor: "pointer",
     transition: "all 0.2s",
@@ -1993,9 +1993,9 @@ const S = {
   helpBtn: {
     padding: "5px 14px",
     borderRadius: 8,
-    border: "1px solid rgba(255,255,255,0.1)",
+    border: "1px solid #141413",
     background: "transparent",
-    color: "#64748b",
+    color: "#6E6657",
     fontSize: 12,
     cursor: "pointer",
   },
@@ -2005,7 +2005,7 @@ const S = {
     borderRadius: 10,
     background: "rgba(250,204,21,0.08)",
     border: "1px solid rgba(250,204,21,0.2)",
-    color: "#fbbf24",
+    color: "#8A6608",
     fontSize: 12,
     display: "inline-block",
   },
@@ -2014,7 +2014,7 @@ const S = {
     borderRadius: 10,
     background: "rgba(74,222,128,0.08)",
     border: "1px solid rgba(74,222,128,0.2)",
-    color: "#86efac",
+    color: "#0E6E55",
     fontSize: 13,
     marginBottom: 12,
     textAlign: "center",
@@ -2037,13 +2037,13 @@ const S = {
     width: 26,
     height: 26,
     borderRadius: 7,
-    background: "rgba(255,255,255,0.06)",
+    background: "#E7E0D0",
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
     fontSize: 11,
     fontWeight: 700,
-    color: "#64748b",
+    color: "#6E6657",
     flexShrink: 0,
   },
   choiceText: { flex: 1 },
@@ -2053,8 +2053,8 @@ const S = {
     maxWidth: 460,
     padding: "32px 24px",
     borderRadius: 24,
-    background: "linear-gradient(180deg, rgba(30,41,59,0.9) 0%, rgba(15,23,42,0.95) 100%)",
-    border: "1px solid rgba(255,255,255,0.08)",
+    background: "#FFFEFB",
+    border: "1px solid #E3DCCB",
     boxShadow: "0 25px 60px rgba(0,0,0,0.5)",
     textAlign: "center",
     maxHeight: "90vh",
@@ -2068,17 +2068,17 @@ const S = {
     alignItems: "center",
     padding: "14px 10px",
     borderRadius: 12,
-    background: "rgba(255,255,255,0.04)",
-    border: "1px solid rgba(255,255,255,0.06)",
+    background: "#FBF8F0",
+    border: "1px solid #E7E0D0",
   },
-  statNum: { fontSize: 22, fontWeight: 800, color: "#f8fafc" },
-  statLabel: { fontSize: 10, color: "#64748b", marginTop: 3, textTransform: "uppercase", letterSpacing: 1 },
+  statNum: { fontSize: 22, fontWeight: 800, color: "#141413" },
+  statLabel: { fontSize: 10, color: "#6E6657", marginTop: 3, textTransform: "uppercase", letterSpacing: 1 },
   resultList: {
     textAlign: "left",
     padding: 14,
     borderRadius: 14,
-    background: "rgba(255,255,255,0.03)",
-    border: "1px solid rgba(255,255,255,0.06)",
+    background: "#FFFEFB",
+    border: "1px solid #E7E0D0",
   },
   reviewItem: {
     padding: "10px 0",
@@ -2087,8 +2087,8 @@ const S = {
   miniSpeaker: {
     padding: "3px 8px",
     borderRadius: 6,
-    border: "1px solid rgba(96,165,250,0.2)",
-    background: "rgba(96,165,250,0.08)",
+    border: "1px solid #DCE6F1",
+    background: "#EEF3F8",
     fontSize: 14,
     cursor: "pointer",
     lineHeight: 1,
@@ -2110,9 +2110,9 @@ const S = {
     flex: 1,
     padding: "13px 0",
     borderRadius: 14,
-    border: "1.5px solid rgba(255,255,255,0.15)",
+    border: "1.5px solid #141413",
     background: "transparent",
-    color: "#94a3b8",
+    color: "#7C766B",
     fontSize: 15,
     fontWeight: 600,
     cursor: "pointer",
