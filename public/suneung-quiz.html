@@ -489,7 +489,9 @@
     if(correct){ const bonus = Math.round(timeLeft/totalT*5); score += 10 + Math.max(0,bonus); }
     else { saveWrong(it, i); }
     const exp = $('#exp'); exp.classList.add('show');
-    exp.innerHTML = `<span class="tg">${correct?'정답!':(i===-1?'시간 초과':'오답')} · 정답 ${'①②③④⑤'[it.a]}</span><br/>${it.exp}`;
+    exp.innerHTML = `<span class="tg">${correct?'정답!':(i===-1?'시간 초과':'오답')} · 정답 ${'①②③④⑤'[it.a]}</span><br/>${it.exp}`
+      + (it.reason ? `<div style="margin-top:10px;padding-top:10px;border-top:1px solid rgba(255,255,255,.1)">🧠 <b style="color:#a78bfa">사고과정</b><br/><span style="color:#cbd5e1">${it.reason}</span></div>` : '')
+      + (it.followups && it.followups.length ? `<div style="margin-top:10px">❓ <b style="color:#fbbf24">예상 질문</b><ul style="margin:4px 0 0 18px;padding:0;color:#cbd5e1">${it.followups.map(f=>`<li>${f}</li>`).join('')}</ul></div>` : '');
     $('#time').textContent = fmt(Math.max(0,timeLeft));
     const nb = $('#nextBtn'); nb.style.display='block'; nb.textContent = (idx+1>=order.length) ? '결과 보기 →' : '다음 →';
   }
@@ -508,7 +510,7 @@
   function saveWrong(it, pick){
     if (!it || !it.q) return;
     let list = loadWrong().filter(w => w.q !== it.q);
-    list.unshift({ q: it.q, label: it.label || '', passage: it.passage || '', opts: it.opts, a: it.a, exp: it.exp || '', type: it.type, pick: pick });
+    list.unshift({ q: it.q, label: it.label || '', passage: it.passage || '', opts: it.opts, a: it.a, exp: it.exp || '', reason: it.reason || '', followups: it.followups || [], type: it.type, pick: pick });
     if (list.length > 200) list = list.slice(0, 200);
     try { localStorage.setItem(WKEY, JSON.stringify(list)); } catch (e) {}
     updateNoteCount();
@@ -540,6 +542,8 @@
         <div style="font-size:14px;margin-bottom:8px">${escH(w.q)}</div>
         <div style="font-size:13px;line-height:1.9;margin-bottom:8px">${opts}</div>
         <div style="font-size:12.5px;color:#cbd5e1;background:rgba(96,165,250,.08);border-radius:8px;padding:8px 10px;line-height:1.6"><b style="color:#93c5fd">해설</b> ${escH(w.exp)}</div>
+        ${w.reason ? `<div style="font-size:12px;color:#cbd5e1;margin-top:6px"><b style="color:#a78bfa">🧠 사고과정</b> ${escH(w.reason)}</div>` : ''}
+        ${(w.followups && w.followups.length) ? `<div style="font-size:12px;color:#cbd5e1;margin-top:6px"><b style="color:#fbbf24">❓ 예상 질문</b><ul style="margin:3px 0 0 16px;padding:0">${w.followups.map(f => `<li>${escH(f)}</li>`).join('')}</ul></div>` : ''}
         <button class="chip noteDel" data-idx="${wi}" style="margin-top:8px;border-color:rgba(52,211,153,.4);color:#34d399">✓ 정복(삭제)</button>
       </div>`;
     }).join('');

@@ -28,12 +28,14 @@ function sysPrompt(s) {
 - 지문이 필요한 유형은 passage 에 지문을 넣고, 필요 없으면 passage="".
 - q = 발문, label = "${s.subj} · 단원/유형" 형식, type = 단원/유형 키워드.
 - exp = 정답 근거와 주요 오답 이유를 담은 한국어 해설.
+- reason = 문제를 푸는 단계별 사고과정(접근법 → 핵심 단서 포착 → 풀이 → 결론)을 1인칭으로 서술. "왜 그렇게 생각하는지"가 드러나게.
+- followups = 이 유형에서 더 나올 수 있는 예상 질문·확인 포인트 2~3개(한국어 문자열 배열).
 - 실제 수능 기출을 그대로 베끼지 말고, 같은 난이도·유형의 새 문항을 창작하세요.
 - 사실·계산 오류가 없도록 반드시 검산하세요.`;
 }
 
 const FORMAT = `아래 JSON 객체 하나만 출력하세요. 코드펜스(\`\`\`)나 다른 설명을 절대 붙이지 마세요.
-{"problems":[{"type":"","label":"","passage":"","q":"","opts":["","","","",""],"a":0,"exp":""}]}`;
+{"problems":[{"type":"","label":"","passage":"","q":"","opts":["","","","",""],"a":0,"exp":"","reason":"","followups":["",""]}]}`;
 
 function parseJson(text) {
   let t = (text || "").trim().replace(/^```(?:json)?/i, "").replace(/```$/, "").trim();
@@ -53,7 +55,7 @@ async function genSubject(s) {
   const data = parseJson(text);
   const probs = (data.problems || [])
     .filter((p) => Array.isArray(p.opts) && p.opts.length === 5 && Number.isInteger(p.a) && p.a >= 0 && p.a <= 4 && p.q)
-    .map((p) => ({ subj: s.subj, type: p.type || s.subj, label: p.label || s.subj, passage: p.passage || "", q: p.q, opts: p.opts, a: p.a, exp: p.exp || "" }));
+    .map((p) => ({ subj: s.subj, type: p.type || s.subj, label: p.label || s.subj, passage: p.passage || "", q: p.q, opts: p.opts, a: p.a, exp: p.exp || "", reason: p.reason || "", followups: Array.isArray(p.followups) ? p.followups.slice(0, 3) : [] }));
   return probs;
 }
 
