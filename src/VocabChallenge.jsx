@@ -370,6 +370,21 @@ export default function VocabChallenge() {
   }, []);
 
   const [screen, setScreen] = useState("menu");
+  // 브라우저/안드로이드 뒤로가기 ↔ 게임 화면 연동
+  useEffect(() => {
+    const onPop = () => { setScreen("menu"); setReviewMode(false); setNewAchievements([]); };
+    window.addEventListener("popstate", onPop);
+    return () => window.removeEventListener("popstate", onPop);
+  }, []);
+  useEffect(() => {
+    if ((screen === "play" || screen === "result") && !(window.history.state && window.history.state.inGame)) {
+      window.history.pushState({ inGame: true }, "");
+    }
+  }, [screen]);
+  const backToMenu = () => {
+    if (window.history.state && window.history.state.inGame) window.history.back();
+    else { setScreen("menu"); setReviewMode(false); setNewAchievements([]); }
+  };
   const [gameMode, setGameMode] = useState("vocab"); // "vocab" | "math"
   const [category, setCategory] = useState("elem");
   const [mathCategory, setMathCategory] = useState("elem");
@@ -1112,10 +1127,11 @@ export default function VocabChallenge() {
             <div style={S.comboOverlay}>🔥 {streak} COMBO!</div>
           )}
 
+          <button onClick={backToMenu} style={{ background: "none", border: "none", color: "#6E6657", fontSize: 13, fontWeight: 700, cursor: "pointer", padding: 0, marginBottom: 10 }}>← 나가기</button>
           <div style={S.gameHeader}>
             <div style={S.scoreDisplay}>
               <span style={{ fontSize: 11, color: "#6E6657" }}>SCORE</span>
-              <span style={{ fontSize: 20, fontWeight: 800, color: "#fff" }}>{score}</span>
+              <span style={{ fontSize: 20, fontWeight: 800, color: "#141413" }}>{score}</span>
             </div>
             <div style={S.progressText}>
               {current + 1} / {questions.length}
@@ -1125,7 +1141,7 @@ export default function VocabChallenge() {
               <span style={{
                 fontSize: 20,
                 fontWeight: 800,
-                color: streak >= 3 ? "#f59e0b" : "#fff",
+                color: streak >= 3 ? "#f59e0b" : "#141413",
               }}>
                 {streak >= 3 ? "🔥" : ""}{streak}
               </span>
@@ -1401,7 +1417,7 @@ export default function VocabChallenge() {
                   <div key={i} style={S.reviewItem}>
                     <div style={{ display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap" }}>
                       <span style={{ fontSize: 16 }}>❌</span>
-                      <span style={{ color: "#fff", fontWeight: 600, ...(rq?.isMath ? { fontFamily: "'JetBrains Mono', monospace" } : {}) }}>
+                      <span style={{ color: "#141413", fontWeight: 600, ...(rq?.isMath ? { fontFamily: "'JetBrains Mono', monospace" } : {}) }}>
                         {qText}
                       </span>
                     </div>
@@ -1426,7 +1442,7 @@ export default function VocabChallenge() {
                     >
                       🔊
                     </button>
-                    <span style={{ color: "#fff", fontWeight: 600 }}>{r.word.en}</span>
+                    <span style={{ color: "#141413", fontWeight: 600 }}>{r.word.en}</span>
                     {r.word.pos && <span style={{ color: "#43618A", fontSize: 11 }}>({r.word.pos})</span>}
                     <span style={{ color: "#6E6657" }}>—</span>
                     <span style={{ color: "#3F3A33" }}>{r.word.ko}</span>
@@ -1582,7 +1598,7 @@ export default function VocabChallenge() {
                     // ===== 뒷면 (정답) =====
                     return isMath ? (
                       <>
-                        <div style={{ fontSize: 26, color: "#fff", fontWeight: 800, marginBottom: 8, fontFamily: "'JetBrains Mono', monospace" }}>
+                        <div style={{ fontSize: 26, color: "#141413", fontWeight: 800, marginBottom: 8, fontFamily: "'JetBrains Mono', monospace" }}>
                           {rq.mathQuestion.replace("= ?", `= ${rq.mathAnswer}`)}
                         </div>
                         {rq.mathHint && (
@@ -1602,7 +1618,7 @@ export default function VocabChallenge() {
                         <div style={{ fontSize: 16, color: "#7C766B", marginBottom: 8, lineHeight: 1.5 }}>
                           {rq.korQuestion}
                         </div>
-                        <div style={{ fontSize: 22, color: "#34d399", fontWeight: 800, marginBottom: 8 }}>
+                        <div style={{ fontSize: 22, color: "#15803D", fontWeight: 800, marginBottom: 8 }}>
                           ✅ {rq.korAnswer}
                         </div>
                         {rq.korHint && (
@@ -1628,7 +1644,7 @@ export default function VocabChallenge() {
                             onClick={(e) => { e.stopPropagation(); unlockAudio(); speakWord(rq.word.en); }}
                             style={{ background: "none", border: "none", fontSize: 20, cursor: "pointer" }}
                           >🔊</button>
-                          <span style={{ fontSize: 24, color: "#fff", fontWeight: 800 }}>
+                          <span style={{ fontSize: 24, color: "#141413", fontWeight: 800 }}>
                             {rq.word.en}
                           </span>
                           {rq.word.pos && (
@@ -1690,7 +1706,7 @@ export default function VocabChallenge() {
 
           <div style={{ display: "flex", gap: 12, marginTop: 16 }}>
             <button onClick={startGame} style={S.retryBtn}>🔄 다시 도전</button>
-            <button onClick={() => { setNewAchievements([]); setReviewMode(false); setScreen("menu"); }} style={S.menuBtn}>메뉴로</button>
+            <button onClick={backToMenu} style={S.menuBtn}>메뉴로</button>
           </div>
 
           {/* 새 업적 달성 알림 */}
@@ -1710,7 +1726,7 @@ export default function VocabChallenge() {
                 }}>
                   <span style={{ fontSize: 28 }}>{a.icon}</span>
                   <div>
-                    <div style={{ color: "#fff", fontWeight: 600, fontSize: 14 }}>{a.title}</div>
+                    <div style={{ color: "#141413", fontWeight: 600, fontSize: 14 }}>{a.title}</div>
                     <div style={{ color: "#7C766B", fontSize: 12 }}>{a.desc}</div>
                   </div>
                 </div>
@@ -1810,7 +1826,7 @@ function BadgesModal({ stats, onClose }) {
               }}>
                 <span style={{ fontSize: 26, filter: unlocked ? "none" : "grayscale(1)" }}>{a.icon}</span>
                 <div style={{ flex: 1 }}>
-                  <div style={{ color: unlocked ? "#fff" : "#6E6657", fontWeight: 600, fontSize: 13 }}>{a.title}</div>
+                  <div style={{ color: unlocked ? "#141413" : "#6E6657", fontWeight: 600, fontSize: 13 }}>{a.title}</div>
                   <div style={{ color: unlocked ? "#7C766B" : "#475569", fontSize: 11 }}>{a.desc}</div>
                 </div>
                 {unlocked && <span style={{ color: "#15803D", fontSize: 16 }}>✓</span>}
