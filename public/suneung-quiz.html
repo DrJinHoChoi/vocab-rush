@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#FAF5EB" />
   <link rel="canonical" href="https://www.datapd.ai/suneung-quiz.html" />
   <meta name="description" content="수능 연습 게임 — 국어·영어·수학 다양한 유형(빈칸추론·독서 지문·어법·수학)을 난이도별 분초 타이머로 푸는 무료 게임. 예시 문제·해설 포함." />
   <meta property="og:title" content="수능 연습 게임 — STUDY RUSH" />
@@ -592,10 +593,12 @@
   $('#subjChips').addEventListener('click', e=>{ const b=e.target.closest('.chip'); if(!b) return;
     subj=b.dataset.subj; document.querySelectorAll('#subjChips .chip').forEach(c=>c.classList.toggle('on',c===b)); start(); });
 
-  start();
+  let firstStarted = false;
+  function firstStart() { if (firstStarted || viewMode === 'note') return; firstStarted = true; start(); }
   $('#noteBtn').addEventListener('click', openNotes);
   updateNoteCount();
   if (new URLSearchParams(location.search).get('note') === '1') openNotes();
+  setTimeout(firstStart, 1200); // 데일리/은행 로드가 늦어도 게임 시작
 
   // 오늘의 문제 — AI 에이전트가 매일 생성한 국·영·수·과·사 문제를 합쳐서 출제
   fetch('/daily/today.json?cb=' + Date.now()).then(r => r.ok ? r.json() : null).then(d => {
@@ -603,15 +606,14 @@
       d.problems.forEach(p => QB.push({ ...p, daily: true }));
       const el = document.getElementById('dailyBanner');
       if (el) { el.style.display = 'block'; el.innerHTML = '🆕 <b>오늘의 문제</b> ' + d.problems.length + '개 추가 · ' + d.date + ' <span style="color:#7C766B">(AI가 매일 생성)</span>'; }
-      if (viewMode !== 'note') start();
     }
-  }).catch(() => {});
+    firstStart();
+  }).catch(() => firstStart());
 
   // 문제 은행 — 원본 어휘 대량(약 3,000) 합치기 → 안 겹치게 계속 새 문제
   fetch('/bank.json').then(r => r.ok ? r.json() : null).then(d => {
     if (d && Array.isArray(d.problems) && d.problems.length) {
       d.problems.forEach(p => QB.push(p));
-      if (viewMode === 'game' && idx === 0 && !answered) start();
     }
   }).catch(() => {});
 </script>
