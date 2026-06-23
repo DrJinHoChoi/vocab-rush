@@ -130,6 +130,14 @@ async function fireTestNotification() {
   showRestNotification(reg, "🔔 쉬는 시간!", { body: "이렇게 알림이 와요 — 오늘의 문제 한 개! 🎯", icon: "/icon-192.png", data: { url: "/suneung-quiz.html" } });
 }
 
+// ===== 공유 (바이럴) =====
+async function shareApp() {
+  const data = { title: "STUDY RUSH — 수능 1등급 학습 게임", text: "수능 1등급, 게임으로! 쉬는 시간마다 한 문제 — 무료 🎯", url: "https://www.datapd.ai/" };
+  try { if (navigator.share) { await navigator.share(data); return; } } catch (e) { return; }
+  try { await navigator.clipboard.writeText(data.url); alert("링크를 복사했어요! 친구에게 붙여넣기 하세요 🔗"); }
+  catch (e) { try { window.prompt("이 링크를 복사해 공유하세요:", data.url); } catch (e2) {} }
+}
+
 // ============================================================
 // ACHIEVEMENT / REWARD SYSTEM
 // ============================================================
@@ -648,6 +656,11 @@ export default function VocabChallenge() {
               </button>
             </div>
           </div>
+        </div>
+
+        {/* 공유 (바이럴) */}
+        <div style={{ maxWidth: 1080, margin: "0 auto 4px", width: "100%", padding: isWide ? "0 20px" : "0 16px" }}>
+          <button onClick={shareApp} style={{ width: "100%", padding: "10px", borderRadius: 12, border: "1px solid rgba(96,165,250,0.25)", background: "rgba(96,165,250,0.06)", color: "#93c5fd", fontSize: 13, fontWeight: 700, cursor: "pointer" }}>🔗 친구에게 공유 — 같이 수능 1등급 가자</button>
         </div>
 
         {/* 메인: 게임 + 교육 */}
