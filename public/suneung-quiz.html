@@ -16,7 +16,9 @@
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body { font-family: 'Noto Sans KR', -apple-system, BlinkMacSystemFont, sans-serif; background: #FAF5EB; color: #3F3A33; line-height: 1.8; }
     nav { position: sticky; top: 0; z-index: 60; background: #FFFEFB; border-bottom: 1px solid #E3DCCB; padding: 12px 20px; }
-    nav .inner { max-width: 720px; margin: 0 auto; display: flex; flex-wrap: wrap; gap: 8px 16px; align-items: center; }
+    nav .inner { max-width: 720px; margin: 0 auto; display: flex; flex-wrap: nowrap; overflow-x: auto; gap: 8px 16px; align-items: center; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
+    nav .inner::-webkit-scrollbar { display: none; }
+    nav .inner > a { white-space: nowrap; flex: 0 0 auto; }
     nav a { color: #7C766B; text-decoration: none; font-size: 13px; } nav a:hover { color: #43618A; }
     nav .brand { color: #141413; font-weight: 700; font-size: 15px; margin-right: 12px; }
     .wrap { max-width: 720px; margin: 0 auto; padding: 28px 20px 60px; }
@@ -38,10 +40,10 @@
     .chips { display: flex; gap: 6px; flex-wrap: wrap; }
     .chip { font-size: 13px; font-weight: 700; padding: 7px 13px; border-radius: 999px; border: 1px solid #141413; background: #FFFEFB; color: #3F3A33; cursor: pointer; }
     .chip.on { background: #F5B60B; border-color: #141413; color: #141413; }
-    .game { background: #FFFEFB; border: 1px solid #141413; border-radius: 16px; padding: 20px; margin-top: 8px; scroll-margin-top: 52px; }
+    .game { background: #FFFEFB; border: 1px solid #141413; border-radius: 16px; padding: 20px; margin-top: 8px; scroll-margin-top: calc(var(--navH, 46px) + 8px); }
     .bar { height: 8px; border-radius: 999px; background: #E3DCCB; overflow: hidden; }
     .bar > i { display: block; height: 100%; background: linear-gradient(90deg,#22c55e,#eab308,#ef4444); border-radius: 999px; transition: width .25s linear; }
-    .meta { position: sticky; top: 46px; z-index: 40; display: flex; justify-content: space-between; align-items: center; margin: 0 -20px; padding: 9px 20px; font-size: 13px; color: #7C766B; background: #FFFEFB; border-bottom: 1px solid #E3DCCB; }
+    .meta { position: sticky; top: var(--navH, 46px); z-index: 40; display: flex; justify-content: space-between; align-items: center; margin: 0 -20px; padding: 9px 20px; font-size: 13px; color: #7C766B; background: #FFFEFB; border-bottom: 1px solid #E3DCCB; }
     .meta .time { font-weight: 800; font-size: 18px; color: #141413; font-variant-numeric: tabular-nums; }
     .tag { font-size: 11px; font-weight: 700; padding: 3px 9px; border-radius: 999px; background: #DCE6F1; color: #43618A; }
     .passage { background: #FBF8F0; border: 1px solid #E3DCCB; border-radius: 10px; padding: 16px; margin: 14px 0; font-size: 15px; line-height: 1.95; }
@@ -503,7 +505,9 @@
     order = picked;
     idx = 0; score = 0; picks = {}; next();
   }
-  function scrollGame(){ document.querySelector('.game')?.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+  function setNavH(){ const n = document.querySelector('nav'); if (n) document.documentElement.style.setProperty('--navH', Math.round(n.getBoundingClientRect().height) + 'px'); }
+  setNavH(); window.addEventListener('resize', setNavH); window.addEventListener('load', setNavH); setTimeout(setNavH, 600);
+  function scrollGame(){ const g = document.querySelector('.game'); if (g) { const navH = (document.querySelector('nav')?.getBoundingClientRect().height) || 46; const y = g.getBoundingClientRect().top + window.scrollY - navH - 8; window.scrollTo({ top: y, behavior: 'instant' }); } }
   function goPrev(){ if(idx > 0){ idx--; next(); scrollGame(); } }
   function goNext(){ if(picks[idx] !== undefined){ idx++; next(); scrollGame(); } }
   function expHTML(it, picked){
