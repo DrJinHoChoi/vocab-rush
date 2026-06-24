@@ -21,7 +21,12 @@
     nav .brand { color: #141413; font-weight: 700; font-size: 15px; margin-right: 12px; }
     .wrap { max-width: 720px; margin: 0 auto; padding: 28px 20px 60px; }
     h1 { color: #141413; font-size: 26px; margin-bottom: 8px; }
-    .subtitle { color: #7C766B; font-size: 15px; margin-bottom: 22px; }
+    .subtitle { color: #7C766B; font-size: 15px; margin-bottom: 14px; }
+    .trust { display: flex; flex-wrap: wrap; gap: 6px 16px; align-items: center; justify-content: space-between; background: #FBF8F0; border: 1px solid #E3DCCB; border-radius: 10px; padding: 10px 14px; margin-bottom: 18px; font-size: 12.5px; color: #3F3A33; line-height: 1.5; }
+    .trust b { color: #141413; }
+    .trust .ck { color: #15803D; font-weight: 800; }
+    .trust a { color: #1d4ed8; font-weight: 700; text-decoration: none; } .trust a:hover { text-decoration: underline; }
+    .vbadge { font-size: 10px; font-weight: 800; color: #15803D; background: #E6F4EC; border: 1px solid #9ED9C0; border-radius: 99px; padding: 2px 7px; margin-left: 6px; white-space: nowrap; }
     h2 { color: #141413; font-size: 20px; margin: 36px 0 14px; border-left: 4px solid #43618A; padding-left: 12px; }
     .controls { display: flex; flex-wrap: wrap; gap: 18px; margin-bottom: 18px; }
     .ctl { } .ctl .lab { font-size: 12px; color: #7C766B; font-weight: 700; margin-bottom: 6px; }
@@ -83,6 +88,10 @@
   <div class="wrap">
     <h1>수능 연습 게임</h1>
     <p class="subtitle">국어·영어·수학 다양한 유형을 <strong>난이도별 분:초 타이머</strong>로 — 예시 문제·해설 포함 (무료)</p>
+    <div class="trust">
+      <span><span class="ck">✓ 검증된 수능 유형 원본</span> — 생성 → 독립 재풀이 → 수정/폐기의 <b>3단계 AI 검증</b>. 기출 무단복제 없음.</span>
+      <span>📚 실제 기출: <a href="https://www.suneung.re.kr" target="_blank" rel="noopener">평가원 수능</a> · <a href="https://www.ebsi.co.kr" target="_blank" rel="noopener">EBSi</a></span>
+    </div>
 
     <div class="controls">
       <div class="ctl">
@@ -512,7 +521,7 @@
     const opts = it.opts.map((o,i)=>`<button class="opt" data-i="${i}">${'①②③④⑤'[i]} ${o}</button>`).join('');
     $('#game').innerHTML = `
       <div class="bar"><i id="bar" style="width:${done?0:100}%"></i></div>
-      <div class="meta"><span class="tag">${it.label}</span><span>문제 ${idx+1}/${order.length} · 점수 ${score}</span><span class="time" id="time">${done?'✓':fmt(timeFor(it))}</span></div>
+      <div class="meta"><span class="tag">${it.label}</span>${it.verified ? '<span class="vbadge">✓ 검증</span>' : ''}<span>문제 ${idx+1}/${order.length} · 점수 ${score}</span><span class="time" id="time">${done?'✓':fmt(timeFor(it))}</span></div>
       ${it.figure ? `<div class="figure">${it.figure}</div>` : ''}
       ${it.passage ? `<div class="passage">${it.passage}</div>` : ''}
       <div class="q">${it.q}</div>
@@ -644,7 +653,7 @@
   // 오늘의 문제 — AI 에이전트가 매일 생성한 국·영·수·과·사 문제를 합쳐서 출제
   fetch('/daily/today.json?cb=' + Date.now()).then(r => r.ok ? r.json() : null).then(d => {
     if (d && Array.isArray(d.problems) && d.problems.length) {
-      d.problems.forEach(p => QB.push({ ...p, daily: true }));
+      d.problems.forEach(p => QB.push({ ...p, daily: true, verified: true }));
       const el = document.getElementById('dailyBanner');
       if (el) { el.style.display = 'block'; el.innerHTML = '🆕 <b>오늘의 문제</b> ' + d.problems.length + '개 추가 · ' + d.date + ' <span style="color:#7C766B">(AI가 매일 생성)</span>'; }
     }
@@ -661,7 +670,7 @@
   // 수능형 문제 은행 (국·영·수·과·사 대량 — build-suneung-bank.mjs 가 생성)
   fetch('/daily/bank-suneung.json').then(r => r.ok ? r.json() : null).then(d => {
     if (d && Array.isArray(d.problems) && d.problems.length) {
-      d.problems.forEach(p => QB.push(p));
+      d.problems.forEach(p => QB.push({ ...p, verified: true }));
     }
   }).catch(() => {});
 </script>
