@@ -35,6 +35,8 @@
     .meta .time { font-weight: 800; font-size: 18px; color: #141413; font-variant-numeric: tabular-nums; }
     .tag { font-size: 11px; font-weight: 700; padding: 3px 9px; border-radius: 999px; background: #DCE6F1; color: #43618A; }
     .passage { background: #FBF8F0; border: 1px solid #E3DCCB; border-radius: 10px; padding: 16px; margin: 14px 0; font-size: 15px; line-height: 1.95; }
+    .figure { background: #FFFEFB; border: 1px solid #E3DCCB; border-radius: 10px; padding: 12px; margin: 14px 0; text-align: center; overflow-x: auto; }
+    .figure svg { display: block; width: 100%; max-width: 360px; height: auto; margin: 0 auto; }
     .q { font-size: 16px; font-weight: 700; color: #141413; margin: 14px 0 12px; }
     .opts { display: flex; flex-direction: column; gap: 9px; }
     .opt { text-align: left; padding: 13px 15px; border-radius: 10px; border: 1px solid #141413; background: #FFFEFB; color: #141413; font-size: 15px; cursor: pointer; }
@@ -511,6 +513,7 @@
     $('#game').innerHTML = `
       <div class="bar"><i id="bar" style="width:${done?0:100}%"></i></div>
       <div class="meta"><span class="tag">${it.label}</span><span>문제 ${idx+1}/${order.length} · 점수 ${score}</span><span class="time" id="time">${done?'✓':fmt(timeFor(it))}</span></div>
+      ${it.figure ? `<div class="figure">${it.figure}</div>` : ''}
       ${it.passage ? `<div class="passage">${it.passage}</div>` : ''}
       <div class="q">${it.q}</div>
       <div class="opts" id="opts">${opts}</div>
@@ -579,7 +582,7 @@
   function saveWrong(it, pick){
     if (!it || !it.q) return;
     let list = loadWrong().filter(w => w.q !== it.q);
-    list.unshift({ q: it.q, label: it.label || '', passage: it.passage || '', opts: it.opts, a: it.a, exp: it.exp || '', reason: it.reason || '', followups: it.followups || [], type: it.type, pick: pick });
+    list.unshift({ q: it.q, label: it.label || '', figure: it.figure || '', passage: it.passage || '', opts: it.opts, a: it.a, exp: it.exp || '', reason: it.reason || '', followups: it.followups || [], type: it.type, pick: pick });
     if (list.length > 200) list = list.slice(0, 200);
     try { localStorage.setItem(WKEY, JSON.stringify(list)); } catch (e) {}
     updateNoteCount();
@@ -607,6 +610,7 @@
       }).join('');
       return `<div style="text-align:left;padding:13px;border:1px solid #E3DCCB;border-radius:12px;margin-bottom:10px;background:#FFFEFB">
         <div style="font-size:11px;color:#C75D3A;font-weight:700;margin-bottom:6px">${escH(w.label)}</div>
+        ${w.figure ? `<div class="figure" style="margin:6px 0">${w.figure}</div>` : ''}
         ${w.passage ? `<div class="muted" style="font-size:12px;margin-bottom:6px;line-height:1.6">${escH(w.passage)}</div>` : ''}
         <div style="font-size:14px;margin-bottom:8px">${escH(w.q)}</div>
         <div style="font-size:13px;line-height:1.9;margin-bottom:8px">${opts}</div>
