@@ -27,6 +27,11 @@
     .trust .ck { color: #15803D; font-weight: 800; }
     .trust a { color: #1d4ed8; font-weight: 700; text-decoration: none; } .trust a:hover { text-decoration: underline; }
     .vbadge { font-size: 10px; font-weight: 800; color: #15803D; background: #E6F4EC; border: 1px solid #9ED9C0; border-radius: 99px; padding: 2px 7px; margin-left: 6px; white-space: nowrap; }
+    .selfcheck { margin-top: 12px; padding-top: 12px; border-top: 1px solid #E3DCCB; }
+    .sc-label { font-size: 12.5px; font-weight: 700; color: #6D28D9; margin-bottom: 7px; }
+    .sc-input { width: 100%; min-height: 56px; border: 1px solid #E3DCCB; border-radius: 8px; padding: 9px 11px; font-size: 13px; font-family: inherit; line-height: 1.6; resize: vertical; background: #FFFEFB; color: #141413; }
+    .sc-btn { margin-top: 8px; padding: 8px 14px; border: 1px solid #6D28D9; background: #F3EEFE; color: #6D28D9; border-radius: 8px; font-size: 12.5px; font-weight: 800; cursor: pointer; }
+    .sc-model { display: none; margin-top: 10px; background: #F6F2FE; border: 1px solid #D9C9F5; border-radius: 8px; padding: 10px 12px; font-size: 12.5px; line-height: 1.65; }
     h2 { color: #141413; font-size: 20px; margin: 36px 0 14px; border-left: 4px solid #43618A; padding-left: 12px; }
     .controls { display: flex; flex-wrap: wrap; gap: 18px; margin-bottom: 18px; }
     .ctl { } .ctl .lab { font-size: 12px; color: #7C766B; font-weight: 700; margin-bottom: 6px; }
@@ -503,14 +508,19 @@
   function goNext(){ if(picks[idx] !== undefined){ idx++; next(); scrollGame(); } }
   function expHTML(it, picked){
     const correct = picked === it.a;
-    return `<span class="tg">${correct?'정답!':(picked===-1?'시간 초과':'오답')} · 정답 ${'①②③④⑤'[it.a]}</span><br/>${it.exp}`
-      + (it.reason ? `<div style="margin-top:10px;padding-top:10px;border-top:1px solid #E3DCCB">🧠 <b style="color:#6D28D9">사고과정</b><br/><span style="color:#3F3A33">${it.reason}</span></div>` : '')
-      + (it.followups && it.followups.length ? `<div style="margin-top:10px">❓ <b style="color:#A16207">예상 질문</b><ul style="margin:4px 0 0 18px;padding:0;color:#3F3A33">${it.followups.map(f=>`<li>${f}</li>`).join('')}</ul></div>` : '');
+    const fu = (it.followups && it.followups.length) ? `<div style="margin-top:10px">❓ <b style="color:#A16207">예상 질문</b><ul style="margin:4px 0 0 18px;padding:0;color:#3F3A33">${it.followups.map(f=>`<li>${f}</li>`).join('')}</ul></div>` : '';
+    let tail = fu;
+    if (it.reason) {
+      tail = `<div class="selfcheck"><div class="sc-label">🧠 내 사고과정 — 왜 그렇게 생각했는지 먼저 적어보세요</div><textarea class="sc-input" placeholder="예: 빈칸 앞 단서를 보고 ~라고 판단했다…"></textarea><button type="button" class="sc-btn">모범 사고과정과 비교하기 →</button><div class="sc-model">🧠 <b style="color:#6D28D9">모범 사고과정</b><br/><span style="color:#3F3A33">${it.reason}</span>${fu}</div></div>`;
+    }
+    return `<span class="tg">${correct?'정답!':(picked===-1?'시간 초과':'오답')} · 정답 ${'①②③④⑤'[it.a]}</span><br/>${it.exp}${tail}`;
   }
   function showAnswered(it, picked){
     document.querySelectorAll('#opts .opt').forEach((b,bi)=>{ b.disabled = true;
       if(bi===it.a) b.classList.add('correct'); else if(bi===picked) b.classList.add('wrong'); });
     const exp = $('#exp'); exp.classList.add('show'); exp.innerHTML = expHTML(it, picked);
+    const scb = exp.querySelector('.sc-btn');
+    if (scb) scb.addEventListener('click', () => { const m = exp.querySelector('.sc-model'); if (m) m.style.display = 'block'; scb.style.display = 'none'; });
   }
   function next(){
     clearInterval(timer); answered = false; viewMode = 'game';
