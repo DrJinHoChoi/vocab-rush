@@ -44,6 +44,11 @@
     .exp { margin-top: 14px; background: #EAF5EF; border: 1px solid #9ED9C0; border-radius: 10px; padding: 14px; font-size: 14px; display: none; }
     .exp.show { display: block; } .exp .tg { color: #15803D; font-weight: 800; }
     .btn { margin-top: 14px; width: 100%; padding: 13px; border-radius: 10px; border: none; background: linear-gradient(135deg,#3b82f6,#2563eb); color: #fff; font-weight: 800; font-size: 15px; cursor: pointer; }
+    .navrow { display: flex; gap: 10px; margin-top: 14px; }
+    .navbtn { padding: 13px; border-radius: 10px; font-weight: 800; font-size: 15px; cursor: pointer; }
+    .navbtn.prev { flex: 0 0 auto; min-width: 92px; border: 1px solid #141413; background: #FFFEFB; color: #141413; }
+    .navbtn.prev:disabled { opacity: .4; cursor: default; }
+    .navbtn.nextb { flex: 1; border: none; background: linear-gradient(135deg,#3b82f6,#2563eb); color: #fff; }
     .end { text-align: center; padding: 20px 6px; }
     .end .sc { font-size: 38px; font-weight: 900; color: #141413; }
     table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 14px; }
@@ -448,7 +453,7 @@
   ];
 
   let diff = 'medium', subj = 'all';
-  let order = [], idx = 0, score = 0, timer = null, timeLeft = 0, totalT = 0, answered = false;
+  let order = [], idx = 0, score = 0, timer = null, timeLeft = 0, totalT = 0, answered = false, picks = {};
 
   const $ = s => document.querySelector(s);
   const shuffle = a => a.map(x=>[Math.random(),x]).sort((p,q)=>p[0]-q[0]).map(p=>p[1]);
@@ -480,47 +485,76 @@
       picked = pickFresh(all, ROUND, seen);
     }
     order = picked;
-    idx = 0; score = 0; next();
+    idx = 0; score = 0; picks = {}; next();
+  }
+  function scrollGame(){ document.querySelector('.game')?.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+  function goPrev(){ if(idx > 0){ idx--; next(); scrollGame(); } }
+  function goNext(){ if(picks[idx] !== undefined){ idx++; next(); scrollGame(); } }
+  function expHTML(it, picked){
+    const correct = picked === it.a;
+    return `<span class="tg">${correct?'정답!':(picked===-1?'시간 초과':'오답')} · 정답 ${'①②③④⑤'[it.a]}</span><br/>${it.exp}`
+      + (it.reason ? `<div style="margin-top:10px;padding-top:10px;border-top:1px solid #E3DCCB">🧠 <b style="color:#6D28D9">사고과정</b><br/><span style="color:#3F3A33">${it.reason}</span></div>` : '')
+      + (it.followups && it.followups.length ? `<div style="margin-top:10px">❓ <b style="color:#A16207">예상 질문</b><ul style="margin:4px 0 0 18px;padding:0;color:#3F3A33">${it.followups.map(f=>`<li>${f}</li>`).join('')}</ul></div>` : '');
+  }
+  function showAnswered(it, picked){
+    document.querySelectorAll('#opts .opt').forEach((b,bi)=>{ b.disabled = true;
+      if(bi===it.a) b.classList.add('correct'); else if(bi===picked) b.classList.add('wrong'); });
+    const exp = $('#exp'); exp.classList.add('show'); exp.innerHTML = expHTML(it, picked);
   }
   function next(){
     clearInterval(timer); answered = false; viewMode = 'game';
     if(idx >= order.length){ return end(); }
     const it = order[idx];
-    totalT = timeFor(it); timeLeft = totalT;
+    const done = picks[idx] !== undefined;
+    const last = idx+1 >= order.length;
     const opts = it.opts.map((o,i)=>`<button class="opt" data-i="${i}">${'①②③④⑤'[i]} ${o}</button>`).join('');
     $('#game').innerHTML = `
-      <div class="bar"><i id="bar" style="width:100%"></i></div>
-      <div class="meta"><span class="tag">${it.label}</span><span>문제 ${idx+1}/${order.length} · 점수 ${score}</span><span class="time" id="time">${fmt(timeLeft)}</span></div>
+      <div class="bar"><i id="bar" style="width:${done?0:100}%"></i></div>
+      <div class="meta"><span class="tag">${it.label}</span><span>문제 ${idx+1}/${order.length} · 점수 ${score}</span><span class="time" id="time">${done?'✓':fmt(timeFor(it))}</span></div>
       ${it.passage ? `<div class="passage">${it.passage}</div>` : ''}
       <div class="q">${it.q}</div>
       <div class="opts" id="opts">${opts}</div>
       <div class="exp" id="exp"></div>
-      <button class="btn" id="nextBtn" style="display:none">다음 →</button>`;
-    document.querySelectorAll('#opts .opt').forEach(b=> b.addEventListener('click', ()=>answer(Number(b.dataset.i))));
-    $('#nextBtn').addEventListener('click', ()=>{ idx++; next(); document.querySelector('.game')?.scrollIntoView({ behavior: 'smooth', block: 'start' }); });
-    timer = setInterval(()=>{
-      timeLeft -= 0.25;
-      const bar = $('#bar'); if(bar) bar.style.width = Math.max(0, timeLeft/totalT*100) + '%';
-      const t = $('#time'); if(t) t.textContent = fmt(Math.max(0,timeLeft));
-      if(timeLeft <= 0){ clearInterval(timer); answer(-1); }
-    }, 250);
+      <div class="navrow">
+        <button class="navbtn prev" id="prevBtn"${idx===0?' disabled':''}>← 이전</button>
+        <button class="navbtn nextb" id="nextBtn"${done?'':' style="display:none"'}>${last?'결과 보기 →':'다음 →'}</button>
+      </div>`;
+    $('#prevBtn').addEventListener('click', goPrev);
+    $('#nextBtn').addEventListener('click', goNext);
+    if(done){
+      answered = true;
+      showAnswered(it, picks[idx]);
+    } else {
+      totalT = timeFor(it); timeLeft = totalT;
+      document.querySelectorAll('#opts .opt').forEach(b=> b.addEventListener('click', ()=>answer(Number(b.dataset.i))));
+      timer = setInterval(()=>{
+        timeLeft -= 0.25;
+        const bar = $('#bar'); if(bar) bar.style.width = Math.max(0, timeLeft/totalT*100) + '%';
+        const t = $('#time'); if(t) t.textContent = fmt(Math.max(0,timeLeft));
+        if(timeLeft <= 0){ clearInterval(timer); answer(-1); }
+      }, 250);
+    }
   }
   function answer(i){
     if(answered) return; answered = true; clearInterval(timer);
     const it = order[idx];
-    markSeen(it.q);
-    document.querySelectorAll('#opts .opt').forEach((b,bi)=>{ b.disabled = true;
-      if(bi===it.a) b.classList.add('correct'); else if(bi===i) b.classList.add('wrong'); });
-    const correct = i===it.a;
-    if(correct){ const bonus = Math.round(timeLeft/totalT*5); score += 10 + Math.max(0,bonus); }
-    else { saveWrong(it, i); }
-    const exp = $('#exp'); exp.classList.add('show');
-    exp.innerHTML = `<span class="tg">${correct?'정답!':(i===-1?'시간 초과':'오답')} · 정답 ${'①②③④⑤'[it.a]}</span><br/>${it.exp}`
-      + (it.reason ? `<div style="margin-top:10px;padding-top:10px;border-top:1px solid rgba(255,255,255,.1)">🧠 <b style="color:#6D28D9">사고과정</b><br/><span style="color:#3F3A33">${it.reason}</span></div>` : '')
-      + (it.followups && it.followups.length ? `<div style="margin-top:10px">❓ <b style="color:#A16207">예상 질문</b><ul style="margin:4px 0 0 18px;padding:0;color:#3F3A33">${it.followups.map(f=>`<li>${f}</li>`).join('')}</ul></div>` : '');
-    $('#time').textContent = fmt(Math.max(0,timeLeft));
-    const nb = $('#nextBtn'); nb.style.display='block'; nb.textContent = (idx+1>=order.length) ? '결과 보기 →' : '다음 →';
+    if(picks[idx] === undefined){
+      picks[idx] = i;
+      markSeen(it.q);
+      const correct = i===it.a;
+      if(correct){ const bonus = Math.round(timeLeft/totalT*5); score += 10 + Math.max(0,bonus); }
+      else { saveWrong(it, i); }
+    }
+    showAnswered(it, picks[idx]);
+    const sc = document.querySelector('.meta span:nth-child(2)'); if(sc) sc.textContent = `문제 ${idx+1}/${order.length} · 점수 ${score}`;
+    const t = $('#time'); if(t) t.textContent = '✓';
+    const nb = $('#nextBtn'); if(nb){ nb.style.display='block'; nb.textContent = (idx+1>=order.length) ? '결과 보기 →' : '다음 →'; }
   }
+  // 좌우 이동: 화살표키 + 스와이프
+  document.addEventListener('keydown', (e)=>{ if(viewMode!=='game') return; if(e.key==='ArrowLeft') goPrev(); else if(e.key==='ArrowRight') goNext(); });
+  let _tsx = 0;
+  document.addEventListener('touchstart', e=>{ _tsx = e.changedTouches[0].clientX; }, {passive:true});
+  document.addEventListener('touchend', e=>{ if(viewMode!=='game') return; const dx = e.changedTouches[0].clientX - _tsx; if(Math.abs(dx) < 60) return; if(dx>0) goPrev(); else goNext(); }, {passive:true});
   function end(){
     $('#game').innerHTML = `<div class="end">
       <div class="sc">${score}점</div>
