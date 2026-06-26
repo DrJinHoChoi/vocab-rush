@@ -1,8 +1,9 @@
 {
-  "_README": "직접 판매(수주) 광고 설정. 광고를 끼우려면 해당 슬롯 배열에 항목을 추가하세요(코드 수정 불필요). type=image(img: 이미지 URL) | video(video: 영상 URL) | html. link=클릭 시 이동 주소, advertiser=광고주명(리포트용), alt=대체텍스트, start/end=게재 기간(ISO 날짜, 생략 시 상시), seconds=전면광고 노출 초. 여러 개 넣으면 순서대로 번갈아 노출(로테이션). _example/_README 항목은 무시됨.",
+  "_README": "직접 판매(수주) 광고 설정. 광고를 끼우려면 해당 슬롯 배열에 항목을 추가하세요(코드 수정 불필요). type=image(img: 이미지 URL) | video(video: 영상 URL) | html. link=클릭 시 이동 주소, advertiser=광고주명(리포트용), alt=대체텍스트, start/end=게재 기간(ISO 날짜, 생략 시 상시), seconds=전면광고 노출 초. 여러 개 넣으면 순서대로 번갈아 노출(로테이션). _example/_README 항목은 무시됨. reportEndpoint=노출/클릭 수집 서버 URL(비우면 /ad-event). scripts/ad-collector.gs 의 Apps Script 웹앱 URL을 붙여넣으면 전 키오스크 노출이 구글 시트에 모임.",
   "kioskMode": false,
   "idleSeconds": 60,
   "interstitialOnEnd": false,
+  "reportEndpoint": "",
   "slots": {
     "bottom": [
       { "id": "house-doyou", "advertiser": "DOYOU", "type": "html", "link": "/doyu-popup-match.html", "alt": "DOYOU 팝업스토어", "html": "<div style='display:flex;align-items:center;justify-content:center;gap:10px;height:100%;background:#141413;color:#FAF5EB;font-size:13px'><b style='color:#F5B60B'>DOYOU 팝업스토어</b><span>입점 브랜드 매칭 →</span></div>" }

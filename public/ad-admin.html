@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#FAF5EB" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>광고 관리 - STUDY RUSH</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #FAF5EB; color: #141413; font-family: 'Noto Sans KR', -apple-system, BlinkMacSystemFont, sans-serif; line-height: 1.6; }
+
+    /* ---- header bar ---- */
+    nav { position: sticky; top: 0; z-index: 60; background: #FFFEFB; border-bottom: 1px solid #E3DCCB; padding: 12px 20px; }
+    nav .inner { max-width: 960px; margin: 0 auto; display: flex; flex-wrap: nowrap; overflow-x: auto; gap: 8px 16px; align-items: center; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
+    nav .inner::-webkit-scrollbar { display: none; }
+    nav .inner > a, nav .inner > span { white-space: nowrap; flex: 0 0 auto; }
+    nav a { color: #7C766B; text-decoration: none; font-size: 13px; }
+    nav a:hover { color: #43618A; }
+    nav .brand { color: #141413; font-weight: 800; font-size: 15px; }
+    nav .sep { color: #C7BFAE; font-size: 14px; margin: 0 -8px; }
+    nav .crumb { color: #6E6657; font-size: 13px; font-weight: 600; margin-right: 8px; }
+    nav .spacer { flex: 1 1 auto; }
+
+    .wrap { max-width: 960px; margin: 0 auto; padding: 26px 20px 80px; }
+    h1 { color: #141413; font-size: 26px; margin: 0 0 6px; }
+    .subtitle { color: #7C766B; font-size: 14.5px; margin: 0 0 18px; }
+
+    /* ---- banners ---- */
+    .banner { border-radius: 12px; padding: 12px 16px; margin-bottom: 12px; font-size: 13.5px; line-height: 1.55; }
+    .banner.info { background: #FBF8F0; border: 1px solid #E3DCCB; color: #3F3A33; }
+    .banner.info b { color: #43618A; }
+    .banner.warn { background: #FEF7E6; border: 1px solid #F5B60B; color: #7A5A00; font-weight: 600; }
+
+    /* ---- generic card ---- */
+    .card { background: #FFFEFB; border: 1px solid #E3DCCB; border-radius: 14px; padding: 18px; margin-bottom: 18px; }
+    .card > h2 { margin: 0 0 4px; font-size: 18px; color: #141413; }
+    .card > .hint { margin: 0 0 14px; font-size: 12.5px; color: #7C766B; }
+
+    /* ---- settings grid ---- */
+    .settings { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; }
+    .field { display: flex; flex-direction: column; gap: 6px; }
+    .field > label { font-size: 12.5px; font-weight: 600; color: #6E6657; }
+    .field .sub { font-size: 11.5px; color: #7C766B; font-weight: 400; }
+    .check { display: flex; align-items: center; gap: 9px; cursor: pointer; padding: 9px 0; }
+    .check input { width: 18px; height: 18px; accent-color: #F5B60B; cursor: pointer; }
+    .check span { font-size: 13.5px; color: #141413; }
+
+    input[type=text], input[type=number], input[type=date], select, textarea {
+      width: 100%; background: #FFFEFB; border: 1px solid #E3DCCB; border-radius: 8px;
+      padding: 9px 10px; font-size: 13.5px; color: #141413;
+      font-family: 'Noto Sans KR', -apple-system, sans-serif; line-height: 1.5;
+    }
+    textarea { resize: vertical; min-height: 76px; }
+    input:focus, select:focus, textarea:focus { outline: 2px solid #F5B60B; outline-offset: 0; border-color: #F5B60B; }
+    input::placeholder, textarea::placeholder { color: #B3AB9A; }
+
+    /* ---- buttons ---- */
+    button { font-family: inherit; cursor: pointer; border-radius: 8px; font-weight: 700; font-size: 13.5px; padding: 9px 16px; border: 1px solid transparent; transition: opacity .12s, background .12s; }
+    button:hover { opacity: .9; }
+    .btn-primary { background: #141413; color: #FAF5EB; border-color: #141413; }
+    .btn-secondary { background: #FFFEFB; color: #141413; border: 1px solid #141413; }
+    .btn-add { background: #FFFEFB; color: #15803D; border: 1px dashed #15803D; width: 100%; padding: 11px; margin-top: 2px; }
+    .btn-add:hover { background: #F4FBF5; opacity: 1; }
+    .btn-del { background: #FFFEFB; color: #C75D3A; border: 1px solid #E5C2B5; padding: 7px 13px; font-size: 12.5px; }
+    .btn-del:hover { background: #FBEEE9; border-color: #C75D3A; opacity: 1; }
+
+    /* ---- slot section ---- */
+    .slot-head { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; flex-wrap: wrap; margin-bottom: 4px; }
+    .slot-head h2 { margin: 0; font-size: 18px; color: #141413; }
+    .slot-head .tag { font-size: 11.5px; color: #7C766B; }
+    .empty { font-size: 13px; color: #7C766B; background: #FBF8F0; border: 1px dashed #E3DCCB; border-radius: 10px; padding: 16px; text-align: center; margin: 10px 0; }
+
+    /* ---- ad editor card ---- */
+    .ad { border: 1px solid #E3DCCB; border-radius: 12px; padding: 14px; margin: 12px 0; background: #FBF8F0; }
+    .ad-top { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 12px; }
+    .ad-top .adid { font-size: 11.5px; color: #7C766B; font-family: ui-monospace, Menlo, Consolas, monospace; background: #FFFEFB; border: 1px solid #E3DCCB; border-radius: 6px; padding: 3px 8px; }
+    .ad-body { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .ad-body .full { grid-column: 1 / -1; }
+    @media (max-width: 620px) { .ad-body { grid-template-columns: 1fr; } }
+
+    .ad-preview-wrap { grid-column: 1 / -1; }
+    .ad-preview-wrap > .plab { font-size: 12.5px; font-weight: 600; color: #6E6657; margin-bottom: 7px; }
+    .warn-inline { font-size: 12px; color: #DC2626; margin-top: 6px; font-weight: 600; display: none; }
+    .warn-inline.show { display: block; }
+
+    /* ---- live preview (mimics engine) ---- */
+    .pv-frame { background: #FFFFFF; border: 1px solid #E3DCCB; border-radius: 8px; padding: 12px; display: flex; justify-content: center; }
+    .pv { position: relative; overflow: hidden; background: #EFEADD; border: 1px dashed #D8CFBC; }
+    .pv.bottom { width: 100%; height: 60px; border-radius: 6px; }
+    .pv.result { width: 300px; max-width: 100%; height: 150px; border-radius: 10px; }
+    .pv.interstitial { width: 280px; height: 210px; border-radius: 10px; } /* 4:3 */
+    .pv .adlabel { position: absolute; top: 4px; left: 5px; z-index: 5; font-size: 9px; line-height: 1; letter-spacing: .03em; color: #fff; background: rgba(20,20,19,.62); border-radius: 3px; padding: 2px 5px; pointer-events: none; }
+    .pv a.creative { display: block; width: 100%; height: 100%; text-decoration: none; color: inherit; }
+    .pv a.creative img, .pv a.creative video { display: block; width: 100%; height: 100%; object-fit: cover; }
+    .pv .empty-pv { display: flex; align-items: center; justify-content: center; width: 100%; height: 100%; font-size: 12px; color: #9C9484; text-align: center; padding: 8px; }
+
+    /* ---- output ---- */
+    #outputCard { position: sticky; bottom: 0; }
+    .out-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; margin-bottom: 10px; }
+    .out-head h2 { margin: 0; font-size: 18px; }
+    .out-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+    pre#json { background: #1f1d1a; color: #EDE7DA; border-radius: 10px; padding: 14px; font-size: 12.5px; line-height: 1.5; overflow: auto; max-height: 320px; margin: 0; font-family: ui-monospace, Menlo, Consolas, monospace; white-space: pre; }
+    .toast { font-size: 12.5px; color: #15803D; font-weight: 600; margin-left: 4px; opacity: 0; transition: opacity .2s; }
+    .toast.show { opacity: 1; }
+    .loadnote { font-size: 12.5px; color: #7C766B; margin: 0 0 14px; }
+    .loadnote.err { color: #C75D3A; }
+  </style>
+</head>
+<body>
+  <nav><div class="inner">
+    <a class="brand" href="/">STUDY RUSH</a>
+    <span class="sep">/</span>
+    <span class="crumb">· 광고 관리(CMS)</span>
+    <span class="spacer"></span>
+    <a href="/suneung-quiz.html">수능 게임</a>
+    <a href="/ad-report.html">광고 리포트</a>
+  </div></nav>
+
+  <div class="wrap">
+    <h1>광고 관리 (CMS)</h1>
+    <p class="subtitle">키오스크 직접 판매(수주) 광고를 시각적으로 편집하고, 결과 JSON을 내보냅니다.</p>
+
+    <div class="banner info">📦 편집한 JSON을 <b>public/ads/kiosk-ads.json</b> 에 커밋/업로드하면 전 키오스크에 반영됩니다. (실시간 원격 푸시는 추후 KV 연동 예정)</div>
+    <div class="banner warn">⚠️ 관리 도구입니다 — 공개 링크에 노출하지 말고, 추후 반드시 인증을 거세요.</div>
+
+    <p class="loadnote" id="loadNote">설정을 불러오는 중…</p>
+
+    <!-- 전역 설정 -->
+    <div class="card">
+      <h2>전역 설정</h2>
+      <p class="hint">키오스크 모드와 유휴/전면 광고 동작을 제어합니다.</p>
+      <div class="settings">
+        <div class="field">
+          <label class="check"><input type="checkbox" id="kioskMode"><span>키오스크 모드 (kioskMode)</span></label>
+          <span class="sub">매장 키오스크 전용 UI/광고 노출을 켭니다.</span>
+        </div>
+        <div class="field">
+          <label for="idleSeconds">유휴 시간 (idleSeconds, 초)</label>
+          <input type="number" id="idleSeconds" min="0" step="1" placeholder="60">
+          <span class="sub">입력 없이 이 시간이 지나면 전면 광고가 뜹니다.</span>
+        </div>
+        <div class="field">
+          <label class="check"><input type="checkbox" id="interstitialOnEnd"><span>종료 시 전면 광고 (interstitialOnEnd)</span></label>
+          <span class="sub">게임이 끝날 때 전면 광고를 노출합니다.</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 슬롯 섹션들 -->
+    <div class="card" data-slot="bottom">
+      <div class="slot-head">
+        <h2>하단 띠배너</h2>
+        <span class="tag">slots.bottom · 화면 하단 고정 가로 배너 (약 60px)</span>
+      </div>
+      <div class="ad-list" id="list-bottom"></div>
+      <button class="btn-add" data-add="bottom">+ 광고 추가</button>
+    </div>
+
+    <div class="card" data-slot="result">
+      <div class="slot-head">
+        <h2>결과 카드</h2>
+        <span class="tag">slots.result · 결과 화면 인-콘텐츠 카드 (336×170)</span>
+      </div>
+      <div class="ad-list" id="list-result"></div>
+      <button class="btn-add" data-add="result">+ 광고 추가</button>
+    </div>
+
+    <div class="card" data-slot="interstitial">
+      <div class="slot-head">
+        <h2>전면 광고</h2>
+        <span class="tag">slots.interstitial · 전체화면 어트랙트 (4:3) · 노출 초 사용</span>
+      </div>
+      <div class="ad-list" id="list-interstitial"></div>
+      <button class="btn-add" data-add="interstitial">+ 광고 추가</button>
+    </div>
+
+    <!-- 출력 -->
+    <div class="card" id="outputCard">
+      <div class="out-head">
+        <h2>결과 JSON</h2>
+        <div class="out-actions">
+          <span class="toast" id="toast">복사됨</span>
+          <button class="btn-secondary" id="btnCopy">JSON 복사</button>
+          <button class="btn-primary" id="btnDownload">kiosk-ads.json 다운로드</button>
+        </div>
+      </div>
+      <pre id="json">{}</pre>
+    </div>
+  </div>
+
+  <script>
+  (function () {
+    'use strict';
+
+    var SLOTS = ['bottom', 'result', 'interstitial'];
+    var TYPE_LABELS = { image: '이미지', video: '영상', html: 'HTML' };
+
+    // ---- application state ----
+    // We keep settings + per-slot ad arrays here. _README and slots._example are
+    // preserved verbatim in `preserved` and re-emitted on output (never editable).
+    var state = {
+      kioskMode: false,
+      idleSeconds: 60,
+      interstitialOnEnd: false,
+      slots: { bottom: [], result: [], interstitial: [] }
+    };
+    var preserved = { _README: undefined, _example: undefined };
+
+    var MINIMAL = {
+      kioskMode: false, idleSeconds: 60, interstitialOnEnd: false,
+      slots: { bottom: [], result: [], interstitial: [] }
+    };
+
+    // ---- helpers ----
+    function esc(s) {
+      return String(s == null ? '' : s)
+        .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+    }
+    function escAttr(s) { return esc(s); }
+    function newId() { return 'adv-' + Date.now(); }
+
+    // ---- load ----
+    var loadNote = document.getElementById('loadNote');
+    function ingest(cfg) {
+      state.kioskMode = !!cfg.kioskMode;
+      state.idleSeconds = (cfg.idleSeconds === 0 || cfg.idleSeconds) ? cfg.idleSeconds : 60;
+      state.interstitialOnEnd = !!cfg.interstitialOnEnd;
+      var s = cfg.slots || {};
+      SLOTS.forEach(function (k) { state.slots[k] = Array.isArray(s[k]) ? s[k].map(cloneAd) : []; });
+      if (typeof cfg._README === 'string') preserved._README = cfg._README;
+      if (s && s._example !== undefined) preserved._example = s._example; // verbatim
+    }
+    function cloneAd(a) {
+      a = a || {};
+      return {
+        id: a.id || newId(),
+        advertiser: a.advertiser || '',
+        type: (a.type === 'video' || a.type === 'html') ? a.type : (a.type === 'image' ? 'image' : 'image'),
+        img: a.img || '',
+        video: a.video || '',
+        html: a.html || '',
+        link: a.link || '',
+        alt: a.alt || '',
+        start: a.start || '',
+        end: a.end || '',
+        seconds: (a.seconds === 0 || a.seconds) ? a.seconds : ''
+      };
+    }
+
+    fetch('/ads/kiosk-ads.json?cb=' + Date.now())
+      .then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
+      .then(function (cfg) {
+        ingest(cfg);
+        loadNote.textContent = '✓ /ads/kiosk-ads.json 불러옴 — _README와 _example은 그대로 보존됩니다.';
+        renderAll();
+      })
+      .catch(function (err) {
+        ingest(MINIMAL);
+        loadNote.className = 'loadnote err';
+        loadNote.textContent = '기존 설정을 불러오지 못해 빈 템플릿으로 시작합니다 (' + err.message + ').';
+        renderAll();
+      });
+
+    // ---- bind global settings ----
+    var elKiosk = document.getElementById('kioskMode');
+    var elIdle = document.getElementById('idleSeconds');
+    var elInter = document.getElementById('interstitialOnEnd');
+    elKiosk.addEventListener('change', function () { state.kioskMode = elKiosk.checked; refreshOutput(); });
+    elInter.addEventListener('change', function () { state.interstitialOnEnd = elInter.checked; refreshOutput(); });
+    elIdle.addEventListener('input', function () {
+      var v = elIdle.value;
+      state.idleSeconds = v === '' ? '' : Number(v);
+      refreshOutput();
+    });
+
+    // ---- add buttons ----
+    document.querySelectorAll('[data-add]').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var slot = btn.getAttribute('data-add');
+        state.slots[slot].push(cloneAd({ id: newId(), type: 'image' }));
+        renderSlot(slot);
+        refreshOutput();
+      });
+    });
+
+    // ---- render ----
+    function renderAll() {
+      elKiosk.checked = state.kioskMode;
+      elIdle.value = state.idleSeconds;
+      elInter.checked = state.interstitialOnEnd;
+      SLOTS.forEach(renderSlot);
+      refreshOutput();
+    }
+
+    function renderSlot(slot) {
+      var list = document.getElementById('list-' + slot);
+      var ads = state.slots[slot];
+      list.innerHTML = '';
+      if (!ads.length) {
+        var e = document.createElement('div');
+        e.className = 'empty';
+        e.textContent = '등록된 광고가 없습니다. 아래 ‘+ 광고 추가’로 시작하세요.';
+        list.appendChild(e);
+        return;
+      }
+      ads.forEach(function (ad, i) { list.appendChild(buildAdCard(slot, ad, i)); });
+    }
+
+    function buildAdCard(slot, ad, index) {
+      var wrap = document.createElement('div');
+      wrap.className = 'ad';
+      var isInter = slot === 'interstitial';
+
+      var typeOpts = ['image', 'video', 'html'].map(function (t) {
+        return '<option value="' + t + '"' + (ad.type === t ? ' selected' : '') + '>' + TYPE_LABELS[t] + '</option>';
+      }).join('');
+
+      var secondsField = isInter ?
+        '<div class="field">' +
+          '<label>노출 초 (seconds)</label>' +
+          '<input type="number" data-f="seconds" min="0" step="1" placeholder="예: 8" value="' + escAttr(ad.seconds) + '">' +
+        '</div>' : '';
+
+      wrap.innerHTML =
+        '<div class="ad-top">' +
+          '<span class="adid">' + esc(ad.id) + '</span>' +
+          '<button class="btn-del" data-del="1">삭제</button>' +
+        '</div>' +
+        '<div class="ad-body">' +
+          '<div class="field">' +
+            '<label>광고주 (advertiser)</label>' +
+            '<input type="text" data-f="advertiser" placeholder="광고주명 (리포트용)" value="' + escAttr(ad.advertiser) + '">' +
+          '</div>' +
+          '<div class="field">' +
+            '<label>유형 (type)</label>' +
+            '<select data-f="type">' + typeOpts + '</select>' +
+          '</div>' +
+          '<div class="field full" data-creativewrap>' + creativeFieldHtml(ad) + '</div>' +
+          '<div class="field">' +
+            '<label>링크 (link)</label>' +
+            '<input type="text" data-f="link" placeholder="클릭 시 이동 주소 (URL 또는 /경로)" value="' + escAttr(ad.link) + '">' +
+          '</div>' +
+          '<div class="field">' +
+            '<label>대체텍스트 (alt)</label>' +
+            '<input type="text" data-f="alt" placeholder="이미지 대체 텍스트" value="' + escAttr(ad.alt) + '">' +
+          '</div>' +
+          '<div class="field">' +
+            '<label>게재 시작 (start)</label>' +
+            '<input type="date" data-f="start" value="' + escAttr(ad.start) + '">' +
+          '</div>' +
+          '<div class="field">' +
+            '<label>게재 종료 (end)</label>' +
+            '<input type="date" data-f="end" value="' + escAttr(ad.end) + '">' +
+          '</div>' +
+          secondsField +
+          '<div class="ad-preview-wrap">' +
+            '<div class="plab">미리보기 (실제 노출 비율)</div>' +
+            '<div class="pv-frame"><div class="pv ' + slot + '" data-pv></div></div>' +
+            '<div class="warn-inline" data-warn></div>' +
+          '</div>' +
+        '</div>';
+
+      // ---- wire field inputs ----
+      wrap.querySelectorAll('[data-f]').forEach(function (el) {
+        var field = el.getAttribute('data-f');
+        var evt = (el.tagName === 'SELECT') ? 'change' : 'input';
+        el.addEventListener(evt, function () {
+          var val = el.value;
+          if (field === 'seconds') val = (val === '' ? '' : Number(val));
+          ad[field] = val;
+          if (field === 'type') {
+            // swap the conditional creative field, keep other values
+            var cw = wrap.querySelector('[data-creativewrap]');
+            cw.innerHTML = creativeFieldHtml(ad);
+            rewireCreative(wrap, ad);
+          }
+          updatePreview(wrap, slot, ad);
+          refreshOutput();
+        });
+      });
+      rewireCreative(wrap, ad);
+
+      // ---- delete ----
+      wrap.querySelector('[data-del]').addEventListener('click', function () {
+        state.slots[slot].splice(index, 1);
+        renderSlot(slot);
+        refreshOutput();
+      });
+
+      // initial preview (deferred so node is in DOM)
+      setTimeout(function () { updatePreview(wrap, slot, ad); }, 0);
+      return wrap;
+    }
+
+    function creativeFieldHtml(ad) {
+      if (ad.type === 'image') {
+        return '<label>이미지 URL (img)</label>' +
+          '<input type="text" data-f="img" placeholder="https://… 이미지 주소" value="' + escAttr(ad.img) + '">';
+      }
+      if (ad.type === 'video') {
+        return '<label>영상 URL (video)</label>' +
+          '<input type="text" data-f="video" placeholder="https://… mp4 영상 주소" value="' + escAttr(ad.video) + '">';
+      }
+      return '<label>HTML (html)</label>' +
+        '<textarea data-f="html" placeholder="&lt;div&gt;…직접 HTML…&lt;/div&gt;">' + esc(ad.html) + '</textarea>';
+    }
+
+    // (re)attach listeners to the conditional creative field after a type swap
+    function rewireCreative(wrap, ad) {
+      var cw = wrap.querySelector('[data-creativewrap]');
+      var el = cw.querySelector('[data-f]');
+      if (!el) return;
+      var field = el.getAttribute('data-f');
+      el.addEventListener('input', function () {
+        ad[field] = el.value;
+        updatePreview(wrap, wrap.querySelector('.pv').classList.contains('bottom') ? 'bottom'
+          : (wrap.querySelector('.pv').classList.contains('result') ? 'result' : 'interstitial'), ad);
+        refreshOutput();
+      });
+    }
+
+    // ---- live preview: renders exactly like the engine ----
+    function updatePreview(wrap, slot, ad) {
+      var pv = wrap.querySelector('[data-pv]');
+      var warn = wrap.querySelector('[data-warn]');
+      if (!pv) return;
+
+      var creative = '';
+      var missing = false;
+      if (ad.type === 'image') {
+        if (ad.img) creative = '<img src="' + escAttr(ad.img) + '" alt="' + escAttr(ad.alt) + '">';
+        else missing = true;
+      } else if (ad.type === 'video') {
+        if (ad.video) creative = '<video src="' + escAttr(ad.video) + '" autoplay muted loop playsinline></video>';
+        else missing = true;
+      } else { // html — engine injects the raw string
+        creative = ad.html || '';
+        if (!creative) creative = '<div class="empty-pv">HTML 내용을 입력하세요</div>';
+      }
+
+      if (missing) {
+        pv.innerHTML = '<span class="adlabel">광고</span>' +
+          '<div class="empty-pv">' + (ad.type === 'image' ? '이미지 URL을 입력하세요' : '영상 URL을 입력하세요') + '</div>';
+      } else {
+        var href = ad.link ? escAttr(ad.link) : '#';
+        pv.innerHTML = '<span class="adlabel">광고</span>' +
+          '<a class="creative" href="' + href + '" onclick="return false;" rel="noopener">' + creative + '</a>';
+      }
+
+      // inline, non-blocking validation
+      if ((ad.type === 'image' && !ad.img) || (ad.type === 'video' && !ad.video)) {
+        warn.textContent = '⚠ ' + (ad.type === 'image' ? '이미지' : '영상') + ' URL이 비어 있습니다 — 게시 전에 입력하세요.';
+        warn.classList.add('show');
+      } else {
+        warn.classList.remove('show');
+        warn.textContent = '';
+      }
+    }
+
+    // ---- build output object (preserving _README + _example verbatim) ----
+    function cleanAd(a) {
+      // emit only the meaningful keys, matching the source schema
+      var out = { id: a.id, advertiser: a.advertiser, type: a.type };
+      if (a.type === 'image') out.img = a.img;
+      else if (a.type === 'video') out.video = a.video;
+      else out.html = a.html;
+      out.link = a.link;
+      if (a.alt !== '' && a.alt != null) out.alt = a.alt;
+      if (a.start !== '' && a.start != null) out.start = a.start;
+      if (a.end !== '' && a.end != null) out.end = a.end;
+      if (a.seconds !== '' && a.seconds != null) out.seconds = a.seconds;
+      return out;
+    }
+
+    function buildConfig() {
+      var cfg = {};
+      if (preserved._README !== undefined) cfg._README = preserved._README; // verbatim
+      cfg.kioskMode = state.kioskMode;
+      cfg.idleSeconds = state.idleSeconds === '' ? 0 : state.idleSeconds;
+      cfg.interstitialOnEnd = state.interstitialOnEnd;
+      cfg.slots = {
+        bottom: state.slots.bottom.map(cleanAd),
+        result: state.slots.result.map(cleanAd),
+        interstitial: state.slots.interstitial.map(cleanAd)
+      };
+      if (preserved._example !== undefined) cfg.slots._example = preserved._example; // verbatim
+      return cfg;
+    }
+
+    var preEl = document.getElementById('json');
+    function refreshOutput() {
+      preEl.textContent = JSON.stringify(buildConfig(), null, 2);
+    }
+
+    // ---- copy / download ----
+    var toast = document.getElementById('toast');
+    function flash(msg) {
+      toast.textContent = msg; toast.classList.add('show');
+      setTimeout(function () { toast.classList.remove('show'); }, 1600);
+    }
+    document.getElementById('btnCopy').addEventListener('click', function () {
+      var text = JSON.stringify(buildConfig(), null, 2);
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(function () { flash('복사됨'); },
+          function () { fallbackCopy(text); });
+      } else { fallbackCopy(text); }
+    });
+    function fallbackCopy(text) {
+      var ta = document.createElement('textarea');
+      ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
+      document.body.appendChild(ta); ta.select();
+      try { document.execCommand('copy'); flash('복사됨'); } catch (e) { flash('복사 실패'); }
+      document.body.removeChild(ta);
+    }
+    document.getElementById('btnDownload').addEventListener('click', function () {
+      var text = JSON.stringify(buildConfig(), null, 2);
+      var blob = new Blob([text], { type: 'application/json' });
+      var url = URL.createObjectURL(blob);
+      var a = document.createElement('a');
+      a.href = url; a.download = 'kiosk-ads.json';
+      document.body.appendChild(a); a.click(); document.body.removeChild(a);
+      setTimeout(function () { URL.revokeObjectURL(url); }, 1000);
+      flash('다운로드됨');
+    });
+  })();
+  </script>
+</body>
+</html>

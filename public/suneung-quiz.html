@@ -717,7 +717,7 @@
     function logAd(ev, slot, ad){
       const rec = { ev: ev, slot: slot, ad: ad && ad.id, adv: ad && ad.advertiser, page: 'suneung-quiz', kiosk: KIOSK, t: T() };
       try { const k='srush.adlog', l=JSON.parse(localStorage.getItem(k)||'[]'); l.push(rec); if (l.length>800) l.splice(0, l.length-800); localStorage.setItem(k, JSON.stringify(l)); } catch(e){}
-      try { navigator.sendBeacon && navigator.sendBeacon('/ad-event', JSON.stringify(rec)); } catch(e){}
+      try { const ep = (cfg && cfg.reportEndpoint) || '/ad-event'; navigator.sendBeacon && navigator.sendBeacon(ep, JSON.stringify(rec)); } catch(e){}
     }
     function activeAds(slot){ const l = cfg.slots[slot] || []; const t = T(); return l.filter(a => (a.start?Date.parse(a.start):0) <= t && t <= (a.end?Date.parse(a.end):8e15)); }
     function nextAd(slot){ const l = activeAds(slot); if (!l.length) return null; const i = (rot[slot]||0) % l.length; rot[slot] = i+1; return l[i]; }
