@@ -71,6 +71,19 @@
     th { background: #FBF8F0; color: #141413; } td:first-child { text-align: left; color: #3F3A33; }
     footer { margin-top: 44px; padding-top: 22px; border-top: 1px solid #E3DCCB; font-size: 13px; color: #6E6657; } footer a { color: #7C766B; }
     .muted { color:#7C766B; font-size:13px; }
+    /* 직접 판매 광고 슬롯 (키오스크/직접광고 — Google AdSense 아님) */
+    .adslot { position: relative; background: #FBF8F0; border: 1px solid #E3DCCB; border-radius: 12px; overflow: hidden; }
+    .adslot .ad-label { position: absolute; top: 6px; left: 7px; font-size: 9.5px; font-weight: 700; letter-spacing: .03em; color: #8A8170; background: rgba(255,254,251,.9); border: 1px solid #E3DCCB; border-radius: 4px; padding: 1px 5px; z-index: 3; pointer-events: none; }
+    .adslot .ad-link { display: block; width: 100%; height: 100%; text-decoration: none; color: inherit; }
+    .adslot img, .adslot video { display: block; width: 100%; height: 100%; object-fit: cover; }
+    #adResult { width: 100%; max-width: 336px; height: 170px; margin: 14px auto 0; }
+    #adBottom { position: fixed; left: 0; right: 0; bottom: 0; z-index: 70; background: #FFFEFB; border-top: 1px solid #E3DCCB; padding: 6px; display: none; }
+    #adBottom .ad-inner { max-width: 728px; margin: 0 auto; }
+    #adBottom .adslot { height: 60px; border-radius: 8px; }
+    body.has-bottom-ad { padding-bottom: 80px; }
+    #adInter { position: fixed; inset: 0; z-index: 200; background: rgba(20,20,19,.92); display: none; align-items: center; justify-content: center; flex-direction: column; padding: 22px; }
+    #adInter .ad-stage { width: 100%; max-width: 460px; aspect-ratio: 4 / 3; }
+    #adInter .ad-skip { margin-top: 18px; color: #FAF5EB; font-size: 13px; background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.35); border-radius: 99px; padding: 9px 22px; cursor: pointer; }
   </style>
   <script type="application/ld+json">
   {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
@@ -587,9 +600,11 @@
       <div class="sc">${score}점</div>
       <p class="muted" style="margin:8px 0 16px">${order.length}문제 · ${diff.toUpperCase()} 난이도 완료</p>
       <button class="btn" id="shareR" style="max-width:260px;margin:0 auto 10px;background:#7c3aed">🔗 결과 공유 · 친구에게 도전</button>
-      <button class="btn" id="again" style="max-width:260px;margin:0 auto">다시 풀기</button></div>`;
+      <button class="btn" id="again" style="max-width:260px;margin:0 auto">다시 풀기</button>
+      <div class="adslot" id="adResult"></div></div>`;
     $('#again').addEventListener('click', start);
     $('#shareR').addEventListener('click', () => shareResult(score, order.length));
+    if (window.SRushAds) { SRushAds.renderResult(); SRushAds.onGameEnd(); }
   }
   function shareResult(sc, n){
     const url = 'https://www.datapd.ai/suneung-quiz.html';
@@ -688,6 +703,63 @@
       d.problems.forEach(p => QB.push({ ...p, verified: true }));
     }
   }).catch(() => {});
+
+  // ===== 직접 판매 광고 엔진 (키오스크/직접광고 — Google AdSense 아님) =====
+  // 광고 교체: public/ads/kiosk-ads.json 의 slots 배열만 수정(코드 무수정). ?kiosk=1 로 키오스크 모드.
+  (function(){
+    const params = new URLSearchParams(location.search);
+    const KIOSK = params.get('kiosk') === '1' || localStorage.getItem('srush.kiosk') === '1';
+    if (params.get('kiosk') === '1') { try { localStorage.setItem('srush.kiosk','1'); } catch(e){} }
+    if (params.get('kiosk') === '0') { try { localStorage.removeItem('srush.kiosk'); } catch(e){} }
+    let cfg = { idleSeconds: 60, interstitialOnEnd: false, slots: {} };
+    const rot = {};
+    const T = () => Date.now();
+    function logAd(ev, slot, ad){
+      const rec = { ev: ev, slot: slot, ad: ad && ad.id, adv: ad && ad.advertiser, page: 'suneung-quiz', kiosk: KIOSK, t: T() };
+      try { const k='srush.adlog', l=JSON.parse(localStorage.getItem(k)||'[]'); l.push(rec); if (l.length>800) l.splice(0, l.length-800); localStorage.setItem(k, JSON.stringify(l)); } catch(e){}
+      try { navigator.sendBeacon && navigator.sendBeacon('/ad-event', JSON.stringify(rec)); } catch(e){}
+    }
+    function activeAds(slot){ const l = cfg.slots[slot] || []; const t = T(); return l.filter(a => (a.start?Date.parse(a.start):0) <= t && t <= (a.end?Date.parse(a.end):8e15)); }
+    function nextAd(slot){ const l = activeAds(slot); if (!l.length) return null; const i = (rot[slot]||0) % l.length; rot[slot] = i+1; return l[i]; }
+    function creative(ad){
+      if (ad.type === 'image') return '<img src="'+ad.img+'" alt="'+String(ad.alt||'').replace(/"/g,'')+'">';
+      if (ad.type === 'video') return '<video src="'+ad.video+'" autoplay muted loop playsinline></video>';
+      return ad.html || '';
+    }
+    function fill(host, slot, ad){
+      if (!host) return false;
+      if (!ad) { host.innerHTML = ''; return false; }
+      const ext = /^https?:/.test(ad.link||'');
+      host.innerHTML = '<span class="ad-label">광고</span><a class="ad-link" href="'+(ad.link||'#')+'"'+(ext?' target="_blank" rel="noopener"':'')+'>'+creative(ad)+'</a>';
+      const a = host.querySelector('.ad-link'); if (a) a.addEventListener('click', () => logAd('click', slot, ad));
+      logAd('impression', slot, ad);
+      return true;
+    }
+    function renderBottom(){
+      const el = document.getElementById('adBottom'); if (!el) return;
+      const ad = KIOSK ? nextAd('bottom') : null;
+      if (fill(el.querySelector('.ad-body'), 'bottom', ad)) { el.style.display = 'block'; document.body.classList.add('has-bottom-ad'); }
+      else { el.style.display = 'none'; document.body.classList.remove('has-bottom-ad'); }
+    }
+    function renderResult(){ const el = document.getElementById('adResult'); if (!el) return; el.style.display = fill(el, 'result', nextAd('result')) ? 'block' : 'none'; }
+    let interT = null;
+    function showInter(){
+      const el = document.getElementById('adInter'); if (!el) return;
+      const ad = nextAd('interstitial'); if (!ad) return;
+      if (!fill(el.querySelector('.ad-stage'), 'interstitial', ad)) return;
+      el.style.display = 'flex';
+      clearTimeout(interT); interT = setTimeout(hideInter, (ad.seconds || 8) * 1000);
+    }
+    function hideInter(){ const el = document.getElementById('adInter'); if (el) el.style.display = 'none'; clearTimeout(interT); }
+    let idleT = null;
+    function resetIdle(){ if (!KIOSK) return; clearTimeout(idleT); idleT = setTimeout(showInter, (cfg.idleSeconds||60)*1000); }
+    function wake(e){ const el = document.getElementById('adInter'); if (el && el.style.display === 'flex') { if (!(e && e.target && e.target.closest && e.target.closest('.ad-link'))) hideInter(); } resetIdle(); }
+    ['click','touchstart','keydown'].forEach(ev => document.addEventListener(ev, wake, { passive: true }));
+    window.SRushAds = { KIOSK: KIOSK, renderResult: renderResult, onGameEnd: function(){ if (KIOSK && cfg.interstitialOnEnd) showInter(); }, showInterstitial: showInter, hideInterstitial: hideInter };
+    fetch('/ads/kiosk-ads.json?cb=' + Date.now()).then(r => r.ok ? r.json() : null).then(d => { if (d) cfg = Object.assign(cfg, d); renderBottom(); resetIdle(); }).catch(()=>{});
+  })();
 </script>
+<div id="adBottom"><div class="ad-inner"><div class="adslot ad-body"></div></div></div>
+<div id="adInter"><div class="adslot ad-stage"></div><div class="ad-skip" id="adSkip">터치하여 계속 · 건너뛰기</div></div>
 </body>
 </html>

@@ -1,0 +1,21 @@
+{
+  "_README": "직접 판매(수주) 광고 설정. 광고를 끼우려면 해당 슬롯 배열에 항목을 추가하세요(코드 수정 불필요). type=image(img: 이미지 URL) | video(video: 영상 URL) | html. link=클릭 시 이동 주소, advertiser=광고주명(리포트용), alt=대체텍스트, start/end=게재 기간(ISO 날짜, 생략 시 상시), seconds=전면광고 노출 초. 여러 개 넣으면 순서대로 번갈아 노출(로테이션). _example/_README 항목은 무시됨.",
+  "kioskMode": false,
+  "idleSeconds": 60,
+  "interstitialOnEnd": false,
+  "slots": {
+    "bottom": [
+      { "id": "house-doyou", "advertiser": "DOYOU", "type": "html", "link": "/doyu-popup-match.html", "alt": "DOYOU 팝업스토어", "html": "<div style='display:flex;align-items:center;justify-content:center;gap:10px;height:100%;background:#141413;color:#FAF5EB;font-size:13px'><b style='color:#F5B60B'>DOYOU 팝업스토어</b><span>입점 브랜드 매칭 →</span></div>" }
+    ],
+    "result": [
+      { "id": "house-plan", "advertiser": "STUDY RUSH", "type": "html", "link": "/plan.html", "alt": "스터디 플래너", "html": "<div style='display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;background:#FBF8F0;text-align:center;padding:14px'><b style='font-size:15px;color:#141413'>막강 스터디 플래너</b><span style='font-size:12px;color:#6E6657;margin-top:4px'>시험 D-day 역산 계획 — 무료</span></div>" }
+    ],
+    "interstitial": [
+      { "id": "house-inquiry", "advertiser": "광고 문의", "type": "html", "link": "mailto:jinho.choi1010@gmail.com", "alt": "광고 문의", "seconds": 8, "html": "<div style='display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;background:#FAF5EB;text-align:center;padding:24px'><b style='font-size:22px;color:#141413'>이 자리에 광고</b><span style='font-size:13px;color:#6E6657;margin-top:10px'>전국 매장 키오스크 노출</span><span style='font-size:12px;color:#43618A;margin-top:14px'>광고 문의 · jinho.choi1010@gmail.com</span></div>" }
+    ],
+    "_example": [
+      { "id": "adv-001", "advertiser": "브랜드A", "type": "image", "img": "https://cdn.example.com/banner-728x90.jpg", "link": "https://brandA.example.com", "alt": "브랜드A 광고", "start": "2026-07-01", "end": "2026-07-31" },
+      { "id": "adv-002", "advertiser": "브랜드B", "type": "video", "video": "https://cdn.example.com/ad-15s.mp4", "link": "https://brandB.example.com", "seconds": 15 }
+    ]
+  }
+}
