@@ -65,6 +65,7 @@
   .reasons{ display:flex; flex-wrap:wrap; gap:5px; margin-top:3px; }
   .reasons span{ font-size:10px; font-weight:700; border-radius:999px; padding:1px 7px; }
   .r-good{ color:var(--green); background:#EAF3E7; } .r-mid{ color:var(--bluetx); background:#EAF0F7; } .r-bad{ color:var(--terra); background:#F8ECE6; }
+  .r-price{ color:#6B5208; background:#FBF0CF; border:1px solid #E8D49A; }
 
   .how{ background:var(--surface); border:2px solid var(--ink); border-radius:16px; padding:16px 18px; box-shadow:var(--shadow); font-size:13.5px; }
   .how b{ color:var(--ink); } .how code{ background:var(--bg); border:1px solid var(--line); border-radius:6px; padding:1px 6px; font-size:12.5px; }
@@ -130,6 +131,7 @@
       <p style="margin-bottom:7px"><b>점수 계산 (투명 공개)</b></p>
       <p style="color:var(--muted)"><code>적합도 = 동네의 카테고리 관심도 − 가격대 미스매치 + 연령 적합 보너스</code></p>
       <p style="color:var(--muted); margin-top:6px">· <b>카테고리 관심도</b> — 동네 프로파일이 그 업종에 얼마나 반응하나(0~100).<br/>· <b>가격대 미스매치</b> — 프리미엄 브랜드를 저소득 상권에 넣으면 감점(반대는 소폭).<br/>· <b>연령 적합</b> — 브랜드 타깃 연령이 동네 핵심 연령과 맞으면 가점.</p>
+      <p style="color:var(--muted); margin-top:6px">· <b>추천 단가</b> — 추천 입점에는 <code>적합도 × 동네 소득 × 가격대</code>로 입점 티어(베이직/프로/플래그십급)를 제안. 부촌·고적합일수록 단가↑.</p>
       <p style="color:var(--muted2); font-size:12px; margin-top:8px">※ 실제 운영에서는 유동인구·카드매출·SNS·과거 입점 성과 데이터로 관심도 벡터를 학습해 정교화합니다. 본 데모는 도메인 지식 기반 초기 가중치.</p>
     </div>
 
@@ -199,6 +201,12 @@
     return out;
   }
   function barColor(s){ return s >= 70 ? '#15803D' : (s >= 45 ? '#5B7FA6' : '#C2A98F'); }
+  function priceTier(score, income, p){
+    var val = score*0.3 + income*12 + p*3;
+    if (val >= 82) return ['플래그십급','₩₩₩'];
+    if (val >= 64) return ['프로급','₩₩'];
+    return ['베이직급','₩'];
+  }
 
   var cur = null, curKey = 'beomeo';
 
@@ -211,10 +219,13 @@
     document.getElementById('pick').innerHTML = '✦ 추천 믹스: ' + (top.length ? top.map(function(r){ return r.b.n; }).join(' · ') : '적합 브랜드 부족 — 동네 조건을 조정해 보세요');
     var rows = ranked.slice(0, 12).map(function(r, i){
       var s = r.fp.score, rs = reasons(r.b, h, r.fp);
-      return '<div class="brow' + (i < 6 && s >= 45 ? ' top' : '') + '">' +
+      var isTop = i < 6 && s >= 45;
+      var chips = rs.map(function(x){ return '<span class="' + x[0] + '">' + x[1] + '</span>'; });
+      if (isTop){ var pt = priceTier(s, h.income, r.b.p); chips.unshift('<span class="r-price">' + pt[1] + ' ' + pt[0] + '</span>'); }
+      return '<div class="brow' + (isTop ? ' top' : '') + '">' +
         '<div class="bn">' + r.b.n + '<small>' + CAT[r.b.c] + '</small></div>' +
         '<div><div class="bar"><i style="width:' + s + '%;background:' + barColor(s) + '"></i></div>' +
-          '<div class="reasons">' + rs.map(function(x){ return '<span class="' + x[0] + '">' + x[1] + '</span>'; }).join('') + '</div></div>' +
+          '<div class="reasons">' + chips.join('') + '</div></div>' +
         '<div class="pct" style="color:' + barColor(s) + '">' + s + '</div></div>';
     }).join('');
     document.getElementById('results').innerHTML = rows;
