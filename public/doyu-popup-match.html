@@ -537,6 +537,7 @@
           <h2>추천 입점 존</h2>
           <span class="count" id="resCount"></span>
         </div>
+        <div id="beomeoFit"></div>
         <div class="grid-cards" id="results"></div>
 
         <h2 class="section-title">내 입점 신청 내역</h2>
@@ -701,7 +702,7 @@
 
 <script>
 /* ============== 데이터 ============== */
-const CATEGORIES = ['패션','뷰티','F&B','굿즈/캐릭터','라이프스타일','주얼리/액세서리','스트리트','디자이너'];
+const CATEGORIES = ['교육','재테크','뷰티','패션','F&B','웰니스','라이프스타일','주얼리/액세서리','굿즈/캐릭터','스트리트','디자이너'];
 const TYPES = ['상관없음','단독 존','벽면 부스','단독 부스'];
 const MONTHS = ['2026-07','2026-08','2026-09','2026-10'];
 const STORE_NAME = '도유 1호점 · 범어 본점';
@@ -713,11 +714,11 @@ const SPACES = [
     price:4500000, months:['2026-07','2026-08','2026-09'], booked:[],
     desc:'정면 골드 포토월 단독 존. 인증샷 핵심 자리, 브랜드 단독 연출에 최적.' },
   { id:'z2', name:'도화지 벽 A', branch:'범어 본점', loc:'좌측 측벽', emoji:'🎨',
-    types:['벽면 부스'], categories:['뷰티','라이프스타일','주얼리/액세서리'], area:4, foot:'높음',
+    types:['벽면 부스'], categories:['뷰티','라이프스타일','주얼리/액세서리','교육','웰니스'], area:4, foot:'높음',
     price:2200000, months:['2026-07','2026-08','2026-09','2026-10'], booked:[],
     desc:'무광 화이트 도화지 벽. 픽처레일·타공으로 자유롭게 연출하는 벽면 부스.' },
   { id:'z3', name:'도화지 벽 B', branch:'범어 본점', loc:'우측 측벽', emoji:'🎨',
-    types:['벽면 부스'], categories:['패션','스트리트','굿즈/캐릭터'], area:4, foot:'높음',
+    types:['벽면 부스'], categories:['패션','스트리트','굿즈/캐릭터','재테크','교육'], area:4, foot:'높음',
     price:2200000, months:['2026-07','2026-09','2026-10'], booked:[],
     desc:'우측 도화지 벽면 부스. 룩북·행거 등 디스플레이 자유도가 높아요.' },
   { id:'z4', name:'센터 단독존', branch:'범어 본점', loc:'중앙 아일랜드', emoji:'🧊',
@@ -734,7 +735,7 @@ let applications = [
 ];
 
 const state = { mode:'brand', opTab:'apps', stamps:0, sponsor:0, member:false, collected:[], missions:{},
-  q:{ brand:'', category:'패션', type:'상관없음', month:'2026-07', budget:3000000 } };
+  q:{ brand:'', category:'교육', type:'상관없음', month:'2026-07', budget:3000000 } };
 
 /* ============== 저장소 (localStorage · 백엔드 교체 지점) ============== */
 const STORE = {
@@ -842,8 +843,39 @@ function initFilters(){
   $('#brandName').addEventListener('input', e=>{ state.q.brand = e.target.value.trim(); });
 }
 
+/* ====== 범어 동네 적합도 (큐레이션 엔진 연동) ====== */
+const BEOMEO_AFF = {edu:95,fin:82,beauty:70,lux:65,kids:72,well:62,food:60,culture:40,living:30};
+const CATMAP = { '교육':{k:'edu',p:3}, '재테크':{k:'fin',p:4}, '뷰티':{k:'beauty',p:3}, '패션':{k:'beauty',p:3}, 'F&B':{k:'food',p:3}, '웰니스':{k:'well',p:3}, '라이프스타일':{k:'living',p:2}, '주얼리/액세서리':{k:'lux',p:4}, '굿즈/캐릭터':{k:'culture',p:2}, '스트리트':{k:'beauty',p:2}, '디자이너':{k:'beauty',p:4} };
+function beomeoFit(cat){
+  const m = CATMAP[cat] || {k:'living',p:2};
+  const base = BEOMEO_AFF[m.k] || 0;
+  const gap = m.p - 5;
+  const pen = gap > 0 ? gap*12 : (-gap)*3;
+  const score = Math.max(0, Math.min(100, Math.round(base - pen)));
+  const val = score*0.3 + 60 + m.p*3;
+  const tier = val>=82 ? {pass:'플래그십 150만~/월',c:'#C75D3A'} : (val>=64 ? {pass:'프로 80만/월',c:'#43618A'} : {pass:'베이직 30만/월',c:'#7C766B'});
+  return { score, tier };
+}
+function renderBeomeoFit(){
+  const el = $('#beomeoFit'); if(!el) return;
+  const r = beomeoFit(state.q.category);
+  const col = r.score>=70 ? '#15803D' : (r.score>=45 ? '#43618A' : '#C2A98F');
+  const verdict = r.score>=70 ? '강하게 추천' : (r.score>=45 ? '적합' : '다른 동네가 더 맞아요');
+  el.innerHTML =
+    '<div style="background:#FFFEFB;border:2px solid #141413;border-radius:16px;padding:15px 17px;margin-bottom:18px;box-shadow:0 8px 22px rgba(20,16,12,.07)">'
+    + '<div style="display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap">'
+    + '<div style="font-weight:900;font-size:15px">📍 범어 동네 적합도 <span style="font-weight:700;font-size:12px;color:#7C766B">· ' + (state.q.category||'') + '</span></div>'
+    + '<div style="font-weight:900;font-size:22px;color:' + col + '">' + r.score + '<span style="font-size:12px;color:#A79E88">/100</span></div></div>'
+    + '<div style="height:12px;background:#F4EEDF;border:1px solid #E3DCCB;border-radius:7px;overflow:hidden;margin:9px 0"><i style="display:block;height:100%;width:' + r.score + '%;background:' + col + '"></i></div>'
+    + '<div style="display:flex;align-items:center;gap:9px;flex-wrap:wrap;font-size:13px">'
+    + '<span style="font-weight:800;color:' + r.tier.c + ';background:#FBF0CF;border:1px solid #E8D49A;border-radius:999px;padding:2px 11px">추천 단가 · ' + r.tier.pass + '</span>'
+    + '<span style="color:#7C766B">범어 = 교육·부촌 → ' + verdict + '</span>'
+    + '<a href="doyou-curation.html" style="margin-left:auto;color:#43618A;font-weight:700;text-decoration:none">다른 동네도 보기 →</a></div></div>';
+}
+
 /* ============== 브랜드: 결과 렌더 ============== */
 function renderResults(){
+  renderBeomeoFit();
   const ranked = SPACES.map(s=>({ s, ...scoreMatch(s, state.q) }))
                        .sort((a,b)=> b.score-a.score);
   $('#resCount').textContent = `${STORE_NAME} · 입점 존 ${ranked.length}곳 · 매칭률 높은 순`;
