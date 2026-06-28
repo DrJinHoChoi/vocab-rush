@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="canonical" href="https://www.datapd.ai/doyou-edu.html" />
+<link rel="icon" type="image/svg+xml" href="doyou-favicon.svg" />
+<meta name="theme-color" content="#F5B60B" />
+<meta name="robots" content="noindex, follow" />
+<meta name="description" content="DOYOU 범어점 — 대구 교육 1번지 학원가의 교육 체험 팝업. STUDY RUSH 초중고 게임으로 학생을 모으고, 교육 브랜드를 학원가에 연결합니다." />
+<title>DOYOU 교육 팝업 — 범어점 컨셉</title>
+<style>
+  :root{
+    --bg:#FAF5EB; --surface:#FFFEFB; --ink:#141413; --line:#E3DCCB;
+    --muted:#7C766B; --muted2:#A79E88; --gold:#F5B60B; --blue:#5B7FA6; --bluetx:#43618A; --terra:#C75D3A; --green:#15803D;
+    --shadow:0 1px 2px rgba(20,16,12,.05), 0 12px 30px rgba(20,16,12,.08);
+  }
+  *{ box-sizing:border-box; margin:0; padding:0; }
+  body{ font-family:'Pretendard','Apple SD Gothic Neo','Malgun Gothic',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+    background:var(--bg); color:var(--ink); line-height:1.6; -webkit-font-smoothing:antialiased; }
+  .wrap{ max-width:940px; margin:0 auto; padding:0 24px; }
+  a{ color:var(--bluetx); }
+
+  nav{ background:var(--surface); border-bottom:2px solid var(--ink); }
+  nav .in{ max-width:940px; margin:0 auto; padding:11px 24px; display:flex; gap:8px 18px; align-items:center; flex-wrap:wrap; font-size:13px; }
+  nav .bd{ font-weight:900; letter-spacing:.5px; margin-right:8px; }
+  nav a{ color:var(--muted); text-decoration:none; } nav a:hover{ color:var(--ink); }
+
+  .hero{ text-align:center; padding:44px 0 22px; }
+  .hero-face{ width:88px; height:88px; }
+  .hero-pill{ display:inline-block; background:var(--ink); color:var(--gold); font-size:12px; font-weight:800; letter-spacing:5px; padding:6px 15px; border-radius:999px; margin:14px 0 0; }
+  .hero h1{ font-size:34px; font-weight:900; letter-spacing:-.02em; margin:16px 0 10px; line-height:1.25; }
+  .hero p.sub{ color:var(--muted); font-size:16px; max-width:620px; margin:0 auto; }
+  .hero .tags{ margin-top:16px; display:flex; gap:8px; justify-content:center; flex-wrap:wrap; }
+  .hero .tags span{ font-size:12px; font-weight:700; border:1.5px solid var(--ink); border-radius:999px; padding:4px 12px; }
+
+  .insight{ background:var(--ink); color:var(--bg); border-radius:18px; padding:24px; text-align:center; margin:14px 0 34px; box-shadow:var(--shadow); }
+  .insight b{ color:var(--gold); }
+  .insight .big{ font-size:20px; font-weight:800; line-height:1.5; }
+  .insight .small{ color:var(--muted2); font-size:13.5px; margin-top:9px; }
+
+  section.blk{ margin:0 0 34px; }
+  h2{ font-size:23px; font-weight:900; letter-spacing:-.01em; padding-left:14px; border-left:5px solid var(--gold); margin-bottom:6px; }
+  h2.b{ border-color:var(--blue); } h2.t{ border-color:var(--terra); } h2.g{ border-color:var(--green); }
+  .lead{ color:var(--muted); font-size:15px; margin:8px 0 16px; }
+
+  .grid{ display:grid; gap:14px; }
+  .g2{ grid-template-columns:repeat(2,1fr); } .g3{ grid-template-columns:repeat(3,1fr); }
+  .card{ background:var(--surface); border:2px solid var(--ink); border-radius:16px; padding:18px; box-shadow:var(--shadow); }
+  .card .ic{ width:44px; height:44px; border-radius:12px; border:2px solid var(--ink); display:grid; place-items:center; font-size:22px; margin-bottom:10px; }
+  .card h3{ font-size:16px; font-weight:900; margin-bottom:5px; }
+  .card p{ font-size:13.5px; color:var(--muted); }
+  .card.fill{ background:var(--gold); }
+  .card.fill p{ color:#6B5208; } .card.fill h3{ color:var(--ink); }
+
+  ul.chk{ list-style:none; margin:6px 0 0; } ul.chk li{ font-size:14px; padding:5px 0 5px 26px; position:relative; }
+  ul.chk li::before{ content:"✓"; position:absolute; left:0; color:var(--green); font-weight:900; }
+
+  table{ width:100%; border-collapse:collapse; font-size:13.5px; background:var(--surface); border:2px solid var(--ink); border-radius:14px; overflow:hidden; }
+  th,td{ border-bottom:1px solid var(--line); padding:11px 13px; text-align:left; vertical-align:top; }
+  th{ background:#FBF3DC; font-weight:800; } tr:last-child td{ border-bottom:none; }
+  td b{ color:var(--ink); }
+
+  .flow{ display:flex; align-items:center; gap:8px; flex-wrap:wrap; justify-content:center; margin-top:8px; }
+  .flow .node{ background:var(--surface); border:2px solid var(--ink); border-radius:12px; padding:9px 13px; font-size:13px; font-weight:800; }
+  .flow .ar{ color:var(--muted2); font-weight:900; }
+
+  .cta{ background:var(--gold); border:2px solid var(--ink); border-radius:20px; padding:30px 24px; text-align:center; box-shadow:var(--shadow); }
+  .cta h2{ border:none; padding:0; font-size:25px; }
+  .cta p{ color:#6B5208; font-size:15px; margin:8px 0 18px; }
+  .cta a.btn{ display:inline-block; background:var(--ink); color:var(--gold); font-weight:800; font-size:16px; text-decoration:none; padding:13px 26px; border-radius:12px; margin:4px; }
+  .cta a.btn.alt{ background:transparent; color:var(--ink); border:2px solid var(--ink); }
+
+  footer{ text-align:center; border-top:2px solid var(--ink); padding:26px 0 46px; margin-top:36px; }
+  .bf-name{ font-weight:900; font-size:24px; letter-spacing:1px; }
+  .bf-pill{ display:inline-block; background:var(--ink); color:var(--gold); font-size:10px; font-weight:800; letter-spacing:4px; padding:4px 11px; border-radius:999px; margin-left:8px; vertical-align:middle; }
+  .bf-meta{ color:var(--muted2); font-size:12.5px; margin-top:11px; } .bf-meta a{ color:var(--muted); }
+
+  @media (max-width:760px){ .g2,.g3{ grid-template-columns:1fr; } .hero h1{ font-size:27px; } }
+</style>
+</head>
+<body>
+  <nav><div class="in">
+    <span class="bd">DOYOU</span>
+    <a href="doyou-hub.html">허브</a>
+    <a href="doyu-popup-match.html">입점·게임 데모</a>
+    <a href="doyou-business.html">비즈니스 모델</a>
+    <a href="doyou-precon.html">공간 프리콘</a>
+    <a href="https://www.datapd.ai/suneung-quiz.html" target="_blank" rel="noopener">STUDY RUSH ↗</a>
+  </div></nav>
+
+  <main class="wrap">
+    <section class="hero">
+      <svg class="hero-face" viewBox="305 222 488 620" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <g stroke="#141413" stroke-width="14" stroke-linejoin="round" stroke-linecap="round">
+          <path d="M540,235 C690,235 770,360 770,540 C770,720 680,825 540,825 C400,825 320,710 320,540 C320,360 390,235 540,235 Z" fill="#F5B60B"/>
+          <path d="M540,250 C610,250 670,300 700,360 C672,430 690,440 778,478 C840,512 838,520 800,548 C742,560 760,585 786,600 C740,628 742,632 720,648 C760,672 742,690 700,742 C648,790 600,805 540,810 L540,250 Z" fill="#FAF5EB"/>
+          <path d="M540,540 L320,540 C328,690 410,795 540,812 Z" fill="#5B7FA6"/>
+          <path d="M540,235 C430,235 360,300 335,395 C400,360 470,350 540,355 C560,300 560,265 540,235 Z" fill="#141413"/>
+          <ellipse cx="445" cy="470" rx="62" ry="42" fill="#FAF5EB"/><circle cx="462" cy="470" r="22" fill="#141413"/>
+          <path d="M628,452 C660,432 705,438 724,460 C700,478 660,480 628,452 Z" fill="#FAF5EB"/><circle cx="690" cy="458" r="13" fill="#141413"/>
+          <polygon points="540,470 600,640 470,640" fill="#C75D3A"/>
+          <path d="M455,705 C500,690 560,690 600,705 C560,742 500,742 455,705 Z" fill="#C75D3A"/>
+        </g>
+      </svg>
+      <div><span class="hero-pill">EDU POP-UP · 범어점</span></div>
+      <h1>학원가 한복판,<br/>공부가 노는 게 되는 팝업</h1>
+      <p class="sub">대구 교육 1번지 <b>범어 학원가</b>에서, 초중고 학생을 <b>STUDY RUSH 게임</b>으로 모으고 교육 브랜드를 학원가에 연결하는 <b>교육 체험 팝업</b>.</p>
+      <div class="tags"><span>🎓 초중고 · 국·영·수·과·사</span><span>🏪 대구 수성구 범어</span><span>🎮 게임 × 데이터 × 구독</span></div>
+    </section>
+
+    <div class="insight">
+      <div class="big">성수는 <b>도달</b>을 팔고, DOYOU 범어점은 <b>교육</b>을 판다.</div>
+      <div class="small">범어동 = 대구 교육 1번지. 유동인구가 곧 초중고 학생·학부모 — 처음으로 <b style="color:#fff">장소(학원가) × 게임(교육) × 관객(학생)</b>이 일치한다.</div>
+    </div>
+
+    <section class="blk">
+      <h2>왜 범어, 왜 지금</h2>
+      <p class="lead">팝업은 이미 검증된 채널이다. 문제는 “어디서, 누구에게”다.</p>
+      <div class="grid g3">
+        <div class="card"><div class="ic" style="background:var(--gold)">📈</div><h3>검증된 채널</h3><p>2025년 서울 주요지역 팝업 3,077개(+79%). 브랜드는 디지털 광고가 못 주는 ‘실시간 체험’을 원한다.</p></div>
+        <div class="card"><div class="ic" style="background:var(--blue);color:#fff">🎓</div><h3>교육 1번지 입지</h3><p>범어·만촌·황금 = 대구 학원 밀집 상권. 유동인구가 곧 초중고 학생과 학부모.</p></div>
+        <div class="card fill"><div class="ic" style="background:var(--ink);color:var(--gold)">⚡</div><h3>이미 가진 무기</h3><p>STUDY RUSH 초중고 게임(datapd.ai)이 바로 그 관객의 엔진. 새 게임이 필요 없다.</p></div>
+      </div>
+    </section>
+
+    <section class="blk">
+      <h2 class="b">누가 오나</h2>
+      <p class="lead">학원가 동선(학원 사이·대기·등하원)이 자연 유입을 만든다.</p>
+      <div class="grid g2">
+        <div class="card"><div class="ic" style="background:var(--blue);color:#fff">🎒</div><h3>1차 · 초중고 학생</h3><p>학원 사이 짬·대기 시간에 들러 게임으로 가볍게 공부. 학원가 학생끼리 <b>랭킹·대결</b>(경쟁 교육문화에 적합).</p></div>
+        <div class="card"><div class="ic" style="background:var(--terra);color:#fff">👨‍👩‍👧</div><h3>2차 · 학부모</h3><p>교육 소비 결정권자. “<b>노는 게 아니라 공부가 되는</b>” 안심 공간 → 허락하고, 자녀 학습 리포트로 재방문.</p></div>
+      </div>
+    </section>
+
+    <section class="blk">
+      <h2 class="t">무엇으로 모으나 — STUDY RUSH</h2>
+      <p class="lead">체류·재미·데이터를 한 번에 만드는 교육 게임 엔진.</p>
+      <div class="grid g3">
+        <div class="card"><div class="ic" style="background:var(--gold)">⏱️</div><h3>타이머가 킥</h3><p>국·영·수·과·사를 개념→응용으로, 난이도별 분·초 타이머로 푸는 긴장감.</p></div>
+        <div class="card"><div class="ic" style="background:var(--blue);color:#fff">🏆</div><h3>랭킹 · 스탬프</h3><p>키오스크 플레이 → 점수·스탬프 → 보상(입점 브랜드 쿠폰·문구·간식). 학원가 리더보드.</p></div>
+        <div class="card"><div class="ic" style="background:var(--terra);color:#fff">📊</div><h3>데이터</h3><p>어느 <b>학년·과목</b>이 얼마나 반응하는지 — 교육 브랜드가 가장 원하는 신호.</p></div>
+      </div>
+    </section>
+
+    <section class="blk">
+      <h2 class="g">누가 입점하나</h2>
+      <p class="lead">평소 학원가 학생·학부모에게 닿기 어려운 <b>교육 인접 브랜드</b>가 무대를 얻는다.</p>
+      <div class="grid g2">
+        <ul class="chk">
+          <li>에듀테크 · 학습 앱 · 인강</li>
+          <li>문구 · 학용품 · 디바이스</li>
+          <li>학생 타깃 식음료(간식·음료)</li>
+        </ul>
+        <ul class="chk">
+          <li>학원 · 과외 · 교육 서비스</li>
+          <li>교육 출판 · 문제집 · 교구</li>
+          <li>스터디카페 · 독서실 · 스튜던트 라이프</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="blk">
+      <h2>어떻게 버나 — 3축 수익</h2>
+      <table>
+        <tr><th>수익</th><th>누가</th><th>무엇에</th></tr>
+        <tr><td><b>입점 (BRAND PASS)</b></td><td>교육 브랜드</td><td>학원가 학생·학부모 도달 + 게임 데이터 리포트(학년·과목)</td></tr>
+        <tr><td><b>멤버십 (DOYOU CLUB)</b></td><td>학생·학부모</td><td>게임 보상 2배·쿠폰·학습 리포트(구독)</td></tr>
+        <tr><td><b>데이터·스튜디오</b></td><td>교육 브랜드</td><td>성과 리포트 판매 + 셋업·콘텐츠·SNS 대행(DOYOU 스튜디오)</td></tr>
+      </table>
+      <p class="lead" style="margin-top:12px">구독·MRR·박스 모델 상세는 <a href="doyou-business.html">비즈니스 모델</a>, 성장 배당·가맹은 <a href="doyou-franchise.html">가맹 페이지</a> 참고.</p>
+    </section>
+
+    <section class="blk">
+      <h2 class="b">공간 — 프레임 × 캔버스</h2>
+      <p class="lead">10평 큐비즘 공간에 교육 체험 동선을 얹는다.</p>
+      <div class="flow">
+        <span class="node">입장</span><span class="ar">→</span>
+        <span class="node">포토월(인증샷)</span><span class="ar">→</span>
+        <span class="node">게임 키오스크</span><span class="ar">→</span>
+        <span class="node">입점 브랜드존</span><span class="ar">→</span>
+        <span class="node">랭킹·보상 카운터</span>
+      </div>
+      <p class="lead" style="margin-top:14px">포토월(브랜드 프레임) + 도화지 벽(입점 브랜드 캔버스) + 게임 키오스크 + 보상 카운터. 시공 전 비주얼은 <a href="doyou-precon.html">공간 프리콘 보드</a>에서.</p>
+    </section>
+
+    <section class="blk">
+      <h2 class="t">왜 이기나 — 해자</h2>
+      <ul class="chk" style="font-size:14.5px">
+        <li><b>카테고리 정의:</b> 또 하나의 트렌디 팝업이 아니라 “교육 체험 팝업”의 첫 주자.</li>
+        <li><b>일치의 힘:</b> 학원가 입지 × 교육 게임 × 학생 관객이 맞물려 트래픽을 억지로 만들 필요가 없다.</li>
+        <li><b>학부모 명분:</b> ‘공부가 되는 곳’ → 양면(학생 재미 + 학부모 허락) 만족.</li>
+        <li><b>데이터·복제난이:</b> datapd.ai 교육 게임 + 학원가 입지 = 단순 모방이 어렵다.</li>
+      </ul>
+    </section>
+
+    <div class="cta">
+      <h2>함께할 브랜드·파트너를 찾습니다</h2>
+      <p>입점(교육 브랜드) · 공간/건물 제휴 · 투자 — 무엇이든 한 줄로 알려주세요. 맞춤 자료를 보내드립니다.</p>
+      <a class="btn" href="mailto:jinho.choi1010@gmail.com?subject=DOYOU 교육 팝업 문의">문의하기</a>
+      <a class="btn alt" href="doyou-hub.html">전체 자료 보기</a>
+    </div>
+  </main>
+
+  <footer>
+    <div><span class="bf-name">DOYOU</span><span class="bf-pill">POP-UP STORE</span></div>
+    <div class="bf-meta">교육 체험 팝업 · 대구 수성구 범어 · 게임 by <a href="https://www.datapd.ai" target="_blank" rel="noopener">DataPD.ai</a> · @doyou_popup_store</div>
+  </footer>
+</body>
+</html>
