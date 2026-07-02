@@ -1,147 +1,190 @@
 <!DOCTYPE html>
 <html lang="ko">
-  <head>
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6402470001589987"
-     crossorigin="anonymous"></script>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<head>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6402470001589987" crossorigin="anonymous"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="canonical" href="https://www.datapd.ai/" />
-    <meta name="theme-color" content="#FAF5EB" />
-    <meta name="description" content="고등학교 국·영·수를 게임으로 공부하며 수능을 준비하는 무료 학습 게임. 원본 수능 예시 문항 포함. 무료 PWA." />
-    <meta property="og:title" content="STUDY RUSH - 국·영·수 수능 학습 게임" />
-    <meta property="og:description" content="고등학교 국·영·수를 게임으로 공부하며 수능을 준비하는 무료 학습 게임. 원본 수능 예시 문항 포함." />
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://www.datapd.ai/" />
-    <meta property="og:image" content="https://www.datapd.ai/icon-512.png" />
-    <meta property="og:locale" content="ko_KR" />
-    <meta name="twitter:card" content="summary" />
-    <meta name="twitter:title" content="STUDY RUSH - 국·영·수 수능 학습 게임" />
-    <meta name="twitter:description" content="고등학교 국·영·수를 게임으로 공부하며 수능을 준비하는 무료 학습 게임." />
-    <meta name="keywords" content="수능, 수능 게임, 수능 학습, 고등학교 학습, 수능 국어, 수능 영어, 수능 수학, 영어 어휘, 국어 맞춤법, 수학 연산, 무료 수능 공부, 수능 문제 풀기" />
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-    <meta name="apple-mobile-web-app-title" content="STUDY RUSH" />
-    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@700;800&display=swap" rel="stylesheet" />
-    <title>STUDY RUSH</title>
-    <style>
-      *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-      body {
-        font-family: 'Noto Sans KR', -apple-system, BlinkMacSystemFont, sans-serif;
-        background: #FAF5EB;
-        color: #141413;
-        -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale;
-        overflow-x: hidden;
-      }
-      #root { min-height: 100vh; min-height: 100dvh; }
-      /* Prevent pull-to-refresh on mobile */
-      html { overscroll-behavior: none; }
-      /* Selection color */
-      ::selection { background: rgba(96,165,250,0.3); }
-      /* Smooth scrollbar */
-      ::-webkit-scrollbar { width: 4px; }
-      ::-webkit-scrollbar-track { background: transparent; }
-      ::-webkit-scrollbar-thumb { background: rgba(20,20,19,0.18); border-radius: 2px; }
-      @keyframes pulse { 0%,100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.7; transform: scale(1.03); } }
-    </style>
-  </head>
-  <body>
-    <div id="root"></div>
+  <meta name="theme-color" content="#FAF5EB" />
+  <link rel="icon" type="image/svg+xml" href="/doyou-favicon.svg" />
+  <meta name="description" content="DataPD — 데이터를 재료로 오프라인 비즈니스를 만드는 회사. 첫 비즈니스 DOYOU 팝업스토어는 장소별 데이터 큐레이션으로 입점 브랜드를 제안하고 가맹점주를 모집합니다. 교육 게임은 큐레이션을 통해 장소에 서비스·광고됩니다." />
+  <meta property="og:title" content="DataPD — 데이터로 비즈니스를 만드는 회사" />
+  <meta property="og:description" content="장소별 데이터 큐레이션 → DOYOU 팝업 입점·가맹. 교육 게임은 큐레이션으로 장소에 서비스되는 앱." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://www.datapd.ai/" />
+  <meta property="og:locale" content="ko_KR" />
+  <title>DataPD — 데이터를 재료로 비즈니스를 만드는 회사</title>
+<style>
+  :root{ --bg:#FAF5EB; --surface:#FFFEFB; --ink:#141413; --line:#E3DCCB; --muted:#7C766B; --muted2:#A79E88; --gold:#F5B60B; --blue:#5B7FA6; --bluetx:#43618A; --terra:#C75D3A; --green:#15803D; --cream:#FAF5EB; --shadow:0 1px 2px rgba(20,16,12,.05), 0 12px 30px rgba(20,16,12,.08); }
+  *{ box-sizing:border-box; margin:0; padding:0; }
+  body{ font-family:'Pretendard','Apple SD Gothic Neo','Malgun Gothic',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; background:var(--bg); color:var(--ink); line-height:1.6; -webkit-font-smoothing:antialiased; }
+  .wrap{ max-width:960px; margin:0 auto; padding:0 24px; }
+  a{ color:var(--bluetx); }
+  nav{ background:var(--surface); border-bottom:2px solid var(--ink); position:sticky; top:0; z-index:40; }
+  nav .in{ max-width:960px; margin:0 auto; padding:11px 24px; display:flex; gap:8px 16px; align-items:center; flex-wrap:wrap; font-size:13px; }
+  nav .bd{ font-weight:900; letter-spacing:.5px; margin-right:8px; font-size:15px; }
+  nav a{ color:var(--muted); text-decoration:none; } nav a:hover{ color:var(--ink); }
+  nav .in .right{ margin-left:auto; display:flex; gap:8px 14px; flex-wrap:wrap; }
+  .hero{ text-align:center; padding:46px 0 20px; }
+  .hero-face{ width:92px; height:92px; }
+  .hero-pill{ display:inline-block; background:var(--ink); color:var(--gold); font-size:12px; font-weight:800; letter-spacing:4px; padding:6px 15px; border-radius:999px; margin:14px 0 0; }
+  .hero h1{ font-size:36px; font-weight:900; letter-spacing:-.02em; margin:16px 0 10px; line-height:1.2; }
+  .hero p.sub{ color:var(--muted); font-size:17px; max-width:600px; margin:0 auto; }
+  .flow{ display:flex; align-items:stretch; gap:10px; flex-wrap:wrap; margin:8px 0 34px; }
+  .fbox{ flex:1 1 180px; background:var(--surface); border:2px solid var(--ink); border-radius:14px; padding:16px; text-align:center; box-shadow:var(--shadow); }
+  .fbox .ft{ font-size:15px; font-weight:900; } .fbox .fd{ font-size:12.5px; color:var(--muted); margin-top:6px; line-height:1.5; }
+  .fbox.hot{ background:var(--ink); } .fbox.hot .ft{ color:var(--gold); } .fbox.hot .fd{ color:#C9C3B5; }
+  .farr{ display:flex; align-items:center; font-size:22px; font-weight:900; color:var(--muted2); }
+  @media(max-width:680px){ .farr{ transform:rotate(90deg); width:100%; justify-content:center; height:16px; } }
+  section.blk{ margin:0 0 38px; }
+  h2{ font-size:24px; font-weight:900; letter-spacing:-.02em; padding-left:14px; border-left:5px solid var(--gold); margin-bottom:6px; }
+  h2.b{ border-color:var(--blue); }
+  .lead{ color:var(--muted); font-size:15px; margin:8px 0 16px; }
+  .biz{ background:var(--surface); border:2px solid var(--ink); border-radius:20px; padding:24px; box-shadow:var(--shadow); }
+  .biz .tag{ display:inline-block; font-size:11px; font-weight:800; letter-spacing:1.5px; color:#6B5208; background:var(--gold); border-radius:999px; padding:4px 12px; }
+  .biz h3{ font-size:24px; font-weight:900; margin:12px 0 8px; letter-spacing:-.02em; }
+  .biz p{ font-size:15px; color:#3F3A33; }
+  .grid{ display:grid; grid-template-columns:repeat(auto-fit, minmax(150px,1fr)); gap:12px; margin-top:16px; }
+  .lk{ display:block; background:var(--bg); border:2px solid var(--ink); border-radius:13px; padding:13px 14px; text-decoration:none; color:var(--ink); transition:transform .12s; }
+  .lk:hover{ transform:translateY(-3px); }
+  .lk b{ font-size:14px; font-weight:900; display:block; } .lk span{ font-size:11.5px; color:var(--muted); }
+  .app{ display:grid; grid-template-columns:1.3fr 1fr; gap:18px; align-items:center; }
+  .app .card{ background:var(--surface); border:2px solid var(--ink); border-radius:18px; padding:20px; box-shadow:var(--shadow); }
+  .app .playbtn{ display:inline-block; background:var(--ink); color:var(--gold); font-weight:900; text-decoration:none; padding:12px 22px; border-radius:12px; margin-top:12px; }
+  .app ul{ list-style:none; margin:6px 0 0; } .app li{ font-size:14px; padding:5px 0 5px 24px; position:relative; } .app li::before{ content:"→"; position:absolute; left:0; color:var(--terra); font-weight:900; }
+  .fly{ background:var(--ink); color:var(--cream); border-radius:20px; padding:24px; box-shadow:var(--shadow); }
+  .fly h2{ color:var(--cream); border:none; padding:0; margin-bottom:14px; }
+  .fly .ring{ display:flex; align-items:center; gap:8px; flex-wrap:wrap; justify-content:center; }
+  .fly .rn{ background:#23201B; border:1px solid #3A352E; border-radius:12px; padding:11px 14px; text-align:center; }
+  .fly .rn b{ color:var(--gold); font-size:13.5px; font-weight:900; display:block; } .fly .rn span{ font-size:11px; color:#C9C3B5; }
+  .fly .ar{ color:var(--gold); font-size:20px; font-weight:900; }
+  .fly p{ color:#C9C3B5; font-size:13.5px; margin-top:14px; text-align:center; }
+  .cta{ background:var(--gold); border:2px solid var(--ink); border-radius:20px; padding:28px 24px; text-align:center; box-shadow:var(--shadow); }
+  .cta h2{ border:none; padding:0; color:var(--ink); font-size:24px; }
+  .cta p{ color:#6B5208; margin:8px 0 16px; }
+  .cta a{ display:inline-block; background:var(--ink); color:var(--gold); font-weight:900; text-decoration:none; padding:13px 26px; border-radius:12px; margin:4px; }
+  .cta a.alt{ background:transparent; color:var(--ink); border:2px solid var(--ink); }
+  footer{ text-align:center; border-top:2px solid var(--ink); padding:28px 0 46px; margin-top:34px; }
+  .bf-name{ font-weight:900; font-size:26px; letter-spacing:1px; } .bf-meta{ color:var(--muted2); font-size:12.5px; margin-top:12px; } .bf-meta a{ color:var(--muted); }
+  @media(max-width:680px){ .app{ grid-template-columns:1fr; } .hero h1{ font-size:28px; } }
+</style>
+</head>
+<body>
+  <nav><div class="in">
+    <span class="bd">DataPD</span>
+    <a href="#doyou">DOYOU 팝업</a>
+    <a href="#game">교육 게임</a>
+    <a href="/vibe-coding.html">바이브 코딩</a>
+    <div class="right"><a href="/doyou-hub.html">DOYOU 허브 ↗</a><a href="/play.html">게임 플레이 ↗</a></div>
+  </div></nav>
 
-    <!-- SEO: 검색엔진 크롤러용 정적 콘텐츠 -->
-    <noscript>
-      <div style="max-width:720px;margin:0 auto;padding:40px 20px;font-family:sans-serif;color:#141413;line-height:1.8;">
-        <h1>STUDY RUSH — 고등학교 국·영·수 수능 학습 게임</h1>
-        <p>STUDY RUSH는 국어·영어·수학을 게임으로 공부하며 수능을 준비하는 무료 학습 플랫폼입니다. 회원가입이나 결제 없이 누구나 바로 시작할 수 있습니다.</p>
+  <main class="wrap">
+    <section class="hero">
+      <svg class="hero-face" viewBox="305 222 488 620" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <g stroke="#141413" stroke-width="14" stroke-linejoin="round" stroke-linecap="round">
+          <path d="M540,235 C690,235 770,360 770,540 C770,720 680,825 540,825 C400,825 320,710 320,540 C320,360 390,235 540,235 Z" fill="#F5B60B"/>
+          <path d="M540,250 C610,250 670,300 700,360 C672,430 690,440 778,478 C840,512 838,520 800,548 C742,560 760,585 786,600 C740,628 742,632 720,648 C760,672 742,690 700,742 C648,790 600,805 540,810 L540,250 Z" fill="#FAF5EB"/>
+          <path d="M540,540 L320,540 C328,690 410,795 540,812 Z" fill="#5B7FA6"/>
+          <path d="M540,235 C430,235 360,300 335,395 C400,360 470,350 540,355 C560,300 560,265 540,235 Z" fill="#141413"/>
+          <ellipse cx="445" cy="470" rx="62" ry="42" fill="#FAF5EB"/><circle cx="462" cy="470" r="22" fill="#141413"/>
+          <path d="M628,452 C660,432 705,438 724,460 C700,478 660,480 628,452 Z" fill="#FAF5EB"/><circle cx="690" cy="458" r="13" fill="#141413"/>
+          <polygon points="540,470 600,640 470,640" fill="#C75D3A"/>
+          <path d="M455,705 C500,690 560,690 600,705 C560,742 500,742 455,705 Z" fill="#C75D3A"/>
+        </g>
+      </svg>
+      <div><span class="hero-pill">DATA · CURATION · BUSINESS</span></div>
+      <h1>데이터를 재료로<br/>비즈니스를 만듭니다</h1>
+      <p class="sub">DataPD는 데이터를 원재료로 오프라인 비즈니스를 설계·운영하는 회사입니다. 첫 비즈니스는 <b>DOYOU 팝업스토어</b>예요.</p>
+    </section>
 
-        <h2>학습 단계: 기초 → 레벨업 → 수능</h2>
-        <p>영어 단어, 수학 연산, 국어 어휘·맞춤법 같은 기초를 타이머 게임으로 다지고, 난이도를 올린 뒤, 실제 수능 유형 문제를 제한 시간 안에 푸는 수능 연습 게임으로 마무리합니다.</p>
+    <div class="flow">
+      <div class="fbox"><div class="ft">데이터</div><div class="fd">방문·게임·상권·소비 데이터를 원재료로</div></div>
+      <div class="farr">→</div>
+      <div class="fbox"><div class="ft">큐레이션</div><div class="fd">장소를 읽어 딱 맞는 브랜드·경험을 매칭</div></div>
+      <div class="farr">→</div>
+      <div class="fbox hot"><div class="ft">오프라인 비즈니스</div><div class="fd">입점·가맹·광고로 수익화</div></div>
+    </div>
 
-        <h3>영어 — 어휘 게임 + 수능 독해</h3>
-        <p>CEFR 기준 A1(기초)부터 C2(최상급)까지 수준별로 분류한 4,500개 이상의 단어를 발음 듣기·예문·4지선다로 학습합니다. 수능 영어는 빈칸추론·주제·어법 등 유형별 풀이 기술을 다룹니다.</p>
-
-        <h3>수학 — 연산 게임 + 수능 수학</h3>
-        <p>덧셈·뺄셈·곱셈·나눗셈·분수·퍼센트·거듭제곱 등 기초 연산을 무한 문제로 훈련합니다. 수능 수학은 수학Ⅰ·수학Ⅱ·확률과 통계의 유형별 풀이를 다룹니다.</p>
-
-        <h3>국어 — 어휘 게임 + 수능 국어</h3>
-        <p>맞춤법·띄어쓰기·사자성어·속담·유의어·반의어·높임말·접두사 등으로 어휘력과 어법을 기릅니다. 수능 국어는 독서(비문학)·문학·언어와 매체의 풀이 기술을 다룹니다.</p>
-
-        <h2>수능 연습 게임</h2>
-        <p>국어·영어·수학의 실제 수능 유형 문제 58문항을 난이도별 분·초 타이머로 풀어 봅니다. 모든 문제는 저작권 문제가 없는 원본 예시 문항으로, 고등학교 교육과정과 수능 출제 범위에 맞춰 단원별로 구성했습니다.</p>
-
-        <h2>주요 기능</h2>
-        <ul>
-          <li>3단계 난이도: Easy / Medium / Hard로 제한 시간 조절</li>
-          <li>콤보 시스템: 연속 정답 시 보너스 점수</li>
-          <li>통계·뱃지: 누적 정답·최고 점수·연속 정답 기록과 도전 과제</li>
-          <li>음성 지원: 영어 단어 발음 듣기 (Web Speech API)</li>
-          <li>오프라인 지원: PWA로 인터넷 없이도 플레이 가능</li>
-        </ul>
-
-        <h2>이런 분들에게 추천합니다</h2>
-        <ul>
-          <li>수능을 준비하는 고등학교 1·2·3학년과 N수생</li>
-          <li>국·영·수 기초 어휘·연산을 빠르게 다지고 싶은 학생</li>
-          <li>제한 시간 안에 푸는 실전 감각을 키우고 싶은 수험생</li>
-        </ul>
-
-        <p>이 게임을 사용하려면 JavaScript를 활성화해 주세요.</p>
-
-        <h2>학습 가이드</h2>
-        <p>과목별 풀이 기술과 어휘·맞춤법 자료를 무료로 제공합니다.</p>
-        <ul>
-          <li><a href="/learn.html">학습 로드맵</a> - 기초부터 수능까지 단계별 순서</li>
-          <li><a href="/suneung-quiz.html">수능 연습 게임</a> - 국·영·수 유형별·난이도별 타이머</li>
-          <li><a href="/suneung-korean.html">수능 국어 독해 기술</a> - 독서·문학·언어와 매체</li>
-          <li><a href="/suneung-english.html">수능 영어 독해 기술</a> - 빈칸·주제·어법</li>
-          <li><a href="/suneung-math.html">수능 수학 풀이 기술</a> - 수학Ⅰ·Ⅱ·확률과 통계</li>
-          <li><a href="/guide-vocab.html">영어 어휘 학습 가이드</a> - CEFR 레벨별 전략</li>
-          <li><a href="/guide-prefix.html">영어 접두사·접미사</a> - 어원으로 어휘 확장</li>
-          <li><a href="/guide-spelling.html">맞춤법 TOP 50</a> - 자주 틀리는 맞춤법</li>
-          <li><a href="/guide-study-tips.html">효과적인 학습법</a> - 게이미피케이션·간격 반복</li>
-        </ul>
-
-        <nav>
-          <a href="/learn.html">학습 로드맵</a> |
-          <a href="/suneung-quiz.html">수능 게임</a> |
-          <a href="/guides.html">학습 자료</a> |
-          <a href="/about.html">소개</a> |
-          <a href="/terms.html">이용약관</a> |
-          <a href="/privacy.html">개인정보처리방침</a>
-        </nav>
-        <p>&copy; 2025 DataPD. All rights reserved. 문의: jinho.choi1010@gmail.com</p>
+    <section class="blk" id="doyou">
+      <h2>첫 비즈니스 — DOYOU 팝업스토어</h2>
+      <p class="lead">장소별 데이터 큐레이션으로 브랜드를 채우고, 입점·가맹으로 굴러가는 팝업 사업.</p>
+      <div class="biz">
+        <span class="tag">BUSINESS #1 · DOYOU POP-UP STORE</span>
+        <h3>동네를 읽어, 딱 맞는 브랜드를 채운다</h3>
+        <p>큐레이션 엔진이 <b>장소의 특성(인구·소득·관심)</b>을 데이터로 읽어 최적 입점 믹스와 단가를 제안합니다. 그렇게 브랜드에는 <b>입점</b>을, 운영자에게는 <b>가맹</b>을 제안하는 것이 DOYOU의 사업 모델이에요. 1호점은 대구 교육 1번지 <b>범어1동</b>.</p>
+        <div class="grid">
+          <a class="lk" href="/doyou-curation.html"><b>🧮 큐레이션 엔진</b><span>장소 → 입점·단가</span></a>
+          <a class="lk" href="/doyou-locations.html"><b>📍 동네 큐레이션</b><span>동네별 입점 제안</span></a>
+          <a class="lk" href="/doyou-apply.html"><b>📝 입점 신청</b><span>브랜드 입점</span></a>
+          <a class="lk" href="/doyou-franchise.html"><b>💸 가맹 모집</b><span>성장 배당</span></a>
+          <a class="lk" href="/doyou-ops.html"><b>⚙️ 본점 운영</b><span>운영 매뉴얼</span></a>
+          <a class="lk" href="/doyou-business.html"><b>💳 비즈니스 모델</b><span>구독·MRR</span></a>
+          <a class="lk" href="/doyou-edu.html"><b>🎓 교육 팝업 컨셉</b><span>범어점</span></a>
+          <a class="lk" href="/doyou-hub.html"><b>🏬 DOYOU 허브</b><span>전체 자료 ↗</span></a>
+        </div>
       </div>
-    </noscript>
+    </section>
 
-    <script type="module" src="/src/main.jsx"></script>
+    <section class="blk" id="game">
+      <h2 class="b">교육 게임 — 큐레이션으로 장소에 서비스되는 앱</h2>
+      <p class="lead">STUDY RUSH 교육 게임은 DOYOU 큐레이션을 통해 특정 장소에 <b>서비스·광고되는 애플리케이션</b>입니다.</p>
+      <div class="app">
+        <div class="card">
+          <p style="font-size:15px; color:#3F3A33">게임은 세 가지 일을 합니다 — DOYOU 사업의 핵심 부품이에요.</p>
+          <ul>
+            <li><b>집객</b> — 학생·가족을 팝업으로 모은다</li>
+            <li><b>데이터</b> — 방문·학년·과목 반응을 원재료로 수집</li>
+            <li><b>광고면</b> — 입점 브랜드가 노출되는 자리</li>
+          </ul>
+          <a class="playbtn" href="/play.html">게임 플레이 →</a>
+        </div>
+        <div class="card" style="text-align:center; background:var(--ink); color:var(--cream)">
+          <div style="font-size:34px">⚡</div>
+          <div style="font-weight:900; font-size:20px; letter-spacing:3px; color:var(--gold)">STUDY RUSH</div>
+          <p style="color:#C9C3B5; font-size:13px; margin-top:6px">국·영·수·과·사 수능 학습 게임<br/>타이머가 킥 · datapd.ai</p>
+        </div>
+      </div>
+    </section>
 
-    <!-- 구조화된 데이터 (JSON-LD) -->
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "WebApplication",
-      "name": "STUDY RUSH",
-      "url": "https://www.datapd.ai",
-      "description": "고등학교 국·영·수를 게임으로 공부하며 수능을 준비하는 무료 학습 게임. 원본 수능 예시 문항 포함.",
-      "applicationCategory": "EducationalApplication",
-      "operatingSystem": "Web Browser",
-      "offers": {
-        "@type": "Offer",
-        "price": "0",
-        "priceCurrency": "KRW"
-      },
-      "author": {
-        "@type": "Organization",
-        "name": "DataPD",
-        "url": "https://www.datapd.ai"
-      },
-      "inLanguage": ["ko", "en"],
-      "browserRequirements": "Requires JavaScript"
-    }
-    </script>
-  </body>
+    <section class="blk">
+      <div class="fly">
+        <h2>데이터 플라이휠</h2>
+        <div class="ring">
+          <div class="rn"><b>게임</b><span>집객 · 데이터 · 광고면</span></div>
+          <span class="ar">→</span>
+          <div class="rn"><b>큐레이션</b><span>장소 × 브랜드 매칭</span></div>
+          <span class="ar">→</span>
+          <div class="rn"><b>입점·가맹·광고</b><span>수익</span></div>
+          <span class="ar">↻</span>
+          <div class="rn"><b>더 많은 데이터</b><span>큐레이션 정교화</span></div>
+        </div>
+        <p>게임이 사람과 데이터를 만들고 → 데이터로 장소를 큐레이션하고 → 입점·가맹·광고로 벌고 → 다시 더 나은 데이터로. 이 순환이 DataPD의 엔진입니다.</p>
+      </div>
+    </section>
+
+    <div class="cta">
+      <h2>함께할까요?</h2>
+      <p>입점 브랜드 · 가맹 운영자 · 제휴 · 투자 — 무엇이든 한 줄로 알려주세요.</p>
+      <a href="mailto:jinho.choi1010@gmail.com?subject=DataPD 문의">문의하기</a>
+      <a class="alt" href="/doyou-hub.html">DOYOU 자료 보기</a>
+    </div>
+  </main>
+
+  <footer>
+    <div><span class="bf-name">DataPD</span></div>
+    <div class="bf-meta">데이터를 재료로 비즈니스를 만드는 회사 · 첫 비즈니스 DOYOU 팝업스토어 · <a href="/play.html">STUDY RUSH 게임</a> · <a href="/vibe-coding.html">바이브 코딩</a> · jinho.choi1010@gmail.com</div>
+  </footer>
+
+  <noscript>
+    <div style="max-width:720px;margin:0 auto;padding:24px 20px;line-height:1.8;color:#141413;">
+      <h1>DataPD — 데이터를 재료로 비즈니스를 만드는 회사</h1>
+      <p>DataPD는 데이터를 원재료로 오프라인 비즈니스를 설계·운영합니다. 첫 비즈니스는 DOYOU 팝업스토어로, 장소별 데이터 큐레이션을 통해 입점 브랜드를 제안하고 가맹점주를 모집합니다. 교육 게임 STUDY RUSH는 이 큐레이션을 통해 특정 장소에 서비스·광고되는 애플리케이션입니다.</p>
+      <p><a href="/doyou-hub.html">DOYOU 팝업 자료</a> · <a href="/play.html">STUDY RUSH 게임</a> · <a href="/vibe-coding.html">바이브 코딩 교육</a></p>
+    </div>
+  </noscript>
+
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"Organization","name":"DataPD","url":"https://www.datapd.ai","description":"데이터를 재료로 오프라인 비즈니스를 만드는 회사. 첫 비즈니스 DOYOU 팝업스토어는 장소별 데이터 큐레이션으로 입점·가맹을 운영합니다.","email":"jinho.choi1010@gmail.com"}
+  </script>
+</body>
 </html>

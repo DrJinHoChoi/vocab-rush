@@ -17,7 +17,7 @@ export default defineConfig({
         display: 'standalone',
         orientation: 'portrait',
         scope: '/',
-        start_url: '/',
+        start_url: '/play.html',
         categories: ['education', 'games'],
         lang: 'ko',
         icons: [
@@ -65,4 +65,12 @@ export default defineConfig({
       },
     }),
   ],
+  build: {
+    rollupOptions: {
+      input: {
+        main: 'index.html',
+        play: 'play.html',
+      },
+    },
+  },
 });
