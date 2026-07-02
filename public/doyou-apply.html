@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="canonical" href="https://www.datapd.ai/doyou-apply.html" />
+<link rel="icon" type="image/svg+xml" href="doyou-favicon.svg" />
+<meta name="theme-color" content="#F5B60B" />
+<meta name="robots" content="noindex, follow" />
+<meta name="description" content="DOYOU 범어 본점 입점 신청 — 브랜드 정보를 넣으면 범어1동 적합도와 추천 단가가 바로 나옵니다. 대구 교육 1번지 팝업 입점 신청." />
+<title>DOYOU 입점 신청 — 범어 본점</title>
+<style>
+  :root{ --bg:#FAF5EB; --surface:#FFFEFB; --ink:#141413; --line:#E3DCCB; --muted:#7C766B; --muted2:#A79E88; --gold:#F5B60B; --blue:#5B7FA6; --bluetx:#43618A; --terra:#C75D3A; --green:#15803D; --shadow:0 1px 2px rgba(20,16,12,.05), 0 12px 30px rgba(20,16,12,.08); }
+  *{ box-sizing:border-box; margin:0; padding:0; }
+  body{ font-family:'Pretendard','Apple SD Gothic Neo','Malgun Gothic',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; background:var(--bg); color:var(--ink); line-height:1.6; -webkit-font-smoothing:antialiased; }
+  .wrap{ max-width:760px; margin:0 auto; padding:0 22px; }
+  a{ color:var(--bluetx); }
+  nav{ background:var(--surface); border-bottom:2px solid var(--ink); }
+  nav .in{ max-width:760px; margin:0 auto; padding:11px 22px; display:flex; gap:8px 16px; align-items:center; flex-wrap:wrap; font-size:13px; }
+  nav .bd{ font-weight:900; letter-spacing:.5px; margin-right:6px; }
+  nav a{ color:var(--muted); text-decoration:none; } nav a:hover{ color:var(--ink); }
+  .hero{ text-align:center; padding:36px 0 14px; }
+  .hero-face{ width:76px; height:76px; }
+  .hero-pill{ display:inline-block; background:var(--ink); color:var(--gold); font-size:12px; font-weight:800; letter-spacing:4px; padding:6px 15px; border-radius:999px; margin:12px 0 0; }
+  .hero h1{ font-size:30px; font-weight:900; letter-spacing:-.02em; margin:13px 0 8px; }
+  .hero p.sub{ color:var(--muted); font-size:15px; max-width:540px; margin:0 auto; }
+  .card{ background:var(--surface); border:2px solid var(--ink); border-radius:18px; box-shadow:var(--shadow); padding:20px; margin-bottom:18px; }
+  .field{ margin-bottom:14px; } .field.two{ display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+  label{ display:block; font-size:12.5px; font-weight:800; color:var(--muted); margin-bottom:5px; } label .req{ color:var(--terra); }
+  input, select, textarea{ width:100%; font-family:inherit; font-size:14px; background:var(--bg); border:2px solid var(--ink); border-radius:10px; padding:10px 12px; color:var(--ink); }
+  input:focus, select:focus, textarea:focus{ outline:3px solid rgba(245,182,11,.4); border-color:var(--gold); }
+  textarea{ min-height:74px; resize:vertical; }
+  input[type=range]{ padding:0; border:none; background:none; accent-color:var(--terra); }
+  .rangeval{ font-weight:900; color:var(--ink); font-size:15px; }
+  .fit{ border:2px solid var(--ink); border-radius:14px; padding:14px 16px; margin:4px 0 16px; background:#FBF8F0; }
+  .fit .top{ display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap; }
+  .fit .lab{ font-weight:900; font-size:14px; } .fit .sc{ font-weight:900; font-size:22px; }
+  .fit .bar{ height:12px; background:#F4EEDF; border:1px solid var(--line); border-radius:7px; overflow:hidden; margin:9px 0; } .fit .bar i{ display:block; height:100%; border-radius:6px 0 0 6px; }
+  .fit .row2{ display:flex; align-items:center; gap:9px; flex-wrap:wrap; font-size:12.5px; }
+  .fit .pass{ font-weight:800; color:#6B5208; background:#FBF0CF; border:1px solid #E8D49A; border-radius:999px; padding:2px 11px; }
+  .btn{ display:block; width:100%; background:var(--ink); color:var(--gold); font-family:inherit; font-weight:900; font-size:16px; border:none; border-radius:12px; padding:14px; cursor:pointer; }
+  .ok{ display:none; background:var(--ink); color:var(--cream,#FAF5EB); border-radius:16px; padding:22px; text-align:center; }
+  .ok h3{ color:var(--gold); font-size:19px; font-weight:900; margin-bottom:6px; } .ok p{ color:#E3DCCB; font-size:14px; }
+  h2{ font-size:20px; font-weight:900; padding-left:12px; border-left:5px solid var(--gold); margin:26px 0 12px; }
+  .steps{ counter-reset:s; } .step{ position:relative; padding:10px 0 10px 40px; font-size:14px; } .step::before{ counter-increment:s; content:counter(s); position:absolute; left:0; top:8px; width:26px; height:26px; border-radius:50%; background:var(--ink); color:var(--gold); font-weight:900; font-size:13px; display:grid; place-items:center; }
+  .provide{ display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+  .pv{ background:var(--surface); border:2px solid var(--ink); border-radius:14px; padding:14px; } .pv b{ font-size:14px; } .pv p{ font-size:12.5px; color:var(--muted); margin-top:4px; }
+  .faq p{ font-size:14px; margin-bottom:10px; } .faq b{ color:var(--ink); }
+  footer{ text-align:center; border-top:2px solid var(--ink); padding:24px 0 44px; margin-top:30px; }
+  .bf-name{ font-weight:900; font-size:22px; letter-spacing:1px; } .bf-pill{ display:inline-block; background:var(--ink); color:var(--gold); font-size:10px; font-weight:800; letter-spacing:4px; padding:4px 11px; border-radius:999px; margin-left:8px; vertical-align:middle; } .bf-meta{ color:var(--muted2); font-size:12.5px; margin-top:11px; }
+  @media(max-width:600px){ .field.two, .provide{ grid-template-columns:1fr; } .hero h1{ font-size:25px; } }
+</style>
+</head>
+<body>
+  <nav><div class="in">
+    <span class="bd">DOYOU</span>
+    <a href="doyou-hub.html">허브</a>
+    <a href="doyou-edu.html">교육 팝업</a>
+    <a href="doyou-curation.html">큐레이션 엔진</a>
+    <a href="doyou-franchise.html">가맹</a>
+  </div></nav>
+
+  <main class="wrap">
+    <section class="hero">
+      <svg class="hero-face" viewBox="305 222 488 620" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <g stroke="#141413" stroke-width="14" stroke-linejoin="round" stroke-linecap="round">
+          <path d="M540,235 C690,235 770,360 770,540 C770,720 680,825 540,825 C400,825 320,710 320,540 C320,360 390,235 540,235 Z" fill="#F5B60B"/>
+          <path d="M540,250 C610,250 670,300 700,360 C672,430 690,440 778,478 C840,512 838,520 800,548 C742,560 760,585 786,600 C740,628 742,632 720,648 C760,672 742,690 700,742 C648,790 600,805 540,810 L540,250 Z" fill="#FAF5EB"/>
+          <path d="M540,540 L320,540 C328,690 410,795 540,812 Z" fill="#5B7FA6"/>
+          <path d="M540,235 C430,235 360,300 335,395 C400,360 470,350 540,355 C560,300 560,265 540,235 Z" fill="#141413"/>
+          <ellipse cx="445" cy="470" rx="62" ry="42" fill="#FAF5EB"/><circle cx="462" cy="470" r="22" fill="#141413"/>
+          <path d="M628,452 C660,432 705,438 724,460 C700,478 660,480 628,452 Z" fill="#FAF5EB"/><circle cx="690" cy="458" r="13" fill="#141413"/>
+          <polygon points="540,470 600,640 470,640" fill="#C75D3A"/>
+          <path d="M455,705 C500,690 560,690 600,705 C560,742 500,742 455,705 Z" fill="#C75D3A"/>
+        </g>
+      </svg>
+      <div><span class="hero-pill">입점 신청</span></div>
+      <h1>범어 본점에 우리 브랜드를</h1>
+      <p class="sub">대구 교육 1번지 범어1동 팝업. 아래에 브랜드를 입력하면 <b>범어 적합도와 추천 단가</b>가 바로 나옵니다.</p>
+    </section>
+
+    <form class="card" id="applyForm">
+      <div class="field two">
+        <div><label>브랜드명 <span class="req">*</span></label><input id="f_brand" required placeholder="예) 무드무드 스튜디오" /></div>
+        <div><label>담당자명 <span class="req">*</span></label><input id="f_name" required placeholder="예) 홍길동" /></div>
+      </div>
+      <div class="field two">
+        <div><label>이메일 <span class="req">*</span></label><input id="f_email" type="email" required placeholder="you@brand.com" /></div>
+        <div><label>연락처</label><input id="f_phone" type="tel" placeholder="010-0000-0000" /></div>
+      </div>
+      <div class="field two">
+        <div><label>브랜드 성격 · 카테고리 <span class="req">*</span></label>
+          <select id="f_cat" required>
+            <option value="">선택하세요</option>
+            <option>교육</option><option>재테크</option><option>뷰티</option><option>패션</option><option>F&B</option><option>웰니스</option><option>라이프스타일</option><option>주얼리·액세서리</option><option>굿즈·캐릭터</option><option>스트리트</option><option>디자이너</option>
+          </select>
+        </div>
+        <div><label>희망 입점 존</label>
+          <select id="f_zone"><option>상관없음</option><option>포토월존</option><option>도화지 벽</option><option>센터 단독존</option></select>
+        </div>
+      </div>
+      <div class="fit" id="fit" style="display:none">
+        <div class="top"><span class="lab">📍 범어1동 적합도 <span id="fitCat" style="color:var(--muted); font-weight:700; font-size:12px"></span></span><span class="sc" id="fitScore">–</span></div>
+        <div class="bar"><i id="fitBar" style="width:0%"></i></div>
+        <div class="row2"><span class="pass" id="fitPass">–</span><span id="fitVerdict" style="color:var(--muted)"></span><a href="doyou-curation.html" style="margin-left:auto; font-weight:700">다른 동네도 보기 →</a></div>
+      </div>
+      <div class="field two">
+        <div><label>희망 기간</label><select id="f_month"><option>2026-07</option><option>2026-08</option><option>2026-09</option><option>2026-10</option><option>2026-11</option><option>2026-12</option></select></div>
+        <div><label>월 예산 <span class="rangeval" id="budVal">₩3,000,000</span></label><input id="f_budget" type="range" min="1500000" max="8000000" step="250000" value="3000000" /></div>
+      </div>
+      <div class="field"><label>브랜드 소개</label><textarea id="f_desc" placeholder="어떤 브랜드인지, 왜 범어 팝업을 원하는지 간단히"></textarea></div>
+      <div class="field"><label>브랜드 URL · 인스타</label><input id="f_url" placeholder="https:// 또는 @instagram" /></div>
+      <button type="submit" class="btn">입점 신청하기 →</button>
+    </form>
+
+    <div class="card ok" id="ok"><h3>신청이 접수됐어요! 🎉</h3><p>담당자가 검토 후 이메일로 연락드립니다. 메일 앱이 열리면 그대로 보내주셔도 돼요.</p></div>
+
+    <h2 class="apply-h">입점 절차</h2>
+    <div class="card steps">
+      <div class="step"><b>신청·문의</b> — 이 폼 또는 메일로 브랜드 정보 전달</div>
+      <div class="step"><b>소재·업종 검수</b> — 범어 적합도 확인 + 학생 매체 정책 점검</div>
+      <div class="step"><b>계약</b> — 기간·존·단가 협의 후 계약</div>
+      <div class="step"><b>셋업</b> — 큐비즘 공간 연출·게임 연동·촬영</div>
+      <div class="step"><b>오픈·데이터</b> — 팝업 운영 + 학년·과목 반응 리포트</div>
+    </div>
+
+    <h2>무엇을 제공하나</h2>
+    <div class="provide">
+      <div class="pv"><b>🎯 수성구 교육가정 도달</b><p>범어1동 학생·구매력 학부모에게 직접.</p></div>
+      <div class="pv"><b>🎮 STUDY RUSH 게임</b><p>방문객 체류·재미 후크로 자연 노출.</p></div>
+      <div class="pv"><b>📊 데이터 리포트</b><p>어느 학년·과목이 반응했는지 성과 데이터.</p></div>
+      <div class="pv"><b>🖼️ 큐비즘 공간 + 셋업</b><p>인증샷 잘 나오는 갤러리형 공간·연출 지원.</p></div>
+    </div>
+
+    <h2>자주 묻는 질문</h2>
+    <div class="faq">
+      <p><b>최소 기간은?</b> 보통 1~2주 단위 팝업으로 시작해요(협의 가능).</p>
+      <p><b>비용은?</b> 카테고리·존·기간에 따라 베이직~플래그십(월 30만~150만) 범위. 위 폼에서 범어 추천 단가가 바로 나옵니다.</p>
+      <p><b>데이터는 정말 주나요?</b> 네. 방문·게임 참여(학년·과목) 리포트를 제공합니다.</p>
+    </div>
+  </main>
+
+  <footer>
+    <div><span class="bf-name">DOYOU</span><span class="bf-pill">POP-UP STORE</span></div>
+    <div class="bf-meta">입점 신청 · 대구 수성구 범어 · @doyou_popup_store · DataPD.ai</div>
+  </footer>
+
+<script>
+  var BEOMEO_AFF = {edu:98,fin:90,beauty:72,lux:70,kids:75,well:60,food:60,culture:38,living:28};
+  var CATMAP = { '교육':{k:'edu',p:3}, '재테크':{k:'fin',p:4}, '뷰티':{k:'beauty',p:3}, '패션':{k:'beauty',p:3}, 'F&B':{k:'food',p:3}, '웰니스':{k:'well',p:3}, '라이프스타일':{k:'living',p:2}, '주얼리·액세서리':{k:'lux',p:4}, '굿즈·캐릭터':{k:'culture',p:2}, '스트리트':{k:'beauty',p:2}, '디자이너':{k:'beauty',p:4} };
+  function beomeoFit(cat){ var m=CATMAP[cat]||{k:'living',p:2}; var base=BEOMEO_AFF[m.k]||0; var gap=m.p-5; var pen=gap>0?gap*12:(-gap)*3; var score=Math.max(0,Math.min(100,Math.round(base-pen))); var val=score*0.3+60+m.p*3; var tier=val>=82?'플래그십 150만~/월':(val>=64?'프로 80만/월':'베이직 30만/월'); return {score:score,tier:tier}; }
+  var $ = function(id){ return document.getElementById(id); };
+  function won(n){ return '₩' + Number(n).toLocaleString('ko-KR'); }
+  $('f_budget').addEventListener('input', function(e){ $('budVal').textContent = won(e.target.value); });
+  $('f_cat').addEventListener('change', function(e){
+    var cat = e.target.value; var fit = $('fit');
+    if(!cat){ fit.style.display='none'; return; }
+    var r = beomeoFit(cat); var col = r.score>=70?'#15803D':(r.score>=45?'#43618A':'#C2A98F');
+    var verdict = r.score>=70?'강하게 추천':(r.score>=45?'적합':'다른 동네가 더 맞아요');
+    fit.style.display='block';
+    $('fitCat').textContent='· '+cat; $('fitScore').textContent=r.score; $('fitScore').style.color=col;
+    $('fitBar').style.width=r.score+'%'; $('fitBar').style.background=col;
+    $('fitPass').textContent='추천 단가 · '+r.tier; $('fitVerdict').textContent='범어1동 → '+verdict;
+  });
+  $('applyForm').addEventListener('submit', function(e){
+    e.preventDefault();
+    var cat=$('f_cat').value, brand=$('f_brand').value.trim();
+    var fit = cat?beomeoFit(cat):{score:'-',tier:'-'};
+    var rec = { brand:brand, name:$('f_name').value.trim(), email:$('f_email').value.trim(), phone:$('f_phone').value.trim(), category:cat, zone:$('f_zone').value, month:$('f_month').value, budget:Number($('f_budget').value), desc:$('f_desc').value.trim(), url:$('f_url').value.trim(), fitScore:fit.score, fitTier:fit.tier, ts:new Date().toISOString() };
+    try{ var k='doyou.apply.v1', l=JSON.parse(localStorage.getItem(k)||'[]'); l.push(rec); localStorage.setItem(k, JSON.stringify(l)); }catch(err){}
+    var body = '[DOYOU 입점 신청]\n\n브랜드: '+rec.brand+'\n담당자: '+rec.name+'\n이메일: '+rec.email+'\n연락처: '+rec.phone+'\n카테고리: '+rec.category+'\n희망 존: '+rec.zone+'\n희망 기간: '+rec.month+'\n월 예산: '+won(rec.budget)+'\n범어 적합도: '+rec.fitScore+' / 추천 단가: '+rec.fitTier+'\n소개: '+rec.desc+'\nURL: '+rec.url+'\n';
+    $('applyForm').style.display='none'; $('ok').style.display='block';
+    window.scrollTo({top:0, behavior:'smooth'});
+    location.href = 'mailto:jinho.choi1010@gmail.com?subject=' + encodeURIComponent('[DOYOU 입점신청] '+rec.brand) + '&body=' + encodeURIComponent(body);
+  });
+</script>
+</body>
+</html>
