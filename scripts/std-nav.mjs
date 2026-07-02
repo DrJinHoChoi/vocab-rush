@@ -10,15 +10,17 @@ const NAV_ITEMS = [
   ['/doyou-franchise.html', 'doyou-franchise', '가맹'],
   ['/doyou-ops.html', 'doyou-ops', '운영'],
   ['/doyou-business.html', 'doyou-business', '비즈니스'],
+  ['/play.html', 'play', '게임'],
+  ['/vibe-coding.html', 'vibe-coding', '바이브코딩'],
 ];
 const STYLE = `<style id="dpnav-css">nav:not(#dpnav){display:none!important}.topbar{display:none!important}#dpnav{position:sticky;top:0;z-index:9000;background:#FFFEFB;border-bottom:2px solid #141413}#dpnav .in{max-width:1000px;margin:0 auto;padding:10px 20px;display:flex;gap:6px 15px;align-items:center;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;font-family:'Pretendard','Apple SD Gothic Neo','Malgun Gothic',-apple-system,sans-serif;font-size:13px}#dpnav .in::-webkit-scrollbar{display:none}#dpnav a{white-space:nowrap;flex:0 0 auto;color:#7C766B;text-decoration:none}#dpnav a:hover{color:#141413}#dpnav a.bd{font-weight:900;color:#141413;font-size:15px;margin-right:4px}#dpnav a.on{color:#141413;font-weight:800;border-bottom:2px solid #F5B60B;padding-bottom:3px}</style>`;
 
 function navFor(page) {
   const links = NAV_ITEMS.map(([href, p, label]) => `<a href="${href}"${p === page ? ' class="on"' : ''}>${label}</a>`).join('');
-  return `${STYLE}<nav id="dpnav"><div class="in"><a class="bd" href="/">DataPD</a>${links}<a href="/play.html">게임</a></div></nav>`;
+  return `${STYLE}<nav id="dpnav"><div class="in"><a class="bd" href="/">DataPD</a>${links}</div></nav>`;
 }
 
-const PAGES = ['doyou-hub', 'doyou-curation', 'doyou-locations', 'doyou-apply', 'doyou-franchise', 'doyou-ops', 'doyou-business', 'doyou-edu', 'doyou-precon', 'doyou-canvas'];
+const PAGES = ['doyou-hub', 'doyou-curation', 'doyou-locations', 'doyou-apply', 'doyou-franchise', 'doyou-ops', 'doyou-business', 'doyou-edu', 'doyou-precon', 'doyou-canvas', 'vibe-coding'];
 const done = [];
 for (const page of PAGES) {
   const f = `public/${page}.html`;
