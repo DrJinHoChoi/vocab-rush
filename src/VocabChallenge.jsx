@@ -19,10 +19,16 @@ const AD_CONFIG = {
   },
 };
 
+// 광고 노출 스위치 — AdSense 심사 중엔 게임에 광고 마크업을 넣지 않는다.
+// 승인 후: (1) 여기를 true 로, (2) play.html <head> 에 AdSense 로더 스크립트 복원,
+// (3) 위 slots 를 실제 발급 슬롯 ID로 교체.
+const ADS_ENABLED = false;
+
 // ============================================================
 // AD BANNER COMPONENT (Google AdSense)
 // ============================================================
 function AdBanner({ slot, format = "auto", style = {} }) {
+  if (!ADS_ENABLED) return null; // 심사 중 게임에 광고 마크업 미노출
   const adRef = useRef(null);
   const pushed = useRef(false);
 
