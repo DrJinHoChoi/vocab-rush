@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="icon" type="image/svg+xml" href="doyou-favicon.svg" />
+<meta name="theme-color" content="#F5B60B" />
+<meta name="robots" content="noindex, nofollow" />
+<title>DOYOU 입점 모집 — 광고 이미지 목업 (스크린샷용)</title>
+<style>
+  :root{ --bg:#FAF5EB; --surface:#FFFEFB; --ink:#141413; --line:#E3DCCB; --muted:#7C766B; --muted2:#A79E88; --gold:#F5B60B; --blue:#5B7FA6; --terra:#C75D3A; --cream:#FAF5EB; --shadow:0 1px 2px rgba(20,16,12,.05), 0 14px 34px rgba(20,16,12,.12); }
+  *{ box-sizing:border-box; margin:0; padding:0; }
+  body{ font-family:'Pretendard','Apple SD Gothic Neo','Malgun Gothic',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; background:var(--bg); color:var(--ink); line-height:1.5; -webkit-font-smoothing:antialiased; }
+  .wrap{ max-width:1040px; margin:0 auto; padding:0 22px 60px; }
+  a{ color:#43618A; }
+  nav{ background:var(--surface); border-bottom:2px solid var(--ink); }
+  .head{ text-align:center; padding:34px 0 6px; }
+  .head .pill{ display:inline-block; background:var(--ink); color:var(--gold); font-size:11px; font-weight:800; letter-spacing:3px; padding:5px 13px; border-radius:999px; }
+  .head h1{ font-size:26px; font-weight:900; letter-spacing:-.02em; margin:12px 0 8px; }
+  .head p{ color:var(--muted); font-size:14px; max-width:640px; margin:0 auto; }
+  .note{ background:#FBF0CF; border:1px solid #E8D49A; border-radius:12px; padding:12px 16px; margin:18px auto 6px; max-width:720px; font-size:13px; color:#6B5208; }
+  .grid{ display:grid; grid-template-columns:repeat(2,1fr); gap:26px; margin-top:26px; }
+  @media(max-width:900px){ .grid{ grid-template-columns:1fr; } }
+  .cap{ font-size:12px; color:var(--muted); font-weight:700; margin:0 0 8px; }
+
+  /* ── 광고 카드 (인스타 4:5) ── */
+  .ad{ position:relative; aspect-ratio:4/5; border:2px solid var(--ink); border-radius:20px; overflow:hidden; box-shadow:var(--shadow); display:flex; flex-direction:column; justify-content:space-between; padding:26px 24px; }
+  .ad .top{ display:flex; align-items:center; justify-content:space-between; gap:10px; }
+  .ad .apill{ font-size:11px; font-weight:800; letter-spacing:2.5px; padding:5px 12px; border-radius:999px; }
+  .ad .face{ width:52px; height:52px; flex:0 0 auto; }
+  .ad .badge{ display:inline-block; font-size:12.5px; font-weight:800; padding:5px 12px; border-radius:999px; }
+  .ad h3{ font-size:30px; font-weight:900; letter-spacing:-.02em; line-height:1.2; margin:10px 0; }
+  .ad .sub{ font-size:14px; font-weight:600; line-height:1.5; }
+  .ad .cta{ display:inline-block; font-size:15px; font-weight:900; padding:11px 18px; border-radius:12px; }
+  .ad .brand{ font-size:11.5px; font-weight:700; margin-top:12px; letter-spacing:.2px; }
+
+  /* 교육 — 골드 */
+  .ad.edu{ background:var(--gold); color:var(--ink); }
+  .ad.edu .apill{ background:var(--ink); color:var(--gold); }
+  .ad.edu .badge{ background:rgba(20,16,12,.12); color:#5A4408; }
+  .ad.edu .cta{ background:var(--ink); color:var(--gold); }
+  .ad.edu .brand{ color:#6B5208; }
+  /* 프리미엄 — 잉크(럭스) */
+  .ad.prem{ background:var(--ink); color:var(--cream); }
+  .ad.prem .apill{ background:var(--terra); color:#fff; }
+  .ad.prem h3{ color:#fff; }
+  .ad.prem .badge{ background:#26221C; color:var(--gold); }
+  .ad.prem .sub{ color:#C9C3B5; }
+  .ad.prem .cta{ background:var(--gold); color:var(--ink); }
+  .ad.prem .brand{ color:var(--muted2); }
+  /* 재테크 — 블루 */
+  .ad.fin{ background:var(--blue); color:#fff; }
+  .ad.fin .apill{ background:var(--ink); color:#fff; }
+  .ad.fin .badge{ background:rgba(255,255,255,.18); color:#fff; }
+  .ad.fin .sub{ color:#EAF1F7; }
+  .ad.fin .cta{ background:#fff; color:#2E4763; }
+  .ad.fin .brand{ color:#DCE6F1; }
+  /* 일반 — 크림 */
+  .ad.gen{ background:var(--surface); color:var(--ink); }
+  .ad.gen .apill{ background:var(--ink); color:var(--gold); }
+  .ad.gen .badge{ background:#F1EADB; color:#6B5208; }
+  .ad.gen .sub{ color:var(--muted); }
+  .ad.gen .cta{ background:var(--ink); color:var(--gold); }
+  .ad.gen .brand{ color:var(--muted2); }
+
+  footer{ text-align:center; border-top:2px solid var(--ink); padding:22px 0 40px; margin-top:36px; color:var(--muted2); font-size:12.5px; }
+</style>
+</head>
+<body>
+<style id="dpnav-css">nav:not(#dpnav){display:none!important}.topbar{display:none!important}#dpnav{position:sticky;top:0;z-index:9000;background:#FFFEFB;border-bottom:2px solid #141413}#dpnav .in{max-width:1000px;margin:0 auto;padding:10px 20px;display:flex;gap:6px 15px;align-items:center;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;font-family:'Pretendard','Apple SD Gothic Neo','Malgun Gothic',-apple-system,sans-serif;font-size:13px}#dpnav .in::-webkit-scrollbar{display:none}#dpnav a{white-space:nowrap;flex:0 0 auto;color:#7C766B;text-decoration:none}#dpnav a:hover{color:#141413}#dpnav a.bd{font-weight:900;color:#141413;font-size:15px;margin-right:4px}#dpnav a.on{color:#141413;font-weight:800;border-bottom:2px solid #F5B60B;padding-bottom:3px}</style><nav id="dpnav"><div class="in"><a class="bd" href="/">DataPD</a><a href="/doyou-hub.html">허브</a><a href="/doyou-curation.html">큐레이션</a><a href="/doyou-invite.html">모집</a><a href="/doyou-apply.html" class="on">입점</a><a href="/doyou-franchise.html">가맹</a><a href="/doyou-ops.html">운영</a><a href="/play.html">게임</a></div></nav>
+
+<!-- 큐비즘 페이스 심볼 (1회 정의 후 재사용) -->
+<svg style="display:none" aria-hidden="true"><symbol id="doyouface" viewBox="305 222 488 620"><g stroke="#141413" stroke-width="14" stroke-linejoin="round" stroke-linecap="round"><path d="M540,235 C690,235 770,360 770,540 C770,720 680,825 540,825 C400,825 320,710 320,540 C320,360 390,235 540,235 Z" fill="#F5B60B"/><path d="M540,250 C610,250 670,300 700,360 C672,430 690,440 778,478 C840,512 838,520 800,548 C742,560 760,585 786,600 C740,628 742,632 720,648 C760,672 742,690 700,742 C648,790 600,805 540,810 L540,250 Z" fill="#FAF5EB"/><path d="M540,540 L320,540 C328,690 410,795 540,812 Z" fill="#5B7FA6"/><path d="M540,235 C430,235 360,300 335,395 C400,360 470,350 540,355 C560,300 560,265 540,235 Z" fill="#141413"/><ellipse cx="445" cy="470" rx="62" ry="42" fill="#FAF5EB"/><circle cx="462" cy="470" r="22" fill="#141413"/><path d="M628,452 C660,432 705,438 724,460 C700,478 660,480 628,452 Z" fill="#FAF5EB"/><circle cx="690" cy="458" r="13" fill="#141413"/><polygon points="540,470 600,640 470,640" fill="#C75D3A"/><path d="M455,705 C500,690 560,690 600,705 C560,742 500,742 455,705 Z" fill="#C75D3A"/></g></symbol></svg>
+
+<div class="wrap">
+  <div class="head">
+    <span class="pill">AD CREATIVE · 스크린샷용</span>
+    <h1>입점 브랜드 모집 — 광고 이미지 목업</h1>
+    <p>인스타·메타 피드 광고(4:5)용 이미지입니다. 각 카드를 <b>스크린샷</b>해서 그대로 올리세요. 문구·릴스·DM은 <b>BRAND-ADS.md</b>, 목적지는 <a href="/doyou-invite.html">모집 랜딩</a>.</p>
+    <div class="note">💡 더 선명하게: 브라우저 확대(Ctrl/⌘ +)로 200% 키운 뒤 카드만 스크린샷하면 고해상도로 나와요. 사진 소재가 생기면 이 배경 위에 얹어 쓰세요.</div>
+  </div>
+
+  <div class="grid">
+    <div>
+      <p class="cap">① 교육 · 에듀테크 · 문구</p>
+      <div class="ad edu">
+        <div class="top"><span class="apill">입점 브랜드 모집</span><svg class="face"><use href="#doyouface"/></svg></div>
+        <div>
+          <span class="badge">🎓 교육 · 에듀테크 · 문구</span>
+          <h3>대구 교육 1번지<br/>학부모·학생 앞에,<br/>2주만.</h3>
+          <p class="sub">10대 인구 전국 2위 사교육 상권 · 성수처럼 비싸지 않게 · 학년·과목 반응 데이터까지</p>
+        </div>
+        <div>
+          <span class="cta">우리 브랜드 적합도 30초 확인 →</span>
+          <div class="brand">DOYOU 팝업 · @doyou_popup_store · datapd.ai/doyou-invite</div>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <p class="cap">② 프리미엄 · 다이닝 · 뷰티</p>
+      <div class="ad prem">
+        <div class="top"><span class="apill">입점 브랜드 모집</span><svg class="face"><use href="#doyouface"/></svg></div>
+        <div>
+          <span class="badge">💎 프리미엄 · 다이닝 · 뷰티</span>
+          <h3>대구 제1부촌<br/>가정에게,<br/>프리미엄을.</h3>
+          <p class="sub">파인다이닝·디저트·니치 향수·주얼리 · 구매력 높은 교육 가정 · 인증샷 큐비즘 공간</p>
+        </div>
+        <div>
+          <span class="cta">입점 자리 알아보기 →</span>
+          <div class="brand">DOYOU 팝업 · @doyou_popup_store · datapd.ai/doyou-invite</div>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <p class="cap">③ 재테크 · 금융 · 법무</p>
+      <div class="ad fin">
+        <div class="top"><span class="apill">입점 브랜드 모집</span><svg class="face"><use href="#doyouface"/></svg></div>
+        <div>
+          <span class="badge">💰 재테크 · 금융 · 법무</span>
+          <h3>금융·법조 타운<br/>한복판,<br/>상담 부스 자리.</h3>
+          <p class="sub">범어네거리 = 대구 양대 금융중심지+법조타운 · 자산관리·보험·법무·교육자금 · 세미나+리드 데이터</p>
+        </div>
+        <div>
+          <span class="cta">제휴 문의하기 →</span>
+          <div class="brand">DOYOU 팝업 · @doyou_popup_store · datapd.ai/doyou-invite</div>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <p class="cap">④ 일반 (리타깃·확장)</p>
+      <div class="ad gen">
+        <div class="top"><span class="apill">입점 브랜드 모집</span><svg class="face"><use href="#doyouface"/></svg></div>
+        <div>
+          <span class="badge">DOYOU 범어 본점</span>
+          <h3>성수처럼<br/>비싸지 않게,<br/>오프라인 검증.</h3>
+          <p class="sub">게임으로 사람을 모으고, 데이터를 드리는 큐레이션 팝업 · 1~2주 저비용 테스트 무대</p>
+        </div>
+        <div>
+          <span class="cta">30초 적합도 확인 →</span>
+          <div class="brand">DOYOU 팝업 · @doyou_popup_store · datapd.ai/doyou-invite</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer>DOYOU 입점 모집 광고 목업 · 내부용(noindex) · 문구/릴스/DM = BRAND-ADS.md · 목적지 <a href="/doyou-invite.html">doyou-invite.html</a></footer>
+</div>
+</body>
+</html>
