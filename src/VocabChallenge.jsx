@@ -630,6 +630,9 @@ export default function VocabChallenge() {
         {/* PC 좌측 사이드바 (대시보드) */}
         {isWide && (
           <aside style={{ position: "fixed", left: 0, top: 0, height: "100vh", width: 214, background: "#FFFEFB", borderRight: "2px solid #141413", padding: "20px 14px", display: "flex", flexDirection: "column", zIndex: 60, boxSizing: "border-box", overflowY: "auto" }}>
+            <a href="/" title="DataPD 홈으로 돌아가기" style={{ display: "inline-flex", alignItems: "center", gap: 6, color: "#7C766B", textDecoration: "none", fontSize: 12.5, fontWeight: 700, paddingLeft: 6, marginBottom: 10 }}
+              onMouseEnter={(e) => { e.currentTarget.style.color = "#141413"; }}
+              onMouseLeave={(e) => { e.currentTarget.style.color = "#7C766B"; }}>← DataPD 홈</a>
             <div style={{ fontWeight: 900, fontSize: 17, color: "#141413", letterSpacing: -0.3, marginBottom: 20, paddingLeft: 6 }}>⚡ STUDY RUSH</div>
             {[
               { ic: "🏠", lab: "홈", act: () => window.scrollTo({ top: 0, behavior: "smooth" }) },
@@ -661,6 +664,7 @@ export default function VocabChallenge() {
         {!isWide && (
         <nav style={{ position: "sticky", top: 0, zIndex: 50, background: "rgba(250,245,235,0.92)", borderBottom: "1px solid #E3DCCB", padding: "11px 18px" }}>
           <div style={{ maxWidth: 1080, margin: "0 auto", display: "flex", alignItems: "center", gap: 14, flexWrap: "wrap" }}>
+            <a href="/" title="DataPD 홈으로 돌아가기" style={{ color: "#141413", textDecoration: "none", fontSize: 13, fontWeight: 800, borderRight: "1px solid #E3DCCB", paddingRight: 12 }}>← DataPD</a>
             <span style={{ fontWeight: 900, letterSpacing: 1, color: "#141413", fontSize: 15, marginRight: 4 }}>⚡ STUDY RUSH</span>
             <a href="/suneung-quiz.html" style={{ color: "#43618A", textDecoration: "none", fontSize: 13, fontWeight: 700 }}>수능 게임</a>
             <a href="/learn.html" target="_blank" rel="noopener noreferrer" style={{ color: "#7C766B", textDecoration: "none", fontSize: 13 }}>학습 로드맵</a>
