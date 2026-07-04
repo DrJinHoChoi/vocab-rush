@@ -10,7 +10,7 @@ const NAV_ITEMS = [
   ['/doyou-partners.html', 'doyou-partners', '입점사'],
   ['/doyou-content.html', 'doyou-content', '콘텐츠'],
   ['/doyou-join.html', 'doyou-join', '가맹'],
-  ['/play.html', 'play', '게임'],
+  ['/crabox.html', 'crabox', '🦀 crabox'],
 ];
 // 내비에 없는 페이지의 활성 표시 별칭 (신청폼→입점, 모델 상세→가맹 등)
 const ALIAS = { 'doyou-apply': 'doyou-invite', 'doyou-franchise': 'doyou-join', 'doyou-locations': 'doyou-curation', 'doyou-ops': 'doyou-hub', 'doyou-business': 'doyou-hub', 'doyou-edu': 'doyou-hub', 'doyou-precon': 'doyou-hub', 'doyou-canvas': 'doyou-hub', 'doyou-ads': 'doyou-invite' };
