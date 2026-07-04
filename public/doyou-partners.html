@@ -36,6 +36,10 @@
   .fbox.hot{ background:var(--ink); } .fbox.hot .ft{ color:var(--gold); } .fbox.hot .fd{ color:#C9C3B5; }
   .farr{ display:flex; align-items:center; font-size:19px; font-weight:900; color:var(--muted2); }
   @media(max-width:680px){ .farr{ transform:rotate(90deg); width:100%; justify-content:center; height:12px; } }
+  .gets{ display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+  .gv{ background:var(--surface); border:2px solid var(--ink); border-radius:14px; padding:15px 16px; box-shadow:var(--shadow); }
+  .gv b{ font-size:14px; } .gv p{ font-size:12.5px; color:var(--muted); margin-top:4px; }
+  @media(max-width:640px){ .gets{ grid-template-columns:1fr; } }
   .terms{ background:var(--surface); border:2px solid var(--ink); border-radius:14px; padding:15px 18px; font-size:13.5px; box-shadow:var(--shadow); }
   .terms b{ color:var(--ink); }
   .terms .row{ display:grid; grid-template-columns:96px 1fr; gap:6px 12px; margin-top:8px; }
@@ -98,16 +102,19 @@
     </section>
 
     <section class="blk">
-      <div class="terms">
-        <b>용어 구분</b> — 헷갈리기 쉬워 정리합니다.
-        <div class="row">
-          <span class="k">입점사</span><span>팝업에 <b>브랜드·콘텐츠로 들어오는</b> 회사 (이 리스트) — <a href="/doyou-invite.html">입점 모집 →</a></span>
-          <span class="k">가맹점주</span><span>DOYOU <b>매장을 운영하는</b> 점주 — 현재 정보공개서 등록 전 <b>사전 상담 단계</b>라 리스트가 없습니다. <a href="/doyou-join.html">가맹 사전 상담 →</a></span>
-        </div>
+      <h2 style="border-color:var(--gold)">입점사가 받는 것</h2>
+      <p class="lead">DOYOU 입점사는 자리만 받지 않습니다 — 아래 네 가지가 기본 패키지예요. 조건·단가는 <a href="/doyou-invite.html"><b>입점 안내</b></a>에서 30초 확인.</p>
+      <div class="gets">
+        <div class="gv"><b>📍 공간 + 집객</b><p>대구 교육 부촌 1번지 범어 본점 — 관객이 곧 타깃(학생·구매력 학부모).</p></div>
+        <div class="gv"><b>🎁 전용 콘텐츠 무료 제작</b><p>미니게임·테스트·쇼케이스를 무료로, 팝업 후에도 계속 사용 — <b>실물 예시가 아래 crabox</b>입니다.</p></div>
+        <div class="gv"><b>🖥️ 키오스크·웹 유통</b><p>브랜드 콘텐츠가 팝업 현장 키오스크와 웹으로 서비스됩니다.</p></div>
+        <div class="gv"><b>📊 반응 데이터 리포트</b><p>어느 학년·과목·시간대가 반응했는지 — 다음 마케팅의 근거.</p></div>
       </div>
     </section>
 
     <section class="blk">
+      <h2 style="border-color:var(--terra)">입점사 리스트</h2>
+      <p class="lead">지금 서비스 중인 브랜드와 <b>1기 모집 중인 빈 자리</b>입니다 — 위 패키지를 실제로 받고 있는 곳들이에요.</p>
       <div class="list">
         <div class="tn" style="grid-column:1/-1; border-width:3px">
           <div class="top"><span class="badge live">● LIVE · 운영 중</span><span style="font-size:11px; font-weight:800; color:var(--muted2)">입점사 #1</span></div>
@@ -173,6 +180,16 @@
         <div class="fbox hot"><div class="ft">💸 가맹점 수익 실현</div><div class="fd">입점료·판매·광고 수익 + 성장 배당</div></div>
       </div>
       <p style="margin-top:12px; font-size:13px; color:var(--muted)">"브랜드는 본사가 채워드립니다"의 실체가 이 구조입니다 — 본점 입점사가 늘수록 가맹점이 강해져요. <a href="/doyou-join.html" style="font-weight:800">가맹 사전 상담 →</a></p>
+    </section>
+
+    <section class="blk">
+      <div class="terms">
+        <b>용어 구분</b> — 헷갈리기 쉬워 정리합니다.
+        <div class="row">
+          <span class="k">입점사</span><span>팝업에 <b>브랜드·콘텐츠로 들어오는</b> 회사 (이 리스트) — <a href="/doyou-invite.html">입점 모집 →</a></span>
+          <span class="k">가맹점주</span><span>DOYOU <b>매장을 운영하는</b> 점주 — 현재 정보공개서 등록 전 <b>사전 상담 단계</b>라 리스트가 없습니다. <a href="/doyou-join.html">가맹 사전 상담 →</a></span>
+        </div>
+      </div>
     </section>
 
     <div class="big-cta">
