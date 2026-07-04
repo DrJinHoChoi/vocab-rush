@@ -51,6 +51,13 @@
   .tn p{ font-size:13px; color:var(--muted); flex:1; }
   .tn .chips{ display:flex; gap:6px; flex-wrap:wrap; margin:10px 0; }
   .tn .chips span{ font-size:11.5px; font-weight:700; border:1.5px solid var(--ink); border-radius:999px; padding:3px 10px; background:var(--bg); }
+  .offers{ display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin:10px 0 14px; }
+  .of{ display:block; background:var(--bg); border:2px solid var(--ink); border-radius:12px; padding:12px 14px; text-decoration:none; color:var(--ink); transition:transform .12s; }
+  .of:hover{ transform:translateY(-2px); }
+  .of b{ display:block; font-size:14px; font-weight:900; }
+  .of span{ display:block; font-size:11.5px; color:var(--muted); margin-top:3px; }
+  .of .go2{ font-size:12px; font-weight:800; color:var(--terra); margin-top:8px; }
+  @media(max-width:640px){ .offers{ grid-template-columns:1fr; } }
   .tn .go{ display:inline-block; align-self:flex-start; background:var(--ink); color:var(--gold); font-weight:900; font-size:13.5px; text-decoration:none; padding:10px 16px; border-radius:11px; }
   .tn.empty{ border-style:dashed; border-color:var(--muted2); background:transparent; box-shadow:none; }
   .tn.empty .ic{ opacity:.55; }
@@ -102,14 +109,23 @@
 
     <section class="blk">
       <div class="list">
-        <div class="tn">
+        <div class="tn" style="grid-column:1/-1; border-width:3px">
           <div class="top"><span class="badge live">● LIVE · 운영 중</span><span style="font-size:11px; font-weight:800; color:var(--muted2)">입점사 #1</span></div>
-          <div class="ic" style="margin-top:10px">🦀</div>
-          <h3>crabox.ai</h3>
-          <span class="cat">🎓 교육 · 에듀테크</span>
-          <p>수능 학습자료 기반 게임과 바이브 코딩 교육 콘텐츠를 만드는 신개념 교육 브랜드 — <b>범어 본점 입점사</b>. 콘텐츠가 큐레이션을 통해 팝업·키오스크에 서비스됩니다.</p>
-          <div class="chips"><span>⚡ STUDY RUSH</span><span>📖 학습 자료 15편</span><span>💻 바이브 코딩</span></div>
-          <a class="go" href="/crabox.html">쇼케이스 보기 →</a>
+          <div style="display:flex; align-items:center; gap:13px; margin-top:12px">
+            <div class="ic">🦀</div>
+            <div>
+              <h3 style="margin:0">crabox.ai</h3>
+              <span class="cat" style="margin:4px 0 0">🎓 교육 · 에듀테크 · 신개념 교육 브랜드</span>
+            </div>
+          </div>
+          <p style="margin-top:10px">수능 학습자료 기반 게임과 바이브 코딩 교육 콘텐츠를 만드는 <b>범어 본점 입점사</b>. 아래 콘텐츠가 큐레이션을 통해 팝업·키오스크에 서비스됩니다.</p>
+          <b style="display:block; font-size:13px; margin:12px 0 0; color:#14532D">제공 콘텐츠 — 지금 바로 체험해 보세요</b>
+          <div class="offers">
+            <a class="of" href="/play.html"><b>⚡ STUDY RUSH</b><span>국·영·수·과·사 수능 학습 게임 · 3,000+ 문제</span><div class="go2">게임 플레이 →</div></a>
+            <a class="of" href="/guides.html"><b>📖 학습 자료 15편</b><span>영어·국어·수학·코딩·AI — 100% 원본 가이드</span><div class="go2">자료 보기 →</div></a>
+            <a class="of" href="/vibe-coding.html"><b>💻 바이브 코딩 교육</b><span>AI에게 말로 시켜 앱을 만드는 개발 교육</span><div class="go2">교육 보기 →</div></a>
+          </div>
+          <a class="go" href="/crabox.html">🦀 crabox 쇼케이스 전체 보기 →</a>
         </div>
 
         <div class="tn empty">
