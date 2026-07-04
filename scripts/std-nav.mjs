@@ -7,6 +7,7 @@ const NAV_ITEMS = [
   ['/doyou-curation.html', 'doyou-curation', '큐레이션'],
   ['/doyou-locations.html', 'doyou-locations', '동네'],
   ['/doyou-apply.html', 'doyou-apply', '입점'],
+  ['/doyou-partners.html', 'doyou-partners', '입점사'],
   ['/doyou-content.html', 'doyou-content', '콘텐츠'],
   ['/doyou-franchise.html', 'doyou-franchise', '가맹'],
   ['/doyou-ops.html', 'doyou-ops', '운영'],
@@ -22,7 +23,7 @@ function navFor(page) {
 
 // vibe-coding/게임은 DataPD 회사 레벨(#cnav) — DOYOU 사업 내비(#dpnav) 대상 아님.
 // doyou-invite(입점 on 고정)·doyou-ads(모집 링크 포함 커스텀)는 변형 내비라 재생성 제외.
-const PAGES = ['doyou-hub', 'doyou-curation', 'doyou-locations', 'doyou-apply', 'doyou-content', 'doyou-franchise', 'doyou-ops', 'doyou-business', 'doyou-edu', 'doyou-precon', 'doyou-canvas'];
+const PAGES = ['doyou-hub', 'doyou-curation', 'doyou-locations', 'doyou-apply', 'doyou-partners', 'doyou-content', 'doyou-franchise', 'doyou-ops', 'doyou-business', 'doyou-edu', 'doyou-precon', 'doyou-canvas'];
 const done = [];
 for (const page of PAGES) {
   const f = `public/${page}.html`;
