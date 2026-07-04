@@ -7,12 +7,13 @@ const NAV_ITEMS = [
   ['/doyou-curation.html', 'doyou-curation', '큐레이션'],
   ['/doyou-locations.html', 'doyou-locations', '동네'],
   ['/doyou-apply.html', 'doyou-apply', '입점'],
+  ['/doyou-content.html', 'doyou-content', '콘텐츠'],
   ['/doyou-franchise.html', 'doyou-franchise', '가맹'],
   ['/doyou-ops.html', 'doyou-ops', '운영'],
   ['/doyou-business.html', 'doyou-business', '비즈니스'],
   ['/play.html', 'play', '게임'],
 ];
-const STYLE = `<style id="dpnav-css">nav:not(#dpnav){display:none!important}.topbar{display:none!important}#dpnav{position:sticky;top:0;z-index:9000;background:#FFFEFB;border-bottom:2px solid #141413}#dpnav .in{max-width:1000px;margin:0 auto;padding:10px 20px;display:flex;gap:6px 15px;align-items:center;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;font-family:'Pretendard','Apple SD Gothic Neo','Malgun Gothic',-apple-system,sans-serif;font-size:13px}#dpnav .in::-webkit-scrollbar{display:none}#dpnav a{white-space:nowrap;flex:0 0 auto;color:#7C766B;text-decoration:none}#dpnav a:hover{color:#141413}#dpnav a.bd{font-weight:900;color:#141413;font-size:15px;margin-right:4px}#dpnav a.on{color:#141413;font-weight:800;border-bottom:2px solid #F5B60B;padding-bottom:3px}</style>`;
+const STYLE = `<style id="dpnav-css">nav:not(#dpnav){display:none!important}.topbar{display:none!important}#dpnav{position:sticky;top:0;z-index:9000;background:#FFFEFB;border-bottom:2px solid #141413}#dpnav .in{max-width:1000px;margin:0 auto;padding:10px 20px;display:flex;gap:6px 15px;align-items:center;flex-wrap:wrap;font-family:'Pretendard','Apple SD Gothic Neo','Malgun Gothic',-apple-system,sans-serif;font-size:13px}#dpnav .in::-webkit-scrollbar{display:none}#dpnav a{white-space:nowrap;flex:0 0 auto;color:#7C766B;text-decoration:none}#dpnav a:hover{color:#141413}#dpnav a.bd{font-weight:900;color:#141413;font-size:15px;margin-right:4px}#dpnav a.on{color:#141413;font-weight:800;border-bottom:2px solid #F5B60B;padding-bottom:3px}</style>`;
 
 function navFor(page) {
   const links = NAV_ITEMS.map(([href, p, label]) => `<a href="${href}"${p === page ? ' class="on"' : ''}>${label}</a>`).join('');
@@ -20,7 +21,8 @@ function navFor(page) {
 }
 
 // vibe-coding/게임은 DataPD 회사 레벨(#cnav) — DOYOU 사업 내비(#dpnav) 대상 아님.
-const PAGES = ['doyou-hub', 'doyou-curation', 'doyou-locations', 'doyou-apply', 'doyou-franchise', 'doyou-ops', 'doyou-business', 'doyou-edu', 'doyou-precon', 'doyou-canvas'];
+// doyou-invite(입점 on 고정)·doyou-ads(모집 링크 포함 커스텀)는 변형 내비라 재생성 제외.
+const PAGES = ['doyou-hub', 'doyou-curation', 'doyou-locations', 'doyou-apply', 'doyou-content', 'doyou-franchise', 'doyou-ops', 'doyou-business', 'doyou-edu', 'doyou-precon', 'doyou-canvas'];
 const done = [];
 for (const page of PAGES) {
   const f = `public/${page}.html`;
