@@ -143,7 +143,7 @@ jinho.choi1010@gmail.com · 인스타 @doyou_popup_store · datapd.ai/doyou-invi
 초중고 학생·학부모가 관객입니다. 에듀테크는 저희 큐레이션 적합도 최상위(97)예요.
 
 패키지: 1~2주 체험 부스 + 전용 콘텐츠 무료 제작 + '어느 학년이 반응했는지' 리포트.
-콘텐츠 메뉴: datapd.ai/doyou-content.html
+콘텐츠 메뉴: datapd.ai/doyou-content.html · 실물 예시(입점사 쇼케이스): datapd.ai/crabox.html
 15분 통화로 어떤 콘텐츠가 맞을지 같이 봐도 될까요? (관심 없으시면 회신 안 주셔도 됩니다)
 
 최진호 · DataPD / DOYOU · jinho.choi1010@gmail.com · @doyou_popup_store
@@ -163,7 +163,7 @@ STUDY RUSH를 직접 만든 팀이라 7일 안에 나오고, 팝업 후에도 �
 금융 관심도 높은 가정이 밀집합니다. 자녀 금융교육은 저희 큐레이션 최상위 적합도예요.
 
 패키지: 1~2주 체험 부스 + 전용 콘텐츠 + 관심 리드 데이터.
-콘텐츠 메뉴: datapd.ai/doyou-content.html
+콘텐츠 메뉴: datapd.ai/doyou-content.html · 실물 예시(입점사 쇼케이스): datapd.ai/crabox.html
 15분 통화 가능하실까요? (관심 없으시면 회신 안 주셔도 됩니다)
 
 최진호 · DataPD / DOYOU · jinho.choi1010@gmail.com
@@ -182,7 +182,7 @@ STUDY RUSH를 직접 만든 팀이라 7일 안에 나오고, 팝업 후에도 �
 자산관리 수요가 특히 큰 동네입니다.
 
 패키지: 상담·세미나 부스 1~2주 + 전용 진단 테스트 + 리드 데이터 + 프라이빗한
-큐비즘 공간. 콘텐츠 메뉴: datapd.ai/doyou-content.html
+큐비즘 공간. 콘텐츠 메뉴: datapd.ai/doyou-content.html · 실물 예시(입점사 쇼케이스): datapd.ai/crabox.html
 부담 없이 15분 통화나 1장 자료 어떠세요? (관심 없으시면 회신 안 주셔도 됩니다)
 
 최진호 · DataPD / DOYOU · jinho.choi1010@gmail.com
@@ -202,7 +202,7 @@ STUDY RUSH를 직접 만든 팀이라 7일 안에 나오고, 팝업 후에도 �
 문구가 가장 자연스럽게 팔리는 동네입니다.
 
 패키지: 시필·체험 부스 1~2주 + 전용 게임 + 반응 데이터 + 인증샷 공간.
-콘텐츠 메뉴: datapd.ai/doyou-content.html
+콘텐츠 메뉴: datapd.ai/doyou-content.html · 실물 예시(입점사 쇼케이스): datapd.ai/crabox.html
 15분 통화 될까요? (관심 없으시면 회신 안 주셔도 됩니다)
 
 최진호 · DataPD / DOYOU · jinho.choi1010@gmail.com
