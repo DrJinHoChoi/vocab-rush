@@ -159,7 +159,7 @@ https://www.datapd.ai/doyou-invite.html?utm_source=wadiz&utm_medium=dm&utm_campa
 
 ---
 
-## 7. 가맹점주 모집 — 어디에·무엇을 (목적지: `/doyou-franchise.html`)
+## 7. 가맹점주 모집 — 어디에·무엇을 (목적지: **모집 랜딩 `/doyou-join.html`** → 사전 상담 폼 / 모델 상세 `/doyou-franchise.html`)
 > 입점(브랜드)과 **별개 트랙**. 타깃 = 예비 창업자·학원 원장·상가 소유주.
 > ⚠️ **법률 주의:** 가맹사업법상 가맹점 모집(계약)은 **정보공개서 등록 후** 가능. 등록 전에는 반드시 **"가맹 사전 상담 · 관심 등록"** 문구로만. 수익 보장·과장 표현 금지("월 ○○만 원 보장" ❌). 광고 목업 ⑤번 카드도 이 원칙으로 제작됨.
 
@@ -171,7 +171,7 @@ https://www.datapd.ai/doyou-invite.html?utm_source=wadiz&utm_medium=dm&utm_campa
 | ★★ | **상가 소유주·공실 임대인** | 범어 일대 상가 부동산 중개사무소 방문·전화 | 공실을 수익 공간으로 — 부동산이 먼저 제안해 주는 채널 |
 | ★ | 부업 직장인·은퇴 예정자 | 인스타 창업 해시태그·유튜브 창업 커뮤니티 | 주간 운영 사이클이 매뉴얼화되어 병행 가능 |
 
-**UTM:** `https://www.datapd.ai/doyou-franchise.html?utm_source=<채널>&utm_medium=<유형>&utm_campaign=franchise_recruit`
+**UTM:** `https://www.datapd.ai/doyou-join.html?utm_source=<채널>&utm_medium=<유형>&utm_campaign=franchise_recruit`
 
 ### 카피 2종
 **A(일반 창업자):** 헤드라인 `팝업 창업 — 뭘 팔지 고민하지 마세요. 브랜드는 본사가 채워드립니다.`
@@ -190,7 +190,7 @@ https://www.datapd.ai/doyou-invite.html?utm_source=wadiz&utm_medium=dm&utm_campa
 · 본사가 하는 일: 동네 데이터 분석 → 입점 브랜드 매주 제안·섭외 지원 → 운영 매뉴얼·정산
 · 점주가 하는 일: 주간 사이클대로 공간 운영 (매뉴얼 제공, 겸업 가능 규모)
 · 구조: 소자본 10평 · STUDY RUSH 게임 집객 · 플랫폼 수익 성장 배당으로 로열티 상쇄
-· 모델·혜택 계산기: https://www.datapd.ai/doyou-franchise.html?utm_source=community&utm_medium=post&utm_campaign=franchise_recruit
+· 사전 상담 등록(30초)·모델 안내: https://www.datapd.ai/doyou-join.html?utm_source=community&utm_medium=post&utm_campaign=franchise_recruit
 
 * 현재는 정식 가맹 계약 전 '사전 상담' 단계입니다. 관심 있으시면 메일 주세요.
   jinho.choi1010@gmail.com (관심 없으시면 지나치셔도 됩니다)
