@@ -36,7 +36,8 @@ function brandNav(activeVibe) {
   const sub = `<div class="sub"><div class="si"><a class="sl" href="/crabox.html">🦀 crabox.ai ▾</a><a href="/play.html">⚡ STUDY RUSH</a><a href="/guides.html">📖 학습 자료 15편</a><a href="/vibe-coding.html"${activeVibe ? ' class="on"' : ''}>💻 바이브 코딩</a></div></div>`;
   return `${STYLE}<nav id="dpnav"><div class="in"><a class="bd" href="/">DataPD</a>${links}</div>${sub}</nav>`;
 }
-for (const [f, activeVibe] of [['public/crabox.html', false], ['public/vibe-coding.html', true]]) {
+// vibe-coding은 crabox 콘텐츠 페이지 — 학습 페이지형 내비(← crabox) 사용, 재생성 제외.
+for (const [f, activeVibe] of [['public/crabox.html', false]]) {
   if (!existsSync(f)) continue;
   let h = readFileSync(f, 'utf8');
   const nav = brandNav(activeVibe);
