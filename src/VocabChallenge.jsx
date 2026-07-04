@@ -817,6 +817,18 @@ export default function VocabChallenge() {
             >
               ✏️ 국어
             </button>
+            {/* 과학·사회 — 카테고리 자리 먼저, 콘텐츠는 추후 (준비되면 gameMode 연결) */}
+            {[{ ic: "🧪", lab: "과학" }, { ic: "🌍", lab: "사회" }].map((s) => (
+              <button key={s.lab} disabled title={s.lab + " 콘텐츠 준비 중 — 곧 열려요!"}
+                style={{
+                  flex: 1, padding: "12px 0", border: "none", cursor: "not-allowed",
+                  background: "transparent", color: "#B7AE9C", fontSize: 14, fontWeight: 700,
+                  borderBottom: "2px solid transparent",
+                }}>
+                {s.ic} {s.lab}
+                <span style={{ display: "block", fontSize: 9, fontWeight: 800, color: "#C2A98F", letterSpacing: 1, lineHeight: 1.2 }}>준비중</span>
+              </button>
+            ))}
           </div>
 
           {/* 누적 통계 (과목별) */}
