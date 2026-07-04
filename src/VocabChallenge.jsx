@@ -668,7 +668,7 @@ export default function VocabChallenge() {
         )}
         {/* 상단 네비게이션 (모바일 전용 — PC는 좌측 사이드바) */}
         {!isWide && (
-        <nav style={{ position: "sticky", top: 0, zIndex: 50, background: "rgba(250,245,235,0.92)", borderBottom: "1px solid #E3DCCB", padding: "11px 18px" }}>
+        <nav style={{ position: "sticky", top: 0, zIndex: 50, background: "#FFFEFB", borderBottom: "2px solid #141413", padding: "10px 18px" }}>
           <div style={{ maxWidth: 1080, margin: "0 auto", display: "flex", alignItems: "center", gap: 14, flexWrap: "wrap" }}>
             <a href="/crabox.html" title="이 게임을 만든 브랜드 — crabox.ai" style={{ color: "#141413", textDecoration: "none", fontSize: 13, fontWeight: 800, borderRight: "1px solid #E3DCCB", paddingRight: 12 }}>← 🦀 crabox</a>
             <span style={{ fontWeight: 900, letterSpacing: 1, color: "#141413", fontSize: 15, marginRight: 4 }}>⚡ STUDY RUSH</span>
