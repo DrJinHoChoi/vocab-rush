@@ -28,6 +28,14 @@
   .hero h1{ font-size:31px; font-weight:900; letter-spacing:-.02em; margin:13px 0 8px; }
   .hero p.sub{ color:var(--muted); font-size:15.5px; max-width:580px; margin:0 auto; }
   section.blk{ margin:26px 0; }
+  h2{ font-size:21px; font-weight:900; letter-spacing:-.01em; padding-left:13px; border-left:5px solid var(--green); margin-bottom:6px; }
+  .lead{ color:var(--muted); font-size:14px; margin:8px 0 16px; }
+  .flow{ display:flex; align-items:stretch; gap:9px; flex-wrap:wrap; }
+  .fbox{ flex:1 1 150px; background:var(--surface); border:2px solid var(--ink); border-radius:13px; padding:14px; text-align:center; box-shadow:var(--shadow); }
+  .fbox .ft{ font-size:14px; font-weight:900; } .fbox .fd{ font-size:11.5px; color:var(--muted); margin-top:5px; line-height:1.5; }
+  .fbox.hot{ background:var(--ink); } .fbox.hot .ft{ color:var(--gold); } .fbox.hot .fd{ color:#C9C3B5; }
+  .farr{ display:flex; align-items:center; font-size:19px; font-weight:900; color:var(--muted2); }
+  @media(max-width:680px){ .farr{ transform:rotate(90deg); width:100%; justify-content:center; height:12px; } }
   .terms{ background:var(--surface); border:2px solid var(--ink); border-radius:14px; padding:15px 18px; font-size:13.5px; box-shadow:var(--shadow); }
   .terms b{ color:var(--ink); }
   .terms .row{ display:grid; grid-template-columns:96px 1fr; gap:6px 12px; margin-top:8px; }
@@ -77,9 +85,9 @@
           <path d="M455,705 C500,690 560,690 600,705 C560,742 500,742 455,705 Z" fill="#C75D3A"/>
         </g>
       </svg>
-      <div><span class="hero-pill">DOYOU 입점사</span></div>
-      <h1>지금 DOYOU와 함께하는 브랜드</h1>
-      <p class="sub">DOYOU 팝업스토어에 입점한 브랜드 리스트입니다. 큐레이션으로 선정되고, 콘텐츠·키오스크로 서비스되며, 반응 데이터를 받아 갑니다. <b>1기 자리 모집 중</b> — 빈 슬롯이 당신 브랜드의 자리예요.</p>
+      <div><span class="hero-pill">DOYOU 범어 본점 입점사</span></div>
+      <h1>범어 본점과 함께하는 브랜드</h1>
+      <p class="sub"><b>DOYOU 팝업스토어 범어점(본점·직영)</b>의 입점사 리스트입니다. 본점이 검증·확보한 이 입점사 풀은 앞으로 <b>가맹점들의 수익원</b>이 됩니다. <b>1기 자리 모집 중</b> — 빈 슬롯이 당신 브랜드의 자리예요.</p>
     </section>
 
     <section class="blk">
@@ -99,7 +107,7 @@
           <div class="ic" style="margin-top:10px">🦀</div>
           <h3>crabox.ai</h3>
           <span class="cat">🎓 교육 · 에듀테크</span>
-          <p>수능 학습자료 기반 게임과 바이브 코딩 교육 콘텐츠를 만드는 신개념 교육 브랜드. 콘텐츠가 DOYOU 큐레이션을 통해 팝업·키오스크에 서비스됩니다.</p>
+          <p>수능 학습자료 기반 게임과 바이브 코딩 교육 콘텐츠를 만드는 신개념 교육 브랜드 — <b>범어 본점 입점사</b>. 콘텐츠가 큐레이션을 통해 팝업·키오스크에 서비스됩니다.</p>
           <div class="chips"><span>⚡ STUDY RUSH</span><span>📖 학습 자료 15편</span><span>💻 바이브 코딩</span></div>
           <a class="go" href="/crabox.html">쇼케이스 보기 →</a>
         </div>
@@ -134,6 +142,21 @@
           <a class="go" href="/doyou-invite.html">이 자리에 입점하기 →</a>
         </div>
       </div>
+    </section>
+
+    <section class="blk">
+      <h2>본점 입점사 풀 → 가맹점 수익 구조</h2>
+      <p class="lead"><b>범어 본점</b>이 입점사를 발굴·검증하고, 그 풀이 <b>가맹점의 수익원</b>이 됩니다 — 가맹점주는 "뭘 팔지"를 직접 구하지 않아도 돼요.</p>
+      <div class="flow">
+        <div class="fbox"><div class="ft">🏬 범어 본점 (직영)</div><div class="fd">입점사 발굴·검증·운영 — crabox.ai가 1호</div></div>
+        <div class="farr">→</div>
+        <div class="fbox"><div class="ft">🏷️ 입점사 풀</div><div class="fd">브랜드 + 콘텐츠 + 반응 데이터가 쌓임</div></div>
+        <div class="farr">→</div>
+        <div class="fbox"><div class="ft">🧮 가맹점 큐레이션</div><div class="fd">동네에 맞는 입점사를 로테이션 배치</div></div>
+        <div class="farr">→</div>
+        <div class="fbox hot"><div class="ft">💸 가맹점 수익 실현</div><div class="fd">입점료·판매·광고 수익 + 성장 배당</div></div>
+      </div>
+      <p style="margin-top:12px; font-size:13px; color:var(--muted)">"브랜드는 본사가 채워드립니다"의 실체가 이 구조입니다 — 본점 입점사가 늘수록 가맹점이 강해져요. <a href="/doyou-join.html" style="font-weight:800">가맹 사전 상담 →</a></p>
     </section>
 
     <div class="big-cta">
