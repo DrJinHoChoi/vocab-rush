@@ -1,10 +1,15 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-  <defs>
-    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#3b82f6"/>
-      <stop offset="100%" style="stop-color:#6366f1"/>
-    </linearGradient>
-  </defs>
-  <rect width="512" height="512" rx="96" fill="url(#bg)"/>
-  <text x="256" y="320" text-anchor="middle" font-size="280" font-family="Arial Black, sans-serif" font-weight="900" fill="white">⚡</text>
+  <rect width="512" height="512" rx="104" fill="#FAF5EB"/>
+  <g transform="translate(-89.6,-51.2) scale(0.66)" stroke="#141413" stroke-width="16" stroke-linejoin="round" stroke-linecap="round">
+    <path d="M540,235 C690,235 770,360 770,540 C770,720 680,825 540,825 C400,825 320,710 320,540 C320,360 390,235 540,235 Z" fill="#F5B60B"/>
+    <path d="M540,250 C610,250 670,300 700,360 C672,430 690,440 778,478 C840,512 838,520 800,548 C742,560 760,585 786,600 C740,628 742,632 720,648 C760,672 742,690 700,742 C648,790 600,805 540,810 L540,250 Z" fill="#FAF5EB"/>
+    <path d="M540,540 L320,540 C328,690 410,795 540,812 Z" fill="#5B7FA6"/>
+    <path d="M540,235 C430,235 360,300 335,395 C400,360 470,350 540,355 C560,300 560,265 540,235 Z" fill="#141413"/>
+    <ellipse cx="445" cy="470" rx="62" ry="42" fill="#FAF5EB"/>
+    <circle cx="462" cy="470" r="22" fill="#141413"/>
+    <path d="M628,452 C660,432 705,438 724,460 C700,478 660,480 628,452 Z" fill="#FAF5EB"/>
+    <circle cx="690" cy="458" r="13" fill="#141413"/>
+    <polygon points="540,470 600,640 470,640" fill="#C75D3A"/>
+    <path d="M455,705 C500,690 560,690 600,705 C560,742 500,742 455,705 Z" fill="#C75D3A"/>
+  </g>
 </svg>

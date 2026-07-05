@@ -7,12 +7,12 @@ export default defineConfig({
     react(),
     VitePWA({
       registerType: 'autoUpdate',
-      includeAssets: ['favicon.svg', 'icon-192.png', 'icon-512.png', 'apple-touch-icon.png'],
+      includeAssets: ['favicon.svg', 'icon-192.png', 'icon-512.png', 'icon-maskable-512.png', 'apple-touch-icon.png'],
       manifest: {
-        name: 'STUDY RUSH - 국영수 수능 학습 게임',
-        short_name: 'STUDY RUSH',
-        description: '국·영·수 기초부터 수능까지, 무료 수능 학습 게임',
-        theme_color: '#FAF5EB',
+        name: 'DOYOU 팝업스토어 — 데이터 큐레이션 팝업',
+        short_name: 'DOYOU팝업스토어',
+        description: 'DOYOU 팝업스토어 — 데이터 큐레이션 팝업. 입점사 crabox.ai의 STUDY RUSH 학습 게임 포함.',
+        theme_color: '#F5B60B',
         background_color: '#FAF5EB',
         display: 'standalone',
         orientation: 'portrait',
@@ -32,7 +32,7 @@ export default defineConfig({
             type: 'image/png',
           },
           {
-            src: 'icon-512.png',
+            src: 'icon-maskable-512.png',
             sizes: '512x512',
             type: 'image/png',
             purpose: 'maskable',
