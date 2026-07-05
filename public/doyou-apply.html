@@ -107,8 +107,9 @@
       </div>
       <div class="field two">
         <div><label>희망 기간</label><select id="f_month"><option>2026-07</option><option>2026-08</option><option>2026-09</option><option>2026-10</option><option>2026-11</option><option>2026-12</option></select></div>
-        <div><label>월 예산 <span class="rangeval" id="budVal">₩3,000,000</span></label><input id="f_budget" type="range" min="1500000" max="8000000" step="250000" value="3000000" /></div>
+        <div><label>희망 슬롯</label><select id="f_slot"><option>한 주 전체</option><option>주중권(월~금)</option><option>주말권(토~일)</option></select></div>
       </div>
+      <div class="field"><label>월 예산 <span class="rangeval" id="budVal">₩3,000,000</span></label><input id="f_budget" type="range" min="1500000" max="8000000" step="250000" value="3000000" /></div>
       <div class="field"><label>브랜드 소개</label><textarea id="f_desc" placeholder="어떤 브랜드인지, 왜 범어 팝업을 원하는지 간단히"></textarea></div>
       <div class="field"><label>브랜드 URL · 인스타</label><input id="f_url" placeholder="https:// 또는 @instagram" /></div>
       <button type="submit" class="btn">입점 신청하기 →</button>
@@ -167,9 +168,9 @@
     e.preventDefault();
     var cat=$('f_cat').value, brand=$('f_brand').value.trim();
     var fit = cat?beomeoFit(cat):{score:'-',tier:'-'};
-    var rec = { brand:brand, name:$('f_name').value.trim(), email:$('f_email').value.trim(), phone:$('f_phone').value.trim(), category:cat, zone:$('f_zone').value, month:$('f_month').value, budget:Number($('f_budget').value), desc:$('f_desc').value.trim(), url:$('f_url').value.trim(), fitScore:fit.score, fitTier:fit.tier, ts:new Date().toISOString() };
+    var rec = { brand:brand, name:$('f_name').value.trim(), email:$('f_email').value.trim(), phone:$('f_phone').value.trim(), category:cat, zone:$('f_zone').value, month:$('f_month').value, slot:$('f_slot').value, budget:Number($('f_budget').value), desc:$('f_desc').value.trim(), url:$('f_url').value.trim(), fitScore:fit.score, fitTier:fit.tier, ts:new Date().toISOString() };
     try{ var k='doyou.apply.v1', l=JSON.parse(localStorage.getItem(k)||'[]'); l.push(rec); localStorage.setItem(k, JSON.stringify(l)); }catch(err){}
-    var body = '[DOYOU 입점 신청]\n\n브랜드: '+rec.brand+'\n담당자: '+rec.name+'\n이메일: '+rec.email+'\n연락처: '+rec.phone+'\n카테고리: '+rec.category+'\n희망 존: '+rec.zone+'\n희망 기간: '+rec.month+'\n월 예산: '+won(rec.budget)+'\n범어 적합도: '+rec.fitScore+' / 추천 단가: '+rec.fitTier+'\n소개: '+rec.desc+'\nURL: '+rec.url+'\n';
+    var body = '[DOYOU 입점 신청]\n\n브랜드: '+rec.brand+'\n담당자: '+rec.name+'\n이메일: '+rec.email+'\n연락처: '+rec.phone+'\n카테고리: '+rec.category+'\n희망 존: '+rec.zone+'\n희망 기간: '+rec.month+'\n희망 슬롯: '+rec.slot+'\n월 예산: '+won(rec.budget)+'\n범어 적합도: '+rec.fitScore+' / 추천 단가: '+rec.fitTier+'\n소개: '+rec.desc+'\nURL: '+rec.url+'\n';
     $('applyForm').style.display='none'; $('ok').style.display='block';
     window.scrollTo({top:0, behavior:'smooth'});
     location.href = 'mailto:jinho.choi1010@gmail.com?subject=' + encodeURIComponent('[DOYOU 입점신청] '+rec.brand) + '&body=' + encodeURIComponent(body);
