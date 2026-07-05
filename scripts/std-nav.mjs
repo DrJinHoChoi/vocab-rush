@@ -29,7 +29,7 @@ function navFor(page) {
 }
 
 // vibe-coding/게임은 DataPD 회사 레벨(#cnav), crabox는 브랜드 내비(#bn) — 대상 아님.
-const PAGES = ['doyou-hub', 'doyou-curation', 'doyou-locations', 'doyou-apply', 'doyou-partners', 'doyou-content', 'doyou-franchise', 'doyou-join', 'doyou-invite', 'doyou-ads', 'doyou-ops', 'doyou-business', 'doyou-edu', 'doyou-precon', 'doyou-canvas'];
+const PAGES = ['doyou-hub', 'doyou-curation', 'doyou-locations', 'doyou-apply', 'doyou-partners', 'doyou-content', 'doyou-franchise', 'doyou-join', 'doyou-invite', 'doyou-ads', 'doyou-ops', 'doyou-business', 'doyou-edu', 'doyou-precon', 'doyou-canvas', 'trust', 'advertise'];
 // crabox 브랜드 페이지(crabox·vibe-coding): 같은 상단 바 + 짝대기 아래 crabox 콘텐츠 하위 줄
 function brandNav(activeVibe) {
   const links = NAV_ITEMS.map(([href, p, label]) => `<a href="${href}"${p === 'doyou-partners' ? ' class="on"' : ''}>${label}</a>`).join('');

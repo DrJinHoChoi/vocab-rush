@@ -672,8 +672,8 @@ export default function VocabChallenge() {
           <div style={{ maxWidth: 1080, margin: "0 auto", display: "flex", alignItems: "center", gap: 14, flexWrap: "wrap" }}>
             <a href="/crabox.html" title="이 게임을 만든 브랜드 — crabox.ai" style={{ color: "#141413", textDecoration: "none", fontSize: 13, fontWeight: 800, borderRight: "1px solid #E3DCCB", paddingRight: 12 }}>← 🦀 crabox</a>
             <span style={{ fontWeight: 900, letterSpacing: 1, color: "#141413", fontSize: 15, marginRight: 4 }}>⚡ STUDY RUSH</span>
-            <a href="/suneung-quiz.html" style={{ color: "#43618A", textDecoration: "none", fontSize: 13, fontWeight: 700 }}>수능 게임</a>
             <a href="/learn.html" target="_blank" rel="noopener noreferrer" style={{ color: "#7C766B", textDecoration: "none", fontSize: 13 }}>학습 로드맵</a>
+            <a href="/suneung-quiz.html" style={{ color: "#43618A", textDecoration: "none", fontSize: 13, fontWeight: 700 }}>수능 게임</a>
             <a href="/guides.html" target="_blank" rel="noopener noreferrer" style={{ color: "#7C766B", textDecoration: "none", fontSize: 13 }}>학습 자료</a>
             <a href="/about.html" target="_blank" rel="noopener noreferrer" style={{ color: "#7C766B", textDecoration: "none", fontSize: 13 }}>소개</a>
             {isWide && <a href="/suneung-quiz.html?note=1" style={{ color: "#7C766B", textDecoration: "none", fontSize: 13 }}>오답노트</a>}
