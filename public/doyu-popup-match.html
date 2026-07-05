@@ -592,7 +592,7 @@
   <main id="visitorView" class="wrap" hidden>
     <section class="hero">
       <span class="tag">🎮 DOYOU POP-UP STORE · 게임 서비스</span>
-      <h1><b>Vocab Rush</b> · 도유 팝업이 지루하지 않게</h1>
+      <h1><b>STUDY RUSH</b> · 도유 팝업이 지루하지 않게</h1>
       <p>매주 바뀌는 팝업을 둘러보고 기다리는 시간, 타이머 단어 게임 한 판으로 즐겁게. 점수만큼 스탬프를 모아 입점 브랜드 혜택으로 바꿔보세요.</p>
     </section>
 
@@ -601,7 +601,7 @@
       <div class="checkin-body">
         <span class="checkin-tag">📍 도유 범어 팝업스토어 · 입장 QR</span>
         <h3>QR 체크인하면 바로 게임이 시작돼요</h3>
-        <p>매장 입구 QR 스캔 → 체크인 완료 → Vocab Rush 플레이 → 스탬프로 입점 브랜드 혜택 교환.</p>
+        <p>매장 입구 QR 스캔 → 체크인 완료 → STUDY RUSH 플레이 → 스탬프로 입점 브랜드 혜택 교환.</p>
         <div class="checkin-steps">
           <span class="cstep done">① QR 체크인 완료</span>
           <span class="cstep">② 게임 플레이</span>
@@ -617,7 +617,7 @@
           <div class="game-id">
             <div class="game-ico">⚡</div>
             <div>
-              <h3>Vocab Rush <span class="by">by DOYOU</span></h3>
+              <h3>STUDY RUSH <span class="by">by DOYOU</span></h3>
               <p class="game-sub">도유 팝업 스토어가 제공 · 개발 DataPD.ai</p>
             </div>
           </div>
@@ -669,7 +669,7 @@
     </section>
 
     <section class="howit">
-      <h2 class="section-title">도유 팝업 × Vocab Rush, 이렇게 연결돼요</h2>
+      <h2 class="section-title">도유 팝업 × STUDY RUSH, 이렇게 연결돼요</h2>
       <div class="how-grid">
         <div class="how"><div class="hn">1</div><h4>방문객이 즐겨요</h4><p>팝업을 둘러보며 단어 게임으로 체류 시간을 자연스럽게 늘려요.</p></div>
         <div class="how"><div class="hn">2</div><h4>스탬프를 모아요</h4><p>점수만큼 스탬프 적립 → 입점 브랜드 쿠폰으로 교환해요.</p></div>
@@ -1100,7 +1100,7 @@ function renderOpSpaces(){
   }).join('');
 }
 
-/* ============== 방문객: 게임 서비스 (Vocab Rush) ============== */
+/* ============== 방문객: 게임 서비스 (STUDY RUSH) ============== */
 const WORD_SETS = {
   general: [
     { en:'abundant', ko:'풍부한', opts:['풍부한','희귀한','어두운','조용한'] },
@@ -1262,7 +1262,7 @@ function renderVisitor(){ renderQR(); renderSponsors(); renderCollect(); renderC
 
 /* ============== 구독: DOYOU CLUB (방문객 멤버십) ============== */
 const CLUB = [
-  { key:'free',   name:'무료',      price:'0',      unit:' 원', tag:'FREE', hot:false, perks:['Vocab Rush 게임·스탬프','범어 팝업 자유 입장'] },
+  { key:'free',   name:'무료',      price:'0',      unit:' 원', tag:'FREE', hot:false, perks:['STUDY RUSH 게임·스탬프','범어 팝업 자유 입장'] },
   { key:'member', name:'멤버',      price:'9,900',  unit:' /월', tag:'추천', hot:true,  perks:['우선 입장·예약','게임 스탬프 2배','입점 브랜드 상시 할인','한정 굿즈·시크릿 초대'] },
   { key:'box',    name:'클럽+박스', price:'29,900', unit:' /월', tag:'BOX',  hot:false, perks:['멤버 혜택 전부','매월 큐레이션 박스 배송'] },
 ];
@@ -1297,7 +1297,7 @@ function subscribeClub(key){
 const MISSIONS = [
   { key:'photo', icon:'📸', label:'포토월에서 인증샷 찍기', reward:2 },
   { key:'visit', icon:'🛍️', label:'입점 브랜드 1곳 체험하기', reward:2 },
-  { key:'game',  icon:'⚡', label:'Vocab Rush 게임 1판 플레이', reward:2 },
+  { key:'game',  icon:'⚡', label:'STUDY RUSH 게임 1판 플레이', reward:2 },
 ];
 const GACHA = [
   { emoji:'🎟️', label:'입점 브랜드 10% 쿠폰' },

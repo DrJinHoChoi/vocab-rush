@@ -1,4 +1,4 @@
-# ⚡ VOCAB RUSH - 직장인 영어 어휘 타이머 챌린지
+# ⚡ STUDY RUSH - 직장인 영어 어휘 타이머 챌린지
 
 직장인을 위한 영어 어휘 학습 PWA 게임입니다.
 
@@ -63,7 +63,7 @@ bubblewrap build
 ### Step 3: Google Play Console 등록
 1. [play.google.com/console](https://play.google.com/console) 접속
 2. "앱 만들기" → 앱 정보 입력
-   - 앱 이름: **VOCAB RUSH**
+   - 앱 이름: **STUDY RUSH**
    - 기본 언어: 한국어
    - 앱 유형: 게임 → 교육
 3. 스토어 등록정보 작성 (스크린샷, 설명, 아이콘 등)

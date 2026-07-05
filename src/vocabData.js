@@ -1,4 +1,4 @@
-// VOCAB RUSH - 5,500+ Vocabulary Database
+// STUDY RUSH - 5,500+ Vocabulary Database
 // Oxford-style definitions with part of speech, multiple meanings, and example sentences
 // Categories: A1 (800) | A2 (700) | B1 (700) | B2 (900) | C1 (800) | C2 (600) | Tech (1000) | TOEIC (125)
 

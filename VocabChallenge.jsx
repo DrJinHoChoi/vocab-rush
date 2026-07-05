@@ -471,7 +471,7 @@ export default function VocabChallenge() {
         <div style={S.menuCard}>
           <div style={S.logoArea}>
             <div style={S.logoIcon}>⚡</div>
-            <h1 style={S.title}>VOCAB RUSH</h1>
+            <h1 style={S.title}>STUDY RUSH</h1>
             <p style={S.subtitle}>학생·직장인을 위한 영어 어휘 타이머 챌린지</p>
             <p style={S.wordCount}>
               총 {allWords.length}개 단어 · CEFR A1~C2 · 발음 지원 🔊
