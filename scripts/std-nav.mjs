@@ -8,23 +8,27 @@ const NAV_ITEMS = [
   ['/#doyou', 'doyou-home', 'DOYOU 팝업'],
   ['/doyou-invite.html', 'doyou-invite', '입점'],
   ['/doyou-partners.html', 'doyou-partners', '입점사'],
-  ['/doyou-join.html', 'doyou-join', '가맹'],
+  ['/doyou-join.html', 'doyou-join', '직영·가맹'],
 ];
 // 입점사 하위 줄(짝대기 아래) — 입점사 섹션에서만 노출. 입점사가 늘면 여기에 추가.
 const TENANTS = [
   ['/crabox.html', '🦀 crabox.ai'],
 ];
-// 내비에 없는 페이지의 활성 표시 별칭 (신청폼·콘텐츠·큐레이션 등 → 입점 여정)
-const ALIAS = { 'doyou-apply': 'doyou-invite', 'doyou-content': 'doyou-invite', 'doyou-curation': 'doyou-invite', 'doyou-locations': 'doyou-invite', 'doyou-ads': 'doyou-invite', 'doyou-franchise': 'doyou-join' };
+// 내비에 없는 페이지의 활성 표시 별칭 (신청폼·콘텐츠·큐레이션 등 → 입점 여정 / 시안·운영·모델 → 직영·가맹)
+const ALIAS = { 'doyou-apply': 'doyou-invite', 'doyou-content': 'doyou-invite', 'doyou-curation': 'doyou-invite', 'doyou-locations': 'doyou-invite', 'doyou-ads': 'doyou-invite', 'doyou-franchise': 'doyou-join', 'doyou-precon': 'doyou-join', 'doyou-ops': 'doyou-join' };
 const STYLE = `<style id="dpnav-css">nav:not(#dpnav){display:none!important}.topbar{display:none!important}#dpnav{position:sticky;top:0;z-index:9000;background:#FFFEFB;border-bottom:2px solid #141413}#dpnav .in{max-width:1000px;margin:0 auto;padding:10px 20px;display:flex;gap:6px 15px;align-items:center;flex-wrap:wrap;font-family:'Pretendard','Apple SD Gothic Neo','Malgun Gothic',-apple-system,sans-serif;font-size:13px}#dpnav .in::-webkit-scrollbar{display:none}#dpnav a{white-space:nowrap;flex:0 0 auto;color:#7C766B;text-decoration:none}#dpnav a:hover{color:#141413}#dpnav a.bd{font-weight:900;color:#141413;font-size:15px;margin-right:4px}#dpnav a.on{color:#141413;font-weight:800;border-bottom:2px solid #F5B60B;padding-bottom:3px}#dpnav .sub{border-top:2px solid #141413;background:#FBF8F0}#dpnav .sub .si{max-width:1000px;margin:0 auto;padding:7px 20px;display:flex;gap:6px 16px;align-items:center;flex-wrap:wrap;font-family:'Pretendard','Apple SD Gothic Neo','Malgun Gothic',-apple-system,sans-serif;font-size:12.5px}#dpnav .sub .sl{font-weight:800;color:#8A6608;letter-spacing:1px;font-size:11px}#dpnav .sub a{color:#141413;font-weight:800;text-decoration:none}#dpnav .sub a:hover{color:#C75D3A}#dpnav .sub a.mut{color:#7C766B;font-weight:700}#dpnav .sub a.on{border-bottom:2px solid #F5B60B;padding-bottom:2px}</style>`;
 
 function navFor(page) {
   const key = ALIAS[page] || page;
   const links = NAV_ITEMS.map(([href, p, label]) => `<a href="${href}"${p === key ? ' class="on"' : ''}>${label}</a>`).join('');
-  // 입점사 섹션(리스트 페이지)에서는 짝대기 아래 하위 줄에 입점사들을 노출
-  const sub = key === 'doyou-partners'
-    ? `<div class="sub"><div class="si"><span class="sl">입점사 ▾</span>${TENANTS.map(([h, l]) => `<a href="${h}">${l}</a>`).join('')}<a class="mut" href="/doyou-invite.html">+ 빈 자리 3 · 1기 모집 중 →</a></div></div>`
-    : '';
+  // 짝대기 아래 하위 줄 — 입점사 섹션: 입점사 목록 / 직영·가맹 섹션: 범어 본점(직영) 시안·운영 + 가맹 상담
+  let sub = '';
+  if (key === 'doyou-partners') {
+    sub = `<div class="sub"><div class="si"><span class="sl">입점사 ▾</span>${TENANTS.map(([h, l]) => `<a href="${h}">${l}</a>`).join('')}<a class="mut" href="/doyou-invite.html">+ 빈 자리 3 · 1기 모집 중 →</a></div></div>`;
+  } else if (key === 'doyou-join') {
+    const on = (p) => page === p ? ' class="on"' : '';
+    sub = `<div class="sub"><div class="si"><span class="sl">직영·가맹 ▾</span><a href="/doyou-precon.html"${on('doyou-precon')}>🏬 범어 본점(직영) 시안</a><a href="/doyou-ops.html"${on('doyou-ops')}>⚙️ 주간 운영</a><a href="/doyou-join.html"${on('doyou-join')}>🤝 가맹 사전 상담</a></div></div>`;
+  }
   return `${STYLE}<nav id="dpnav"><div class="in"><a class="bd" href="/">DataPD</a>${links}</div>${sub}</nav>`;
 }
 
