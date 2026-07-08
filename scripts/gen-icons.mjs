@@ -40,6 +40,9 @@ const targets = [
   // Maskable: face kept inside the center-80% safe zone so Android's mask
   // (circle / squircle / teardrop) never clips the portrait.
   { file: 'icon-maskable-512.png', size: 512, pad: 0.58 },
+  // Browser-tab / link-preview PNG favicons (crawlers that skip SVG use these).
+  { file: 'favicon-32.png', size: 32, pad: 0.84 },
+  { file: 'favicon-16.png', size: 16, pad: 0.84 },
 ];
 
 for (const t of targets) {
@@ -47,3 +50,36 @@ for (const t of targets) {
   await sharp(buf).png().toFile(join(PUB, t.file));
   console.log(`✓ ${t.file} (${t.size}×${t.size})`);
 }
+
+// favicon.ico — the file browsers auto-request at /favicon.ico and that most
+// link-preview crawlers (KakaoTalk, iMessage, Slack…) use because they don't
+// read SVG favicons. Multi-resolution, PNG-compressed entries (all modern UAs).
+function buildIco(images) {
+  const header = Buffer.alloc(6);
+  header.writeUInt16LE(1, 2); // type: icon
+  header.writeUInt16LE(images.length, 4);
+  const dir = Buffer.alloc(16 * images.length);
+  let offset = 6 + 16 * images.length;
+  images.forEach((img, i) => {
+    const b = i * 16;
+    dir.writeUInt8(img.size >= 256 ? 0 : img.size, b);     // width
+    dir.writeUInt8(img.size >= 256 ? 0 : img.size, b + 1); // height
+    dir.writeUInt16LE(1, b + 4);              // color planes
+    dir.writeUInt16LE(32, b + 6);             // bits per pixel
+    dir.writeUInt32LE(img.buf.length, b + 8); // byte size
+    dir.writeUInt32LE(offset, b + 12);        // offset
+    offset += img.buf.length;
+  });
+  return Buffer.concat([header, dir, ...images.map((i) => i.buf)]);
+}
+
+const icoSizes = [16, 32, 48];
+const icoImgs = await Promise.all(
+  icoSizes.map(async (size) => ({
+    size,
+    buf: await sharp(Buffer.from(svg(size, { pad: 0.84 }))).png().toBuffer(),
+  })),
+);
+const { writeFileSync } = await import('node:fs');
+writeFileSync(join(PUB, 'favicon.ico'), buildIco(icoImgs));
+console.log(`✓ favicon.ico (${icoSizes.join('/')})`);
