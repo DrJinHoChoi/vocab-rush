@@ -1,75 +1,136 @@
 /*
- * DataPD 데모 인증 레이어 (client-side, localStorage).
+ * DataPD 인증 레이어 — Supabase(실제 구글·카카오) + 데모 폴백.
  * ─────────────────────────────────────────────────────────────
- * ⚠️ 프로토타입 전용입니다. 비밀번호가 이 브라우저의 localStorage에
- *    평문으로 저장되므로 실제 서비스에는 절대 그대로 쓰지 마세요.
- *    실제 인증·소셜 로그인은 백엔드(Supabase / Firebase / Auth0 등)로
- *    교체해야 합니다 — 이 파일의 함수 시그니처만 맞추면 됩니다.
+ * auth-config.js 에 supabaseUrl/anonKey 를 넣으면 → 실제 로그인(Supabase Auth).
+ * 비어 있으면 → 데모 모드(localStorage, 프로토타입 전용).
+ *
+ * 공개 API (모두 Promise 반환):
+ *   DataPDAuth.mode                     'supabase' | 'demo'
+ *   DataPDAuth.getSession()             → {name,email,provider,picture,at} | null
+ *   DataPDAuth.signUpEmail({name,email,password})
+ *   DataPDAuth.signInEmail({email,password})
+ *   DataPDAuth.signInProvider('google'|'kakao')   // supabase: 리다이렉트 / demo: 즉시
+ *   DataPDAuth.signOut()
+ *   DataPDAuth.providerLabel(p)
  */
 (function () {
+  var cfg = window.DATAPD_AUTH_CONFIG || {};
+  var HAS_SUPA = !!(cfg.supabaseUrl && cfg.supabaseAnonKey);
   var SESSION_KEY = 'datapd.session.v1';
   var USERS_KEY = 'datapd.users.v1';
+  var PROVIDERS = { google: 'Google', kakao: '카카오', email: '이메일' };
 
-  function readJSON(key, fallback) {
-    try { return JSON.parse(localStorage.getItem(key)) || fallback; }
-    catch (e) { return fallback; }
-  }
+  /* ---------- 공통 ---------- */
+  function readJSON(key, fb) { try { return JSON.parse(localStorage.getItem(key)) || fb; } catch (e) { return fb; } }
+  function label(p) { return PROVIDERS[p] || '이메일'; }
+
+  /* ---------- 데모(localStorage) ---------- */
   function users() { return readJSON(USERS_KEY, []); }
-  function saveUsers(list) { localStorage.setItem(USERS_KEY, JSON.stringify(list)); }
-  function setSession(user) {
+  function saveUsers(l) { localStorage.setItem(USERS_KEY, JSON.stringify(l)); }
+  function setDemoSession(u) {
     localStorage.setItem(SESSION_KEY, JSON.stringify({
-      name: user.name, email: user.email, provider: user.provider, at: Date.now(),
+      name: u.name, email: u.email, provider: u.provider, picture: '', at: u.at || Date.now(),
     }));
   }
+  function demoSignUp(p) {
+    var email = (p.email || '').trim().toLowerCase(), pw = p.password || '';
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) throw new Error('올바른 이메일을 입력해 주세요.');
+    if (pw.length < 6) throw new Error('비밀번호는 6자 이상이어야 합니다.');
+    var l = users();
+    if (l.some(function (u) { return u.email === email; })) throw new Error('이미 가입된 이메일입니다.');
+    var u = { name: (p.name || '').trim() || email.split('@')[0], email: email, password: pw, provider: 'email', at: Date.now() };
+    l.push(u); saveUsers(l); setDemoSession(u); return u;
+  }
+  function demoSignIn(p) {
+    var email = (p.email || '').trim().toLowerCase(), pw = p.password || '';
+    var u = users().find(function (x) { return x.email === email; });
+    if (!u || u.password !== pw) throw new Error('이메일 또는 비밀번호가 올바르지 않습니다.');
+    setDemoSession(u); return u;
+  }
+  function demoSocial(provider) {
+    var email = 'demo_' + provider + '@datapd.ai', l = users();
+    var u = l.find(function (x) { return x.email === email; });
+    if (!u) { u = { name: label(provider) + ' 사용자', email: email, provider: provider, at: Date.now() }; l.push(u); saveUsers(l); }
+    setDemoSession(u); return u;
+  }
 
-  var PROVIDERS = { google: 'Google', kakao: '카카오', naver: '네이버', apple: 'Apple' };
+  /* ---------- Supabase(실제) ---------- */
+  var supa = null, supaReady = null;
+  function loadSupa() {
+    if (supaReady) return supaReady;
+    supaReady = new Promise(function (resolve, reject) {
+      if (window.supabase && window.supabase.createClient) return resolve();
+      var s = document.createElement('script');
+      s.src = 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js';
+      s.onload = resolve;
+      s.onerror = function () { reject(new Error('Supabase SDK를 불러오지 못했습니다.')); };
+      document.head.appendChild(s);
+    }).then(function () {
+      supa = window.supabase.createClient(cfg.supabaseUrl, cfg.supabaseAnonKey, {
+        auth: { persistSession: true, detectSessionInUrl: true, flowType: 'pkce' },
+      });
+    });
+    return supaReady;
+  }
+  function fromSupa(sess) {
+    if (!sess || !sess.user) return null;
+    var u = sess.user, m = u.user_metadata || {}, a = u.app_metadata || {};
+    return {
+      name: m.name || m.full_name || m.nickname || (u.email || '').split('@')[0],
+      email: u.email || m.email || '',
+      provider: a.provider || 'email',
+      picture: m.avatar_url || m.picture || '',
+      at: Date.parse(u.created_at) || Date.now(),
+    };
+  }
 
+  /* ---------- 공개 API ---------- */
   window.DataPDAuth = {
-    // 현재 로그인 세션(없으면 null)
-    session: function () { return readJSON(SESSION_KEY, null); },
+    mode: HAS_SUPA ? 'supabase' : 'demo',
+    providerLabel: label,
 
-    // 이메일 회원가입
-    signUp: function (payload) {
-      var email = (payload.email || '').trim().toLowerCase();
-      var pw = payload.password || '';
-      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) throw new Error('올바른 이메일을 입력해 주세요.');
-      if (pw.length < 6) throw new Error('비밀번호는 6자 이상이어야 합니다.');
-      var list = users();
-      if (list.some(function (u) { return u.email === email; })) throw new Error('이미 가입된 이메일입니다.');
-      var user = {
-        name: (payload.name || '').trim() || email.split('@')[0],
-        email: email, password: pw, provider: 'email', createdAt: Date.now(),
-      };
-      list.push(user); saveUsers(list); setSession(user);
-      return user;
+    getSession: function () {
+      if (HAS_SUPA) return loadSupa().then(function () {
+        return supa.auth.getSession().then(function (r) { return fromSupa(r.data.session); });
+      });
+      return Promise.resolve(readJSON(SESSION_KEY, null));
     },
 
-    // 이메일 로그인
-    logIn: function (payload) {
-      var email = (payload.email || '').trim().toLowerCase();
-      var pw = payload.password || '';
-      var user = users().find(function (u) { return u.email === email; });
-      if (!user || user.password !== pw) throw new Error('이메일 또는 비밀번호가 올바르지 않습니다.');
-      setSession(user);
-      return user;
+    signUpEmail: function (p) {
+      if (HAS_SUPA) return loadSupa().then(function () {
+        return supa.auth.signUp({ email: p.email, password: p.password, options: { data: { name: p.name || '' } } });
+      }).then(function (r) {
+        if (r.error) throw new Error(r.error.message);
+        if (!r.data.session) throw new Error('확인 메일을 보냈습니다. 메일의 링크를 눌러 가입을 완료해 주세요.');
+        return fromSupa(r.data.session);
+      });
+      try { return Promise.resolve(demoSignUp(p)); } catch (e) { return Promise.reject(e); }
     },
 
-    // 소셜 로그인 (데모: 실제 OAuth는 provider client ID + 리다이렉트/백엔드 필요)
-    social: function (provider) {
-      var label = PROVIDERS[provider] || provider;
-      var email = 'demo_' + provider + '@datapd.ai';
-      var list = users();
-      var user = list.find(function (u) { return u.email === email; });
-      if (!user) {
-        user = { name: label + ' 사용자', email: email, provider: provider, createdAt: Date.now() };
-        list.push(user); saveUsers(list);
-      }
-      setSession(user);
-      return user;
+    signInEmail: function (p) {
+      if (HAS_SUPA) return loadSupa().then(function () {
+        return supa.auth.signInWithPassword({ email: p.email, password: p.password });
+      }).then(function (r) {
+        if (r.error) throw new Error('이메일 또는 비밀번호가 올바르지 않습니다.');
+        return fromSupa(r.data.session);
+      });
+      try { return Promise.resolve(demoSignIn(p)); } catch (e) { return Promise.reject(e); }
     },
 
-    logOut: function () { localStorage.removeItem(SESSION_KEY); },
+    // supabase: 브라우저가 provider로 리다이렉트됨 / demo: 즉시 로그인
+    signInProvider: function (provider) {
+      if (HAS_SUPA) return loadSupa().then(function () {
+        return supa.auth.signInWithOAuth({
+          provider: provider,
+          options: { redirectTo: location.origin + '/dashboard.html' },
+        });
+      }).then(function (r) { if (r.error) throw new Error(r.error.message); return { redirecting: true }; });
+      try { demoSocial(provider); return Promise.resolve({ redirecting: false }); } catch (e) { return Promise.reject(e); }
+    },
 
-    providerLabel: function (p) { return PROVIDERS[p] || '이메일'; },
+    signOut: function () {
+      var done = HAS_SUPA ? loadSupa().then(function () { return supa.auth.signOut(); }) : Promise.resolve();
+      return done.then(function () { localStorage.removeItem(SESSION_KEY); });
+    },
   };
 })();

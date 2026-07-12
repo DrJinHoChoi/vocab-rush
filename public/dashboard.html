@@ -18,34 +18,36 @@
     .top .bd span{ color:var(--muted2); font-weight:700; font-size:13px; }
     .top .right{ margin-left:auto; display:flex; align-items:center; gap:12px; }
     .top a.plain{ color:var(--muted); text-decoration:none; font-size:13px; font-weight:700; }
-    .btn{ font:inherit; font-weight:800; font-size:13px; padding:8px 14px; border:2px solid var(--ink); border-radius:10px; background:var(--surface); color:var(--ink); cursor:pointer; text-decoration:none; }
+    .btn{ font:inherit; font-weight:800; font-size:13px; padding:8px 14px; border:2px solid var(--ink); border-radius:10px; background:var(--surface); color:var(--ink); cursor:pointer; text-decoration:none; display:inline-block; }
     .btn.gold{ background:var(--gold); }
     .wrap{ max-width:840px; margin:0 auto; padding:26px 20px 60px; }
-    .hi{ display:flex; align-items:center; gap:14px; margin-bottom:22px; }
-    .ava{ width:52px; height:52px; border-radius:50%; background:var(--ink); color:var(--gold); display:grid; place-items:center; font-weight:900; font-size:22px; flex:0 0 auto; }
+    .hi{ display:flex; align-items:center; gap:14px; margin-bottom:8px; }
+    .ava{ width:52px; height:52px; border-radius:50%; background:var(--ink); color:var(--gold); display:grid; place-items:center; font-weight:900; font-size:22px; flex:0 0 auto; overflow:hidden; }
+    .ava img{ width:100%; height:100%; object-fit:cover; }
     .hi h1{ font-size:22px; font-weight:900; letter-spacing:-.01em; }
     .hi .pv{ font-size:12.5px; color:var(--muted); margin-top:2px; }
     .badge{ display:inline-block; font-size:11px; font-weight:800; padding:2px 9px; border-radius:999px; background:var(--bg); border:1px solid var(--line); color:var(--bluetx); margin-left:6px; vertical-align:middle; }
-    h2{ font-size:15px; font-weight:900; margin:26px 0 12px; padding-left:11px; border-left:4px solid var(--gold); }
-    .tiles{ display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:12px; }
+    .modeflag{ font-size:11px; color:var(--muted2); margin:0 0 18px 66px; }
+    h2{ font-size:15px; font-weight:900; margin:26px 0 12px; padding-left:11px; border-left:4px solid var(--gold); display:flex; align-items:center; gap:8px; }
+    h2 .cta{ margin-left:auto; font-size:12px; font-weight:700; }
+    .tiles{ display:grid; grid-template-columns:repeat(auto-fit,minmax(140px,1fr)); gap:12px; }
     .tile{ background:var(--surface); border:2px solid var(--ink); border-radius:15px; padding:15px 16px; box-shadow:var(--shadow); }
     .tile .k{ font-size:12px; color:var(--muted); font-weight:700; }
     .tile .v{ font-size:24px; font-weight:900; margin-top:5px; letter-spacing:-.02em; }
     .tile .v small{ font-size:13px; font-weight:700; color:var(--muted2); }
-    .panel{ background:var(--surface); border:2px solid var(--ink); border-radius:18px; padding:20px; box-shadow:var(--shadow); }
-    .bars{ display:grid; gap:9px; }
-    .bar{ display:grid; grid-template-columns:34px 1fr 30px; align-items:center; gap:10px; font-size:13px; }
-    .bar .lab{ color:var(--muted); font-weight:700; }
-    .bar .track{ height:14px; background:var(--bg); border:1px solid var(--line); border-radius:7px; overflow:hidden; }
-    .bar .fill{ height:100%; background:var(--gold); border-right:2px solid var(--ink); }
-    .bar .num{ text-align:right; font-weight:800; color:var(--ink); }
     .list{ display:grid; gap:10px; }
-    .row{ display:flex; align-items:center; gap:12px; padding:12px 14px; background:var(--bg); border:2px solid var(--ink); border-radius:12px; text-decoration:none; color:var(--ink); }
-    .row .emo{ font-size:20px; }
+    .row{ display:flex; align-items:center; gap:12px; padding:12px 14px; background:var(--surface); border:2px solid var(--ink); border-radius:12px; text-decoration:none; color:var(--ink); box-shadow:var(--shadow); }
+    .row .emo{ font-size:20px; flex:0 0 auto; }
     .row .t{ font-weight:800; font-size:14px; } .row .d{ font-size:12px; color:var(--muted); }
-    .row .go{ margin-left:auto; color:var(--terra); font-weight:900; }
+    .row .go{ margin-left:auto; font-weight:900; font-size:12px; }
+    .chip{ font-size:11px; font-weight:800; padding:2px 9px; border-radius:999px; border:1px solid var(--line); }
+    .chip.ok{ background:#EAF3EC; color:#15803D; border-color:#bcdcc4; }
+    .chip.wait{ background:#FBF3E0; color:#8a6d12; border-color:#e7d5a6; }
+    .empty{ background:var(--surface); border:2px dashed var(--muted2); border-radius:14px; padding:20px; text-align:center; color:var(--muted); font-size:13.5px; }
+    .empty a{ color:var(--bluetx); font-weight:800; }
+    .actions{ margin-top:20px; display:flex; gap:10px; flex-wrap:wrap; }
     .note{ font-size:11.5px; color:var(--muted2); margin-top:22px; text-align:center; line-height:1.6; }
-    @media(max-width:560px){ .top .in{ padding:11px 16px; } .top a.plain{ display:none; } }
+    @media(max-width:560px){ .top .in{ padding:11px 16px; } .top a.plain{ display:none; } .modeflag{ margin-left:0; } }
   </style>
 </head>
 <body>
@@ -59,7 +61,7 @@
     </div>
   </header>
 
-  <main class="wrap">
+  <main class="wrap" id="main" hidden>
     <div class="hi">
       <div class="ava" id="ava">D</div>
       <div>
@@ -67,84 +69,106 @@
         <div class="pv" id="pv"></div>
       </div>
     </div>
+    <div class="modeflag" id="modeflag"></div>
 
-    <div class="tiles">
-      <div class="tile"><div class="k">가입 경로</div><div class="v" id="tProvider">–</div></div>
-      <div class="tile"><div class="k">가입일</div><div class="v" id="tJoined">–</div></div>
-      <div class="tile"><div class="k">관심 카테고리</div><div class="v">교육</div></div>
-      <div class="tile"><div class="k">저장한 항목</div><div class="v" id="tSaved">3<small> 개</small></div></div>
-    </div>
+    <h2>학습 기록 <span style="font-weight:700;color:var(--muted2);font-size:12px">STUDY RUSH</span></h2>
+    <div id="learnWrap"></div>
 
-    <h2>주간 활동 <span style="font-weight:700;color:var(--muted2);font-size:12px">(데모 데이터)</span></h2>
-    <div class="panel">
-      <div class="bars" id="bars"></div>
-    </div>
+    <h2>내 신청 현황 <a class="cta" href="/doyou-invite.html">+ 입점 신청</a></h2>
+    <div id="appsWrap"></div>
 
-    <h2>저장한 항목</h2>
-    <div class="list">
-      <a class="row" href="/play.html">
-        <span class="emo">⚡</span>
-        <div><div class="t">STUDY RUSH</div><div class="d">수능 학습 게임 · 입점사 crabox.ai</div></div>
-        <span class="go">→</span>
-      </a>
-      <a class="row" href="/guides.html">
-        <span class="emo">📖</span>
-        <div><div class="t">학습 자료 15편</div><div class="d">원본 가이드 · 독해·풀이 기술</div></div>
-        <span class="go">→</span>
-      </a>
-      <a class="row" href="/doyou-partners.html">
-        <span class="emo">🦀</span>
-        <div><div class="t">crabox.ai</div><div class="d">DOYOU 범어 본점 입점사 #1</div></div>
-        <span class="go">→</span>
-      </a>
-    </div>
-
-    <div style="margin-top:18px;display:flex;gap:10px;flex-wrap:wrap">
+    <div class="actions">
       <button class="btn gold" id="export" type="button">내 데이터 CSV 내보내기</button>
-      <a class="btn" href="/doyou-invite.html">입점 브랜드 둘러보기</a>
+      <a class="btn" href="/play.html">STUDY RUSH 플레이</a>
+      <a class="btn" href="/doyou-partners.html">입점사 보기</a>
     </div>
 
-    <p class="note">이 페이지의 활동·항목 데이터는 데모입니다.<br/>실제 서비스에서는 로그인한 계정의 실제 데이터가 표시됩니다.</p>
+    <p class="note" id="note"></p>
   </main>
 
-  <script src="/auth.js?v=1"></script>
+  <script src="/auth-config.js?v=1"></script>
+  <script src="/auth.js?v=2"></script>
   <script>
     (function () {
-      var s = window.DataPDAuth && DataPDAuth.session();
-      if (!s) { location.replace('/login.html'); return; }
+      var $ = function (id) { return document.getElementById(id); };
+      function readJSON(k, fb) { try { return JSON.parse(localStorage.getItem(k)) || fb; } catch (e) { return fb; } }
+      function esc(s) { return String(s == null ? '' : s).replace(/[<>&]/g, function (c) { return { '<': '&lt;', '>': '&gt;', '&': '&amp;' }[c]; }); }
+      function fmt(ts) { var d = new Date(ts); return isNaN(d) ? '-' : d.getFullYear() + '.' + ('0' + (d.getMonth() + 1)).slice(-2) + '.' + ('0' + d.getDate()).slice(-2); }
 
-      function fmt(ts){ var d = new Date(ts); return d.getFullYear() + '.' + ('0'+(d.getMonth()+1)).slice(-2) + '.' + ('0'+d.getDate()).slice(-2); }
-      var initial = (s.name || s.email || 'D').trim().charAt(0).toUpperCase();
+      DataPDAuth.getSession().then(function (s) {
+        if (!s) { location.replace('/login.html'); return; }
+        render(s);
+        $('main').hidden = false;
+      });
 
-      document.getElementById('ava').textContent = initial;
-      document.getElementById('hello').innerHTML = s.name + '님 <span class="badge">' + DataPDAuth.providerLabel(s.provider) + '</span>';
-      document.getElementById('pv').textContent = s.email;
-      document.getElementById('tProvider').textContent = DataPDAuth.providerLabel(s.provider);
-      document.getElementById('tJoined').textContent = fmt(s.at);
+      function render(s) {
+        // 프로필
+        var initial = (s.name || s.email || 'D').trim().charAt(0).toUpperCase();
+        $('ava').innerHTML = s.picture ? '<img src="' + esc(s.picture) + '" alt="" referrerpolicy="no-referrer">' : initial;
+        $('hello').innerHTML = esc(s.name) + '님 <span class="badge">' + esc(DataPDAuth.providerLabel(s.provider)) + '</span>';
+        $('pv').textContent = s.email + ' · 가입 ' + fmt(s.at);
+        $('modeflag').textContent = DataPDAuth.mode === 'supabase'
+          ? '● 실제 계정 로그인 (Supabase)'
+          : '● 데모 모드 — 이 브라우저에만 저장';
 
-      // 주간 활동 막대(데모, 결정적 값)
-      var days = ['월','화','수','목','금','토','일'];
-      var vals = [4, 7, 5, 9, 6, 8, 3];
-      var max = Math.max.apply(null, vals);
-      document.getElementById('bars').innerHTML = days.map(function (d, i) {
-        var pct = Math.round(vals[i] / max * 100);
-        return '<div class="bar"><span class="lab">' + d + '</span>' +
-          '<span class="track"><span class="fill" style="width:' + pct + '%"></span></span>' +
-          '<span class="num">' + vals[i] + '</span></div>';
-      }).join('');
+        // 학습 기록 (STUDY RUSH — vocab_rush_stats / gx.streak)
+        var st = readJSON('vocab_rush_stats', null);
+        var streak = parseInt(localStorage.getItem('gx.streak') || '0', 10) || 0;
+        if (st && (st.totalGames || st.totalCorrect)) {
+          $('learnWrap').innerHTML = '<div class="tiles">' +
+            tile('누적 정답', (st.totalCorrect || 0).toLocaleString()) +
+            tile('플레이한 게임', (st.totalGames || 0).toLocaleString()) +
+            tile('최고 연속', (st.bestStreak || 0)) +
+            tile('연속 학습일', streak, '일') +
+            tile('누적 XP', (st.totalScore || 0).toLocaleString()) +
+            tile('달성 업적', ((st.unlockedIds || []).length), '개') +
+            '</div>';
+        } else {
+          $('learnWrap').innerHTML = emptyBox('아직 학습 기록이 없어요.', '/play.html', 'STUDY RUSH 시작하기 →');
+        }
 
-      document.getElementById('logout').onclick = function () { DataPDAuth.logOut(); location.href = '/login.html'; };
+        // 신청 현황 (doyou.apply.v1 입점 / doyou.join.v1 가맹)
+        var apps = readJSON('doyou.apply.v1', []);
+        var joins = readJSON('doyou.join.v1', []);
+        var rows = [];
+        apps.forEach(function (a) {
+          rows.push(row('🏬', esc(a.brand || a.name || '입점 신청'),
+            '입점 · ' + esc(a.category || '-') + (a.zone ? ' · ' + esc(a.zone) : '') + ' · ' + fmt(a.ts),
+            a.fitTier ? '<span class="chip ok">' + esc(a.fitTier) + '</span>' : '<span class="chip wait">접수됨</span>'));
+        });
+        joins.forEach(function (j) {
+          rows.push(row('🤝', esc(j.name || '가맹 상담'),
+            '가맹 상담 · ' + esc(j.type || '-') + (j.area ? ' · ' + esc(j.area) : '') + ' · ' + fmt(j.ts),
+            '<span class="chip wait">상담 대기</span>'));
+        });
+        $('appsWrap').innerHTML = rows.length
+          ? '<div class="list">' + rows.join('') + '</div>'
+          : emptyBox('아직 입점·가맹 신청 내역이 없어요.', '/doyou-invite.html', '입점 알아보기 →');
 
-      document.getElementById('export').onclick = function () {
-        var rows = [['항목','값'],
-          ['이름', s.name], ['이메일', s.email],
-          ['가입 경로', DataPDAuth.providerLabel(s.provider)], ['가입일', fmt(s.at)]];
-        days.forEach(function (d, i) { rows.push(['활동_' + d, vals[i]]); });
-        var csv = '﻿' + rows.map(function (r) { return r.join(','); }).join('\n');
-        var url = URL.createObjectURL(new Blob([csv], { type: 'text/csv;charset=utf-8' }));
-        var a = document.createElement('a'); a.href = url; a.download = 'datapd-내데이터.csv'; a.click();
-        URL.revokeObjectURL(url);
-      };
+        $('note').innerHTML = DataPDAuth.mode === 'supabase'
+          ? '학습·신청 데이터는 이 브라우저에 저장된 활동을 표시합니다. (계정 동기화는 백엔드 연동 시 확장)'
+          : '데모 모드입니다. 학습·신청 데이터는 이 브라우저의 실제 활동에서 읽어옵니다.';
+
+        // CSV
+        $('export').onclick = function () {
+          var out = [['구분', '항목', '값'],
+            ['프로필', '이름', s.name], ['프로필', '이메일', s.email],
+            ['프로필', '로그인', DataPDAuth.providerLabel(s.provider)]];
+          if (st) { out.push(['학습', '누적 정답', st.totalCorrect || 0], ['학습', '게임 수', st.totalGames || 0], ['학습', '최고 연속', st.bestStreak || 0], ['학습', '누적 XP', st.totalScore || 0]); }
+          apps.forEach(function (a, i) { out.push(['입점신청 ' + (i + 1), a.brand || a.name || '', (a.category || '') + '/' + (a.zone || '') + '/' + fmt(a.ts)]); });
+          joins.forEach(function (j, i) { out.push(['가맹상담 ' + (i + 1), j.name || '', (j.type || '') + '/' + (j.area || '') + '/' + fmt(j.ts)]); });
+          var csv = '﻿' + out.map(function (r) { return r.map(function (c) { return '"' + String(c).replace(/"/g, '""') + '"'; }).join(','); }).join('\n');
+          var url = URL.createObjectURL(new Blob([csv], { type: 'text/csv;charset=utf-8' }));
+          var a = document.createElement('a'); a.href = url; a.download = 'datapd-내데이터.csv'; a.click();
+          URL.revokeObjectURL(url);
+        };
+      }
+
+      function tile(k, v, unit) { return '<div class="tile"><div class="k">' + k + '</div><div class="v">' + v + (unit ? '<small> ' + unit + '</small>' : '') + '</div></div>'; }
+      function row(emo, t, d, chip) { return '<div class="row"><span class="emo">' + emo + '</span><div><div class="t">' + t + '</div><div class="d">' + d + '</div></div><span class="go">' + (chip || '') + '</span></div>'; }
+      function emptyBox(text, href, cta) { return '<div class="empty">' + text + '<br/><a href="' + href + '">' + cta + '</a></div>'; }
+
+      $('logout').onclick = function () { DataPDAuth.signOut().then(function () { location.href = '/login.html'; }); };
     })();
   </script>
 </body>
