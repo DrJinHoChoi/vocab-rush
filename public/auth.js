@@ -100,7 +100,19 @@
 
     getSession: function () {
       if (HAS_SUPA) return loadSupa().then(function () {
-        return supa.auth.getSession().then(function (r) { return fromSupa(r.data.session); });
+        return supa.auth.getSession().then(function (r) {
+          var sess = fromSupa(r.data.session);
+          if (!sess) return null;
+          // OAuth는 provider가 역할을 모르므로, 로그인 직전 저장한 pending 역할을
+          // 로그인 후 user_metadata에 1회 반영(입점사/회원 구분 유지).
+          var pending = readJSON('datapd.pending', null);
+          if (pending && pending.role && sess.role !== pending.role) {
+            return supa.auth.updateUser({ data: { role: pending.role, company: pending.company || sess.company || '' } })
+              .then(function () { localStorage.removeItem('datapd.pending'); sess.role = pending.role; if (pending.company) sess.company = pending.company; return sess; })
+              .catch(function () { localStorage.removeItem('datapd.pending'); return sess; });
+          }
+          return sess;
+        });
       });
       return Promise.resolve(readJSON(SESSION_KEY, null));
     },
@@ -152,6 +164,8 @@
     signInProvider: function (provider, role) {
       var dest = role === 'tenant' ? '/partner.html' : '/dashboard.html';
       if (HAS_SUPA) return loadSupa().then(function () {
+        // provider 리다이렉트 전에 의도한 역할을 저장(복귀 후 getSession이 반영).
+        if (role) localStorage.setItem('datapd.pending', JSON.stringify({ role: role }));
         return supa.auth.signInWithOAuth({
           provider: provider,
           options: { redirectTo: location.origin + dest },
