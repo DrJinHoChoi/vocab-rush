@@ -7,25 +7,26 @@
   <link rel="icon" href="/favicon.ico?v=2" sizes="any" />
   <link rel="icon" type="image/svg+xml" href="/doyou-favicon.svg?v=2" />
   <link rel="apple-touch-icon" href="/apple-touch-icon.png?v=2" />
-  <title>로그인 · DOYOU 팝업스토어</title>
+  <title>입점사 로그인 · DOYOU 팝업스토어</title>
   <style>
     :root{ --bg:#FAF5EB; --surface:#FFFEFB; --ink:#141413; --line:#E3DCCB; --muted:#7C766B; --muted2:#A79E88; --gold:#F5B60B; --blue:#5B7FA6; --bluetx:#43618A; --terra:#C75D3A; --green:#15803D; --shadow:0 1px 2px rgba(20,16,12,.05), 0 12px 30px rgba(20,16,12,.08); }
     *{ box-sizing:border-box; margin:0; padding:0; }
     body{ font-family:'Pretendard','Apple SD Gothic Neo','Malgun Gothic',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; background:var(--bg); color:var(--ink); line-height:1.55; -webkit-font-smoothing:antialiased; min-height:100vh; display:flex; align-items:center; justify-content:center; padding:24px; }
     .card{ width:100%; max-width:410px; background:var(--surface); border:2px solid var(--ink); border-radius:22px; padding:30px 28px 24px; box-shadow:var(--shadow); }
     .brand{ text-align:center; margin-bottom:18px; }
-    .brand svg{ width:54px; height:54px; }
-    .brand .wm{ font-weight:900; font-size:20px; letter-spacing:.5px; margin-top:6px; }
+    .brand svg{ width:50px; height:50px; }
+    .brand .pill{ display:inline-block; background:var(--ink); color:#fff; font-size:10.5px; font-weight:800; letter-spacing:2px; padding:3px 11px; border-radius:999px; margin-bottom:8px; }
+    .brand .wm{ font-weight:900; font-size:20px; letter-spacing:.3px; margin-top:6px; }
     .brand .sub{ font-size:12.5px; color:var(--muted); margin-top:2px; }
     .tabs{ display:flex; background:var(--bg); border:2px solid var(--ink); border-radius:12px; padding:4px; gap:4px; margin-bottom:20px; }
     .tabs button{ flex:1; font:inherit; font-weight:800; font-size:14px; padding:9px 0; border:0; border-radius:8px; background:transparent; color:var(--muted); cursor:pointer; }
-    .tabs button.on{ background:var(--ink); color:var(--gold); }
+    .tabs button.on{ background:var(--blue); color:#fff; }
     label{ display:block; font-size:12.5px; font-weight:700; color:var(--muted); margin:0 0 5px 2px; }
     .field{ margin-bottom:13px; }
     input{ width:100%; font:inherit; font-size:15px; padding:12px 13px; border:2px solid var(--line); border-radius:11px; background:var(--surface); color:var(--ink); transition:border-color .12s; }
-    input:focus{ outline:none; border-color:var(--gold); }
-    .primary{ width:100%; font:inherit; font-weight:900; font-size:15px; padding:13px 0; border:2px solid var(--ink); border-radius:12px; background:var(--gold); color:var(--ink); cursor:pointer; margin-top:4px; }
-    .primary:hover{ background:#e9ac06; } .primary:disabled{ opacity:.6; cursor:default; }
+    input:focus{ outline:none; border-color:var(--blue); }
+    .primary{ width:100%; font:inherit; font-weight:900; font-size:15px; padding:13px 0; border:2px solid var(--ink); border-radius:12px; background:var(--blue); color:#fff; cursor:pointer; margin-top:4px; }
+    .primary:hover{ background:#4d6f95; } .primary:disabled{ opacity:.6; cursor:default; }
     .msg{ font-size:13px; font-weight:600; padding:9px 12px; border-radius:9px; margin-bottom:13px; display:none; }
     .msg.show{ display:block; } .msg.err{ background:#FBEEE9; color:#a23a1c; border:1px solid #e7c4b6; } .msg.ok{ background:#EAF3EC; color:#15803D; border:1px solid #bcdcc4; }
     .divider{ display:flex; align-items:center; gap:10px; color:var(--muted2); font-size:12px; margin:18px 0 14px; }
@@ -36,33 +37,37 @@
     .soc.google{ background:#fff; } .soc.google .ic{ background:#fff; border:1px solid #e0ddd6; color:#4285F4; }
     .soc.kakao{ background:#FEE500; border-color:#141413; } .soc.kakao .ic{ color:#3A1D1D; }
     .note{ font-size:11.5px; color:var(--muted2); text-align:center; margin-top:16px; line-height:1.5; }
-    .note a{ color:var(--muted); }
-    .back{ display:block; text-align:center; margin-top:14px; font-size:12.5px; color:var(--bluetx); text-decoration:none; }
+    .back{ display:block; text-align:center; margin-top:12px; font-size:12.5px; color:var(--bluetx); text-decoration:none; }
   </style>
 </head>
 <body>
   <main class="card">
     <div class="brand">
+      <div class="pill">입점사 파트너 포털</div>
       <svg viewBox="305 210 490 630" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><g stroke="#141413" stroke-width="16" stroke-linejoin="round" stroke-linecap="round"><path d="M540,235 C690,235 770,360 770,540 C770,720 680,825 540,825 C400,825 320,710 320,540 C320,360 390,235 540,235 Z" fill="#F5B60B"/><path d="M540,250 C610,250 670,300 700,360 C672,430 690,440 778,478 C840,512 838,520 800,548 C742,560 760,585 786,600 C740,628 742,632 720,648 C760,672 742,690 700,742 C648,790 600,805 540,810 L540,250 Z" fill="#FAF5EB"/><path d="M540,540 L320,540 C328,690 410,795 540,812 Z" fill="#5B7FA6"/><path d="M540,235 C430,235 360,300 335,395 C400,360 470,350 540,355 C560,300 560,265 540,235 Z" fill="#141413"/><ellipse cx="445" cy="470" rx="62" ry="42" fill="#FAF5EB"/><circle cx="462" cy="470" r="22" fill="#141413"/><path d="M628,452 C660,432 705,438 724,460 C700,478 660,480 628,452 Z" fill="#FAF5EB"/><circle cx="690" cy="458" r="13" fill="#141413"/><polygon points="540,470 600,640 470,640" fill="#C75D3A"/><path d="M455,705 C500,690 560,690 600,705 C560,742 500,742 455,705 Z" fill="#C75D3A"/></g></svg>
-      <div class="wm">DOYOU 팝업스토어</div>
-      <div class="sub" id="sub">다시 오셨네요</div>
+      <div class="wm">DOYOU 입점사 포털</div>
+      <div class="sub" id="sub">입점 브랜드 파트너 로그인</div>
     </div>
 
     <div class="tabs">
       <button id="tabLogin" class="on" type="button">로그인</button>
-      <button id="tabSignup" type="button">회원가입</button>
+      <button id="tabSignup" type="button">입점사 가입</button>
     </div>
 
     <div class="msg" id="msg"></div>
 
     <form id="form" autocomplete="on">
+      <div class="field" id="companyField" hidden>
+        <label for="company">회사 / 브랜드명</label>
+        <input id="company" name="company" type="text" placeholder="예: crabox.ai" autocomplete="organization" />
+      </div>
       <div class="field" id="nameField" hidden>
-        <label for="name">이름</label>
+        <label for="name">담당자 이름</label>
         <input id="name" name="name" type="text" placeholder="홍길동" autocomplete="name" />
       </div>
       <div class="field">
         <label for="email">이메일</label>
-        <input id="email" name="email" type="email" placeholder="you@example.com" autocomplete="email" required />
+        <input id="email" name="email" type="email" placeholder="you@company.com" autocomplete="email" required />
       </div>
       <div class="field">
         <label for="password">비밀번호</label>
@@ -78,8 +83,8 @@
     </div>
 
     <p class="note" id="note"></p>
-    <a class="back" href="/partner-login.html" style="font-weight:700">🏬 입점 브랜드(입점사)이신가요? 입점사 로그인 →</a>
-    <a class="back" href="/">← 홈으로</a>
+    <a class="back" href="/login.html" style="font-weight:700">👤 일반 회원이신가요? 회원 로그인 →</a>
+    <a class="back" href="/doyou-invite.html">← 입점 안내 보기</a>
   </main>
 
   <script src="/auth-config.js?v=1"></script>
@@ -88,21 +93,22 @@
     (function () {
       var mode = 'login';
       var $ = function (id) { return document.getElementById(id); };
-      var tabLogin = $('tabLogin'), tabSignup = $('tabSignup'), nameField = $('nameField');
+      var tabLogin = $('tabLogin'), tabSignup = $('tabSignup');
+      var companyField = $('companyField'), nameField = $('nameField');
       var submitBtn = $('submitBtn'), sub = $('sub'), msg = $('msg'), pw = $('password'), note = $('note');
       var isDemo = !window.DataPDAuth || DataPDAuth.mode === 'demo';
 
       note.innerHTML = isDemo
-        ? '데모 모드 — 계정은 이 브라우저에만 저장됩니다.<br/>구글·카카오 실제 로그인은 auth-config.js 설정 후 켜집니다.'
-        : '구글·카카오 실제 계정으로 안전하게 로그인합니다.';
+        ? '데모 모드 — 입점사 계정은 이 브라우저에만 저장됩니다.<br/>구글·카카오 실제 로그인은 auth-config.js 설정 후 켜집니다.'
+        : '입점 브랜드사 계정으로 안전하게 로그인합니다.';
 
       function setMode(m) {
         mode = m; var login = m === 'login';
         tabLogin.classList.toggle('on', login);
         tabSignup.classList.toggle('on', !login);
-        nameField.hidden = login;
-        submitBtn.textContent = login ? '로그인' : '회원가입';
-        sub.textContent = login ? '다시 오셨네요' : '계정을 만들어 시작하기';
+        companyField.hidden = login; nameField.hidden = login;
+        submitBtn.textContent = login ? '로그인' : '입점사 가입';
+        sub.textContent = login ? '다시 오셨어요, 파트너님' : '입점 브랜드 계정 만들기';
         pw.setAttribute('autocomplete', login ? 'current-password' : 'new-password');
         hideMsg();
       }
@@ -115,22 +121,22 @@
       $('form').addEventListener('submit', function (e) {
         e.preventDefault();
         submitBtn.disabled = true; hideMsg();
-        var data = { name: $('name').value, email: $('email').value, password: pw.value };
+        var data = { name: $('name').value, email: $('email').value, password: pw.value, role: 'tenant', company: $('company').value };
         var op = mode === 'login' ? DataPDAuth.signInEmail(data) : DataPDAuth.signUpEmail(data);
-        op.then(function (sess) { location.href = (sess && sess.role === 'tenant') ? '/partner.html' : '/dashboard.html'; })
+        op.then(function () { location.href = '/partner.html'; })
           .catch(function (err) { showMsg(err.message, /메일/.test(err.message) ? 'ok' : 'err'); submitBtn.disabled = false; });
       });
 
       Array.prototype.forEach.call(document.querySelectorAll('.soc'), function (b) {
         b.onclick = function () {
           hideMsg();
-          DataPDAuth.signInProvider(b.getAttribute('data-p'))
-            .then(function (r) { if (r && !r.redirecting) location.href = '/dashboard.html'; })
+          DataPDAuth.signInProvider(b.getAttribute('data-p'), 'tenant')
+            .then(function (r) { if (r && !r.redirecting) location.href = '/partner.html'; })
             .catch(function (err) { showMsg(err.message); });
         };
       });
 
-      // 이미 로그인 상태면 대시보드로
+      // 이미 로그인 상태면 역할에 맞는 대시보드로
       DataPDAuth.getSession().then(function (s) { if (s) location.replace(s.role === 'tenant' ? '/partner.html' : '/dashboard.html'); });
     })();
   </script>

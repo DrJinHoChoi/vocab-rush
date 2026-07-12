@@ -29,7 +29,8 @@
   function saveUsers(l) { localStorage.setItem(USERS_KEY, JSON.stringify(l)); }
   function setDemoSession(u) {
     localStorage.setItem(SESSION_KEY, JSON.stringify({
-      name: u.name, email: u.email, provider: u.provider, picture: '', at: u.at || Date.now(),
+      name: u.name, email: u.email, provider: u.provider, picture: '',
+      role: u.role || 'member', company: u.company || '', at: u.at || Date.now(),
     }));
   }
   function demoSignUp(p) {
@@ -38,7 +39,8 @@
     if (pw.length < 6) throw new Error('비밀번호는 6자 이상이어야 합니다.');
     var l = users();
     if (l.some(function (u) { return u.email === email; })) throw new Error('이미 가입된 이메일입니다.');
-    var u = { name: (p.name || '').trim() || email.split('@')[0], email: email, password: pw, provider: 'email', at: Date.now() };
+    var u = { name: (p.name || '').trim() || email.split('@')[0], email: email, password: pw,
+      provider: 'email', role: p.role || 'member', company: (p.company || '').trim(), at: Date.now() };
     l.push(u); saveUsers(l); setDemoSession(u); return u;
   }
   function demoSignIn(p) {
@@ -47,10 +49,15 @@
     if (!u || u.password !== pw) throw new Error('이메일 또는 비밀번호가 올바르지 않습니다.');
     setDemoSession(u); return u;
   }
-  function demoSocial(provider) {
-    var email = 'demo_' + provider + '@datapd.ai', l = users();
+  function demoSocial(provider, role) {
+    var tenant = role === 'tenant';
+    var email = 'demo_' + provider + (tenant ? '_tenant' : '') + '@datapd.ai', l = users();
     var u = l.find(function (x) { return x.email === email; });
-    if (!u) { u = { name: label(provider) + ' 사용자', email: email, provider: provider, at: Date.now() }; l.push(u); saveUsers(l); }
+    if (!u) {
+      u = { name: label(provider) + ' ' + (tenant ? '입점사' : '사용자'), email: email,
+        provider: provider, role: tenant ? 'tenant' : 'member', company: tenant ? 'crabox.ai' : '', at: Date.now() };
+      l.push(u); saveUsers(l);
+    }
     setDemoSession(u); return u;
   }
 
@@ -80,6 +87,8 @@
       email: u.email || m.email || '',
       provider: a.provider || 'email',
       picture: m.avatar_url || m.picture || '',
+      role: m.role || 'member',
+      company: m.company || '',
       at: Date.parse(u.created_at) || Date.now(),
     };
   }
@@ -118,7 +127,8 @@
 
     signUpEmail: function (p) {
       if (HAS_SUPA) return loadSupa().then(function () {
-        return supa.auth.signUp({ email: p.email, password: p.password, options: { data: { name: p.name || '' } } });
+        return supa.auth.signUp({ email: p.email, password: p.password,
+          options: { data: { name: p.name || '', role: p.role || 'member', company: p.company || '' } } });
       }).then(function (r) {
         if (r.error) throw new Error(r.error.message);
         if (!r.data.session) throw new Error('확인 메일을 보냈습니다. 메일의 링크를 눌러 가입을 완료해 주세요.');
@@ -138,14 +148,16 @@
     },
 
     // supabase: 브라우저가 provider로 리다이렉트됨 / demo: 즉시 로그인
-    signInProvider: function (provider) {
+    // role='tenant'면 입점사 대시보드로, 기본은 회원 대시보드로.
+    signInProvider: function (provider, role) {
+      var dest = role === 'tenant' ? '/partner.html' : '/dashboard.html';
       if (HAS_SUPA) return loadSupa().then(function () {
         return supa.auth.signInWithOAuth({
           provider: provider,
-          options: { redirectTo: location.origin + '/dashboard.html' },
+          options: { redirectTo: location.origin + dest },
         });
       }).then(function (r) { if (r.error) throw new Error(r.error.message); return { redirecting: true }; });
-      try { demoSocial(provider); return Promise.resolve({ redirecting: false }); } catch (e) { return Promise.reject(e); }
+      try { demoSocial(provider, role); return Promise.resolve({ redirecting: false }); } catch (e) { return Promise.reject(e); }
     },
 
     signOut: function () {

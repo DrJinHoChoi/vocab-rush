@@ -5,7 +5,7 @@
  */
 (function () {
   var path = location.pathname.replace(/\/+$/, '');
-  if (/\/(login|dashboard)\.html$/.test(path)) return;   // 로그인·대시보드 페이지엔 표시 안 함
+  if (/\/(login|dashboard|partner-login|partner)\.html$/.test(path)) return;   // 로그인·대시보드 페이지엔 표시 안 함
   if (!window.DataPDAuth || !DataPDAuth.peekSession) return;
 
   function esc(x) { return String(x == null ? '' : x).replace(/[<>&"]/g, function (c) { return { '<': '&lt;', '>': '&gt;', '&': '&amp;', '"': '&quot;' }[c]; }); }
@@ -30,12 +30,16 @@
     if (!wrap) return;
     var s = DataPDAuth.peekSession();
     if (s) {
+      var isTenant = s.role === 'tenant';
+      var display = (isTenant && s.company) ? s.company : (s.name || (isTenant ? '입점사' : '회원'));
+      var dashHref = isTenant ? '/partner.html' : '/dashboard.html';
+      var dashLabel = isTenant ? '🏬 입점사 대시보드' : '📊 내 데이터';
       var av = s.picture
         ? '<span class="dp-av"><img src="' + esc(s.picture) + '" alt="" referrerpolicy="no-referrer"></span>'
-        : '<span class="dp-av">' + esc((s.name || 'D').charAt(0).toUpperCase()) + '</span>';
+        : '<span class="dp-av">' + esc((display || 'D').charAt(0).toUpperCase()) + '</span>';
       wrap.innerHTML = '<button class="dp-chip" id="dp-chipbtn" aria-haspopup="true">' + av +
-        '<span class="dp-nm">' + esc(s.name || '회원') + '</span><span class="dp-ca">▾</span></button>' +
-        '<div class="dp-menu" id="dp-menu" hidden><a href="/dashboard.html">📊 내 데이터</a><button id="dp-logout" type="button">로그아웃</button></div>';
+        '<span class="dp-nm">' + esc(display) + '</span><span class="dp-ca">▾</span></button>' +
+        '<div class="dp-menu" id="dp-menu" hidden><a href="' + dashHref + '">' + dashLabel + '</a><button id="dp-logout" type="button">로그아웃</button></div>';
       var btn = document.getElementById('dp-chipbtn'), menu = document.getElementById('dp-menu');
       btn.addEventListener('click', function (e) { e.stopPropagation(); menu.hidden = !menu.hidden; });
       document.getElementById('dp-logout').addEventListener('click', function () {

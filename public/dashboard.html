@@ -98,6 +98,7 @@
 
       DataPDAuth.getSession().then(function (s) {
         if (!s) { location.replace('/login.html'); return; }
+        if (s.role === 'tenant') { location.replace('/partner.html'); return; }  // 입점사는 입점사 포털로
         return loadData().then(function (data) { render(s, data); $('main').hidden = false; });
       });
 
