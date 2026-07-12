@@ -33,9 +33,10 @@
 ## 2. 리다이렉트 주소 등록
 Supabase → **Authentication → URL Configuration**
 - **Site URL**: `https://www.datapd.ai`
-- **Redirect URLs** 에 추가:
-  - `https://www.datapd.ai/dashboard.html`
-  - `http://localhost:5188/dashboard.html`  ← 로컬 테스트용(선택)
+- **Redirect URLs** 에 추가 — 와일드카드 한 줄이면 회원(`/dashboard.html`)·입점사(`/partner.html`) 둘 다 커버:
+  - `https://www.datapd.ai/**`
+  - `http://localhost:5188/**`  ← 로컬 테스트용(선택)
+  - (와일드카드 대신 개별 등록하려면 `/dashboard.html`·`/partner.html` **둘 다** 넣으세요)
 
 ## 3. 구글 로그인 켜기
 1. **Google Cloud Console** (https://console.cloud.google.com) → 프로젝트 생성
