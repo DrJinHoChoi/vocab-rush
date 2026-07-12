@@ -132,5 +132,8 @@
       var done = HAS_SUPA ? loadSupa().then(function () { return supa.auth.signOut(); }) : Promise.resolve();
       return done.then(function () { localStorage.removeItem(SESSION_KEY); });
     },
+
+    // 초기화된 Supabase 클라이언트(실모드) 또는 null(데모) — datapd-db.js가 사용
+    supabase: function () { return HAS_SUPA ? loadSupa().then(function () { return supa; }) : Promise.resolve(null); },
   };
 })();

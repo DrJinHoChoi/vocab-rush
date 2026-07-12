@@ -88,6 +88,7 @@
 
   <script src="/auth-config.js?v=1"></script>
   <script src="/auth.js?v=2"></script>
+  <script src="/datapd-db.js?v=1"></script>
   <script>
     (function () {
       var $ = function (id) { return document.getElementById(id); };
@@ -97,11 +98,25 @@
 
       DataPDAuth.getSession().then(function (s) {
         if (!s) { location.replace('/login.html'); return; }
-        render(s);
-        $('main').hidden = false;
+        return loadData().then(function (data) { render(s, data); $('main').hidden = false; });
       });
 
-      function render(s) {
+      // 실모드: 로컬 데이터를 계정에 올리고 계정에서 읽음 / 데모·실패: 로컬
+      function loadData() {
+        var local = {
+          stats: readJSON('vocab_rush_stats', null),
+          streak: parseInt(localStorage.getItem('gx.streak') || '0', 10) || 0,
+          apps: readJSON('doyou.apply.v1', []),
+          joins: readJSON('doyou.join.v1', []),
+          source: 'local',
+        };
+        if (DataPDAuth.mode !== 'supabase' || !window.DataPDDB) return Promise.resolve(local);
+        return DataPDDB.syncUp().then(function () { return DataPDDB.load(); }).then(function (d) {
+          return d ? { stats: d.stats, streak: d.streak, apps: d.apps, joins: d.joins, source: 'cloud' } : local;
+        }).catch(function (e) { console.warn('계정 데이터 로드 실패 → 로컬 표시', e); return local; });
+      }
+
+      function render(s, data) {
         // 프로필
         var initial = (s.name || s.email || 'D').trim().charAt(0).toUpperCase();
         $('ava').innerHTML = s.picture ? '<img src="' + esc(s.picture) + '" alt="" referrerpolicy="no-referrer">' : initial;
@@ -111,9 +126,9 @@
           ? '● 실제 계정 로그인 (Supabase)'
           : '● 데모 모드 — 이 브라우저에만 저장';
 
-        // 학습 기록 (STUDY RUSH — vocab_rush_stats / gx.streak)
-        var st = readJSON('vocab_rush_stats', null);
-        var streak = parseInt(localStorage.getItem('gx.streak') || '0', 10) || 0;
+        // 학습 기록 (STUDY RUSH)
+        var st = data.stats;
+        var streak = data.streak;
         if (st && (st.totalGames || st.totalCorrect)) {
           $('learnWrap').innerHTML = '<div class="tiles">' +
             tile('누적 정답', (st.totalCorrect || 0).toLocaleString()) +
@@ -127,9 +142,9 @@
           $('learnWrap').innerHTML = emptyBox('아직 학습 기록이 없어요.', '/play.html', 'STUDY RUSH 시작하기 →');
         }
 
-        // 신청 현황 (doyou.apply.v1 입점 / doyou.join.v1 가맹)
-        var apps = readJSON('doyou.apply.v1', []);
-        var joins = readJSON('doyou.join.v1', []);
+        // 신청 현황 (입점 / 가맹)
+        var apps = data.apps || [];
+        var joins = data.joins || [];
         var rows = [];
         apps.forEach(function (a) {
           rows.push(row('🏬', esc(a.brand || a.name || '입점 신청'),
@@ -145,9 +160,11 @@
           ? '<div class="list">' + rows.join('') + '</div>'
           : emptyBox('아직 입점·가맹 신청 내역이 없어요.', '/doyou-invite.html', '입점 알아보기 →');
 
-        $('note').innerHTML = DataPDAuth.mode === 'supabase'
-          ? '학습·신청 데이터는 이 브라우저에 저장된 활동을 표시합니다. (계정 동기화는 백엔드 연동 시 확장)'
-          : '데모 모드입니다. 학습·신청 데이터는 이 브라우저의 실제 활동에서 읽어옵니다.';
+        $('note').innerHTML = data.source === 'cloud'
+          ? '학습·신청 데이터가 계정에 동기화됩니다 (기기 간 유지).'
+          : (DataPDAuth.mode === 'supabase'
+              ? '계정 데이터를 불러오지 못해 이 브라우저의 로컬 데이터를 표시합니다.'
+              : '데모 모드입니다. 학습·신청 데이터는 이 브라우저의 실제 활동에서 읽어옵니다.');
 
         // CSV
         $('export').onclick = function () {

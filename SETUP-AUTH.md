@@ -54,6 +54,13 @@ Supabase → **Authentication → URL Configuration**
 데모처럼 이메일 회원가입을 확인메일 없이 바로 쓰려면:
 Supabase → **Authentication → Providers → Email** → **Confirm email** 끄기.
 
+## 5.5 계정 데이터 동기화 켜기 (선택, 권장)
+학습·신청 데이터를 계정에 저장해 **기기 간 동기화**하려면:
+1. Supabase → **SQL Editor** → 저장소의 [`supabase-schema.sql`](supabase-schema.sql) 내용을 붙여넣고 **Run**
+   (profiles·applications·learning_stats 테이블 + 본인만 접근하는 RLS 생성)
+2. 끝. 로그인하면 대시보드가 이 브라우저의 로컬 데이터를 계정으로 올리고(중복 자동 무시),
+   이후에는 계정에서 읽어옵니다. 스키마를 안 넣으면 대시보드는 로컬 데이터로 폴백합니다.
+
 ## 6. 배포 & 테스트
 ```bash
 git add public/auth-config.js
