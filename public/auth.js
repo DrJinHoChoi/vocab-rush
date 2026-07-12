@@ -96,6 +96,26 @@
       return Promise.resolve(readJSON(SESSION_KEY, null));
     },
 
+    // 동기·경량 세션 확인(localStorage만; SDK 미로드) — 전역 내비 칩용
+    peekSession: function () {
+      if (HAS_SUPA) {
+        for (var i = 0; i < localStorage.length; i++) {
+          var k = localStorage.key(i);
+          if (/^sb-.*-auth-token$/.test(k)) {
+            try {
+              var o = JSON.parse(localStorage.getItem(k)); var sess = (o && o.currentSession) || o;
+              if (sess && sess.user) {
+                if (sess.expires_at && sess.expires_at * 1000 < Date.now()) return null;
+                return fromSupa(sess);
+              }
+            } catch (e) {}
+          }
+        }
+        return null;
+      }
+      return readJSON(SESSION_KEY, null);
+    },
+
     signUpEmail: function (p) {
       if (HAS_SUPA) return loadSupa().then(function () {
         return supa.auth.signUp({ email: p.email, password: p.password, options: { data: { name: p.name || '' } } });
