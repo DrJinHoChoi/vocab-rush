@@ -38,7 +38,7 @@ const PAGES = ['doyou-hub', 'doyou-curation', 'doyou-locations', 'doyou-apply', 
 function brandNav(activeVibe) {
   const links = NAV_ITEMS.map(([href, p, label]) => `<a href="${href}"${p === 'doyou-partners' ? ' class="on"' : ''}>${label}</a>`).join('');
   // crabox 제품 2종 — 학습 자료 15편은 STUDY RUSH 안(콘텐츠 내비에서 접근)
-  const sub = `<div class="sub"><div class="si"><a class="sl" href="/crabox.html">🦀 crabox.ai ▾</a><a href="/play.html">⚡ STUDY RUSH</a><a href="/vibe-coding.html"${activeVibe ? ' class="on"' : ''}>💻 바이브 코딩</a></div></div>`;
+  const sub = `<div class="sub"><div class="si"><a class="sl" href="/crabox.html">🦀 crabox.ai ▾</a><a href="#roadmap">🎓 학습 로드맵</a><a href="/play.html">⚡ STUDY RUSH</a><a href="/vibe-coding.html"${activeVibe ? ' class="on"' : ''}>🤖 생성형 AI</a></div></div>`;
   return `${STYLE}<nav id="dpnav"><div class="in"><a class="bd" href="/">DataPD</a>${links}</div>${sub}</nav>`;
 }
 // vibe-coding은 crabox 콘텐츠 페이지 — 학습 페이지형 내비(← crabox) 사용, 재생성 제외.

@@ -7,14 +7,14 @@
 <link rel="icon" type="image/svg+xml" href="/favicon.svg?v=2" />
 <meta name="theme-color" content="#FAF5EB" />
 <meta name="robots" content="noindex, follow" />
-<meta name="description" content="crabox.ai — 수능 학습자료 기반 게임과 바이브 코딩 교육 콘텐츠를 만드는 신개념 교육 브랜드. DOYOU 팝업스토어 입점사로, 콘텐츠가 큐레이션을 통해 장소·키오스크에 서비스됩니다." />
+<meta name="description" content="crabox.ai — 생성형 AI 아카데미. 기초는 수능(특히 고교 수학)을 게임(STUDY RUSH)으로 다지고, 그 위에 생성형 AI 교육으로 도약합니다. DOYOU 팝업스토어 입점사." />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://www.datapd.ai/crabox.html" />
-<meta property="og:title" content="crabox.ai — 신개념 교육 브랜드 · DOYOU 입점사" />
-<meta property="og:description" content="수능 학습자료 기반 게임 + 바이브 코딩 교육 콘텐츠. DOYOU 입점 모델의 실물 사례." />
+<meta property="og:title" content="crabox.ai — 생성형 AI 아카데미 · DOYOU 입점사" />
+<meta property="og:description" content="수능 기초(고교 수학) → 생성형 AI. 게임으로 다지고 AI로 도약하는 아카데미." />
 <meta property="og:image" content="https://www.datapd.ai/icon-512.png?v=2" />
 <meta name="twitter:card" content="summary" />
-<title>crabox.ai — 신개념 교육 브랜드 | DOYOU 입점사</title>
+<title>crabox.ai — 생성형 AI 아카데미 | DOYOU 입점사</title>
 <style>
   :root{ --bg:#FAF5EB; --surface:#FFFEFB; --ink:#141413; --line:#E3DCCB; --muted:#7C766B; --muted2:#A79E88; --gold:#F5B60B; --blue:#5B7FA6; --bluetx:#43618A; --terra:#C75D3A; --green:#15803D; --cream:#FAF5EB; --shadow:0 1px 2px rgba(20,16,12,.05), 0 12px 30px rgba(20,16,12,.08); }
   *{ box-sizing:border-box; margin:0; padding:0; }
@@ -31,7 +31,7 @@
   .hero-pill{ display:inline-block; background:var(--ink); color:var(--gold); font-size:12px; font-weight:800; letter-spacing:3px; padding:6px 15px; border-radius:999px; margin:14px 0 0; }
   .hero h1{ font-size:40px; font-weight:900; letter-spacing:-.03em; margin:12px 0 4px; }
   .hero .tag{ font-size:16px; font-weight:800; color:var(--terra); }
-  .hero p.sub{ color:var(--muted); font-size:15.5px; max-width:600px; margin:12px auto 0; }
+  .hero p.sub{ color:var(--muted); font-size:15.5px; max-width:610px; margin:12px auto 0; }
   section.blk{ margin:30px 0; }
   h2{ font-size:22px; font-weight:900; letter-spacing:-.01em; padding-left:13px; border-left:5px solid var(--terra); margin-bottom:6px; }
   h2.g{ border-color:var(--gold); } h2.b{ border-color:var(--blue); }
@@ -44,14 +44,20 @@
   .prod .nums{ display:flex; gap:6px 16px; flex-wrap:wrap; margin:12px 0; }
   .prod .nums div b{ display:block; font-size:17px; color:var(--ink); } .prod .nums div span{ font-size:11px; color:var(--muted2); }
   .prod .go{ display:inline-block; align-self:flex-start; background:var(--ink); color:var(--gold); font-weight:900; font-size:14px; text-decoration:none; padding:11px 18px; border-radius:11px; }
+  .ladder{ display:flex; align-items:stretch; gap:9px; flex-wrap:wrap; }
+  .step{ flex:1 1 170px; background:var(--surface); border:2px solid var(--ink); border-radius:14px; padding:16px; box-shadow:var(--shadow); }
+  .step .sn{ font-size:11px; font-weight:800; letter-spacing:1px; color:var(--muted2); }
+  .step .st{ font-size:15.5px; font-weight:900; margin:3px 0 6px; } .step .sd{ font-size:12.5px; color:var(--muted); line-height:1.55; }
+  .step.hot{ background:var(--ink); } .step.hot .sn{ color:var(--gold); } .step.hot .st{ color:var(--gold); } .step.hot .sd{ color:#C9C3B5; }
+  .larr{ display:flex; align-items:center; font-size:19px; font-weight:900; color:var(--muted2); }
+  @media(max-width:680px){ .larr{ transform:rotate(90deg); width:100%; justify-content:center; height:12px; } }
+  .gets{ display:grid; grid-template-columns:1fr 1fr; gap:13px; }
+  .gv{ background:var(--surface); border:2px solid var(--ink); border-radius:14px; padding:16px; box-shadow:var(--shadow); } .gv b{ font-size:14px; } .gv p{ font-size:12.5px; color:var(--muted); margin-top:5px; }
   .flow{ display:flex; align-items:stretch; gap:9px; flex-wrap:wrap; }
   .fbox{ flex:1 1 150px; background:var(--surface); border:2px solid var(--ink); border-radius:13px; padding:14px; text-align:center; box-shadow:var(--shadow); }
   .fbox .ft{ font-size:14px; font-weight:900; } .fbox .fd{ font-size:11.5px; color:var(--muted); margin-top:5px; line-height:1.5; }
   .fbox.hot{ background:var(--ink); } .fbox.hot .ft{ color:var(--gold); } .fbox.hot .fd{ color:#C9C3B5; }
   .farr{ display:flex; align-items:center; font-size:19px; font-weight:900; color:var(--muted2); }
-  @media(max-width:680px){ .farr{ transform:rotate(90deg); width:100%; justify-content:center; height:12px; } }
-  .gets{ display:grid; grid-template-columns:1fr 1fr; gap:13px; }
-  .gv{ background:var(--surface); border:2px solid var(--ink); border-radius:14px; padding:16px; box-shadow:var(--shadow); } .gv b{ font-size:14.5px; } .gv p{ font-size:12.5px; color:var(--muted); margin-top:5px; }
   .big-cta{ background:var(--gold); border:2px solid var(--ink); border-radius:18px; padding:28px 22px; text-align:center; margin:12px 0 6px; box-shadow:var(--shadow); }
   .big-cta h2{ color:var(--ink); border:none; padding:0; font-size:22px; }
   .big-cta p{ color:#6B5208; font-size:14px; margin:9px 0 16px; }
@@ -64,57 +70,92 @@
 </style>
 </head>
 <body>
-<style id="dpnav-css">nav:not(#dpnav){display:none!important}.topbar{display:none!important}#dpnav{position:sticky;top:0;z-index:9000;background:#FFFEFB;border-bottom:2px solid #141413}#dpnav .in{max-width:1000px;margin:0 auto;padding:10px 20px;display:flex;gap:6px 15px;align-items:center;flex-wrap:wrap;font-family:'Pretendard','Apple SD Gothic Neo','Malgun Gothic',-apple-system,sans-serif;font-size:13px}#dpnav .in::-webkit-scrollbar{display:none}#dpnav a{white-space:nowrap;flex:0 0 auto;color:#7C766B;text-decoration:none}#dpnav a:hover{color:#141413}#dpnav a.bd{font-weight:900;color:#141413;font-size:15px;margin-right:4px}#dpnav a.on{color:#141413;font-weight:800;border-bottom:2px solid #F5B60B;padding-bottom:3px}#dpnav .sub{border-top:2px solid #141413;background:#FBF8F0}#dpnav .sub .si{max-width:1000px;margin:0 auto;padding:7px 20px;display:flex;gap:6px 16px;align-items:center;flex-wrap:wrap;font-family:'Pretendard','Apple SD Gothic Neo','Malgun Gothic',-apple-system,sans-serif;font-size:12.5px}#dpnav .sub .sl{font-weight:800;color:#8A6608;letter-spacing:1px;font-size:11px}#dpnav .sub a{color:#141413;font-weight:800;text-decoration:none}#dpnav .sub a:hover{color:#C75D3A}#dpnav .sub a.mut{color:#7C766B;font-weight:700}#dpnav .sub a.on{border-bottom:2px solid #F5B60B;padding-bottom:2px}</style><nav id="dpnav"><div class="in"><a class="bd" href="/">DataPD</a><a href="/#doyou">DOYOU 팝업</a><a href="/doyou-invite.html">입점</a><a href="/doyou-partners.html" class="on">입점사</a><a href="/doyou-join.html">직영·가맹</a></div><div class="sub"><div class="si"><a class="sl" href="/crabox.html">🦀 crabox.ai ▾</a><a href="/play.html">⚡ STUDY RUSH</a><a href="/vibe-coding.html">💻 바이브 코딩</a></div></div></nav>
+<style id="dpnav-css">nav:not(#dpnav){display:none!important}.topbar{display:none!important}#dpnav{position:sticky;top:0;z-index:9000;background:#FFFEFB;border-bottom:2px solid #141413}#dpnav .in{max-width:1000px;margin:0 auto;padding:10px 20px;display:flex;gap:6px 15px;align-items:center;flex-wrap:wrap;font-family:'Pretendard','Apple SD Gothic Neo','Malgun Gothic',-apple-system,sans-serif;font-size:13px}#dpnav .in::-webkit-scrollbar{display:none}#dpnav a{white-space:nowrap;flex:0 0 auto;color:#7C766B;text-decoration:none}#dpnav a:hover{color:#141413}#dpnav a.bd{font-weight:900;color:#141413;font-size:15px;margin-right:4px}#dpnav a.on{color:#141413;font-weight:800;border-bottom:2px solid #F5B60B;padding-bottom:3px}#dpnav .sub{border-top:2px solid #141413;background:#FBF8F0}#dpnav .sub .si{max-width:1000px;margin:0 auto;padding:7px 20px;display:flex;gap:6px 16px;align-items:center;flex-wrap:wrap;font-family:'Pretendard','Apple SD Gothic Neo','Malgun Gothic',-apple-system,sans-serif;font-size:12.5px}#dpnav .sub .sl{font-weight:800;color:#8A6608;letter-spacing:1px;font-size:11px}#dpnav .sub a{color:#141413;font-weight:800;text-decoration:none}#dpnav .sub a:hover{color:#C75D3A}#dpnav .sub a.mut{color:#7C766B;font-weight:700}#dpnav .sub a.on{border-bottom:2px solid #F5B60B;padding-bottom:2px}</style><nav id="dpnav"><div class="in"><a class="bd" href="/">DataPD</a><a href="/#doyou">DOYOU 팝업</a><a href="/doyou-invite.html">입점</a><a href="/doyou-partners.html" class="on">입점사</a><a href="/doyou-join.html">직영·가맹</a></div><div class="sub"><div class="si"><a class="sl" href="/crabox.html">🦀 crabox.ai ▾</a><a href="#roadmap">🎓 학습 로드맵</a><a href="/play.html">⚡ STUDY RUSH</a><a href="/vibe-coding.html">🤖 생성형 AI</a></div></div></nav>
 
   <main class="wrap">
     <section class="hero">
       <div class="crab">🦀</div>
-      <div><span class="hero-pill">DOYOU 범어 본점 입점사 #1 · 신개념 교육 브랜드</span></div>
+      <div><span class="hero-pill">DOYOU 범어 본점 입점사 #1 · 생성형 AI 아카데미</span></div>
       <h1>crabox.ai</h1>
-      <p class="tag">게임으로 배우고, AI로 만든다</p>
-      <p class="sub">crabox.ai는 수능 학습 플랫폼 <b>⚡ STUDY RUSH</b>(게임 + 원본 학습 자료 15편)를 운영하고, <b>💻 바이브 코딩 교육</b> 콘텐츠를 제작하는 신개념 교육 브랜드입니다. DOYOU 팝업스토어의 입점사로 — 콘텐츠가 큐레이션을 통해 <b>장소와 키오스크</b>에 서비스됩니다.</p>
+      <p class="tag">제대로 배운 깊이가, 생성형 AI를 깊게 만든다</p>
+      <p class="sub">crabox.ai는 <b>생성형 AI 아카데미</b>입니다. 단, 순서가 있어요 — 생성형 AI를 <b>깊이 있게</b> 쓰려면 <b>정통 교육 기초</b>가 먼저입니다. 그래서 <b>수능(고교 정규 과정)</b>으로 다지고, <b>정통 고등교육</b>으로 깊이를 더한 뒤, 그 위에서 생성형 AI를 진짜로 활용합니다. AI는 아는 만큼 깊어지니까요.</p>
       <p style="margin-top:12px; font-size:12.5px; color:var(--muted2)">💡 이 페이지가 바로 DOYOU가 입점사에게 <b>무료로 만들어 주는 쇼케이스</b>의 실물 예시입니다 — <a href="/doyou-content.html">콘텐츠 제작 안내 →</a></p>
       <p style="margin-top:14px"><a href="/partner-login.html" style="display:inline-block;background:#5B7FA6;color:#fff;font-weight:800;font-size:13px;text-decoration:none;padding:9px 18px;border:2px solid #141413;border-radius:11px">🏬 입점사 로그인 — crabox.ai 파트너 계정</a></p>
     </section>
 
+    <section class="blk" id="roadmap">
+      <h2 class="g">학습 로드맵 — 정통 교육에서 생성형 AI까지</h2>
+      <p class="lead">crabox 아카데미는 사다리입니다. 정통 교육으로 깊이를 쌓고, 그 위에 생성형 AI를 올립니다 — 순서가 곧 힘입니다.</p>
+      <div class="ladder">
+        <div class="step">
+          <div class="sn">STEP 1 · 기초</div>
+          <div class="st">📚 수능 (고교 정규 과정)</div>
+          <div class="sd">국·영·수·과·사를 STUDY RUSH 게임으로. 특히 <b>고교 수학</b>을 반복·속도 훈련으로 몸에 붙여 학문의 밑바탕을 만듭니다.</div>
+        </div>
+        <div class="larr">→</div>
+        <div class="step">
+          <div class="sn">STEP 2 · 심화</div>
+          <div class="st">🎓 정통 고등교육</div>
+          <div class="sd">얕은 요약이 아니라 <b>정규 교육과정의 검증된 깊이</b> — 전공·학문 기초를 제대로 갖춰 AI를 판단·발전시킬 힘을 기릅니다.</div>
+        </div>
+        <div class="larr">→</div>
+        <div class="step hot">
+          <div class="sn">STEP 3 · 활용</div>
+          <div class="st">🤖 생성형 AI</div>
+          <div class="sd">바이브 코딩·프롬프트·생성형 AI 실전. <b>깊이 아는 사람이 AI를 깊게 씁니다</b> — 정통 교육 위에서 진짜 활용.</div>
+        </div>
+      </div>
+    </section>
+
     <section class="blk">
-      <h2>운영 중인 콘텐츠</h2>
-      <p class="lead">전부 지금 바로 써볼 수 있는 라이브 서비스입니다 — 무료·회원가입 없이.</p>
+      <h2 class="b">왜 정통 교육 기초가 생성형 AI에 유리한가</h2>
+      <p class="lead">생성형 AI는 <b>증폭기</b>입니다 — 아는 만큼 깊이 씁니다. 정통 교육으로 다진 깊이가 AI 결과의 수준을 가릅니다.</p>
+      <div class="gets">
+        <div class="gv"><b>🔍 판단력</b><p>AI 답이 맞는지 틀린지 가려내는 힘은 정통 지식에서 나옵니다. 기초가 없으면 틀린 답도 그대로 받습니다.</p></div>
+        <div class="gv"><b>🎯 깊은 질문</b><p>깊이 아는 사람이 깊은 프롬프트를 씁니다. 질문의 수준이 곧 결과의 수준입니다.</p></div>
+        <div class="gv"><b>🛠️ 비판·발전</b><p>학문 기초가 있어야 AI 결과를 고치고 더 밀어붙입니다. 없으면 첫 답에서 멈춥니다.</p></div>
+        <div class="gv"><b>⚡ 증폭</b><p>AI는 가진 것을 키웁니다. 기초가 얕으면 얕게, 정통 교육으로 깊으면 깊게 증폭됩니다.</p></div>
+      </div>
+    </section>
+
+    <section class="blk">
+      <h2>과정 — 지금 바로 체험</h2>
+      <p class="lead">전부 무료·회원가입 없이 지금 써볼 수 있습니다.</p>
       <div class="prods">
         <div class="prod">
-          <span class="pt" style="background:#DCE6F1; color:#36506A">수능 학습 플랫폼 · 운영 중</span>
+          <span class="pt" style="background:#DCE6F1; color:#36506A">기초 과정 · 수능</span>
           <h3>⚡ STUDY RUSH</h3>
-          <p>국·영·수·과·사 수능을 타이머 게임으로 공부하는 학습 플랫폼 — 안에 <b>100% 원본 학습 자료 15편</b>(영·국·수·코딩·AI·학습법)과 로드맵까지. DOYOU 팝업의 집객 콘텐츠로 서비스됩니다.</p>
+          <p>국·영·수·과·사 수능을 타이머 게임으로. <b>특히 고교 수학</b>을 탄탄히 — 생성형 AI로 가는 발판입니다. 안에 <b>100% 원본 학습 자료 15편</b> + 로드맵.</p>
           <div class="nums">
-            <div><b>5,500+</b><span>영어 단어</span></div>
             <div><b>3,000+</b><span>수능 문제</span></div>
-            <div><b>15편</b><span>원본 학습 자료</span></div>
+            <div><b>고교 수학</b><span>AI의 토대</span></div>
+            <div><b>15편</b><span>원본 자료</span></div>
           </div>
           <a class="go" href="/play.html">게임 플레이 →</a>
-          <a href="/guides.html" style="align-self:flex-start; margin-top:9px; font-size:12.5px; font-weight:800; color:var(--bluetx)">📖 안의 학습 자료 15편 보기 →</a>
+          <a href="/guides.html" style="align-self:flex-start; margin-top:9px; font-size:12.5px; font-weight:800; color:var(--bluetx)">📖 학습 자료 15편 보기 →</a>
         </div>
         <div class="prod">
-          <span class="pt" style="background:#F6E3DB; color:#8A3A20">코딩 교육 콘텐츠 · 운영 중</span>
-          <h3>💻 바이브 코딩 교육</h3>
-          <p>코드를 몰라도 AI에게 말로 시켜 앱을 만드는 개발 교육. 이 생태계의 게임·엔진·페이지가 전부 바이브 코딩으로 만들어진 실물 결과물입니다.</p>
+          <span class="pt" style="background:#F6E3DB; color:#8A3A20">본 과정 · 생성형 AI</span>
+          <h3>🤖 생성형 AI 아카데미</h3>
+          <p>고교 수학을 다진 뒤 올라가는 본과정. <b>바이브 코딩</b>(AI에게 말로 시켜 앱 만들기)부터 프롬프트·생성형 AI 실전까지 — 이 사이트가 곧 실물 교재입니다.</p>
           <div class="nums">
+            <div><b>바이브 코딩</b><span>지금 오픈</span></div>
             <div><b>단계별</b><span>커리큘럼</span></div>
-            <div><b>실전</b><span>사이트가 곧 교재</span></div>
           </div>
-          <a class="go" href="/vibe-coding.html">교육 보기 →</a>
+          <a class="go" href="/vibe-coding.html">생성형 AI 교육 보기 →</a>
         </div>
       </div>
     </section>
 
     <section class="blk">
       <h2 class="b">DOYOU 입점으로, 이렇게 서비스됩니다</h2>
-      <p class="lead">브랜드 콘텐츠가 팝업과 만나는 흐름 — crabox.ai가 그 실물 사례입니다.</p>
+      <p class="lead">아카데미 콘텐츠가 팝업과 만나는 흐름 — crabox.ai가 그 실물 사례입니다.</p>
       <div class="flow">
-        <div class="fbox"><div class="ft">🦀 crabox 콘텐츠</div><div class="fd">수능 게임 · 코딩 교육</div></div>
+        <div class="fbox"><div class="ft">🦀 crabox 아카데미</div><div class="fd">수능 게임 · 생성형 AI 교육</div></div>
         <div class="farr">→</div>
         <div class="fbox"><div class="ft">🧮 DOYOU 큐레이션</div><div class="fd">범어 교육 적합도 최상위 매칭</div></div>
         <div class="farr">→</div>
-        <div class="fbox"><div class="ft">🖥️ 팝업·키오스크 서비스</div><div class="fd">현장 방문객이 게임·콘텐츠 체험</div></div>
+        <div class="fbox"><div class="ft">🖥️ 팝업·키오스크 서비스</div><div class="fd">현장 방문객이 게임·AI 콘텐츠 체험</div></div>
         <div class="farr">→</div>
         <div class="fbox hot"><div class="ft">📊 데이터 회수</div><div class="fd">학년·과목 반응 리포트가 브랜드로</div></div>
       </div>
@@ -142,8 +183,8 @@
   </main>
 
   <footer>
-    <div><span class="bf-name">🦀 crabox.ai</span><span class="bf-pill">DOYOU TENANT</span></div>
-    <div class="bf-meta">신개념 교육 브랜드 · 수능 학습 게임 <a href="/play.html">STUDY RUSH</a> · <a href="/vibe-coding.html">바이브 코딩 교육</a> · DOYOU 팝업스토어 입점사 · powered by <a href="/">DataPD</a></div>
+    <div><span class="bf-name">🦀 crabox.ai</span><span class="bf-pill">생성형 AI 아카데미</span></div>
+    <div class="bf-meta">수능 기초(고교 수학) → 생성형 AI · <a href="/play.html">STUDY RUSH</a> · <a href="/vibe-coding.html">생성형 AI 교육</a> · DOYOU 팝업스토어 입점사 · powered by <a href="/">DataPD</a></div>
   </footer>
 <script src="/auth-config.js?v=1"></script><script src="/auth.js?v=2"></script><script src="/auth-nav.js?v=1"></script>
 </body>
