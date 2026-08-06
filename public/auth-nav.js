@@ -10,24 +10,26 @@
 
   function esc(x) { return String(x == null ? '' : x).replace(/[<>&"]/g, function (c) { return { '<': '&lt;', '>': '&gt;', '&': '&amp;', '"': '&quot;' }[c]; }); }
 
-  // 칩 높이 32px, top 7px → 표준 내비 바(약 46px, 하단 2px 선) 안에서 세로 가운데.
-  // 칩 아래에 선까지 약 7px 여백이 남습니다.
-  var CSS = '#dp-authchip{position:fixed;top:7px;right:12px;z-index:10000;font-family:"Pretendard","Apple SD Gothic Neo","Malgun Gothic",-apple-system,sans-serif}' +
+  // 내비 바(.in/.inner)가 있으면 그 안에 in-flow 로 넣어 메뉴와 나란히 정렬(dp-inline),
+  // 없는 페이지만 우상단 고정(dp-fixed). 칩 높이 32px.
+  var CSS = '#dp-authchip{font-family:"Pretendard","Apple SD Gothic Neo","Malgun Gothic",-apple-system,sans-serif}' +
+    '#dp-authchip.dp-fixed{position:fixed;top:7px;right:12px;z-index:10000}' +
+    '#dp-authchip.dp-inline{position:relative;margin-left:auto;order:999;flex:0 0 auto;display:inline-flex;align-items:center}' +
     '.dp-chip{display:inline-flex;align-items:center;gap:7px;box-sizing:border-box;height:32px;background:#FFFEFB;border:2px solid #141413;border-radius:999px;padding:0 11px 0 4px;font-weight:800;font-size:12.5px;line-height:1;color:#141413;cursor:pointer;text-decoration:none;box-shadow:0 2px 8px rgba(20,16,12,.14)}' +
     '.dp-chip.dp-login{background:#F5B60B;padding:0 16px}' +
+    '#dp-authchip.dp-inline .dp-chip{box-shadow:none}' +
     '.dp-av{width:22px;height:22px;border-radius:50%;background:#141413;color:#F5B60B;display:grid;place-items:center;font-size:12px;font-weight:900;overflow:hidden;flex:0 0 auto}' +
     '.dp-av img{width:100%;height:100%;object-fit:cover}' +
     '.dp-nm{max-width:96px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}' +
     '.dp-ca{font-size:9px;color:#7C766B}' +
-    '.dp-menu{position:absolute;top:40px;right:0;background:#FFFEFB;border:2px solid #141413;border-radius:12px;padding:5px;min-width:136px;box-shadow:0 10px 26px rgba(20,16,12,.18);display:grid;gap:2px}' +
+    '.dp-menu{position:absolute;top:calc(100% + 6px);right:0;background:#FFFEFB;border:2px solid #141413;border-radius:12px;padding:5px;min-width:136px;box-shadow:0 10px 26px rgba(20,16,12,.18);display:grid;gap:2px;z-index:10001}' +
     '.dp-menu[hidden]{display:none}' +
     '.dp-menu a,.dp-menu button{display:block;width:100%;text-align:left;font:inherit;font-size:13px;font-weight:700;padding:8px 10px;border:0;border-radius:8px;background:transparent;color:#141413;cursor:pointer;text-decoration:none}' +
     '.dp-menu a:hover,.dp-menu button:hover{background:#FAF5EB}' +
     '#dp-logout{color:#a23a1c}' +
     '@media(max-width:480px){.dp-nm{display:none}}' +
-    // 좁은 화면에선 내비 링크가 오른쪽 끝까지 차서 칩 밑에 깔림(클릭 불가) →
-    // 내비 첫 줄에 칩 폭만큼 오른쪽 여백을 확보해 링크가 먼저 줄바꿈되게 함.
-    '@media(max-width:1024px){#dpnav>.in,#cnav>.in,nav>.inner{padding-right:96px!important}}' +
+    // dp-fixed 폴백(내비 없는 페이지)에서만 링크 가림 방지 여백이 필요할 수 있으나,
+    // 그 페이지들은 상단 내비 자체가 없으므로 별도 여백은 두지 않음.
     '@media print{#dp-authchip{display:none}}';
 
   function render() {
@@ -58,7 +60,12 @@
   function inject() {
     if (document.getElementById('dp-authchip')) return;
     var style = document.createElement('style'); style.textContent = CSS; document.head.appendChild(style);
-    var wrap = document.createElement('div'); wrap.id = 'dp-authchip'; document.body.appendChild(wrap);
+    var wrap = document.createElement('div'); wrap.id = 'dp-authchip';
+    // 페이지 상단 나비게이션이 있으면 그 안에 넣어 메뉴와 나란히 정렬(겹침 방지),
+    // 없으면 기존처럼 우상단 고정.
+    var host = document.querySelector('#cnav .in, #dpnav .in, nav .in, nav .inner');
+    if (host) { wrap.className = 'dp-inline'; host.appendChild(wrap); }
+    else { wrap.className = 'dp-fixed'; document.body.appendChild(wrap); }
     render();
     // 다른 탭에서 로그인/로그아웃 시 동기화
     window.addEventListener('storage', function (e) {
