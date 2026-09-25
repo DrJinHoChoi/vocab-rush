@@ -1,0 +1,5 @@
+# Sample photos are verified by exact SHA-256 — never let git touch their bytes.
+public/samples/* binary
+*.jpg binary
+*.png binary
+*.ico binary

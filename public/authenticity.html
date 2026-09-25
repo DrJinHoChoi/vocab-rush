@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>원본 인증이란 — 지문(SHA-256)과 NFT 원본 등록 | 최박사사진관</title>
+<meta name="description" content="최박사사진관의 원본 인증은 사진 파일의 SHA-256 지문으로, 이 파일이 스튜디오가 발급한 원본과 같은지 누구나 확인할 수 있게 합니다. 기록되는 정보, NFT 원본 등록(선택), 증명하는 것과 증명하지 않는 것을 안내합니다." />
+<link rel="canonical" href="https://www.datapd.ai/authenticity.html" />
+<meta name="theme-color" content="#F4F4F1" media="(prefers-color-scheme: light)" />
+<meta name="theme-color" content="#0E0E0D" media="(prefers-color-scheme: dark)" />
+<link rel="icon" href="/favicon.ico" sizes="any" />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="최박사사진관" />
+<meta property="og:title" content="원본 인증이란 — 지문(SHA-256)과 NFT 원본 등록" />
+<meta property="og:description" content="최박사사진관의 원본 인증은 사진 파일의 SHA-256 지문으로, 이 파일이 스튜디오가 발급한 원본과 같은지 누구나 확인할 수 있게 합니다. 기록되는 정보, NFT 원본 등록(선택), 증명하는 것과 증명하지 않는 것을 안내합니다." />
+<meta property="og:url" content="https://www.datapd.ai/authenticity.html" />
+<meta property="og:image" content="https://www.datapd.ai/og-card.png" />
+<meta property="og:locale" content="ko_KR" />
+<meta name="twitter:card" content="summary_large_image" />
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap" />
+<link rel="stylesheet" href="/static/site.css" />
+<script src="/static/site.js" defer></script>
+<style>
+  .between{ justify-content:space-between; }
+  .stack-lg>*+*{ margin-top:clamp(32px,5vw,56px); }
+  .pair{ margin:0; }
+  .scope h3{ font-size:var(--t-md); margin-bottom:8px; }
+  .scope ul{ margin-top:4px; padding-left:1.1em; display:grid; gap:10px; font-size:var(--t-sm); color:var(--ink-2); }
+  .plain{ list-style:none; padding:0; }
+  .plain>li{ padding:18px 0; border-top:1px solid var(--hair); }
+  .plain>li:last-child{ border-bottom:1px solid var(--hair); }
+  .plain h3{ font-size:var(--t-md); margin-bottom:6px; }
+  .plain p{ color:var(--graphite); font-size:var(--t-sm); }
+  .price th.r{ text-align:right; }
+  .where th,.where td{ padding-right:16px; }
+  .where td{ font-size:var(--t-sm); }
+  .where tbody th{ font-family:var(--font); font-size:var(--t-sm); font-weight:700; letter-spacing:0; text-transform:none; color:var(--ink); padding-top:16px; border-top:1px solid var(--hair); }
+  .where tbody tr:last-child th{ border-bottom:1px solid var(--hair); }
+  .where .no{ color:var(--graphite); }
+  @media (max-width:680px){
+    .where thead{ position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; }
+    .where,.where tbody,.where tr,.where th,.where td{ display:block; width:100%; }
+    .where tbody tr{ border-top:1.5px solid var(--ink); padding-bottom:10px; }
+    .where tbody th{ border-top:0; padding:14px 0 4px; font-size:var(--t-md); }
+    .where td{ padding:8px 0; border-top:1px solid var(--hair-2); }
+    .where td::before{ content:attr(data-label); display:block; font-family:var(--mono); font-size:var(--t-xs); letter-spacing:.04em; color:var(--graphite); }
+    .where tbody tr:last-child th,.where tbody tr:last-child td{ border-bottom:0; }
+    .where tbody tr:last-child{ border-bottom:1px solid var(--hair); }
+  }
+</style>
+</head>
+<body>
+<a class="skip" href="#main">본문으로 건너뛰기</a>
+<header class="site-head">
+  <div class="wrap head-in">
+    <a class="logo" href="/" aria-label="최박사사진관 홈">
+      <svg class="mark" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9V3h6M15 3h6v6M21 15v6h-6M9 21H3v-6" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="3" fill="var(--accent)"/></svg>
+      <span class="wm">최박사사진관<small>DR. CHOI PHOTO STUDIO</small></span>
+    </a>
+    <nav class="nav" aria-label="주요 메뉴">
+      <a href="/guide.html">이용 안내</a>
+      <a href="/authenticity.html" aria-current="page">원본 인증</a>
+      <a href="/verify.html">원본 확인</a>
+    </nav>
+    <a class="btn btn-ink btn-sm head-cta" href="mailto:jinho.choi1010@gmail.com?subject=%5B%EC%B5%9C%EB%B0%95%EC%82%AC%EC%82%AC%EC%A7%84%EA%B4%80%5D%20%EC%98%A4%ED%94%88%20%EC%95%8C%EB%A6%BC%20%EC%8B%A0%EC%B2%AD">오픈 알림 받기</a>
+  </div>
+</header>
+
+<main id="main">
+
+  <!-- 1. Hero -->
+  <section class="section" aria-labelledby="hero-title">
+    <div class="wrap split">
+      <div class="stack">
+        <p class="eyebrow">원본 인증 · HOW IT WORKS</p>
+        <h1 class="display" id="hero-title">원본 인증은 무엇을 증명하나요</h1>
+        <p class="lead">원본 인증은 지금 가진 이 파일이 스튜디오에서 그 시각에 발급한 원본 파일과 같은지를 누구나 확인할 수 있게 합니다.</p>
+        <p class="body muted">AI 합성과 보정이 흔한 요즘, “받은 그대로의 원본 파일”이라는 사실을 말 대신 64자리 지문으로 보여 드립니다. 무엇을 기록하고, 무엇을 증명하며, 무엇은 증명하지 않는지 이 페이지에 그대로 적었습니다.</p>
+      </div>
+      <div class="frame">
+        <div class="panel raised stack">
+          <div class="cluster between">
+            <p class="eyebrow">샘플 인증서</p>
+            <span class="seal">원본</span>
+          </div>
+          <dl class="kv">
+            <dt>인증서 번호</dt>
+            <dd class="mono">DRC-2026-000001</dd>
+            <dt>발급 일시</dt>
+            <dd><time datetime="2026-09-25T15:00:00+09:00">2026년 9월 25일 15:00 KST</time></dd>
+            <dt>파일</dt>
+            <dd><span class="mono">sample-original.jpg</span> · JPEG · 1200×900 · 23,543바이트</dd>
+            <dt>지문 SHA-256</dt>
+            <dd><span class="hash">2e58e77648954e67ce51a77b2913064a0d4dc9454fb92d81c8e6ff3321178a60</span></dd>
+            <dt>블록체인</dt>
+            <dd>시범 운영 — 블록체인 등록 전, 공개 레지스트리에만 기록</dd>
+          </dl>
+          <p class="small"><a class="link-arrow" href="/certificate.html?id=DRC-2026-000001">샘플 인증서 전체 보기</a></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2. 사진의 지문 -->
+  <section class="section" id="fingerprint" aria-labelledby="fp-title">
+    <div class="wrap stack-lg">
+      <div class="stack">
+        <p class="eyebrow">지문 · SHA-256</p>
+        <h2 class="h2" id="fp-title">사진의 지문, SHA-256</h2>
+        <p class="body">디지털 사진은 결국 숫자로 된 파일입니다. 파일 전체를 SHA-256이라는 공개 표준 계산에 넣으면 64자리 문자열 하나가 나옵니다. 이 값을 파일의 <strong>지문</strong>(해시)이라고 부릅니다. 원본 인증서에는 발급 순간의 원본 파일에서 계산한 이 지문이 적힙니다.</p>
+      </div>
+
+      <div class="grid grid-3">
+        <div class="tile">
+          <h3>같은 파일이면 같은 지문</h3>
+          <p>같은 파일은 언제, 어느 컴퓨터에서 계산해도 똑같은 64자리 지문이 나옵니다.</p>
+        </div>
+        <div class="tile">
+          <h3>조금만 바뀌어도 전혀 다른 지문</h3>
+          <p>한 픽셀, 아니 파일의 1비트만 달라져도 지문은 비슷해지는 게 아니라 완전히 다른 값이 됩니다.</p>
+        </div>
+        <div class="tile">
+          <h3>지문으로 사진을 되돌릴 수 없음</h3>
+          <p>지문은 한 방향으로만 계산됩니다. 지문을 공개해도 사진이나 얼굴은 드러나지 않습니다.</p>
+        </div>
+      </div>
+
+      <div class="stack">
+        <h3 class="h3">직접 비교해 보세요: 원본과 4% 밝게 보정한 파일</h3>
+        <div class="grid grid-2">
+          <figure class="pair stack">
+            <div class="frame">
+              <img src="/samples/sample-original.jpg" width="1200" height="900" loading="lazy" decoding="async" alt="원본 샘플 사진: 세이지색 배경지 앞, 나무 스툴 위에 흰 꽃병과 마른 나뭇가지를 놓은 스튜디오 정물" />
+            </div>
+            <figcaption class="stack">
+              <div class="cluster">
+                <span class="seal">원본</span>
+                <span class="mono xs muted">sample-original.jpg · 레지스트리 등록</span>
+              </div>
+              <p class="hash"><span class="sr-only">SHA-256 지문: </span>2e58e77648954e67ce51a77b2913064a0d4dc9454fb92d81c8e6ff3321178a60</p>
+            </figcaption>
+          </figure>
+          <figure class="pair stack">
+            <div class="frame">
+              <img src="/samples/sample-edited.jpg" width="1200" height="900" loading="lazy" decoding="async" alt="같은 정물 사진을 4% 밝게 보정한 파일: 눈으로는 원본과 거의 구별되지 않음" />
+            </div>
+            <figcaption class="stack">
+              <div class="cluster">
+                <span class="tag">4% 밝게 보정</span>
+                <span class="mono xs muted">sample-edited.jpg · 레지스트리에 없음</span>
+              </div>
+              <p class="hash"><span class="sr-only">SHA-256 지문: </span>6aa4bf01c4ecf889d8108c9561db0fbafa7190704e6f9f6f35e52b495bd7c3d5</p>
+            </figcaption>
+          </figure>
+        </div>
+        <p class="body">두 사진은 눈으로 거의 구별되지 않습니다. 하지만 지문은 비슷한 구석 없이 전혀 다른 값입니다. 공개 레지스트리에는 원본의 지문만 등록돼 있어서, 두 파일을 원본 확인에 넣어 보면 원본만 인증서 DRC-2026-000001과 일치합니다.</p>
+        <div class="cluster">
+          <a class="btn btn-ink btn-sm" href="/verify.html">원본 확인에서 직접 해 보기</a>
+          <a class="link-arrow small" href="/samples/sample-original.jpg" download>원본 파일 받기</a>
+          <a class="link-arrow small" href="/samples/sample-edited.jpg" download>보정본 받기</a>
+        </div>
+        <p class="xs muted">원본 확인은 파일을 서버로 보내지 않습니다. 지문 계산은 브라우저 안에서만 이뤄집니다.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. 무엇이 어디에 기록되나 -->
+  <section class="section" id="records" aria-labelledby="where-title">
+    <div class="wrap stack-lg">
+      <div class="stack">
+        <h2 class="h2" id="where-title">무엇이 어디에 기록되나</h2>
+        <p class="body">원본 인증서와 공개 레지스트리에는 사진도, 이름도 들어가지 않습니다. 공개되는 것은 사진으로 되돌릴 수 없는 지문과 인증서 번호·발급 일시, 그리고 파일 크기·해상도·형식 같은 기술 정보뿐입니다.</p>
+      </div>
+
+      <div class="table-wrap">
+        <table class="price where">
+          <caption class="sr-only">항목별 기록 위치</caption>
+          <thead>
+            <tr>
+              <th scope="col">항목</th>
+              <th scope="col">고객에게 전달</th>
+              <th scope="col">인증서·공개 레지스트리</th>
+              <th scope="col">공개 블록체인(선택 NFT)</th>
+              <th scope="col">스튜디오 보관</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">원본 사진 파일</th>
+              <td data-label="고객에게 전달">전달<small>원본 파일 그대로</small></td>
+              <td data-label="인증서·공개 레지스트리" class="no">기록하지 않음</td>
+              <td data-label="공개 블록체인(선택 NFT)" class="no">기록하지 않음</td>
+              <td data-label="스튜디오 보관">전달 후 30일 보관 뒤 삭제<small>예정 · 오픈 때 확정</small></td>
+            </tr>
+            <tr>
+              <th scope="row">지문(SHA-256)</th>
+              <td data-label="고객에게 전달">인증서에 표시</td>
+              <td data-label="인증서·공개 레지스트리">공개 기록</td>
+              <td data-label="공개 블록체인(선택 NFT)">기록<small>NFT 원본 등록에 동의한 경우만</small></td>
+              <td data-label="스튜디오 보관">레지스트리로 관리</td>
+            </tr>
+            <tr>
+              <th scope="row">인증서 번호·발급 일시</th>
+              <td data-label="고객에게 전달">인증서에 표시</td>
+              <td data-label="인증서·공개 레지스트리">공개 기록</td>
+              <td data-label="공개 블록체인(선택 NFT)">기록<small>NFT 원본 등록에 동의한 경우만</small></td>
+              <td data-label="스튜디오 보관">레지스트리로 관리</td>
+            </tr>
+            <tr>
+              <th scope="row">이름·연락처</th>
+              <td data-label="고객에게 전달" class="no">인증서에 넣지 않음</td>
+              <td data-label="인증서·공개 레지스트리" class="no">기록하지 않음</td>
+              <td data-label="공개 블록체인(선택 NFT)" class="no">기록하지 않음</td>
+              <td data-label="스튜디오 보관">예약 정보로만 보관</td>
+            </tr>
+            <tr>
+              <th scope="row">얼굴·이미지</th>
+              <td data-label="고객에게 전달">원본 파일 안에만 담김</td>
+              <td data-label="인증서·공개 레지스트리" class="no">기록하지 않음</td>
+              <td data-label="공개 블록체인(선택 NFT)" class="no">기록하지 않음</td>
+              <td data-label="스튜디오 보관">원본 파일 사본 안에만<small>전달 후 30일 뒤 삭제 예정 · 동의 없이 홍보에 쓰지 않음</small></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="stack">
+        <p class="small muted body">공개 레지스트리 전체는 <a href="/certificates.json">certificates.json</a>에서 누구나 볼 수 있습니다. 예약 정보 같은 개인정보의 처리 기준은 <a href="/privacy.html">개인정보처리방침</a>에서 안내합니다.</p>
+        <p class="small muted body">셀프로 촬영한 사진의 저작권은 고객에게 있습니다. 스튜디오는 동의 없이 고객 사진을 홍보에 쓰지 않습니다.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. NFT 원본 등록 -->
+  <section class="section" id="nft" aria-labelledby="nft-title">
+    <div class="wrap stack-lg">
+      <div class="stack">
+        <p class="eyebrow">선택 옵션</p>
+        <h2 class="h2" id="nft-title">NFT 원본 등록 (선택)</h2>
+        <p class="lead">원본 인증서의 지문·인증서 번호·발급 일시를 공개 블록체인에도 기록하는 선택 옵션입니다. 이 웹사이트와 별개로 공개 기록이 남아, 누구나 따로 대조해 볼 수 있습니다.</p>
+      </div>
+
+      <div class="grid grid-2">
+        <div class="tile">
+          <h3>지갑이 필요 없습니다</h3>
+          <p>기록은 스튜디오가 대신 합니다. 가상자산 지갑을 만들 필요가 없고, 등록 기록은 인증서 링크에서 확인합니다.</p>
+        </div>
+        <div class="tile">
+          <h3>따로 동의를 받습니다</h3>
+          <p>원본 인증서는 모든 촬영에 기본으로 드립니다. NFT 원본 등록은 원하는 컷만, 별도 동의를 받은 뒤 진행합니다.</p>
+        </div>
+        <div class="tile">
+          <h3>지울 수 없어서, 지문만 올립니다</h3>
+          <p>블록체인에 올린 기록은 나중에 지울 수 없습니다. 그래서 사진·얼굴·이름·연락처는 올리지 않고, 사진으로 되돌릴 수 없는 지문과 인증서 번호·발급 일시만 기록합니다.</p>
+        </div>
+        <div class="tile">
+          <h3>네트워크는 오픈 때 안내합니다</h3>
+          <p>어떤 공개 블록체인에 기록할지는 정식 오픈 때 알려 드립니다. 지금의 샘플 인증서는 시범 운영 단계로, 블록체인 등록 전이며 공개 레지스트리에만 기록돼 있습니다.</p>
+        </div>
+      </div>
+
+      <div class="grid grid-2">
+        <div class="table-wrap">
+          <table class="price">
+            <caption class="sr-only">원본 인증 요금, 오픈 예정가 · 확정 전</caption>
+            <thead>
+              <tr>
+                <th scope="col">항목</th>
+                <th scope="col" class="r">오픈 예정가 · 확정 전</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>원본 인증서 (디지털)<small>지문·인증서 번호·발급 일시</small></td>
+                <td class="amt">모든 촬영에 기본 포함</td>
+              </tr>
+              <tr>
+                <td>NFT 원본 등록 (선택)<small>별도 동의 후 진행</small></td>
+                <td class="amt">컷당 3,000원</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="notice">
+          <p><strong>NFT 원본 등록은 증명 기록입니다.</strong> 여기서 NFT는 등록을 신청한 컷마다 원본 인증서의 지문·인증서 번호·발급 일시를 공개 블록체인에 고유한 기록 하나로 남기는 것을 말합니다.</p>
+          <p>기록은 스튜디오가 남기며 고객에게 옮겨지지 않고, 판매·양도·거래를 위해 발행하지 않습니다. 가상자산이 아니며 투자·거래·결제 수단이 아닙니다. 가격·수익을 약속하지 않으며 재판매 시장을 운영하지 않습니다.</p>
+          <p>등록되는 것은 지문·인증서 번호·발급 일시뿐이며, 사진 파일이나 저작권을 넘기는 것이 아닙니다.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. 증명하는 것 / 증명하지 않는 것 -->
+  <section class="section" id="scope" aria-labelledby="scope-title">
+    <div class="wrap stack-lg">
+      <div class="stack">
+        <h2 class="h2" id="scope-title">증명하는 것, 증명하지 않는 것</h2>
+        <p class="body">원본 인증서가 확인하는 것은 한 가지입니다. 그 밖의 것까지 보증한다고 말하지 않겠습니다.</p>
+      </div>
+      <div class="panel scope grid grid-2">
+        <div>
+          <h3>증명하는 것</h3>
+          <ul>
+            <li>확인한 파일이 스튜디오가 발급한 원본 파일과 같은 파일이라는 것. 한 바이트라도 다르면 지문이 달라집니다.</li>
+            <li>스튜디오가 기록한 발급 일시에 그 지문으로 원본 인증서를 발급했다는 것. 기본 인증서의 발급 일시는 스튜디오 레지스트리의 기록이며, 스튜디오와 별개로 시각을 확인할 수 있는 기록은 NFT 원본 등록을 한 경우에만 남습니다.</li>
+            <li>NFT 원본 등록을 한 경우, 같은 지문이 공개 블록체인에도 기록돼 있다는 것.</li>
+          </ul>
+        </div>
+        <div>
+          <h3>증명하지 않는 것</h3>
+          <ul>
+            <li>사진에 담긴 장면이나 내용이 사실이라는 것.</li>
+            <li>사진 속 사람이 누구인지. 원본 인증은 신원 확인이 아닙니다.</li>
+            <li>법적 증거로서의 효력. 원본 인증서는 이를 보장하지 않습니다.</li>
+            <li>보정, 자르기, 필터, 메신저 전송 시 재압축, 스크린샷, 형식 변환을 거친 파일이 원본이라는 것. 파일이 바뀌면 지문도 바뀌어 일치하지 않습니다.</li>
+            <li>일치하지 않는 파일이 조작됐다는 것. 평범한 재압축만으로도 지문은 달라집니다.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. 원본을 지키는 법 -->
+  <section class="section" id="keep" aria-labelledby="keep-title">
+    <div class="wrap">
+      <div class="narrow stack-lg">
+        <div class="stack">
+          <h2 class="h2" id="keep-title">원본을 지키는 법</h2>
+          <p class="body">원본 인증은 원본 파일이 그대로 남아 있을 때 쓸모가 있습니다. 받은 뒤에는 이것만 기억해 주세요.</p>
+        </div>
+        <ul class="plain">
+          <li>
+            <h3>받은 원본 파일은 그대로 보관하세요</h3>
+            <p>편집 앱에서 열었다가 다시 저장하면 파일이 바뀌어 지문이 달라질 수 있습니다. 원본은 손대지 않는 폴더에 두고, 보정은 복사본으로 하세요. 파일 이름만 바꾸는 것은 지문에 영향을 주지 않습니다.</p>
+          </li>
+          <li>
+            <h3>확인이 필요할 땐 원본 파일을 그대로, 인증서 링크와 함께</h3>
+            <p>메신저와 SNS는 사진을 다시 압축해 올리는 경우가 많아, 받는 사람의 파일은 지문이 달라집니다. 원본임을 보여 줘야 할 때는 메일 첨부처럼 파일을 줄이지 않고 그대로 보내고, 인증서 링크를 함께 보내세요. 받는 분이 원본 확인에서 그 파일을 직접 대조할 수 있습니다.</p>
+          </li>
+          <li>
+            <h3>보정본은 원본이 아닙니다</h3>
+            <p>보정한 사진은 새 파일이라 원본 인증서와 일치하지 않습니다. 원본 인증서는 원본 파일에 대해 발급합니다.</p>
+          </li>
+          <li>
+            <h3>클라우드에 한 벌 더</h3>
+            <p>스튜디오 사본은 전달 후 30일 뒤 삭제할 예정입니다. 개인 클라우드나 외장 저장장치에 원본을 백업해 두세요. 사진을 줄여서 저장하는 설정이라면 원본 화질 저장으로 바꿔 주세요.</p>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7. FAQ -->
+  <section class="section" id="faq" aria-labelledby="faq-title">
+    <div class="wrap">
+      <div class="narrow stack-lg">
+        <div class="stack">
+          <p class="eyebrow">FAQ</p>
+          <h2 class="h2" id="faq-title">자주 묻는 질문</h2>
+        </div>
+        <div class="faq">
+          <details>
+            <summary>해시만으로 사진을 복원할 수 있나요?</summary>
+            <div class="ans">
+              <p>아니요. SHA-256은 한 방향으로만 계산됩니다. 파일에서 지문을 만들 수는 있어도, 지문에서 사진을 되살릴 수는 없습니다. 64자리 지문에는 사진을 다시 만들 만큼의 정보가 담겨 있지 않기 때문입니다. 그래서 지문을 공개해도 사진이나 얼굴은 드러나지 않습니다.</p>
+            </div>
+          </details>
+          <details>
+            <summary>인증서를 잃어버리면 어떻게 하나요?</summary>
+            <div class="ans">
+              <p>원본 파일이 남아 있다면 괜찮습니다. <a href="/verify.html">원본 확인</a>에 원본 파일을 넣으면 공개 레지스트리와 대조해 해당 인증서를 다시 찾을 수 있습니다. 인증서 번호를 알고 있다면 번호로도 조회할 수 있습니다.</p>
+              <p>원본 파일까지 잃어버렸다면 스튜디오 보관 기간(전달 후 30일, 예정) 안에 <a href="mailto:jinho.choi1010@gmail.com">이메일</a>로 문의해 주세요.</p>
+            </div>
+          </details>
+          <details>
+            <summary>스튜디오가 문을 닫으면 확인할 수 없나요?</summary>
+            <div class="ans">
+              <p>공개 레지스트리(<a href="/certificates.json">certificates.json</a>)는 지금도 누구나 내려받을 수 있는 공개 파일이고, SHA-256은 공개 표준이라 이 사이트가 아닌 다른 도구로도 같은 지문을 계산할 수 있습니다. 다만 이 웹사이트가 닫히면 레지스트리도 함께 볼 수 없게 될 수 있습니다.</p>
+              <p>NFT 원본 등록을 한 사진은 지문이 공개 블록체인에도 기록돼 있어, 스튜디오 웹사이트와 별개로 대조할 수 있습니다. 블록체인 네트워크 자체의 운영까지 스튜디오가 보장할 수는 없다는 점도 함께 알려 드립니다.</p>
+            </div>
+          </details>
+          <details>
+            <summary>보정한 사진은 어떻게 되나요?</summary>
+            <div class="ans">
+              <p>보정한 파일은 원본과 지문이 달라 원본 인증서와 일치하지 않습니다. 보정본이 잘못됐다는 뜻이 아니라, 원본과 같은 파일이 아니라는 뜻입니다. 원본 파일을 따로 보관해 두면 언제든 원본을 확인할 수 있습니다. 원본 인증서는 원본 파일에 대해 발급합니다.</p>
+            </div>
+          </details>
+          <details>
+            <summary>NFT를 팔 수 있나요?</summary>
+            <div class="ans">
+              <p>아니요. NFT 원본 등록은 판매를 위한 것이 아닙니다. 지문을 공개 기록으로 남겨 원본을 확인하기 위한 증명 기록이며, 가상자산이나 투자 상품이 아닙니다. 기록은 스튜디오가 남기고 고객 지갑으로 옮기지 않으므로, 사고팔 수 있는 형태로 드리지 않습니다. 스튜디오는 가격을 매기거나 거래를 중개하지 않고, 재판매 시장도 운영하지 않습니다.</p>
+              <p>사진의 저작권은 촬영한 고객에게 있으며, NFT 원본 등록으로 저작권이 옮겨지지 않습니다.</p>
+            </div>
+          </details>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 8. CTA -->
+  <section class="section" aria-labelledby="cta-title">
+    <div class="wrap">
+      <div class="narrow stack">
+        <h2 class="h2" id="cta-title">직접 확인해 보세요</h2>
+        <p class="body">샘플 원본과 보정본을 원본 확인에 넣어 보면, 지문이 어떻게 달라지는지 바로 볼 수 있습니다. 파일은 브라우저 밖으로 나가지 않습니다.</p>
+        <div class="cluster">
+          <a class="btn btn-accent" href="/verify.html">원본 확인해 보기</a>
+          <a class="btn" href="/certificate.html?id=DRC-2026-000001">샘플 인증서 보기</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-foot">
+  <div class="wrap foot-in">
+    <div>
+      <a class="logo" href="/" aria-label="최박사사진관 홈">
+        <svg class="mark" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9V3h6M15 3h6v6M21 15v6h-6M9 21H3v-6" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="3" fill="var(--accent)"/></svg>
+        <span class="wm">최박사사진관<small>DR. CHOI PHOTO STUDIO</small></span>
+      </a>
+      <p>찍는 순간, 원본이 증명되는 셀프 사진관.</p>
+      <p style="margin-top:14px"><span class="status">오픈 준비 중</span></p>
+    </div>
+    <div>
+      <h4>스튜디오</h4>
+      <ul>
+        <li>대구 수성구 범어동</li>
+        <li>10평 셀프 스튜디오 · 상세 주소는 오픈 때 안내</li>
+        <li><a href="mailto:jinho.choi1010@gmail.com">jinho.choi1010@gmail.com</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>안내</h4>
+      <ul>
+        <li><a href="/guide.html">이용 안내</a></li>
+        <li><a href="/authenticity.html">원본 인증</a></li>
+        <li><a href="/verify.html">원본 확인</a></li>
+        <li><a href="/privacy.html">개인정보처리방침</a></li>
+        <li><a href="/terms.html">이용약관</a></li>
+      </ul>
+    </div>
+    <p class="fine"><span>© 2026 최박사사진관 · DataPD</span><span>사업자 정보는 정식 오픈 때 게재합니다.</span><span>요금·운영 시간은 오픈 전 예정 정보입니다.</span></p>
+  </div>
+</footer>
+</body>
+</html>

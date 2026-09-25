@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>원본 인증서 | 최박사사진관</title>
+<meta name="description" content="최박사사진관이 발급한 원본 인증서를 공개 레지스트리에서 조회합니다. 인증서 번호, 발급 일시, 원본 파일의 SHA-256 지문을 확인하세요." />
+<link rel="canonical" href="https://www.datapd.ai/certificate.html" />
+<meta name="robots" content="noindex, follow" />
+<meta name="theme-color" content="#F4F4F1" media="(prefers-color-scheme: light)" />
+<meta name="theme-color" content="#0E0E0D" media="(prefers-color-scheme: dark)" />
+<link rel="icon" href="/favicon.ico" sizes="any" />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="최박사사진관" />
+<meta property="og:title" content="원본 인증서 · 최박사사진관" />
+<meta property="og:description" content="최박사사진관이 발급한 원본 인증서를 공개 레지스트리에서 조회합니다. 인증서 번호, 발급 일시, 원본 파일의 SHA-256 지문을 확인하세요." />
+<meta property="og:url" content="https://www.datapd.ai/certificate.html" />
+<meta property="og:image" content="https://www.datapd.ai/og-card.png" />
+<meta property="og:locale" content="ko_KR" />
+<meta name="twitter:card" content="summary_large_image" />
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap" />
+<link rel="stylesheet" href="/static/site.css" />
+<script src="/static/site.js" defer></script>
+<style>
+  .gap-sm{ --s:10px; }
+  .gap-lg{ --s:28px; }
+  .gap-top{ margin-top:24px; }
+  .cert-side{ display:grid; justify-items:end; gap:12px; text-align:right; }
+  .cert-body{ margin-top:26px; display:grid; gap:26px; }
+  .cert-preview{ margin:0; max-width:400px; }
+  .sub{ display:block; margin-top:2px; font-weight:500; }
+  .hash-row{ display:flex; flex-wrap:wrap; align-items:flex-start; gap:10px 12px; }
+  .hash-row .hash{ flex:1 1 240px; min-width:0; }
+  .cert-foot strong{ color:var(--ink); }
+  @media (max-width:560px){ .cert-side{ justify-items:start; text-align:left; } }
+  @media print{
+    .cert-preview{ max-width:260px; }
+    .seal{ -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+  }
+</style>
+</head>
+<body>
+<a class="skip" href="#main">본문으로 건너뛰기</a>
+<header class="site-head">
+  <div class="wrap head-in">
+    <a class="logo" href="/" aria-label="최박사사진관 홈">
+      <svg class="mark" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9V3h6M15 3h6v6M21 15v6h-6M9 21H3v-6" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="3" fill="var(--accent)"/></svg>
+      <span class="wm">최박사사진관<small>DR. CHOI PHOTO STUDIO</small></span>
+    </a>
+    <nav class="nav" aria-label="주요 메뉴">
+      <a href="/guide.html">이용 안내</a>
+      <a href="/authenticity.html">원본 인증</a>
+      <a href="/verify.html">원본 확인</a>
+    </nav>
+    <a class="btn btn-ink btn-sm head-cta" href="mailto:jinho.choi1010@gmail.com?subject=%5B%EC%B5%9C%EB%B0%95%EC%82%AC%EC%82%AC%EC%A7%84%EA%B4%80%5D%20%EC%98%A4%ED%94%88%20%EC%95%8C%EB%A6%BC%20%EC%8B%A0%EC%B2%AD">오픈 알림 받기</a>
+  </div>
+</header>
+
+<main id="main">
+  <section class="section tight">
+    <div class="wrap narrow">
+      <p class="sr-only" id="live" role="status" aria-live="polite"></p>
+
+      <div id="view" aria-busy="true">
+        <div class="stack">
+          <p class="eyebrow">ORIGINAL CERTIFICATE · 원본 인증서</p>
+          <h1 class="h2">인증서를 불러오는 중입니다</h1>
+          <p class="body muted">공개 레지스트리에서 인증서 번호를 찾고 있습니다.</p>
+          <div class="progress" role="progressbar" aria-label="인증서 불러오는 중"><i></i></div>
+        </div>
+      </div>
+
+      <noscript>
+        <div class="notice warn gap-top">이 페이지는 JavaScript로 공개 레지스트리를 불러와 인증서를 표시합니다. JavaScript를 켜거나 <a href="/certificates.json">공개 레지스트리</a>에서 인증서 번호를 직접 찾아 주세요.</div>
+      </noscript>
+
+      <template id="tpl-loading">
+        <div class="stack">
+          <p class="eyebrow">ORIGINAL CERTIFICATE · 원본 인증서</p>
+          <h1 class="h2">인증서를 불러오는 중입니다</h1>
+          <p class="body muted">공개 레지스트리에서 인증서 번호를 찾고 있습니다.</p>
+          <div class="progress" role="progressbar" aria-label="인증서 불러오는 중"><i></i></div>
+        </div>
+      </template>
+
+      <template id="tpl-noid">
+        <div class="stack">
+          <p class="eyebrow">ORIGINAL CERTIFICATE · 원본 인증서</p>
+          <h1 class="h2">인증서 번호가 없습니다</h1>
+          <p class="body">인증서 링크 끝에는 <span class="mono">DRC-2026-000001</span>처럼 인증서 번호가 붙어 있습니다. 받은 링크를 처음부터 끝까지 그대로 열어 주세요.</p>
+          <p class="body muted">원본 파일을 가지고 있다면 원본 확인 페이지에서 파일의 지문으로 바로 확인할 수 있습니다.</p>
+          <div class="cluster">
+            <a class="btn btn-ink" href="/verify.html">원본 확인 페이지로</a>
+            <a class="link-arrow" href="/certificate.html?id=DRC-2026-000001">체험용 샘플 인증서 보기</a>
+          </div>
+        </div>
+      </template>
+
+      <template id="tpl-invalid">
+        <div class="stack">
+          <p class="eyebrow">ORIGINAL CERTIFICATE · 원본 인증서</p>
+          <h1 class="h2">인증서 번호 형식이 올바르지 않습니다</h1>
+          <p class="body">입력된 번호: <span class="mono" data-f="raw"></span></p>
+          <p class="body muted">인증서 번호는 <span class="mono">DRC-연도 4자리-일련번호 6자리</span> 형식입니다. 예: <span class="mono">DRC-2026-000001</span></p>
+          <div class="cluster">
+            <a class="btn btn-ink" href="/verify.html">원본 확인 페이지로</a>
+            <a class="link-arrow" href="/certificate.html?id=DRC-2026-000001">체험용 샘플 인증서 보기</a>
+          </div>
+        </div>
+      </template>
+
+      <template id="tpl-notfound">
+        <div class="stack">
+          <p class="eyebrow">ORIGINAL CERTIFICATE · 원본 인증서</p>
+          <h1 class="h2">등록된 인증서를 찾지 못했습니다</h1>
+          <p class="body"><span class="mono" data-f="id"></span> 번호는 공개 레지스트리에 없습니다. 번호를 다시 확인해 주세요.</p>
+          <p class="body muted">원본 파일을 가지고 있다면 원본 확인 페이지에서 파일의 지문으로 직접 확인할 수 있습니다. 궁금한 점은 <a href="mailto:jinho.choi1010@gmail.com">jinho.choi1010@gmail.com</a>으로 보내 주세요.</p>
+          <div class="cluster">
+            <a class="btn btn-ink" href="/verify.html">원본 확인 페이지로</a>
+            <a class="link-arrow" href="/certificates.json">공개 레지스트리 보기</a>
+          </div>
+        </div>
+      </template>
+
+      <template id="tpl-error">
+        <div class="stack">
+          <p class="eyebrow">ORIGINAL CERTIFICATE · 원본 인증서</p>
+          <h1 class="h2">레지스트리를 불러오지 못했습니다</h1>
+          <p class="body">인증서 정보는 공개 레지스트리에서 불러옵니다. 네트워크 연결을 확인한 뒤 다시 시도해 주세요.</p>
+          <div class="cluster">
+            <button type="button" class="btn btn-ink" data-retry>다시 시도</button>
+            <a class="link-arrow" href="/verify.html">원본 확인 페이지로</a>
+          </div>
+        </div>
+      </template>
+
+      <template id="tpl-found">
+        <div class="stack gap-lg">
+          <article class="cert" aria-labelledby="cert-title">
+            <div class="cert-head">
+              <div class="stack gap-sm">
+                <p class="eyebrow">ORIGINAL CERTIFICATE · 원본 인증서</p>
+                <h1 class="cert-title" id="cert-title">원본 인증서</h1>
+                <p class="small muted">최박사사진관 · Dr. Choi Photo Studio</p>
+              </div>
+              <div class="cert-side">
+                <p class="cert-id" data-f="id"></p>
+                <span class="seal">원본</span>
+              </div>
+            </div>
+
+            <div class="cert-body">
+              <div class="notice warn" data-f="demo-note"><strong>체험용 샘플 인증서입니다.</strong> 원본 확인 과정을 직접 해 볼 수 있도록 공개한 스튜디오 정물 사진입니다. 실제 촬영 인증서에는 사진이 표시되지 않습니다. 사진은 고객에게만 전달됩니다.</div>
+
+              <dl class="kv">
+                <dt>인증서 번호</dt>
+                <dd class="mono" data-f="id"></dd>
+                <dt>발급 일시</dt>
+                <dd><span data-f="issued"></span><span class="sub xs muted mono" data-f="iso"></span></dd>
+                <dt>구분</dt>
+                <dd><span data-f="category"></span><span class="sub small muted" data-f="title"></span></dd>
+                <dt>스튜디오</dt>
+                <dd data-f="studio"></dd>
+                <dt>파일</dt>
+                <dd class="mono" data-f="file"></dd>
+                <dt>지문 알고리즘</dt>
+                <dd class="mono" data-f="algo"></dd>
+                <dt>원본 지문</dt>
+                <dd>
+                  <div class="hash-row">
+                    <code class="hash" data-f="sha"></code>
+                    <button type="button" class="btn btn-sm no-print" data-f="copy-sha">지문 복사</button>
+                  </div>
+                </dd>
+                <dt>블록체인 기록</dt>
+                <dd data-f="chain"></dd>
+              </dl>
+
+              <figure class="frame cert-preview" data-f="preview">
+                <figcaption class="caption">
+                  <span>체험용 샘플 원본</span>
+                  <span data-f="fig-name"></span>
+                  <span data-f="fig-dim"></span>
+                  <a class="no-print" data-f="fig-link" href="/samples/sample-original.jpg" download>원본 파일 내려받기</a>
+                </figcaption>
+              </figure>
+            </div>
+
+            <div class="cert-foot">
+              <p><strong>이 인증서가 확인해 주는 것.</strong> 위 지문(SHA-256)을 가진 파일이, 표시된 발급 일시에 최박사사진관이 발급한 원본 파일과 같다는 사실입니다.</p>
+              <p>보정, 자르기, 필터, 메신저 전송 시 재압축, 스크린샷, 형식 변환처럼 파일이 조금이라도 바뀌면 지문이 달라집니다. 손대지 않은 원본 파일만 일치로 확인됩니다.</p>
+              <p>사진에 담긴 내용이 사실인지, 사진 속 인물이 누구인지는 증명하지 않습니다. 법적 증거 효력을 보장하지 않습니다.</p>
+              <p>NFT 원본 등록(선택)은 지문·인증서 번호·발급 일시만 공개 블록체인에 남기는 증명 기록입니다. 사진·얼굴·개인정보는 기록하지 않으며, 블록체인 기록은 지울 수 없기 때문에 지문만 남깁니다. 가상자산이나 투자·거래·결제 수단이 아니며, 금전적 가치를 약속하지 않고, 스튜디오는 재판매 시장을 운영하지 않습니다.</p>
+              <p>이 인증서는 최박사사진관이 자체 발급하는 기록이며, 국가나 공인 기관의 인증이 아닙니다.</p>
+              <p>발급 최박사사진관 · 대구 수성구 범어동 · 공개 레지스트리 <a class="mono" href="/certificates.json">www.datapd.ai/certificates.json</a><span data-f="updated"></span></p>
+            </div>
+          </article>
+
+          <div class="stack no-print">
+            <div class="cluster">
+              <a class="btn btn-accent" data-f="verify-link" href="/verify.html">이 인증서로 원본 확인</a>
+              <button type="button" class="btn" data-print>인쇄 · PDF 저장</button>
+              <button type="button" class="btn" data-f="copy-link">링크 복사</button>
+            </div>
+            <p class="body small muted">원본 확인 페이지에 원본 파일을 올리면 브라우저 안에서 지문을 계산해 이 인증서와 비교합니다. 파일은 서버로 전송되지 않습니다. <a class="link-arrow" href="/authenticity.html">원본 인증 알아보기</a></p>
+          </div>
+        </div>
+      </template>
+    </div>
+  </section>
+</main>
+
+<footer class="site-foot">
+  <div class="wrap foot-in">
+    <div>
+      <a class="logo" href="/" aria-label="최박사사진관 홈">
+        <svg class="mark" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9V3h6M15 3h6v6M21 15v6h-6M9 21H3v-6" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="3" fill="var(--accent)"/></svg>
+        <span class="wm">최박사사진관<small>DR. CHOI PHOTO STUDIO</small></span>
+      </a>
+      <p>찍는 순간, 원본이 증명되는 셀프 사진관.</p>
+      <p style="margin-top:14px"><span class="status">오픈 준비 중</span></p>
+    </div>
+    <div>
+      <h4>스튜디오</h4>
+      <ul>
+        <li>대구 수성구 범어동</li>
+        <li>10평 셀프 스튜디오 · 상세 주소는 오픈 때 안내</li>
+        <li><a href="mailto:jinho.choi1010@gmail.com">jinho.choi1010@gmail.com</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>안내</h4>
+      <ul>
+        <li><a href="/guide.html">이용 안내</a></li>
+        <li><a href="/authenticity.html">원본 인증</a></li>
+        <li><a href="/verify.html">원본 확인</a></li>
+        <li><a href="/privacy.html">개인정보처리방침</a></li>
+        <li><a href="/terms.html">이용약관</a></li>
+      </ul>
+    </div>
+    <p class="fine"><span>© 2026 최박사사진관 · DataPD</span><span>사업자 정보는 정식 오픈 때 게재합니다.</span><span>요금·운영 시간은 오픈 전 예정 정보입니다.</span></p>
+  </div>
+</footer>
+
+<script>
+(function () {
+  'use strict';
+
+  var REGISTRY = '/certificates.json';
+  var ID_RE = /^DRC-\d{4}-\d{6}$/i;
+  var FILE_RE = /^[A-Za-z0-9._-]+$/;
+  var PAGE_TITLE = document.title;
+  var ALT = {
+    'sample-original.jpg': '체험용 샘플 원본 사진. 세이지색 배경지 앞 세 발 나무 스툴 위에 흰 꽃병을 올리고 마른 나뭇가지를 꽂은 스튜디오 정물입니다.'
+  };
+  var TYPE_LABEL = {
+    'image/jpeg': 'JPEG', 'image/png': 'PNG', 'image/heic': 'HEIC',
+    'image/heif': 'HEIF', 'image/tiff': 'TIFF', 'image/webp': 'WEBP'
+  };
+
+  var view = document.getElementById('view');
+  var live = document.getElementById('live');
+  var root = document.documentElement;
+
+  /* ---------- helpers (all registry strings go through textContent) ---------- */
+  function str(v) { return typeof v === 'string' ? v.trim() : ''; }
+  function posInt(n) { return typeof n === 'number' && isFinite(n) && n > 0 && Math.floor(n) === n; }
+  function all(scope, name) { return scope.querySelectorAll('[data-f="' + name + '"]'); }
+  function one(scope, name) { return scope.querySelector('[data-f="' + name + '"]'); }
+  function setText(scope, name, text) {
+    Array.prototype.forEach.call(all(scope, name), function (el) { el.textContent = text; });
+  }
+  function drop(el) { if (el && el.parentNode) el.parentNode.removeChild(el); }
+
+  function show(tplId, fill, message) {
+    var frag = document.getElementById(tplId).content.cloneNode(true);
+    if (fill) fill(frag);
+    while (view.firstChild) view.removeChild(view.firstChild);
+    view.appendChild(frag);
+    view.setAttribute('aria-busy', tplId === 'tpl-loading' ? 'true' : 'false');
+    live.textContent = message || '';
+  }
+
+  function fmtDate(iso) {
+    var s = str(iso);
+    var d = new Date(s);
+    if (!s || isNaN(d.getTime())) return s || '—';
+    try {
+      return new Intl.DateTimeFormat('ko-KR', {
+        timeZone: 'Asia/Seoul', dateStyle: 'long', timeStyle: 'short', hourCycle: 'h23'
+      }).format(d) + ' KST';
+    } catch (e) {
+      try {
+        var day = new Intl.DateTimeFormat('ko-KR', { timeZone: 'Asia/Seoul', year: 'numeric', month: 'long', day: 'numeric' }).format(d);
+        var hh = '', mm = '';
+        new Intl.DateTimeFormat('en-US', { timeZone: 'Asia/Seoul', hour: 'numeric', minute: 'numeric', hour12: false })
+          .formatToParts(d).forEach(function (p) {
+            if (p.type === 'hour') hh = p.value;
+            else if (p.type === 'minute') mm = p.value;
+          });
+        if (!hh || !mm) return s;
+        if (hh === '24') hh = '0';
+        return day + ' ' + ('0' + hh).slice(-2) + ':' + ('0' + mm).slice(-2) + ' KST';
+      } catch (e2) { return s; }
+    }
+  }
+
+  function fmtBytes(n) {
+    var s = n.toLocaleString('ko-KR') + '바이트';
+    if (n >= 1048576) s += ' (약 ' + (n / 1048576).toFixed(1) + ' MB)';
+    else if (n >= 1024) s += ' (약 ' + Math.round(n / 1024) + ' KB)';
+    return s;
+  }
+
+  function fmtFile(f) {
+    if (!f || typeof f !== 'object') return '—';
+    var parts = [];
+    if (str(f.name)) parts.push(str(f.name));
+    var type = str(f.type).toLowerCase();
+    if (type) parts.push(TYPE_LABEL[type] || type);
+    if (posInt(f.width) && posInt(f.height)) parts.push(f.width + '×' + f.height);
+    if (posInt(f.bytes)) parts.push(fmtBytes(f.bytes));
+    return parts.length ? parts.join(' · ') : '—';
+  }
+
+  function renderChain(dd, chain) {
+    var status = chain && chain.status;
+    if (status === 'anchored') {
+      var line = document.createElement('span');
+      line.textContent = '공개 블록체인에 지문 기록 (NFT 원본 등록)';
+      dd.appendChild(line);
+      if (str(chain.network)) {
+        var net = document.createElement('span');
+        net.className = 'sub small muted';
+        net.textContent = '네트워크 · ' + str(chain.network);
+        dd.appendChild(net);
+      }
+      if (str(chain.tx)) {
+        var label = document.createElement('span');
+        label.className = 'sub xs muted';
+        label.textContent = '트랜잭션';
+        var tx = document.createElement('code');
+        tx.className = 'hash sub';
+        tx.textContent = str(chain.tx);
+        dd.appendChild(label);
+        dd.appendChild(tx);
+      }
+    } else if (status === 'pilot') {
+      dd.textContent = '시범 운영 — 블록체인 등록 전, 공개 레지스트리에만 기록';
+    } else {
+      dd.textContent = '레지스트리에만 기록';
+    }
+  }
+
+  /* ---------- found ---------- */
+  function renderCert(cert, reg, id) {
+    show('tpl-found', function (f) {
+      var file = (cert.file && typeof cert.file === 'object') ? cert.file : {};
+      var sha = str(cert.sha256);
+
+      setText(f, 'id', id);
+      setText(f, 'issued', fmtDate(cert.issuedAt));
+      setText(f, 'iso', str(cert.issuedAt));
+      setText(f, 'category', str(cert.category) || '—');
+      setText(f, 'title', str(cert.title));
+      setText(f, 'studio', str(cert.studio) || str(reg.issuer && reg.issuer.name) || '—');
+      setText(f, 'file', fmtFile(file));
+      setText(f, 'algo', str(reg.algorithm) || 'SHA-256');
+      setText(f, 'sha', sha || '—');
+      setText(f, 'updated', str(reg.updatedAt) ? ' · 갱신 ' + str(reg.updatedAt) : '');
+
+      var copySha = one(f, 'copy-sha');
+      if (sha) copySha.setAttribute('data-copy', sha); else drop(copySha);
+
+      renderChain(one(f, 'chain'), cert.chain);
+
+      one(f, 'verify-link').setAttribute('href', '/verify.html?id=' + encodeURIComponent(id));
+      one(f, 'copy-link').setAttribute('data-copy', location.href);
+
+      // Images are private by design: only a demo certificate shows its photo.
+      var isDemo = cert.demo === true;
+      var canShow = isDemo && FILE_RE.test(str(file.name)) && posInt(file.width) && posInt(file.height);
+      if (!isDemo) drop(one(f, 'demo-note'));
+      var fig = one(f, 'preview');
+      if (!canShow) {
+        drop(fig);
+      } else {
+        var name = str(file.name);
+        var src = '/samples/' + encodeURIComponent(name);
+        var img = document.createElement('img');
+        img.src = src;
+        img.width = file.width;
+        img.height = file.height;
+        img.decoding = 'async';
+        img.alt = ALT[name] || ('체험용 샘플 원본 사진 — ' + (str(cert.title) || name));
+        fig.insertBefore(img, fig.firstChild);
+        setText(f, 'fig-name', name);
+        setText(f, 'fig-dim', file.width + '×' + file.height);
+        one(f, 'fig-link').setAttribute('href', src);
+      }
+    }, '원본 인증서를 불러왔습니다. 인증서 번호 ' + id);
+    document.title = '원본 인증서 ' + id + ' | 최박사사진관';
+  }
+
+  /* ---------- flow ---------- */
+  var raw = str(new URLSearchParams(location.search).get('id'));
+
+  function start() {
+    document.title = PAGE_TITLE;
+    if (!raw) {
+      show('tpl-noid', null, '인증서 번호가 없습니다.');
+      return;
+    }
+    if (!ID_RE.test(raw)) {
+      show('tpl-invalid', function (f) {
+        setText(f, 'raw', raw.length > 60 ? raw.slice(0, 60) + '…' : raw);
+      }, '인증서 번호 형식이 올바르지 않습니다.');
+      return;
+    }
+    var id = raw.toUpperCase();
+    show('tpl-loading', null, '인증서를 불러오는 중입니다.');
+
+    fetch(REGISTRY, { cache: 'no-store' })
+      .then(function (res) {
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        return res.json();
+      })
+      .then(function (reg) {
+        if (!reg || !Array.isArray(reg.certificates)) {
+          show('tpl-error', null, '레지스트리를 불러오지 못했습니다.');
+          return;
+        }
+        var cert = null;
+        for (var i = 0; i < reg.certificates.length; i++) {
+          var c = reg.certificates[i];
+          if (c && typeof c.id === 'string' && c.id.trim().toUpperCase() === id) { cert = c; break; }
+        }
+        if (!cert) {
+          show('tpl-notfound', function (f) { setText(f, 'id', id); }, '등록된 인증서를 찾지 못했습니다.');
+          return;
+        }
+        renderCert(cert, reg, id);
+      }, function () {
+        show('tpl-error', null, '레지스트리를 불러오지 못했습니다.');
+      });
+  }
+
+  view.addEventListener('click', function (e) {
+    if (e.target.closest('[data-retry]')) { start(); return; }
+    if (e.target.closest('[data-print]')) window.print();
+  });
+
+  // Print on light paper even when the viewer uses dark mode.
+  var prevTheme = null, forced = false;
+  window.addEventListener('beforeprint', function () {
+    prevTheme = root.getAttribute('data-theme');
+    root.setAttribute('data-theme', 'light');
+    forced = true;
+  });
+  window.addEventListener('afterprint', function () {
+    if (!forced) return;
+    if (prevTheme === null) root.removeAttribute('data-theme');
+    else root.setAttribute('data-theme', prevTheme);
+    forced = false;
+  });
+
+  start();
+})();
+</script>
+</body>
+</html>

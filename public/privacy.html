@@ -1,77 +1,342 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="icon" type="image/svg+xml" href="/favicon.svg?v=2" />
-  <link rel="canonical" href="https://www.datapd.ai/privacy.html" />
-  <meta name="description" content="STUDY RUSH 개인정보처리방침. 개인정보 수집, 쿠키, 광고, 로컬 데이터 저장에 대한 안내." />
-  <title>개인정보처리방침 - STUDY RUSH</title>
-  <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body {
-      font-family: 'Noto Sans KR', -apple-system, BlinkMacSystemFont, sans-serif;
-      background: #FAF5EB; color: #3F3A33; line-height: 1.8;
-      padding: 40px 20px; max-width: 720px; margin: 0 auto;
-    }
-    h1 { color: #141413; font-size: 28px; margin-bottom: 10px; }
-    h2 { color: #1F1B16; font-size: 22px; margin: 32px 0 14px; }
-    p { margin-bottom: 14px; font-size: 17px; }
-    a { color: #1d4ed8; }
-    .date { color: #6E6657; font-size: 15px; margin-bottom: 32px; }
-    .back { display: inline-block; margin-top: 32px; color: #1d4ed8; text-decoration: none; }
-  </style>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
-  <meta property="og:image" content="https://www.datapd.ai/icon-512.png?v=2" />
-  <meta name="twitter:card" content="summary" />
-<style id="navfix">nav{position:sticky;top:0;z-index:100;background:#FFFEFB;border-bottom:2px solid #141413;padding:10px 20px}nav .inner{max-width:1000px;margin:0 auto;display:flex;flex-wrap:wrap;gap:6px 15px;align-items:center}nav .inner a{font-size:13px;color:#7C766B}nav .inner a:hover{color:#141413}nav .inner .brand,nav .brand{font-weight:900;color:#141413;font-size:15px;margin-right:4px}nav a.up{font-size:13px;font-weight:800;color:#141413;border-right:1px solid #E3DCCB;padding-right:12px;margin-right:2px;text-decoration:none}nav a.up:hover{color:#C75D3A}html{overflow-x:hidden}</style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>개인정보처리방침 | 최박사사진관</title>
+<meta name="description" content="최박사사진관 개인정보처리방침(정식 오픈 전 게시본). 현재 처리하는 개인정보는 이메일 문의뿐이며, 원본 인증 기록에는 이름·연락처·사진을 넣지 않습니다." />
+<link rel="canonical" href="https://www.datapd.ai/privacy.html" />
+<meta name="theme-color" content="#F4F4F1" media="(prefers-color-scheme: light)" />
+<meta name="theme-color" content="#0E0E0D" media="(prefers-color-scheme: dark)" />
+<link rel="icon" href="/favicon.ico" sizes="any" />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="최박사사진관" />
+<meta property="og:title" content="개인정보처리방침 | 최박사사진관" />
+<meta property="og:description" content="최박사사진관 개인정보처리방침(정식 오픈 전 게시본). 현재 처리하는 개인정보는 이메일 문의뿐이며, 원본 인증 기록에는 이름·연락처·사진을 넣지 않습니다." />
+<meta property="og:url" content="https://www.datapd.ai/privacy.html" />
+<meta property="og:image" content="https://www.datapd.ai/og-card.png" />
+<meta property="og:locale" content="ko_KR" />
+<meta name="twitter:card" content="summary_large_image" />
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap" />
+<link rel="stylesheet" href="/static/site.css" />
+<script src="/static/site.js" defer></script>
+<style>
+  .doc-head .notice{ margin-top:28px; }
+  .toc{ margin-top:36px; }
+  .toc ol{ list-style:none; padding:0; margin-top:12px; columns:2; column-gap:32px; font-size:var(--t-sm); }
+  .toc li{ break-inside:avoid; padding-block:3px; }
+  .toc a{ text-decoration:none; color:var(--ink-2); }
+  .toc a:hover{ color:var(--accent); }
+  .art{ margin-top:56px; scroll-margin-top:120px; }
+  .art>h2{ font-size:var(--t-lg); margin-bottom:14px; }
+  .art p,.art li{ color:var(--ink-2); }
+  .art ol,.art ul{ margin-top:12px; }
+  .art li+li{ margin-top:8px; }
+  .art .kv{ margin-top:16px; }
+  .art .kv dd{ font-weight:500; color:var(--ink-2); }
+  .art .kv dd strong{ color:var(--ink); }
+  .art .tag{ margin-left:4px; vertical-align:1px; }
+  .art .sub{ margin-top:20px; }
+  .art>h3{ font-size:var(--t-md); margin-top:28px; margin-bottom:12px; }
+  .doc-end{ margin-top:56px; padding-top:20px; border-top:1px solid var(--hair); }
+  @media (max-width:560px){ .toc ol{ columns:1; } }
+</style>
 </head>
 <body>
-  <nav style="margin:-40px calc(50% - 50vw) 32px"><div class="inner">
-    <a class="up" href="/crabox.html">← 🦀 crabox.ai</a>
-    <a class="brand" href="/play.html">STUDY RUSH</a>
-    <a href="/learn.html">학습 로드맵</a>
-    <a href="/suneung-quiz.html">수능 게임</a>
-    <a href="/guides.html">학습 자료</a>
-    <a href="/about.html">소개</a>
-  </div></nav>
-  <h1>개인정보처리방침</h1>
-  <p class="date">시행일: 2025년 2월 10일 · 최종 수정일: 2026년 6월 23일</p>
+<a class="skip" href="#main">본문으로 건너뛰기</a>
+<header class="site-head">
+  <div class="wrap head-in">
+    <a class="logo" href="/" aria-label="최박사사진관 홈">
+      <svg class="mark" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9V3h6M15 3h6v6M21 15v6h-6M9 21H3v-6" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="3" fill="var(--accent)"/></svg>
+      <span class="wm">최박사사진관<small>DR. CHOI PHOTO STUDIO</small></span>
+    </a>
+    <nav class="nav" aria-label="주요 메뉴">
+      <a href="/guide.html">이용 안내</a>
+      <a href="/authenticity.html">원본 인증</a>
+      <a href="/verify.html">원본 확인</a>
+    </nav>
+    <a class="btn btn-ink btn-sm head-cta" href="mailto:jinho.choi1010@gmail.com?subject=%5B%EC%B5%9C%EB%B0%95%EC%82%AC%EC%82%AC%EC%A7%84%EA%B4%80%5D%20%EC%98%A4%ED%94%88%20%EC%95%8C%EB%A6%BC%20%EC%8B%A0%EC%B2%AD">오픈 알림 받기</a>
+  </div>
+</header>
+<main id="main">
+  <article class="section tight">
+    <div class="wrap narrow">
+      <div class="body">
+        <header class="doc-head stack">
+          <p class="eyebrow">Legal · Privacy</p>
+          <h1 class="h2">개인정보처리방침</h1>
+          <p class="lead">최박사사진관(이하 “스튜디오”)은 「개인정보 보호법」에 따라 이용자의 개인정보를 보호하고, 이와 관련한 고충을 원활하게 처리하기 위해 다음과 같이 개인정보처리방침을 공개합니다.</p>
+          <div class="notice warn" role="note">
+            <p><strong>정식 오픈 전 게시본입니다.</strong> 현재(오픈 전) 스튜디오가 실제로 처리하는 개인정보는 이메일 문의(오픈 알림 신청 포함)뿐입니다. 예약·촬영과 관련된 항목은 정식 오픈과 함께 적용됩니다.</p>
+            <p><strong>시행일</strong> 2026년 9월 25일(‘현재 적용’ 항목). ‘오픈 후 적용’ 항목은 정식 오픈일부터 시행하며, 오픈일은 오픈 때 공지합니다.</p>
+          </div>
+        </header>
 
-  <h2>1. 수집하는 개인정보</h2>
-  <p>STUDY RUSH(이하 "앱")는 별도의 회원가입 없이 이용 가능하며, 사용자로부터 직접적인 개인정보를 수집하지 않습니다.</p>
+        <nav class="toc panel" aria-labelledby="toc-title">
+          <h2 id="toc-title" class="eyebrow">목차</h2>
+          <ol>
+            <li><a href="#p1">제1조 개인정보의 처리 목적</a></li>
+            <li><a href="#p2">제2조 처리하는 개인정보 항목</a></li>
+            <li><a href="#p3">제3조 보유·이용 기간</a></li>
+            <li><a href="#p4">제4조 제3자 제공</a></li>
+            <li><a href="#p5">제5조 처리 위탁과 국외 이전</a></li>
+            <li><a href="#p6">제6조 원본 확인 도구</a></li>
+            <li><a href="#p7">제7조 쿠키와 분석 도구</a></li>
+            <li><a href="#p8">제8조 정보주체의 권리와 행사 방법</a></li>
+            <li><a href="#p9">제9조 파기 절차와 방법</a></li>
+            <li><a href="#p10">제10조 안전성 확보 조치</a></li>
+            <li><a href="#p11">제11조 개인정보 보호책임자</a></li>
+            <li><a href="#p12">제12조 권익침해 구제 방법</a></li>
+            <li><a href="#p13">제13조 처리방침의 변경</a></li>
+          </ol>
+        </nav>
 
-  <h2>2. 광고 및 쿠키</h2>
-  <p>본 사이트는 제3자 광고 사업자인 Google AdSense를 통해 광고를 게재합니다. Google을 포함한 제3자 광고 사업자는 쿠키를 사용하여 사용자가 본 사이트나 다른 웹사이트를 방문한 기록을 바탕으로 광고를 게재합니다.</p>
-  <p>Google이 광고 게재에 사용하는 DoubleClick DART 쿠키를 통해, 사용자는 본 사이트 및 인터넷상의 다른 사이트 방문 기록에 기반한 맞춤 광고를 보게 됩니다.</p>
-  <p>사용자는 <a href="https://policies.google.com/technologies/ads" target="_blank" rel="noopener">Google 광고 정책</a> 페이지에서 DART 쿠키 사용에 대한 정보를 확인하고, <a href="https://www.google.com/settings/ads" target="_blank" rel="noopener">Google 광고 설정</a> 또는 <a href="https://www.aboutads.info/choices/" target="_blank" rel="noopener">aboutads.info</a>에서 맞춤 광고(개인 맞춤 광고)를 비활성화할 수 있습니다.</p>
+        <section class="art" id="p1" aria-labelledby="p1-t">
+          <h2 id="p1-t">제1조 개인정보의 처리 목적</h2>
+          <p>스튜디오는 다음 목적을 위해서만 개인정보를 처리합니다. 처리한 개인정보는 이 목적 외의 용도로 쓰지 않으며, 목적이 바뀌면 「개인정보 보호법」에 따라 별도 동의를 받는 등 필요한 조치를 합니다.</p>
+          <ol>
+            <li><strong>문의 응답과 오픈 알림</strong>: 이메일로 받은 문의에 답하고, 오픈 알림을 신청한 분께 정식 오픈 소식을 보냅니다. <span class="tag">현재 적용</span></li>
+            <li><strong>예약 관리</strong>: 예약 확인, 일정 변경·취소 안내, 이용 요금 정산을 합니다. <span class="tag">오픈 후 적용</span></li>
+            <li><strong>촬영물 전달</strong>: 이용자가 셀프 촬영한 원본 파일을 전달하고, 규격 사진을 인화하며, 전달 후 재전달 요청에 대응합니다. <span class="tag">오픈 후 적용</span></li>
+            <li><strong>원본 인증</strong>: 원본 인증서를 발급해 인증 레지스트리에 기록하고, 이용자가 선택한 경우 NFT 원본 등록을 합니다. <span class="tag">오픈 후 적용</span></li>
+          </ol>
+        </section>
 
-  <h2>3. 로컬 데이터 저장</h2>
-  <p>게임 설정(사운드 ON/OFF, 난이도 등)은 사용자의 브라우저 로컬 스토리지에만 저장되며, 서버로 전송되지 않습니다.</p>
+        <section class="art" id="p2" aria-labelledby="p2-t">
+          <h2 id="p2-t">제2조 처리하는 개인정보 항목</h2>
+          <dl class="kv">
+            <dt>문의·오픈 알림</dt>
+            <dd>이메일 주소, 이메일 계정에 표시되는 이름(설정된 경우), 문의 내용 <span class="tag">현재 적용</span></dd>
+            <dt>예약</dt>
+            <dd>이름, 연락처, 예약 정보(예약 일시, 촬영 종류, 인원 등) <span class="tag">오픈 후 적용</span></dd>
+            <dt>촬영물</dt>
+            <dd>이용자가 촬영한 사진 파일(얼굴 등 초상이 담길 수 있습니다) <span class="tag">오픈 후 적용</span></dd>
+            <dt>원본 인증</dt>
+            <dd>파일 지문(SHA-256), 인증서 번호, 발급 일시, 파일 기술 정보(크기·해상도·형식) <span class="tag">오픈 후 적용</span></dd>
+          </dl>
+          <ol>
+            <li>원본 인증 기록에는 이름·연락처·사진을 넣지 않습니다. 지문은 파일 내용으로 계산한 단방향 값이어서, 지문만으로는 사진의 내용이나 촬영한 사람을 알 수 없습니다. 다만 같은 원본 파일을 가진 사람은 그 파일이 언제 발급됐는지 알 수 있습니다. 그래서 스튜디오는 인증 기록도 이 방침에 따라 처리하는 항목으로 다룹니다.</li>
+            <li>결제와 관련해 처리하는 항목은 결제 방식이 확정되는 정식 오픈 때 이 방침에 추가해 공개합니다.</li>
+            <li>만 14세 미만 아동의 개인정보를 처리해야 하는 경우에는 법정대리인의 동의를 받습니다.</li>
+          </ol>
+        </section>
 
-  <h2>4. 분석 도구</h2>
-  <p>서비스 개선을 위해 Google Analytics 등의 분석 도구를 사용할 수 있으며, 이를 통해 익명화된 방문 통계가 수집될 수 있습니다.</p>
+        <section class="art" id="p3" aria-labelledby="p3-t">
+          <h2 id="p3-t">제3조 보유·이용 기간</h2>
+          <p>스튜디오는 처리 목적을 달성하면 개인정보를 지체 없이 파기합니다. 항목별 보유 기간은 다음과 같습니다.</p>
+          <dl class="kv">
+            <dt>문의·오픈 알림</dt>
+            <dd>문의 메일은 답변을 마친 뒤, 오픈 알림 신청 메일은 정식 오픈 소식을 보낸 뒤 지체 없이 파기합니다. 오픈 알림 신청을 취소하면 그때 지체 없이 파기합니다.</dd>
+            <dt>예약 정보</dt>
+            <dd>보유 기간은 정식 오픈 때 확정해 이 방침에 게시합니다. 관계 법령에 따라 보존해야 하는 정보는 그 법령이 정한 기간 동안 보관합니다.</dd>
+            <dt>촬영 원본 파일</dt>
+            <dd>이용자에게 전달한 날부터 30일 동안 사본을 보관한 뒤 파기합니다(예정 · 정식 오픈 때 확정).</dd>
+            <dt>인증 기록</dt>
+            <dd>지문·인증서 번호·발급 일시·파일 기술 정보로, 이름·연락처·사진을 넣지 않은 기록입니다. 누구나 원본 여부를 확인할 수 있도록 공개 인증 레지스트리(<a class="mono" href="/certificates.json">/certificates.json</a>)에 두며, 스튜디오가 원본 확인 서비스를 운영하는 동안 보관합니다. 이용자가 요청하면 해당 항목을 레지스트리에서 지체 없이 삭제하며, 삭제한 뒤에는 그 파일의 원본 확인이 되지 않습니다. 웹사이트 파일은 공개 저장소로 관리되므로 삭제 전 내용이 저장소의 변경 이력에 남을 수 있고, 삭제 전에 다른 사람이 복사해 둔 사본은 스튜디오가 지울 수 없습니다.</dd>
+            <dt>NFT 원본 등록</dt>
+            <dd>이용자가 선택하고 별도로 동의한 경우에만 지문·인증서 번호·발급 일시를 공개 블록체인에 기록합니다. 보유 기간은 <strong>기한 없음(기술적으로 삭제할 수 없음)</strong>입니다. 공개 블록체인에 기록된 정보는 스튜디오도 지우거나 고칠 수 없고, 동의를 철회해도 이미 기록된 정보는 남습니다. 그래서 사진·얼굴·이름·연락처는 기록하지 않고 지문과 인증서 번호·발급 일시만 기록합니다. 삭제를 요청하시면 레지스트리 항목은 지울 수 있지만 블록체인 기록은 남습니다. NFT 원본 등록은 원본 확인을 위한 기록이며 가상자산이나 투자·거래·결제 수단이 아닙니다. 가격이나 수익을 약속하지 않으며, 스튜디오는 재판매 시장을 운영하지 않습니다(<a href="/terms.html">이용약관</a> 제8조).</dd>
+          </dl>
+        </section>
 
-  <h2>5. 아동 보호</h2>
-  <p>본 앱은 13세 미만 아동을 대상으로 하지 않으며, 아동의 개인정보를 의도적으로 수집하지 않습니다.</p>
+        <section class="art" id="p4" aria-labelledby="p4-t">
+          <h2 id="p4-t">제4조 제3자 제공</h2>
+          <p>스튜디오는 개인정보를 제3자에게 제공하지 않습니다. 다만 다른 법률에 특별한 규정이 있거나 수사기관이 법령에서 정한 절차에 따라 요청하는 경우 등 법령에 근거가 있는 경우에는 예외로 합니다.</p>
+          <p>제3조의 인증 기록과 NFT 원본 등록 기록은 누구나 볼 수 있도록 공개되지만, 이름·연락처·사진은 포함하지 않습니다.</p>
+        </section>
 
-  <h2>6. 제3자 서비스</h2>
-  <p>본 앱은 다음 제3자 서비스를 이용합니다:</p>
-  <p>• Google AdSense (광고)</p>
-  <p>• GitHub Pages (웹 호스팅)</p>
-  <p>• Google Fonts (웹 폰트)</p>
-  <p>• Web Speech API (음성 합성, 브라우저 내장)</p>
+        <section class="art" id="p5" aria-labelledby="p5-t">
+          <h2 id="p5-t">제5조 처리 위탁과 국외 이전</h2>
+          <p>스튜디오는 서비스 운영을 위해 다음 업무를 외부 사업자에게 맡기고 있습니다.</p>
+          <dl class="kv">
+            <dt>웹사이트 호스팅</dt>
+            <dd>GitHub Pages(GitHub, Inc.): 웹사이트 파일과 인증 레지스트리의 보관과 전송</dd>
+            <dt>이메일 수신·보관</dt>
+            <dd>Gmail(Google LLC): 문의·오픈 알림 신청 메일의 수신과 보관</dd>
+            <dt>예약·결제 대행</dt>
+            <dd>정식 오픈 때 확정해 이 방침에 공개합니다.</dd>
+          </dl>
+          <p class="sub">아래 정보는 국외에 있는 사업자의 서버나 여러 나라의 블록체인 노드에 저장·처리됩니다. 「개인정보 보호법」 제28조의8에 따라 이전 내용을 알립니다.</p>
 
-  <h2>7. 문의</h2>
-  <p>개인정보 관련 문의사항이 있으시면 아래로 연락해주세요.</p>
-  <p>이메일: <a href="mailto:jinho.choi1010@gmail.com">jinho.choi1010@gmail.com</a></p>
+          <h3>Gmail(Google LLC)</h3>
+          <dl class="kv">
+            <dt>이전 항목</dt>
+            <dd>이메일 주소, 이메일 계정에 표시되는 이름(설정된 경우), 문의 내용 <span class="tag">현재 적용</span></dd>
+            <dt>이전 국가</dt>
+            <dd>미국 등 Google이 서버를 운영하는 국가</dd>
+            <dt>시기·방법</dt>
+            <dd>이용자가 문의·오픈 알림 신청 메일을 보낼 때 네트워크로 전송되어 Gmail 서버에 저장됩니다.</dd>
+            <dt>이전받는 자</dt>
+            <dd>Google LLC · 1600 Amphitheatre Parkway, Mountain View, CA 94043, USA · 개인정보 문의는 Google 개인정보처리방침에 안내된 창구</dd>
+            <dt>목적·보유 기간</dt>
+            <dd>메일의 수신과 보관 · 제3조의 문의·오픈 알림 보유 기간과 같습니다.</dd>
+            <dt>거부 방법·효과</dt>
+            <dd>현재 문의 수단은 이메일뿐입니다. 국외 이전을 원하지 않으면 메일을 보내지 않으시면 되며, 이 경우 문의 답변과 오픈 알림을 받을 수 없습니다. 이메일 외 문의 수단은 정식 오픈 때 안내합니다.</dd>
+          </dl>
 
-  <h2>8. 변경사항</h2>
-  <p>본 개인정보처리방침은 법률 또는 서비스 변경에 따라 수정될 수 있으며, 변경 시 본 페이지를 통해 공지합니다.</p>
+          <h3>GitHub Pages(GitHub, Inc.)</h3>
+          <dl class="kv">
+            <dt>이전 항목</dt>
+            <dd>웹사이트 접속 기록(IP 주소, 브라우저 정보 등) <span class="tag">현재 적용</span> · 인증 레지스트리의 인증 기록(지문·인증서 번호·발급 일시·파일 기술 정보) <span class="tag">오픈 후 적용</span></dd>
+            <dt>이전 국가</dt>
+            <dd>미국 등 GitHub가 서버를 운영하는 국가</dd>
+            <dt>시기·방법</dt>
+            <dd>접속 기록은 웹사이트에 접속할 때, 인증 기록은 스튜디오가 인증서를 발급해 레지스트리에 올릴 때 네트워크로 전송됩니다.</dd>
+            <dt>이전받는 자</dt>
+            <dd>GitHub, Inc. · 88 Colin P. Kelly Jr. Street, San Francisco, CA 94107, USA · 개인정보 문의는 GitHub 개인정보처리방침에 안내된 창구</dd>
+            <dt>목적·보유 기간</dt>
+            <dd>웹사이트 호스팅과 보안 유지 · 접속 기록은 GitHub의 개인정보 처리 기준에 따르고, 인증 기록은 제3조의 기간과 같습니다.</dd>
+            <dt>거부 방법·효과</dt>
+            <dd>접속 기록은 웹사이트 이용에 필요한 전송이어서, 웹사이트를 이용하지 않는 방법 외에는 거부할 수 없습니다. 인증 기록은 레지스트리에서 삭제를 요청할 수 있으며, 이 경우 그 파일의 원본 확인이 되지 않습니다(제3조).</dd>
+          </dl>
 
-  <a class="back" href="/play.html">← STUDY RUSH로 돌아가기</a>
-<script src="/auth-config.js?v=1"></script><script src="/auth.js?v=2"></script><script src="/auth-nav.js?v=1"></script>
+          <h3>NFT 원본 등록(선택)</h3>
+          <dl class="kv">
+            <dt>이전 항목</dt>
+            <dd>지문, 인증서 번호, 발급 일시 <span class="tag">오픈 후 적용</span></dd>
+            <dt>이전 국가</dt>
+            <dd>블록체인 노드가 있는 여러 나라(특정할 수 없습니다)</dd>
+            <dt>시기·방법</dt>
+            <dd>이용자가 별도로 동의한 뒤 스튜디오가 등록할 때 공개 블록체인 네트워크로 전송되며, 여러 나라에 있는 노드에 복제·보관됩니다.</dd>
+            <dt>이전받는 자</dt>
+            <dd>특정한 수령자가 없는 공개 블록체인 네트워크 · 사용할 네트워크는 정식 오픈 때 안내합니다.</dd>
+            <dt>목적·보유 기간</dt>
+            <dd>원본 여부 확인 · 기한 없음(기술적으로 삭제할 수 없음)</dd>
+            <dt>거부 방법·효과</dt>
+            <dd>NFT 원본 등록은 선택입니다. 동의하지 않으면 등록하지 않으며, 원본 인증서 발급과 인증 레지스트리를 통한 원본 확인은 그대로 이용할 수 있습니다. 동의를 받을 때 이 내용을 함께 안내합니다.</dd>
+          </dl>
+          <ol>
+            <li>GitHub의 접속 기록은 GitHub가 웹사이트의 보안 유지 등을 위해 남기는 기록으로, GitHub의 개인정보 처리 기준에 따릅니다.</li>
+            <li>수탁자나 위탁 업무, 국외 이전 내용이 바뀌면 이 방침을 통해 알립니다.</li>
+          </ol>
+        </section>
+
+        <section class="art" id="p6" aria-labelledby="p6-t">
+          <h2 id="p6-t">제6조 원본 확인 도구</h2>
+          <p><a href="/verify.html">원본 확인 도구</a>에서 파일을 선택하면, 파일의 지문은 이용자의 브라우저 안에서 계산되고 공개 인증 레지스트리와 비교됩니다. 확인하려는 파일은 스튜디오 서버나 다른 곳으로 전송되지 않으며 저장되지도 않습니다.</p>
+        </section>
+
+        <section class="art" id="p7" aria-labelledby="p7-t">
+          <h2 id="p7-t">제7조 쿠키와 분석 도구</h2>
+          <ol>
+            <li>웹사이트는 현재 방문 분석 도구와 광고 쿠키를 사용하지 않습니다.</li>
+            <li>글꼴을 표시하기 위해 브라우저가 글꼴 제공 서버(jsDelivr, Google Fonts)에 접속할 수 있습니다. 이때 IP 주소와 브라우저 정보 등 일반적인 접속 정보가 해당 서버에 전달될 수 있습니다.</li>
+            <li>앞으로 분석 도구나 쿠키를 쓰게 되면 사용하기 전에 이 방침에 반영해 알립니다.</li>
+          </ol>
+        </section>
+
+        <section class="art" id="p8" aria-labelledby="p8-t">
+          <h2 id="p8-t">제8조 정보주체의 권리와 행사 방법</h2>
+          <ol>
+            <li>이용자는 언제든지 스튜디오에 자신의 개인정보 열람, 정정, 삭제, 처리정지를 요구할 수 있습니다.</li>
+            <li>요구는 이메일(<a href="mailto:jinho.choi1010@gmail.com">jinho.choi1010@gmail.com</a>)로 하실 수 있으며, 스튜디오는 법령이 정한 기간 안에 지체 없이 조치하고 결과를 알려드립니다.</li>
+            <li>법정대리인이나 위임을 받은 사람을 통해서도 요구할 수 있습니다. 이 경우 위임 사실을 확인할 수 있는 서류를 요청할 수 있습니다.</li>
+            <li>스튜디오는 요구한 사람이 본인이거나 정당한 대리인인지 확인합니다.</li>
+            <li>다른 법령에서 보존하도록 정한 개인정보는 삭제를 요구할 수 없으며, 법령에 따라 열람이나 처리정지 요구가 제한될 수 있습니다.</li>
+            <li>오픈 알림 신청은 언제든지 이메일로 취소할 수 있습니다.</li>
+            <li>인증 레지스트리의 인증 기록은 요청하면 삭제합니다. 삭제한 뒤에는 그 파일의 원본 확인이 되지 않습니다(제3조).</li>
+            <li>공개 블록체인에 기록된 NFT 원본 등록 정보는 기술적으로 삭제할 수 없습니다(제3조). 이 기록에는 사진·얼굴·이름·연락처가 들어 있지 않습니다.</li>
+          </ol>
+        </section>
+
+        <section class="art" id="p9" aria-labelledby="p9-t">
+          <h2 id="p9-t">제9조 파기 절차와 방법</h2>
+          <ol>
+            <li><strong>파기 절차</strong>: 보유 기간이 끝나거나 처리 목적을 달성한 개인정보는 지체 없이 파기합니다. 다른 법령에 따라 보존해야 하는 경우에는 다른 개인정보와 분리해 보관합니다.</li>
+            <li><strong>파기 방법</strong>: 전자 파일은 복구·재생되지 않도록 기술적 방법으로 삭제하고, 종이에 출력한 개인정보는 분쇄하거나 소각합니다.</li>
+          </ol>
+        </section>
+
+        <section class="art" id="p10" aria-labelledby="p10-t">
+          <h2 id="p10-t">제10조 안전성 확보 조치</h2>
+          <ol>
+            <li><strong>관리적 조치</strong>: 개인정보를 다루는 사람을 운영자 등 최소 인원으로 제한하고, 처리 목적에 필요한 정보만 받습니다.</li>
+            <li><strong>기술적 조치</strong>: 이메일 계정과 촬영 파일 저장소의 접근 권한을 제한하고 인증 수단을 관리합니다. 웹사이트는 HTTPS로 전송 구간을 암호화합니다.</li>
+            <li><strong>물리적 조치</strong>: 정식 오픈 후 촬영 파일을 다루는 스튜디오 PC 등 기기와 저장 매체에 대한 접근을 통제합니다.</li>
+            <li><strong>기록 최소화</strong>: 원본 인증 기록과 NFT 원본 등록 기록에는 이름·연락처·사진을 넣지 않습니다.</li>
+          </ol>
+        </section>
+
+        <section class="art" id="p11" aria-labelledby="p11-t">
+          <h2 id="p11-t">제11조 개인정보 보호책임자</h2>
+          <dl class="kv">
+            <dt>개인정보처리자</dt>
+            <dd>최박사사진관을 운영하는 사업주(대표자) · 상호와 사업자등록번호 등 사업자 정보는 정식 오픈 때 게재합니다.</dd>
+            <dt>보호책임자</dt>
+            <dd>최박사사진관 대표(사업주) · 개인정보 보호 업무와 고충 처리를 직접 맡습니다.</dd>
+            <dt>연락처</dt>
+            <dd><a href="mailto:jinho.choi1010@gmail.com">jinho.choi1010@gmail.com</a></dd>
+          </dl>
+          <p>개인정보 보호와 관련한 문의, 불만 처리, 피해 구제, 열람 청구는 위 연락처로 하실 수 있습니다. 스튜디오는 지체 없이 답변하고 처리합니다.</p>
+        </section>
+
+        <section class="art" id="p12" aria-labelledby="p12-t">
+          <h2 id="p12-t">제12조 권익침해 구제 방법</h2>
+          <p>개인정보 침해에 대한 신고나 상담이 필요하거나 스튜디오의 조치에 이의가 있으면 아래 기관에 문의하실 수 있습니다.</p>
+          <dl class="kv">
+            <dt>개인정보침해신고센터</dt>
+            <dd><span class="mono">privacy.kisa.or.kr</span> · 국번 없이 118</dd>
+            <dt>개인정보분쟁조정위원회</dt>
+            <dd><span class="mono">www.kopico.go.kr</span> · 1833-6972</dd>
+            <dt>대검찰청</dt>
+            <dd><span class="mono">www.spo.go.kr</span> · 국번 없이 1301</dd>
+            <dt>경찰청</dt>
+            <dd><span class="mono">ecrm.police.go.kr</span> · 국번 없이 182</dd>
+          </dl>
+        </section>
+
+        <section class="art" id="p13" aria-labelledby="p13-t">
+          <h2 id="p13-t">제13조 처리방침의 변경</h2>
+          <ol>
+            <li>이 방침은 2026년 9월 25일부터 시행합니다. 다만 ‘오픈 후 적용’으로 표시한 항목은 정식 오픈일부터 시행하며, 오픈일은 오픈 때 공지합니다.</li>
+            <li>이 방침을 변경하면 시행 7일 전부터 웹사이트에 변경 내용과 시행일을 공지합니다. 수집 항목이나 이용 목적의 변경처럼 이용자 권리에 중요한 변경은 시행 30일 전부터 공지합니다.</li>
+            <li>정식 오픈 때 예약·결제 관련 항목, 수탁자, 확정된 보유 기간을 반영해 다시 게시합니다.</li>
+          </ol>
+        </section>
+
+        <div class="doc-end stack">
+          <p class="small muted">오픈 전 게시본 · 2026년 9월 25일 시행</p>
+          <p class="cluster"><a class="link-arrow" href="/terms.html">이용약관</a><a class="link-arrow" href="/authenticity.html">원본 인증 안내</a></p>
+        </div>
+      </div>
+    </div>
+  </article>
+</main>
+<footer class="site-foot">
+  <div class="wrap foot-in">
+    <div>
+      <a class="logo" href="/" aria-label="최박사사진관 홈">
+        <svg class="mark" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9V3h6M15 3h6v6M21 15v6h-6M9 21H3v-6" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="3" fill="var(--accent)"/></svg>
+        <span class="wm">최박사사진관<small>DR. CHOI PHOTO STUDIO</small></span>
+      </a>
+      <p>찍는 순간, 원본이 증명되는 셀프 사진관.</p>
+      <p style="margin-top:14px"><span class="status">오픈 준비 중</span></p>
+    </div>
+    <div>
+      <h4>스튜디오</h4>
+      <ul>
+        <li>대구 수성구 범어동</li>
+        <li>10평 셀프 스튜디오 · 상세 주소는 오픈 때 안내</li>
+        <li><a href="mailto:jinho.choi1010@gmail.com">jinho.choi1010@gmail.com</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>안내</h4>
+      <ul>
+        <li><a href="/guide.html">이용 안내</a></li>
+        <li><a href="/authenticity.html">원본 인증</a></li>
+        <li><a href="/verify.html">원본 확인</a></li>
+        <li><a href="/privacy.html">개인정보처리방침</a></li>
+        <li><a href="/terms.html">이용약관</a></li>
+      </ul>
+    </div>
+    <p class="fine"><span>© 2026 최박사사진관 · DataPD</span><span>사업자 정보는 정식 오픈 때 게재합니다.</span><span>요금·운영 시간은 오픈 전 예정 정보입니다.</span></p>
+  </div>
+</footer>
 </body>
 </html>

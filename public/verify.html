@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>원본 확인 — 사진이 인증된 원본인지 확인하기 | 최박사사진관</title>
+<meta name="description" content="최박사사진관에서 받은 사진이 스튜디오가 발급한 원본 파일과 같은지 확인하세요. SHA-256 지문은 이 브라우저 안에서만 계산되고, 파일은 업로드되지 않습니다." />
+<link rel="canonical" href="https://www.datapd.ai/verify.html" />
+<meta name="theme-color" content="#F4F4F1" media="(prefers-color-scheme: light)" />
+<meta name="theme-color" content="#0E0E0D" media="(prefers-color-scheme: dark)" />
+<link rel="icon" href="/favicon.ico" sizes="any" />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="최박사사진관" />
+<meta property="og:title" content="원본 확인 — 사진이 인증된 원본인지 확인하기" />
+<meta property="og:description" content="최박사사진관에서 받은 사진이 스튜디오가 발급한 원본 파일과 같은지 확인하세요. SHA-256 지문은 이 브라우저 안에서만 계산되고, 파일은 업로드되지 않습니다." />
+<meta property="og:url" content="https://www.datapd.ai/verify.html" />
+<meta property="og:image" content="https://www.datapd.ai/og-card.png" />
+<meta property="og:locale" content="ko_KR" />
+<meta name="twitter:card" content="summary_large_image" />
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap" />
+<link rel="stylesheet" href="/static/site.css" />
+<script src="/static/site.js" defer></script>
+<style>
+  .verify{ --s:36px; }
+  .verify-intro{ --s:14px; }
+  .sub{ --s:10px; }
+  .drop-in{ display:grid; gap:8px; justify-items:center; max-width:46ch; }
+  .drop-title{ font-size:var(--t-lg); font-weight:800; letter-spacing:-.02em; line-height:1.3; }
+  .drop:has(input:focus-visible){ outline:2px solid var(--accent); outline-offset:3px; border-color:var(--accent); }
+  @supports not selector(:has(a)){ .drop:focus-within{ outline:2px solid var(--accent); outline-offset:3px; } }
+  .drop.is-off{ cursor:not-allowed; opacity:.6; }
+  .drop.is-off input[type=file]{ pointer-events:none; }
+  .lookup-row{ display:flex; gap:8px; }
+  .lookup-row .input{ flex:1 1 auto; min-width:0; }
+  .field-error{ color:var(--bad); font-weight:600; }
+  .target{ display:flex; flex-wrap:wrap; align-items:center; gap:8px 12px; padding-top:12px; border-top:1px solid var(--hair); }
+  .target[hidden]{ display:none; }
+  #result{ scroll-margin-top:96px; }
+  .result-head{ display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:10px 16px; }
+  .result ul{ font-size:var(--t-sm); color:var(--ink-2); }
+  .result li+li{ margin-top:4px; }
+  .result .mono,.result .cert-id{ overflow-wrap:anywhere; }
+  .grid.samples{ --g:16px; }
+  .sample-fig{ margin:0; }
+  .sample .frame{ --fp:8px; }
+  .sample .btn{ width:100%; text-align:center; }
+</style>
+</head>
+<body>
+<a class="skip" href="#main">본문으로 건너뛰기</a>
+<header class="site-head">
+  <div class="wrap head-in">
+    <a class="logo" href="/" aria-label="최박사사진관 홈">
+      <svg class="mark" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9V3h6M15 3h6v6M21 15v6h-6M9 21H3v-6" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="3" fill="var(--accent)"/></svg>
+      <span class="wm">최박사사진관<small>DR. CHOI PHOTO STUDIO</small></span>
+    </a>
+    <nav class="nav" aria-label="주요 메뉴">
+      <a href="/guide.html">이용 안내</a>
+      <a href="/authenticity.html">원본 인증</a>
+      <a href="/verify.html" aria-current="page">원본 확인</a>
+    </nav>
+    <a class="btn btn-ink btn-sm head-cta" href="mailto:jinho.choi1010@gmail.com?subject=%5B%EC%B5%9C%EB%B0%95%EC%82%AC%EC%82%AC%EC%A7%84%EA%B4%80%5D%20%EC%98%A4%ED%94%88%20%EC%95%8C%EB%A6%BC%20%EC%8B%A0%EC%B2%AD">오픈 알림 받기</a>
+  </div>
+</header>
+<main id="main">
+  <section class="section">
+    <div class="wrap narrow stack verify">
+
+      <div class="stack verify-intro">
+        <p class="eyebrow">원본 확인 · SHA-256</p>
+        <h1 class="h2">이 사진, 원본인가요?</h1>
+        <p class="lead">최박사사진관에서 받은 사진 파일을 아래 칸에서 선택해 보세요. 파일의 지문(SHA-256)은 지금 쓰고 있는 이 브라우저 안에서만 계산되고, 파일은 어디에도 업로드되지 않습니다.</p>
+      </div>
+
+      <noscript><p class="notice warn">이 확인 도구는 브라우저에서 자바스크립트를 켜야 작동합니다.</p></noscript>
+      <p class="notice warn" id="env-note" hidden><strong>이 환경에서는 지문을 계산할 수 없습니다.</strong> 원본 확인은 보안 연결(https)과 최신 브라우저에서만 작동합니다. 주소가 https://로 시작하는지 확인한 뒤 다시 열어 주세요. 인증서 번호 조회는 그대로 쓸 수 있습니다.</p>
+
+      <div class="stack" style="--s:20px">
+        <label class="drop" id="drop">
+          <input type="file" id="file" aria-describedby="drop-hint" />
+          <span class="drop-in">
+            <span class="drop-title" id="drop-title">받은 사진 파일 선택</span>
+            <span class="small">눌러서 고르거나 여기로 끌어다 놓으세요 · JPG, PNG, HEIC, TIFF, DNG 등 형식 제한 없음</span>
+            <span class="xs muted" id="drop-hint">보정·자르기·메신저 전송을 거치지 않은, 받은 그대로의 원본 파일로 확인하세요.</span>
+          </span>
+        </label>
+
+        <form class="field" id="lookup" novalidate>
+          <label for="cert-id">인증서 번호로 조회</label>
+          <div class="lookup-row">
+            <input class="input" id="cert-id" name="id" type="text" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="DRC-2026-000001" aria-describedby="cert-id-hint cert-id-error" />
+            <button class="btn btn-ink" id="lookup-btn" type="submit">조회</button>
+          </div>
+          <p class="xs muted" id="cert-id-hint">인증서에 적힌 번호를 넣으면 등록된 지문과 발급 정보를 보여 줍니다. 조회한 뒤 파일을 확인하면 그 인증서의 원본과 비교합니다.</p>
+          <p class="xs field-error" id="cert-id-error" role="alert" hidden></p>
+          <p class="target small" id="target" hidden>
+            <span>비교 기준 <strong class="mono" id="target-id"></strong> — 이 인증서의 원본과 비교합니다.</span>
+            <button class="btn btn-sm" id="target-clear" type="button">기준 해제</button>
+          </p>
+        </form>
+      </div>
+
+      <div id="result" aria-live="polite"></div>
+
+      <section class="panel stack" aria-labelledby="try-title">
+        <h2 class="h3" id="try-title">샘플로 체험해 보기</h2>
+        <p class="small muted body">스튜디오 정물 사진 한 장을 체험용 인증서 <span class="mono">DRC-2026-000001</span>로 등록해 두었습니다. 버튼을 누르면 샘플 파일을 받아 위와 같은 방식으로 이 브라우저에서 확인합니다.</p>
+        <div class="grid grid-2 samples">
+          <div class="sample stack" style="--s:12px">
+            <figure class="sample-fig">
+              <div class="frame"><img src="/samples/sample-original.jpg" width="1200" height="900" loading="lazy" decoding="async" alt="체험용 원본 샘플 사진: 세이지색 배경지 앞 나무 스툴 위에 흰 화병과 마른 나뭇가지를 놓은 정물" /></div>
+              <figcaption class="caption"><span>원본</span><span>JPEG 1200×900</span></figcaption>
+            </figure>
+            <button class="btn btn-sm" type="button" data-sample="/samples/sample-original.jpg">원본 샘플로 확인</button>
+            <a class="xs" href="/samples/sample-original.jpg" download>원본 샘플 내려받기</a>
+          </div>
+          <div class="sample stack" style="--s:12px">
+            <figure class="sample-fig">
+              <div class="frame"><img src="/samples/sample-edited.jpg" width="1200" height="900" loading="lazy" decoding="async" alt="같은 정물 사진을 4% 밝게 보정한 샘플: 눈으로는 원본과 거의 같아 보입니다" /></div>
+              <figcaption class="caption"><span>보정본</span><span>밝기 +4%</span></figcaption>
+            </figure>
+            <button class="btn btn-sm" type="button" data-sample="/samples/sample-edited.jpg">보정 샘플로 확인</button>
+            <a class="xs" href="/samples/sample-edited.jpg" download>보정 샘플 내려받기</a>
+          </div>
+        </div>
+        <p class="small body">보정본은 밝기만 4% 올렸지만 파일의 바이트가 달라져 지문이 완전히 바뀌므로, 등록된 원본과 일치하지 않습니다.</p>
+      </section>
+
+      <div class="notice">
+        <p><strong>개인정보</strong> — 확인하는 파일은 어디에도 전송·저장되지 않습니다. 지문 계산은 이 브라우저 안에서 끝납니다. 조회에 쓰는 공개 레지스트리 <a class="mono" href="/certificates.json">/certificates.json</a>에는 고객의 이름·연락처·사진을 담지 않습니다. 공개되는 항목은 인증서 번호·지문·발급 일시·제목·촬영 구분·스튜디오 이름, 그리고 파일 정보(파일 이름·크기·해상도·형식)입니다. 제목·구분·파일 이름에는 개인을 알아볼 수 있는 내용을 넣지 않습니다.</p>
+        <p><a class="link-arrow" href="/authenticity.html">원본 인증이 무엇을 증명하나요</a></p>
+      </div>
+
+    </div>
+  </section>
+</main>
+<footer class="site-foot">
+  <div class="wrap foot-in">
+    <div>
+      <a class="logo" href="/" aria-label="최박사사진관 홈">
+        <svg class="mark" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9V3h6M15 3h6v6M21 15v6h-6M9 21H3v-6" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="3" fill="var(--accent)"/></svg>
+        <span class="wm">최박사사진관<small>DR. CHOI PHOTO STUDIO</small></span>
+      </a>
+      <p>찍는 순간, 원본이 증명되는 셀프 사진관.</p>
+      <p style="margin-top:14px"><span class="status">오픈 준비 중</span></p>
+    </div>
+    <div>
+      <h4>스튜디오</h4>
+      <ul>
+        <li>대구 수성구 범어동</li>
+        <li>10평 셀프 스튜디오 · 상세 주소는 오픈 때 안내</li>
+        <li><a href="mailto:jinho.choi1010@gmail.com">jinho.choi1010@gmail.com</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>안내</h4>
+      <ul>
+        <li><a href="/guide.html">이용 안내</a></li>
+        <li><a href="/authenticity.html">원본 인증</a></li>
+        <li><a href="/verify.html">원본 확인</a></li>
+        <li><a href="/privacy.html">개인정보처리방침</a></li>
+        <li><a href="/terms.html">이용약관</a></li>
+      </ul>
+    </div>
+    <p class="fine"><span>© 2026 최박사사진관 · DataPD</span><span>사업자 정보는 정식 오픈 때 게재합니다.</span><span>요금·운영 시간은 오픈 전 예정 정보입니다.</span></p>
+  </div>
+</footer>
+<script>
+(function () {
+  'use strict';
+
+  var ID_RE = /^DRC-\d{4}-\d{6}$/i;
+  var BIG = 200 * 1024 * 1024;
+  var HONEST = '일치는 최박사사진관이 발급한 원본 파일과 바이트 단위로 같다는 뜻이며, 사진 내용의 사실성이나 인물의 신원을 보증하지 않습니다. 법적 증거 효력도 보장하지 않습니다.';
+
+  var drop = document.getElementById('drop');
+  var dropTitle = document.getElementById('drop-title');
+  var fileInput = document.getElementById('file');
+  var form = document.getElementById('lookup');
+  var idInput = document.getElementById('cert-id');
+  var idError = document.getElementById('cert-id-error');
+  var lookupBtn = document.getElementById('lookup-btn');
+  var targetBox = document.getElementById('target');
+  var targetId = document.getElementById('target-id');
+  var clearBtn = document.getElementById('target-clear');
+  var envNote = document.getElementById('env-note');
+  var result = document.getElementById('result');
+  var sampleBtns = Array.prototype.slice.call(document.querySelectorAll('[data-sample]'));
+
+  var canHash = !!(window.isSecureContext && window.crypto && window.crypto.subtle &&
+    typeof window.crypto.subtle.digest === 'function');
+  var busy = false;
+  var target = null;      // certificate chosen by number; files are compared against it
+  var registry = null;    // memoized promise of /certificates.json
+
+  /* ---------- DOM helpers (text is always set with textContent) ---------- */
+  function el(tag, props, kids) {
+    var n = document.createElement(tag);
+    if (props) {
+      Object.keys(props).forEach(function (k) {
+        var v = props[k];
+        if (v == null || v === false) return;
+        if (k === 'class') n.className = v;
+        else if (k === 'text') n.textContent = String(v);
+        else n.setAttribute(k, String(v));
+      });
+    }
+    [].concat(kids == null ? [] : kids).forEach(function (c) {
+      if (c == null || c === false) return;
+      n.appendChild(typeof c === 'string' || typeof c === 'number' ? document.createTextNode(String(c)) : c);
+    });
+    return n;
+  }
+
+  function show(node, reveal) {
+    while (result.firstChild) result.removeChild(result.firstChild);
+    if (node) result.appendChild(node);
+    if (reveal) revealResult();
+  }
+
+  function revealResult() {
+    var r = result.getBoundingClientRect();
+    var vh = window.innerHeight || document.documentElement.clientHeight;
+    if (r.top >= 80 && r.top <= vh - 140) return;
+    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    try { result.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' }); }
+    catch (e) { result.scrollIntoView(true); }
+  }
+
+  /* ---------- formatting ---------- */
+  var dateFmt = (function () {
+    try {
+      return new Intl.DateTimeFormat('ko-KR', { timeZone: 'Asia/Seoul', dateStyle: 'long', timeStyle: 'short', hourCycle: 'h23' });
+    } catch (e) {
+      try { return new Intl.DateTimeFormat('ko-KR', { timeZone: 'Asia/Seoul', dateStyle: 'long', timeStyle: 'short' }); }
+      catch (e2) { return null; }
+    }
+  })();
+
+  function fmtDate(iso) {
+    var d = new Date(iso);
+    if (!iso || isNaN(d.getTime())) return iso ? String(iso) : '—';
+    return dateFmt ? dateFmt.format(d) + ' KST' : String(iso);
+  }
+
+  function fmtBytes(n) {
+    n = Number(n);
+    if (!isFinite(n) || n < 0) return '—';
+    var exact = n.toLocaleString('ko-KR') + '바이트';
+    if (n < 1024) return exact;
+    var units = ['KB', 'MB', 'GB', 'TB'];
+    var v = n / 1024, i = 0;
+    while (v >= 1024 && i < units.length - 1) { v /= 1024; i++; }
+    return exact + ' (' + v.toFixed(1) + ' ' + units[i] + ')';
+  }
+
+  function fmtType(t) {
+    t = String(t || '');
+    var sub = t.indexOf('/') > -1 ? t.split('/')[1] : t;
+    return sub ? sub.toUpperCase() : '형식 정보 없음';
+  }
+
+  function fileLine(f) {
+    if (!f || typeof f !== 'object') return '—';
+    var parts = [fmtType(f.type)];
+    var w = Number(f.width), h = Number(f.height), b = Number(f.bytes);
+    if (isFinite(w) && isFinite(h) && w > 0 && h > 0) parts.push(w + '×' + h);
+    if (f.bytes != null && isFinite(b)) parts.push(b.toLocaleString('ko-KR') + '바이트');
+    return parts.join(' · ');
+  }
+
+  function certId(c) { return c && c.id != null ? String(c.id).trim().toUpperCase() : ''; }
+  function certSha(c) { return c && typeof c.sha256 === 'string' ? c.sha256.trim().toLowerCase() : ''; }
+
+  /* ---------- hashing & registry ---------- */
+  function sha256Hex(buf) {
+    return window.crypto.subtle.digest('SHA-256', buf).then(function (d) {
+      return Array.from(new Uint8Array(d), function (b) { return b.toString(16).padStart(2, '0'); }).join('');
+    });
+  }
+
+  function readFile(file) {
+    if (typeof file.arrayBuffer === 'function') return file.arrayBuffer();
+    return new Promise(function (resolve, reject) {
+      var r = new FileReader();
+      r.onload = function () { resolve(r.result); };
+      r.onerror = function () { reject(r.error); };
+      r.readAsArrayBuffer(file);
+    });
+  }
+
+  function regError(kind, status) { var e = new Error(kind); e.kind = kind; e.status = status; return e; }
+
+  function loadRegistry() {
+    if (!registry) {
+      registry = fetch('/certificates.json', { cache: 'no-store' })
+        .then(function (res) {
+          if (!res.ok) throw regError('http', res.status);
+          return res.json().catch(function () { throw regError('json'); });
+        })
+        .then(function (data) {
+          if (!data || !Array.isArray(data.certificates)) throw regError('json');
+          return data;
+        })
+        .catch(function (err) { registry = null; throw err; });
+    }
+    return registry;
+  }
+
+  function regErrorText(err) {
+    if (err && err.kind === 'http') return '원본 레지스트리를 불러오지 못했습니다(응답 코드 ' + err.status + '). 잠시 뒤 다시 시도해 주세요.';
+    if (err && err.kind === 'json') return '원본 레지스트리 파일의 형식을 읽지 못했습니다. 잠시 뒤 다시 시도해 주세요.';
+    return '네트워크 문제로 원본 레지스트리를 불러오지 못했습니다. 인터넷 연결을 확인한 뒤 다시 시도해 주세요.';
+  }
+
+  /* ---------- state ---------- */
+  function setBusy(on) {
+    busy = on;
+    var off = on || !canHash;
+    fileInput.disabled = off;
+    drop.classList.toggle('is-off', off);
+    sampleBtns.forEach(function (b) { b.disabled = off; });
+    lookupBtn.disabled = on;
+    clearBtn.disabled = on;
+    result.setAttribute('aria-busy', on ? 'true' : 'false');
+  }
+
+  function setTarget(cert) {
+    target = cert || null;
+    targetBox.hidden = !target;
+    targetId.textContent = target ? certId(target) : '';
+    dropTitle.textContent = target
+      ? certId(target) + ' 인증서의 원본 파일 선택'
+      : '받은 사진 파일 선택';
+    try {
+      var q = target ? '?id=' + encodeURIComponent(certId(target)) : '';
+      history.replaceState(null, '', location.pathname + q + location.hash);
+    } catch (e) { /* ignore */ }
+  }
+
+  function setFieldError(msg) {
+    idError.textContent = msg || '';
+    idError.hidden = !msg;
+    if (msg) idInput.setAttribute('aria-invalid', 'true');
+    else idInput.removeAttribute('aria-invalid');
+  }
+
+  /* ---------- result blocks ---------- */
+  function kvList(rows) {
+    var dl = el('dl', { 'class': 'kv' });
+    rows.forEach(function (r) {
+      if (!r) return;
+      dl.appendChild(el('dt', { text: r[0] }));
+      dl.appendChild(el('dd', null, r[1]));
+    });
+    return dl;
+  }
+
+  function hashSpan(h) { return el('span', { 'class': 'hash', text: h || '—' }); }
+
+  function chainValue(chain) {
+    var status = chain && chain.status;
+    if (status === 'pilot') return '시범 운영 — 블록체인 등록 전, 공개 레지스트리에만 기록';
+    if (status === 'anchored') {
+      var kids = [el('span', { text: chain.network ? String(chain.network) : '네트워크 정보 없음' })];
+      if (chain.tx) kids.push(el('span', { 'class': 'hash', style: 'display:block', text: String(chain.tx) }));
+      return el('span', null, kids);
+    }
+    return '기록 정보 없음';
+  }
+
+  function certKv(cert, withHash) {
+    var rows = [
+      ['번호', el('span', { 'class': 'mono', text: certId(cert) || '—' })],
+      ['발급 일시', fmtDate(cert.issuedAt)],
+      ['구분', cert.category ? String(cert.category) : '—'],
+      ['파일', fileLine(cert.file)]
+    ];
+    if (withHash) rows.push(['등록 지문', hashSpan(certSha(cert))]);
+    rows.push(['블록체인 기록', chainValue(cert.chain)]);
+    return kvList(rows);
+  }
+
+  function demoNote(cert) {
+    return cert && cert.demo === true ? el('p', null, [el('span', { 'class': 'tag', text: '체험용 샘플 인증서' })]) : null;
+  }
+
+  function certLink(cert, label) {
+    var id = certId(cert);
+    if (!ID_RE.test(id)) return null;
+    return el('a', { 'class': 'link-arrow', href: '/certificate.html?id=' + encodeURIComponent(id), text: label || '인증서 보기' });
+  }
+
+  function honest() { return el('p', { 'class': 'xs muted body', text: HONEST }); }
+
+  function fileBlock(info, extraRows) {
+    var rows = [
+      ['파일 이름', el('span', { 'class': 'mono', text: info.name || '이름 없는 파일' })],
+      ['크기', fmtBytes(info.size)],
+      ['SHA-256 지문', hashSpan(info.hash)]
+    ].concat(extraRows || []);
+    return el('div', { 'class': 'stack sub' }, [
+      el('h3', { 'class': 'eyebrow', text: '확인한 파일' }),
+      kvList(rows),
+      el('div', { 'class': 'cluster' }, [
+        el('button', { 'class': 'btn btn-sm', type: 'button', 'data-copy': info.hash, text: '지문 복사' })
+      ])
+    ]);
+  }
+
+  function noteLine(info) { return info.note ? el('p', { 'class': 'xs muted', text: info.note }) : null; }
+
+  function messageBox(title, msg) {
+    return el('div', { 'class': 'notice warn' }, [el('p', null, [el('strong', { text: title })]), el('p', { text: msg })]);
+  }
+
+  function progressBox(label, name, size) {
+    return el('div', { 'class': 'result stack' }, [
+      el('p', { 'class': 'small' }, [label, name ? ' — ' : '', name ? el('span', { 'class': 'mono', text: name }) : null]),
+      el('div', { 'class': 'progress', 'aria-hidden': 'true' }, [el('i')]),
+      size > BIG
+        ? el('p', { 'class': 'xs muted', text: '파일이 커서(' + fmtBytes(size) + ') 시간이 조금 걸릴 수 있습니다. 계산은 이 기기 안에서만 진행되니 창을 닫지 말고 잠시 기다려 주세요.' })
+        : null
+    ]);
+  }
+
+  function renderMatch(info, cert, specific) {
+    show(el('div', { 'class': 'result is-ok stack' }, [
+      el('div', { 'class': 'result-head' }, [
+        el('h2', { 'class': 'result-title', text: specific ? '이 인증서의 원본과 일치합니다' : '원본과 일치합니다' }),
+        el('span', { 'class': 'seal', text: '원본' })
+      ]),
+      el('p', { 'class': 'small body' }, [
+        '이 파일은 최박사사진관이 발급한 원본 파일(인증서 ',
+        el('span', { 'class': 'mono', text: certId(cert) }),
+        ')과 바이트 단위로 같습니다.'
+      ]),
+      demoNote(cert),
+      noteLine(info),
+      fileBlock(info),
+      el('div', { 'class': 'stack sub' }, [
+        el('h3', { 'class': 'eyebrow', text: '등록된 인증서' }),
+        certKv(cert, false)
+      ]),
+      el('p', null, [certLink(cert)]),
+      honest()
+    ]), true);
+  }
+
+  function renderNoMatch(info, specific, other) {
+    var extra = specific ? [['인증서 등록 지문', hashSpan(certSha(specific))]] : null;
+    var otherLine = null;
+    if (other) {
+      otherLine = el('p', { 'class': 'small body' }, [
+        '다만 이 파일은 다른 인증서(',
+        el('span', { 'class': 'mono', text: certId(other) }),
+        ')의 원본과 일치합니다. ',
+        certLink(other, '그 인증서 보기')
+      ]);
+    }
+    show(el('div', { 'class': 'result is-bad stack' }, [
+      el('div', { 'class': 'result-head' }, [
+        el('h2', { 'class': 'result-title', text: specific ? '이 인증서의 원본과 일치하지 않습니다' : '등록된 원본과 일치하지 않습니다' })
+      ]),
+      el('p', {
+        'class': 'small body',
+        text: specific
+          ? '이 파일의 지문이 인증서 ' + certId(specific) + '에 등록된 원본 지문과 다릅니다. 파일이 조금이라도 바뀌면 지문은 완전히 달라집니다.'
+          : '이 파일의 지문이 최박사사진관 원본 레지스트리에 등록된 어떤 지문과도 같지 않습니다. 파일이 조금이라도 바뀌면 지문은 완전히 달라집니다.'
+      }),
+      el('p', { 'class': 'small body', text: '일치하지 않는다고 해서 사진이 조작됐다는 뜻은 아닙니다. 평범한 재압축만으로도 지문은 달라집니다.' }),
+      otherLine,
+      noteLine(info),
+      fileBlock(info, extra),
+      el('div', { 'class': 'stack sub' }, [
+        el('h3', { 'class': 'eyebrow', text: '흔한 이유' }),
+        el('ul', null, [
+          el('li', { text: '보정·자르기·필터를 적용한 파일' }),
+          el('li', { text: '메신저로 주고받으며 다시 압축된 파일' }),
+          el('li', { text: '화면을 캡처한 스크린샷' }),
+          el('li', { text: '다른 형식으로 변환한 파일 (예: HEIC → JPG)' }),
+          el('li', { text: '최박사사진관에서 발급하지 않은 사진' })
+        ])
+      ]),
+      el('div', { 'class': 'stack sub' }, [
+        el('h3', { 'class': 'eyebrow', text: '이렇게 해 보세요' }),
+        el('ul', null, [
+          el('li', { text: '촬영 후 받은 원본 파일을 그대로 다시 확인해 보세요.' }),
+          el('li', { text: '휴대폰에서는 사진 앱 대신 ‘파일’ 앱에 저장한 원본을 선택해 보세요. 사진 앱을 거치면 파일이 다시 저장될 수 있습니다.' }),
+          el('li', { text: '사진을 공유할 때는 인증서 링크를 함께 보내세요. 받는 분이 이 페이지에서 원본인지 직접 확인할 수 있습니다.' })
+        ])
+      ]),
+      honest()
+    ]), true);
+  }
+
+  function renderRegistryFail(info, err) {
+    var retry = el('button', { 'class': 'btn btn-ink btn-sm', type: 'button', text: '다시 비교' });
+    retry.addEventListener('click', function () { if (!busy) compare(info); });
+    show(el('div', { 'class': 'result stack' }, [
+      el('h2', { 'class': 'result-title', text: '지문은 계산했지만 비교하지 못했습니다' }),
+      messageBox('레지스트리 연결 오류', regErrorText(err)),
+      fileBlock(info),
+      el('div', { 'class': 'cluster' }, [retry])
+    ]), true);
+  }
+
+  function certView(cert) {
+    return el('div', { 'class': 'result stack' }, [
+      el('div', { 'class': 'result-head' }, [
+        el('h2', { 'class': 'result-title', text: '등록된 인증서를 찾았습니다' }),
+        el('span', { 'class': 'cert-id', text: certId(cert) })
+      ]),
+      demoNote(cert),
+      certKv(cert, true),
+      el('p', { 'class': 'small body', text: canHash
+        ? '이 인증서의 원본 파일을 위 칸에서 선택하면, 파일의 지문이 등록 지문과 같은지 확인합니다.'
+        : '이 환경에서는 파일 지문을 계산할 수 없어, 등록 정보만 보여 드립니다.' }),
+      cert.demo === true && canHash
+        ? el('p', { 'class': 'small body muted', text: '체험용 샘플은 아래 ‘원본 샘플로 확인’ 버튼으로 바로 확인해 볼 수 있습니다.' })
+        : null,
+      el('p', null, [certLink(cert)]),
+      honest()
+    ]);
+  }
+
+  /* ---------- actions ---------- */
+  function compare(info) {
+    setBusy(true);
+    return loadRegistry().then(function (data) {
+      setBusy(false);
+      var found = null;
+      for (var i = 0; i < data.certificates.length; i++) {
+        if (certSha(data.certificates[i]) === info.hash) { found = data.certificates[i]; break; }
+      }
+      if (target) {
+        if (certSha(target) === info.hash) renderMatch(info, target, true);
+        else renderNoMatch(info, target, found);
+      } else if (found) {
+        renderMatch(info, found, false);
+      } else {
+        renderNoMatch(info, null, null);
+      }
+    }, function (err) {
+      setBusy(false);
+      renderRegistryFail(info, err);
+    });
+  }
+
+  function runCheck(opts) {
+    if (busy) return;
+    if (!canHash) { envNote.hidden = false; return; }
+    setBusy(true);
+    show(progressBox('지문을 계산하고 있습니다', opts.name, opts.size), true);
+    var size = opts.size;
+    Promise.resolve()
+      .then(opts.read)
+      .then(function (buf) {
+        if (size == null) size = buf.byteLength;
+        return sha256Hex(buf).catch(function () {
+          var e = new Error('digest'); e.digest = true; throw e;
+        });
+      })
+      .then(function (hash) {
+        return compare({ name: opts.name, size: size, hash: hash, note: opts.note || null });
+      }, function (err) {
+        setBusy(false);
+        if (err && err.digest) {
+          show(messageBox('지문을 계산하지 못했습니다', '계산 중 오류가 났습니다. 페이지를 새로 고친 뒤 다시 시도해 주세요.'), true);
+        } else {
+          show(messageBox(opts.failTitle, opts.failText), true);
+        }
+      });
+  }
+
+  function handleFile(file, many) {
+    if (!file || busy || !canHash) return;
+    if (file.size === 0) {
+      show(messageBox('빈 파일입니다', '크기가 0바이트인 파일은 확인할 수 없습니다. 받은 원본 파일을 다시 골라 주세요.'), true);
+      return;
+    }
+    runCheck({
+      name: file.name,
+      size: file.size,
+      read: function () { return readFile(file); },
+      note: many ? '여러 파일을 놓으셔서 첫 번째 파일만 확인했습니다.' : null,
+      failTitle: '파일을 읽지 못했습니다',
+      failText: '파일을 다시 선택해 보세요. 파일이 아주 크면 이 기기의 메모리가 부족할 수 있습니다.'
+    });
+  }
+
+  function lookup(raw, fromUser) {
+    var id = String(raw == null ? '' : raw).trim().toUpperCase();
+    idInput.value = id;
+    if (!id) {
+      setFieldError('인증서 번호를 입력해 주세요. 예: DRC-2026-000001');
+      if (fromUser) idInput.focus();
+      return;
+    }
+    if (!ID_RE.test(id)) {
+      setFieldError('번호 형식이 맞지 않습니다. DRC-연도 4자리-숫자 6자리로 입력해 주세요. 예: DRC-2026-000001');
+      if (fromUser) idInput.focus();
+      return;
+    }
+    setFieldError('');
+    if (busy) return;
+    setBusy(true);
+    loadRegistry().then(function (data) {
+      setBusy(false);
+      var cert = null;
+      for (var i = 0; i < data.certificates.length; i++) {
+        if (certId(data.certificates[i]) === id) { cert = data.certificates[i]; break; }
+      }
+      if (!cert) {
+        setTarget(null);
+        show(messageBox('등록된 인증서를 찾지 못했습니다', id + ' 번호로 등록된 인증서가 없습니다. 인증서에 적힌 번호를 다시 확인해 주세요.'), fromUser);
+        return;
+      }
+      setTarget(cert);
+      show(certView(cert), fromUser);
+    }, function (err) {
+      setBusy(false);
+      show(messageBox('인증서를 조회하지 못했습니다', regErrorText(err)), fromUser);
+    });
+  }
+
+  /* ---------- events ---------- */
+  fileInput.addEventListener('change', function () {
+    var files = fileInput.files;
+    var f = files && files[0];
+    if (f) handleFile(f, files.length > 1);
+    fileInput.value = '';
+  });
+
+  function hasFiles(e) {
+    var dt = e.dataTransfer;
+    return !!(dt && dt.types && Array.prototype.indexOf.call(dt.types, 'Files') !== -1);
+  }
+
+  drop.addEventListener('dragenter', function (e) {
+    if (!hasFiles(e)) return;
+    e.preventDefault();
+    if (!busy && canHash) drop.classList.add('is-over');
+  });
+  drop.addEventListener('dragover', function (e) {
+    if (!hasFiles(e)) return;
+    e.preventDefault();
+    var ok = !busy && canHash;
+    e.dataTransfer.dropEffect = ok ? 'copy' : 'none';
+    if (ok) drop.classList.add('is-over');
+  });
+  drop.addEventListener('dragleave', function (e) {
+    if (e.relatedTarget && drop.contains(e.relatedTarget)) return;
+    drop.classList.remove('is-over');
+  });
+  drop.addEventListener('drop', function (e) {
+    if (!hasFiles(e)) return;
+    e.preventDefault();
+    drop.classList.remove('is-over');
+    if (busy) return;
+    if (!canHash) { envNote.hidden = false; return; }
+    var files = e.dataTransfer.files;
+    if (!files || !files.length) return;
+    handleFile(files[0], files.length > 1);
+  });
+  // A file dropped just outside the zone should not make the browser open it.
+  window.addEventListener('dragover', function (e) {
+    if (hasFiles(e) && !drop.contains(e.target)) { e.preventDefault(); e.dataTransfer.dropEffect = 'none'; }
+  });
+  window.addEventListener('drop', function (e) {
+    if (hasFiles(e) && !drop.contains(e.target)) e.preventDefault();
+    drop.classList.remove('is-over');
+  });
+  window.addEventListener('dragend', function () { drop.classList.remove('is-over'); });
+
+  sampleBtns.forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var url = btn.getAttribute('data-sample');
+      runCheck({
+        name: url.split('/').pop(),
+        size: null,
+        read: function () {
+          return fetch(url).then(function (res) {
+            if (!res.ok) throw new Error('HTTP ' + res.status);
+            return res.arrayBuffer();
+          });
+        },
+        failTitle: '샘플 파일을 불러오지 못했습니다',
+        failText: '인터넷 연결을 확인한 뒤 다시 시도해 주세요.'
+      });
+    });
+  });
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    lookup(idInput.value, true);
+  });
+
+  idInput.addEventListener('input', function (e) {
+    if (e.isComposing) return;
+    var v = idInput.value, up = v.toUpperCase();
+    if (v !== up) {
+      var s = idInput.selectionStart, en = idInput.selectionEnd;
+      idInput.value = up;
+      try { idInput.setSelectionRange(s, en); } catch (err) { /* ignore */ }
+    }
+    if (!idError.hidden) setFieldError('');
+  });
+
+  clearBtn.addEventListener('click', function () {
+    if (busy) return;
+    setTarget(null);
+    idInput.value = '';
+    setFieldError('');
+    show(el('p', { 'class': 'small muted', text: '비교 기준을 해제했습니다. 이제 파일을 등록된 원본 전체와 비교합니다.' }), false);
+    idInput.focus();
+  });
+
+  /* ---------- init ---------- */
+  if (!canHash) envNote.hidden = false;
+  setBusy(false);
+  var qid = null;
+  try { qid = new URLSearchParams(location.search).get('id'); } catch (e) { qid = null; }
+  if (qid != null && qid.trim() !== '') lookup(qid, false);
+})();
+</script>
+</body>
+</html>

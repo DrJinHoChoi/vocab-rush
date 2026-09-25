@@ -1,101 +1,40 @@
-# ⚡ STUDY RUSH - 직장인 영어 어휘 타이머 챌린지
+# 최박사사진관 · Dr. Choi Photo Studio
 
-직장인을 위한 영어 어휘 학습 PWA 게임입니다.
+찍는 순간, 원본이 증명되는 셀프 사진관 — 대구 수성구 범어동 (오픈 준비 중).
 
-## 🚀 빠른 시작
+셀프 촬영한 모든 사진에 **원본 인증서**(원본 파일의 SHA-256 지문 · 인증서 번호 · 발급 일시)를 발급하고,
+선택하면 지문을 공개 블록체인에 기록(**NFT 원본 등록**)합니다. 누구나 `/verify.html`에서
+사진 파일을 넣어 원본인지 확인할 수 있습니다 — 파일은 브라우저 안에서만 계산되고 전송되지 않습니다.
+
+사이트: https://www.datapd.ai
+
+## 구조
+
+| 경로 | 내용 |
+|---|---|
+| `index.html` | 홈 (Vite 진입점 — 서비스워커 등록 포함) |
+| `public/guide.html` | 이용 안내 · 요금(오픈 예정가) · 공간 구성안 |
+| `public/authenticity.html` | 원본 인증 · NFT 원본 등록 설명 |
+| `public/verify.html` | 원본 확인 도구 (Web Crypto SHA-256, 서버 없음) |
+| `public/certificate.html?id=` | 원본 인증서 보기 · 인쇄 |
+| `public/certificates.json` | 공개 인증 레지스트리 (지문·번호·일시만, 개인정보·이미지 없음) |
+| `public/static/` | 디자인 시스템 `site.css`, `site.js`, 공간 구성안 `studio-plan.svg` |
+| `public/samples/` | 원본 확인 체험용 샘플 (원본 / 4% 보정본) |
+| `scripts/gen-brand.mjs` | 아이콘·파비콘·공유 이미지·샘플·레지스트리 생성 |
+| `_archive/doyou/` | 이전 사업(DOYOU 팝업스토어) 문서 보관 — 배포되지 않음 |
+
+## 개발
 
 ```bash
-# 1. 의존성 설치
 npm install
-
-# 2. 개발 서버 실행
-npm run dev
-
-# 3. 프로덕션 빌드
-npm run build
+npm run dev      # http://localhost:5173
+npm run build    # dist/
+npm run brand    # 아이콘·샘플·레지스트리 재생성 (샘플을 다시 만들면 지문이 바뀝니다)
 ```
 
-## 🌐 웹 배포 (Vercel 추천 - 무료)
+`main` 브랜치에 푸시하면 GitHub Actions가 빌드해 GitHub Pages(www.datapd.ai)로 배포합니다.
 
-1. GitHub에 이 프로젝트를 push
-2. [vercel.com](https://vercel.com) 가입 → "Import Project" → 저장소 선택
-3. 자동 빌드 & 배포 → `https://your-app.vercel.app` URL 발급
+## 인증서 추가
 
-> Netlify도 가능: Build command `npm run build`, Publish directory `dist`
-
-## 📱 Google Play Store 등록 (TWA 방식)
-
-### 전제 조건
-- 위 웹 배포 완료 (HTTPS URL 필요)
-- Android Studio + JDK 11+ 설치
-- Google Play Console 개발자 계정 ($25 일회성)
-
-### Step 1: Digital Asset Links 설정
-`public/.well-known/assetlinks.json` 파일 생성:
-```json
-[{
-  "relation": ["delegate_permission/common.handle_all_urls"],
-  "target": {
-    "namespace": "android_app",
-    "package_name": "com.vocabrush.app",
-    "sha256_cert_fingerprints": ["YOUR_SHA256_FINGERPRINT"]
-  }
-}]
-```
-
-### Step 2: Bubblewrap으로 AAB 생성
-Google Chrome Labs의 **Bubblewrap CLI**를 사용합니다.
-
-```bash
-# Bubblewrap 설치
-npm install -g @nicholasgodfreyt/nicholasgodfreyt-nicholasgodfreyt/nicholasgodfreyt/bubblewrap-cli
-
-# 프로젝트 초기화
-bubblewrap init --manifest https://your-app.vercel.app/manifest.webmanifest
-
-# 빌드
-bubblewrap build
-```
-
-> 정확한 패키지명은 "bubblewrap cli" 로 npm 검색하거나
-> GitHub에서 "nicholasgodfreyt nicholasgodfreyt nicholasgodfreyt nicholasgodfreyt bubblewrap" 을 검색하세요.
-
-### Step 3: Google Play Console 등록
-1. [play.google.com/console](https://play.google.com/console) 접속
-2. "앱 만들기" → 앱 정보 입력
-   - 앱 이름: **STUDY RUSH**
-   - 기본 언어: 한국어
-   - 앱 유형: 게임 → 교육
-3. 스토어 등록정보 작성 (스크린샷, 설명, 아이콘 등)
-4. 생성된 AAB 파일 업로드
-5. 콘텐츠 등급 설문 완료
-6. 가격 및 배포 → 무료 → 국가 선택
-7. 검토 제출 (심사 3~7일 소요)
-
-## 🔧 프로젝트 구조
-
-```
-vocab-rush/
-├── public/
-│   ├── favicon.svg
-│   ├── icon-192.png
-│   ├── icon-512.png
-│   └── apple-touch-icon.png
-├── src/
-│   ├── main.jsx
-│   ├── App.jsx
-│   └── VocabChallenge.jsx
-├── index.html
-├── vite.config.js
-├── package.json
-└── README.md
-```
-
-## 💡 PWA 기능
-- 오프라인 지원 (Service Worker 자동 생성)
-- 홈 화면 추가 가능
-- 풀스크린 앱 모드
-- 정적 자산 캐싱으로 빠른 로딩
-
-## 📄 라이선스
-MIT License
+`public/certificates.json`의 `certificates` 배열에 항목을 추가합니다. `sha256`은 고객에게 전달한
+원본 파일 그대로의 지문(소문자 16진수 64자)이어야 합니다. 사진·이름·연락처는 넣지 않습니다.

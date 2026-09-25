@@ -1,231 +1,376 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="canonical" href="https://www.datapd.ai/" />
-  <meta name="theme-color" content="#FAF5EB" />
-  <link rel="icon" href="/favicon.ico" sizes="any" />
-  <link rel="icon" type="image/svg+xml" href="/doyou-favicon.svg" />
-  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
-  <link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png" />
-  <link rel="apple-touch-icon" href="/apple-touch-icon.png?v=2" />
-  <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-title" content="DOYOU팝업스토어" />
-  <meta name="description" content="DataPD — 데이터를 재료로 비즈니스를 창출하는 플랫폼. 주 사업은 DOYOU 팝업스토어 운영(입점 브랜드·가맹점주 서비스). 새 브랜드·제품 콘텐츠를 키오스크로 서비스 — 입점사 사례: 생성형 AI 아카데미 crabox.ai(수능 기초 → 정통 교육 → 생성형 AI 교육)." />
-  <meta property="og:title" content="DataPD — 데이터를 재료로 비즈니스를 창출하는 플랫폼" />
-  <meta property="og:description" content="주 사업 DOYOU 팝업스토어 운영(입점·가맹 서비스). 브랜드 콘텐츠를 키오스크로 서비스 — 입점사 사례 crabox.ai(생성형 AI 아카데미 · 수능 기초 → 생성형 AI)." />
-  <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://www.datapd.ai/" />
-  <meta property="og:locale" content="ko_KR" />
-  <title>DataPD — 데이터를 재료로 비즈니스를 창출하는 플랫폼</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>최박사사진관 — 찍는 순간, 원본이 증명되는 셀프 사진관 | 대구 범어</title>
+<meta name="description" content="대구 수성구 범어동의 셀프 사진관. 증명·프로필·가족·반려동물·제품 사진을 직접 찍고, 모든 사진에 원본 인증서(SHA-256 지문)를 발급합니다. 원본 파일과 같은지 누구나 확인할 수 있습니다. 오픈 준비 중." />
+<link rel="canonical" href="https://www.datapd.ai/" />
+<meta name="theme-color" content="#F4F4F1" media="(prefers-color-scheme: light)" />
+<meta name="theme-color" content="#0E0E0D" media="(prefers-color-scheme: dark)" />
+<link rel="icon" href="/favicon.ico" sizes="any" />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="최박사사진관" />
+<meta property="og:title" content="최박사사진관 — 찍는 순간, 원본이 증명되는 셀프 사진관" />
+<meta property="og:description" content="대구 수성구 범어동의 셀프 사진관. 증명·프로필·가족·반려동물·제품 사진을 직접 찍고, 모든 사진에 원본 인증서(SHA-256 지문)를 발급합니다. 원본 파일과 같은지 누구나 확인할 수 있습니다. 오픈 준비 중." />
+<meta property="og:url" content="https://www.datapd.ai/" />
+<meta property="og:image" content="https://www.datapd.ai/og-card.png" />
+<meta property="og:locale" content="ko_KR" />
+<meta name="twitter:card" content="summary_large_image" />
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap" />
+<link rel="stylesheet" href="/static/site.css" />
+<script src="/static/site.js" defer></script>
 <style>
-  :root{ --bg:#FAF5EB; --surface:#FFFEFB; --ink:#141413; --line:#E3DCCB; --muted:#7C766B; --muted2:#A79E88; --gold:#F5B60B; --blue:#5B7FA6; --bluetx:#43618A; --terra:#C75D3A; --green:#15803D; --cream:#FAF5EB; --shadow:0 1px 2px rgba(20,16,12,.05), 0 12px 30px rgba(20,16,12,.08); }
-  *{ box-sizing:border-box; margin:0; padding:0; }
-  body{ font-family:'Pretendard','Apple SD Gothic Neo','Malgun Gothic',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; background:var(--bg); color:var(--ink); line-height:1.6; -webkit-font-smoothing:antialiased; }
-  .wrap{ max-width:960px; margin:0 auto; padding:0 24px; }
-  a{ color:var(--bluetx); }
-  nav{ background:var(--surface); border-bottom:2px solid var(--ink); position:sticky; top:0; z-index:40; }
-  nav .in{ max-width:960px; margin:0 auto; padding:11px 24px; display:flex; gap:8px 16px; align-items:center; flex-wrap:wrap; font-size:13px; }
-  nav .bd{ font-weight:900; letter-spacing:.5px; margin-right:8px; font-size:15px; }
-  nav a{ color:var(--muted); text-decoration:none; } nav a:hover{ color:var(--ink); }
-  nav .in .right{ margin-left:auto; display:flex; gap:8px 14px; flex-wrap:wrap; }
-  .hero{ text-align:center; padding:46px 0 20px; }
-  .hero-face{ width:92px; height:92px; }
-  .hero-pill{ display:inline-block; background:var(--ink); color:var(--gold); font-size:12px; font-weight:800; letter-spacing:4px; padding:6px 15px; border-radius:999px; margin:14px 0 0; }
-  .hero h1{ font-size:36px; font-weight:900; letter-spacing:-.02em; margin:16px 0 10px; line-height:1.2; }
-  .hero p.sub{ color:var(--muted); font-size:17px; max-width:600px; margin:0 auto; }
-  .flow{ display:flex; align-items:stretch; gap:10px; flex-wrap:wrap; margin:8px 0 34px; }
-  .fbox{ flex:1 1 180px; background:var(--surface); border:2px solid var(--ink); border-radius:14px; padding:16px; text-align:center; box-shadow:var(--shadow); }
-  .fbox .ft{ font-size:15px; font-weight:900; } .fbox .fd{ font-size:12.5px; color:var(--muted); margin-top:6px; line-height:1.5; }
-  .fbox.hot{ background:var(--ink); } .fbox.hot .ft{ color:var(--gold); } .fbox.hot .fd{ color:#C9C3B5; }
-  .farr{ display:flex; align-items:center; font-size:22px; font-weight:900; color:var(--muted2); }
-  @media(max-width:680px){ .farr{ transform:rotate(90deg); width:100%; justify-content:center; height:16px; } }
-  section.blk{ margin:0 0 38px; }
-  h2{ font-size:24px; font-weight:900; letter-spacing:-.02em; padding-left:14px; border-left:5px solid var(--gold); margin-bottom:6px; }
-  h2.b{ border-color:var(--blue); }
-  .lead{ color:var(--muted); font-size:15px; margin:8px 0 16px; }
-  .biz{ background:var(--surface); border:2px solid var(--ink); border-radius:20px; padding:24px; box-shadow:var(--shadow); }
-  .biz .tag{ display:inline-block; font-size:11px; font-weight:800; letter-spacing:1.5px; color:#6B5208; background:var(--gold); border-radius:999px; padding:4px 12px; }
-  .biz h3{ font-size:24px; font-weight:900; margin:12px 0 8px; letter-spacing:-.02em; }
-  .biz p{ font-size:15px; color:#3F3A33; }
-  .grid{ display:grid; grid-template-columns:repeat(auto-fit, minmax(150px,1fr)); gap:12px; margin-top:16px; }
-  .lk{ display:block; background:var(--bg); border:2px solid var(--ink); border-radius:13px; padding:13px 14px; text-decoration:none; color:var(--ink); transition:transform .12s; }
-  .lk:hover{ transform:translateY(-3px); }
-  .lk b{ font-size:14px; font-weight:900; display:block; } .lk span{ font-size:11.5px; color:var(--muted); }
-  .app{ display:grid; grid-template-columns:1.3fr 1fr; gap:18px; align-items:center; }
-  .app .card{ background:var(--surface); border:2px solid var(--ink); border-radius:18px; padding:20px; box-shadow:var(--shadow); }
-  .app .playbtn{ display:inline-block; background:var(--ink); color:var(--gold); font-weight:900; text-decoration:none; padding:12px 22px; border-radius:12px; margin-top:12px; }
-  .app ul{ list-style:none; margin:6px 0 0; } .app li{ font-size:14px; padding:5px 0 5px 24px; position:relative; } .app li::before{ content:"→"; position:absolute; left:0; color:var(--terra); font-weight:900; }
-  .fly{ background:var(--ink); color:var(--cream); border-radius:20px; padding:24px; box-shadow:var(--shadow); }
-  .fly h2{ color:var(--cream); border:none; padding:0; margin-bottom:14px; }
-  .fly .ring{ display:flex; align-items:center; gap:8px; flex-wrap:wrap; justify-content:center; }
-  .fly .rn{ background:#23201B; border:1px solid #3A352E; border-radius:12px; padding:11px 14px; text-align:center; }
-  .fly .rn b{ color:var(--gold); font-size:13px; font-weight:900; display:block; } .fly .rn span{ font-size:11px; color:#C9C3B5; }
-  .fly .ar{ color:var(--gold); font-size:20px; font-weight:900; }
-  .fly p{ color:#C9C3B5; font-size:13px; margin-top:14px; text-align:center; }
-  .cta{ background:var(--gold); border:2px solid var(--ink); border-radius:20px; padding:28px 24px; text-align:center; box-shadow:var(--shadow); }
-  .cta h2{ border:none; padding:0; color:var(--ink); font-size:24px; }
-  .cta p{ color:#6B5208; margin:8px 0 16px; }
-  .cta a{ display:inline-block; background:var(--ink); color:var(--gold); font-weight:900; text-decoration:none; padding:13px 26px; border-radius:12px; margin:4px; }
-  .cta a.alt{ background:transparent; color:var(--ink); border:2px solid var(--ink); }
-  footer{ text-align:center; border-top:2px solid var(--ink); padding:28px 0 46px; margin-top:34px; }
-  .bf-name{ font-weight:900; font-size:26px; letter-spacing:1px; } .bf-meta{ color:var(--muted2); font-size:12.5px; margin-top:12px; } .bf-meta a{ color:var(--muted); }
-  @media(max-width:680px){ .app{ grid-template-columns:1fr; } .hero h1{ font-size:28px; } }
+  .hero-shot{ margin:0; }
+  .hero-shot .caption{ align-items:center; }
+  .hero-shot .seal{ margin-left:auto; font-family:var(--font); }
+  .sec-head{ max-width:65ch; margin-bottom:clamp(28px,4vw,48px); }
+  .hero-copy,.cert-card{ --s:22px; }
+  .gap-sm{ --s:10px; }
+  .after{ margin-top:28px; }
+  .price th.amt{ text-align:right; }
 </style>
-  <meta property="og:image" content="https://www.datapd.ai/icon-512.png?v=2" />
-  <meta name="twitter:card" content="summary" />
 </head>
 <body>
-  <style id="cnav-css">nav:not(#cnav){display:none!important}.topbar{display:none!important}#cnav{position:sticky;top:0;z-index:9000;background:#FFFEFB;border-bottom:2px solid #141413}#cnav .in{max-width:1000px;margin:0 auto;padding:10px 20px;display:flex;gap:6px 15px;align-items:center;flex-wrap:wrap;font-family:'Pretendard','Apple SD Gothic Neo','Malgun Gothic',-apple-system,sans-serif;font-size:13px}#cnav .in::-webkit-scrollbar{display:none}#cnav a{white-space:nowrap;flex:0 0 auto;color:#7C766B;text-decoration:none}#cnav a:hover{color:#141413}#cnav a.bd{font-weight:900;color:#141413;font-size:15px;margin-right:4px}#cnav a.on{color:#141413;font-weight:800;border-bottom:2px solid #F5B60B;padding-bottom:3px}</style><nav id="cnav"><div class="in"><a class="bd" href="/">DataPD</a><a href="/#doyou">DOYOU 팝업</a><a href="/doyou-invite.html">입점</a><a href="/doyou-partners.html">입점사</a><a href="/doyou-join.html">직영·가맹</a></div></nav>
+<a class="skip" href="#main">본문으로 건너뛰기</a>
+<header class="site-head">
+  <div class="wrap head-in">
+    <a class="logo" href="/" aria-label="최박사사진관 홈">
+      <svg class="mark" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9V3h6M15 3h6v6M21 15v6h-6M9 21H3v-6" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="3" fill="var(--accent)"/></svg>
+      <span class="wm">최박사사진관<small>DR. CHOI PHOTO STUDIO</small></span>
+    </a>
+    <nav class="nav" aria-label="주요 메뉴">
+      <a href="/guide.html">이용 안내</a>
+      <a href="/authenticity.html">원본 인증</a>
+      <a href="/verify.html">원본 확인</a>
+    </nav>
+    <a class="btn btn-ink btn-sm head-cta" href="mailto:jinho.choi1010@gmail.com?subject=%5B%EC%B5%9C%EB%B0%95%EC%82%AC%EC%82%AC%EC%A7%84%EA%B4%80%5D%20%EC%98%A4%ED%94%88%20%EC%95%8C%EB%A6%BC%20%EC%8B%A0%EC%B2%AD">오픈 알림 받기</a>
+  </div>
+</header>
 
-  <main class="wrap">
-    <section class="hero">
-      <svg class="hero-face" viewBox="305 222 488 620" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-        <g stroke="#141413" stroke-width="14" stroke-linejoin="round" stroke-linecap="round">
-          <path d="M540,235 C690,235 770,360 770,540 C770,720 680,825 540,825 C400,825 320,710 320,540 C320,360 390,235 540,235 Z" fill="#F5B60B"/>
-          <path d="M540,250 C610,250 670,300 700,360 C672,430 690,440 778,478 C840,512 838,520 800,548 C742,560 760,585 786,600 C740,628 742,632 720,648 C760,672 742,690 700,742 C648,790 600,805 540,810 L540,250 Z" fill="#FAF5EB"/>
-          <path d="M540,540 L320,540 C328,690 410,795 540,812 Z" fill="#5B7FA6"/>
-          <path d="M540,235 C430,235 360,300 335,395 C400,360 470,350 540,355 C560,300 560,265 540,235 Z" fill="#141413"/>
-          <ellipse cx="445" cy="470" rx="62" ry="42" fill="#FAF5EB"/><circle cx="462" cy="470" r="22" fill="#141413"/>
-          <path d="M628,452 C660,432 705,438 724,460 C700,478 660,480 628,452 Z" fill="#FAF5EB"/><circle cx="690" cy="458" r="13" fill="#141413"/>
-          <polygon points="540,470 600,640 470,640" fill="#C75D3A"/>
-          <path d="M455,705 C500,690 560,690 600,705 C560,742 500,742 455,705 Z" fill="#C75D3A"/>
-        </g>
-      </svg>
-      <div><span class="hero-pill">DATA · CURATION · BUSINESS</span></div>
-      <h1>데이터를 재료로<br/>비즈니스를 창출합니다</h1>
-      <p class="sub">DataPD는 데이터를 재료로 비즈니스를 창출하는 플랫폼입니다. 주 사업은 <b>DOYOU 팝업스토어 운영</b> — 입점 브랜드·가맹점주 서비스, 그리고 브랜드 콘텐츠를 만들어 키오스크로 서비스하는 일까지.</p>
-      <div style="margin-top:20px; display:flex; gap:10px; flex-wrap:wrap; justify-content:center">
-        <a href="/doyou-invite.html" style="display:inline-block; background:var(--ink); color:var(--gold); font-weight:900; text-decoration:none; padding:12px 22px; border-radius:12px">📣 입점 브랜드 모집</a>
-        <a href="/doyou-join.html" style="display:inline-block; background:transparent; color:var(--ink); border:2px solid var(--ink); font-weight:900; text-decoration:none; padding:12px 22px; border-radius:12px">🤝 가맹점주 모집</a>
+<main id="main">
+
+  <!-- 1. Hero -->
+  <section class="section" aria-labelledby="hero-title">
+    <div class="wrap split">
+      <div class="stack hero-copy">
+        <p class="eyebrow"><span class="rec" aria-hidden="true"></span>대구 범어 · 셀프 사진관</p>
+        <h1 class="display" id="hero-title">찍는 순간,<br>원본이 증명됩니다.</h1>
+        <p class="lead">리모컨과 큰 모니터를 보며 직접 찍는 셀프 사진관입니다. 찍은 컷을 고르면 그 자리에서 원본 파일마다 지문(SHA-256)을 계산해 원본 인증서를 발급합니다. AI 합성과 보정이 흔한 요즘에도, 그 사진이 스튜디오가 발급한 원본 파일 그대로인지 누구나 확인할 수 있습니다.</p>
+        <div class="cluster">
+          <a class="btn btn-accent" href="/verify.html">원본 확인해 보기</a>
+          <a class="btn" href="/guide.html">이용 안내</a>
+        </div>
+        <p class="cluster small muted"><span class="status">오픈 준비 중</span><span>예약은 정식 오픈과 함께 받습니다.</span></p>
       </div>
-      <p style="margin-top:13px; font-size:13px; color:var(--muted2)">입점사 <a href="/crabox.html" style="color:var(--ink); font-weight:800">🦀 crabox.ai</a>의 콘텐츠 — <a href="/play.html" style="color:var(--bluetx); font-weight:700">⚡ STUDY RUSH</a>(게임 · <a href="/guides.html" style="color:var(--bluetx); font-weight:700">학습 자료 15편</a>) · <a href="/vibe-coding.html" style="color:var(--bluetx); font-weight:700">💻 바이브 코딩</a></p>
-    </section>
-
-    <div class="flow">
-      <div class="fbox"><div class="ft">데이터</div><div class="fd">방문·게임·상권·소비 데이터를 원재료로</div></div>
-      <div class="farr">→</div>
-      <div class="fbox"><div class="ft">큐레이션</div><div class="fd">장소를 읽어 딱 맞는 브랜드·경험을 매칭</div></div>
-      <div class="farr">→</div>
-      <div class="fbox hot"><div class="ft">오프라인 비즈니스</div><div class="fd">입점·가맹·광고로 수익화</div></div>
-    </div>
-
-    <section class="blk" id="doyou">
-      <h2>주 사업 — DOYOU 팝업스토어 운영</h2>
-      <p class="lead">장소별 데이터 큐레이션으로 브랜드를 채우는 직영 팝업 사업 — <b>입점 브랜드</b>와 <b>가맹점주</b>에게 서비스를 제공합니다.</p>
-      <div class="biz">
-        <span class="tag">BUSINESS #1 · DOYOU POP-UP STORE</span>
-        <h3>동네를 읽어, 딱 맞는 브랜드를 채운다</h3>
-        <p>큐레이션 엔진이 <b>장소의 특성(인구·소득·관심)</b>을 데이터로 읽어 최적 입점 믹스와 단가를 제안합니다. 그렇게 브랜드에는 <b>입점</b>을, 운영자에게는 <b>가맹</b>을 제안하는 것이 DOYOU의 사업 모델이에요. 1호점은 대구 교육 부촌 1번지 <b>범어1동</b>.</p>
-        <div class="app" style="grid-template-columns:1fr 1fr; align-items:stretch; margin-top:16px">
-          <div class="card">
-            <span class="tag">🏷️ 입점 브랜드 서비스</span>
-            <ul style="margin-top:10px">
-              <li>큐레이션 적합도·추천 단가 <b>30초 확인</b></li>
-              <li>1~2주 저비용 팝업 + 학년·과목 <b>반응 데이터 리포트</b></li>
-              <li>🎁 <b>전용 콘텐츠 무료 제작</b>(미니게임·테스트·랜딩) — 팝업 후에도 사용</li>
-            </ul>
-            <a class="playbtn" href="/doyou-invite.html">입점 안내·모집 →</a>
+      <div class="stack">
+        <figure class="hero-shot">
+          <div class="frame">
+            <img src="/samples/sample-original.jpg" width="1200" height="900" alt="원본 인증 샘플 사진: 세이지색 배경지 앞 나무 스툴 위에 놓인 흰 꽃병과 마른 나뭇가지" fetchpriority="high" />
           </div>
-          <div class="card">
-            <span class="tag" style="background:#DFF0E3; color:#14532D">🤝 가맹점주 서비스</span>
-            <ul style="margin-top:10px">
-              <li>본점(범어) <b>입점사 풀 공유</b> — 매주 큐레이션 제안·섭외</li>
-              <li>주간 <b>운영 매뉴얼</b> + STUDY RUSH 게임 집객</li>
-              <li><b>성장 배당</b>으로 로열티 부담 완화</li>
-            </ul>
-            <a class="playbtn" href="/doyou-join.html">가맹 사전 상담 등록 →</a>
+          <figcaption class="caption">
+            <span>DRC-2026-000001</span>
+            <span>SHA-256 <span class="hash">2e58e776…178a60</span></span>
+            <span class="seal">원본</span>
+          </figcaption>
+        </figure>
+        <p class="small"><a class="link-arrow" href="/verify.html?id=DRC-2026-000001">이 샘플로 직접 확인해 보기</a></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2. 왜 원본 인증인가 -->
+  <section class="section" aria-labelledby="why-title">
+    <div class="wrap">
+      <div class="sec-head stack">
+        <p class="eyebrow">왜 원본 인증인가</p>
+        <h2 class="h2" id="why-title">진짜로 찍은 사진이라는 걸 보여 줘야 할 때가 있습니다</h2>
+        <p class="body muted">사진 한 장을 몇 초 만에 합성하고 고칠 수 있는 시대입니다. “보정 없이 찍었어요”라는 말만으로는 부족한 순간이 생깁니다. 최박사사진관은 발급하는 원본 파일마다 지문을 남겨, 필요할 때 원본 파일과 같은지 누구나 확인할 수 있게 합니다.</p>
+      </div>
+      <div class="grid grid-4">
+        <div class="tile">
+          <h3>증명·취업 사진</h3>
+          <p>제출한 파일이 스튜디오가 발급한 원본 파일 그대로인지, 발급 이후 바뀌지 않았는지 확인할 수 있습니다.</p>
+        </div>
+        <div class="tile">
+          <h3>프로필·SNS</h3>
+          <p>보정 전 원본 파일을 그대로 건네면, 받는 사람이 스튜디오가 발급한 원본과 같은 파일인지 직접 확인할 수 있습니다. 보낸 사람의 신원까지 확인해 주지는 않습니다.</p>
+        </div>
+        <div class="tile">
+          <h3>소상공인 제품 실사</h3>
+          <p>실물을 그대로 찍은 원본 파일을 인증서와 함께 보관해 두세요. 필요할 때 상세 페이지 사진과 나란히 꺼내 보여 줄 수 있습니다.</p>
+        </div>
+        <div class="tile">
+          <h3>가족 기록</h3>
+          <p>돌·만삭·가족사진을 찍은 그날의 원본 그대로 남겨 두세요. 발급 일시와 지문이 함께 기록됩니다.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. 진행 순서 -->
+  <section class="section" aria-labelledby="flow-title">
+    <div class="wrap">
+      <div class="sec-head stack">
+        <p class="eyebrow">촬영부터 확인까지</p>
+        <h2 class="h2" id="flow-title">이렇게 진행됩니다</h2>
+      </div>
+      <ol class="steps">
+        <li>
+          <div>
+            <h3>셀프 촬영</h3>
+            <p>스튜디오 카메라 앞에서 리모컨으로 직접 셔터를 누르세요. 큰 라이브뷰 모니터로 표정과 포즈를 보면서 찍습니다.</p>
+          </div>
+        </li>
+        <li>
+          <div>
+            <h3>컷 셀렉</h3>
+            <p>셀렉 스테이션에서 찍은 컷을 살펴보고 받아 갈 사진을 고르세요.</p>
+          </div>
+        </li>
+        <li>
+          <div>
+            <h3>원본 인증서 발급</h3>
+            <p>고른 원본 파일마다 지문(SHA-256)을 계산해 인증서 번호·발급 일시와 함께 원본 인증서를 발급합니다. 지문은 파일 내용으로 계산한 64자리 값으로, 파일이 조금만 달라져도 전혀 다른 값이 나옵니다. 모든 촬영에 기본 포함입니다.</p>
+          </div>
+        </li>
+        <li>
+          <div>
+            <h3>NFT 원본 등록 (선택)</h3>
+            <p>원하는 컷만, 별도 동의를 받은 뒤 지문·인증서 번호·발급 일시를 공개 블록체인에 기록합니다. 사진·얼굴·개인정보는 올리지 않습니다. 블록체인 기록은 지울 수 없어서 지문만 남깁니다. 지갑 없이 스튜디오가 기록합니다. 가상자산이 아닌 확인용 기록으로 투자·거래·결제 수단이 아니며, 가격이나 이익을 약속하지 않고 재판매 시장도 운영하지 않습니다.</p>
+          </div>
+        </li>
+        <li>
+          <div>
+            <h3>누구나 확인</h3>
+            <p><a href="/verify.html">원본 확인</a> 페이지에서 파일을 고르면 브라우저 안에서 지문을 계산해 공개 레지스트리와 비교합니다. 사진 파일은 브라우저 밖으로 전송되지 않습니다.</p>
+          </div>
+        </li>
+      </ol>
+      <p class="small muted body after">셀프로 찍은 사진의 권리는 고객께 있습니다. 스튜디오는 동의 없이 고객 사진을 홍보에 쓰지 않습니다.</p>
+    </div>
+  </section>
+
+  <!-- 4. 원본 인증서 미리보기 -->
+  <section class="section" aria-labelledby="cert-title">
+    <div class="wrap split">
+      <div class="stack">
+        <p class="eyebrow">원본 인증서 미리보기</p>
+        <h2 class="h2" id="cert-title">사진마다 한 장, 원본 인증서</h2>
+        <p class="body">인증서에는 원본 파일의 지문(SHA-256), 인증서 번호, 발급 일시, 파일 크기·해상도·형식이 담깁니다. 같은 내용이 공개 레지스트리(<a class="mono" href="/certificates.json">certificates.json</a>)에도 기록되어 누구나 대조할 수 있습니다. 이름·연락처·사진은 인증서와 레지스트리 어디에도 넣지 않습니다.</p>
+        <p class="body">원본 사진 파일은 고객께 전달하고, 스튜디오 보관본은 전달 후 30일이 지나면 삭제할 예정입니다. 보관 기간은 오픈 때 확정해 안내합니다.</p>
+        <div class="notice">인증서가 확인해 주는 것은 <strong>“이 파일이 그 시각 스튜디오가 발급한 원본 파일과 같다”</strong>는 사실입니다. 사진에 담긴 내용의 사실 여부나 누군가의 신원을 증명하지 않으며, 법적 증거 효력을 보장하지 않습니다.</div>
+        <p><a class="link-arrow" href="/authenticity.html">원본 인증 자세히</a></p>
+      </div>
+      <div class="panel raised stack cert-card">
+        <div class="cert-head">
+          <div>
+            <p class="eyebrow">원본 인증서 · 체험용 샘플</p>
+            <p class="cert-id">DRC-2026-000001</p>
+          </div>
+          <span class="seal">원본</span>
+        </div>
+        <dl class="kv">
+          <dt>인증서 번호</dt>
+          <dd class="mono">DRC-2026-000001</dd>
+          <dt>발급 일시</dt>
+          <dd><time datetime="2026-09-25T15:00:00+09:00">2026년 9월 25일 15:00 KST</time></dd>
+          <dt>제목</dt>
+          <dd>원본 확인 체험용 샘플</dd>
+          <dt>구분</dt>
+          <dd>샘플 · 스튜디오 정물</dd>
+          <dt>파일</dt>
+          <dd><span class="mono">sample-original.jpg</span> · JPEG · 1200×900 · 23,543바이트</dd>
+          <dt>지문(SHA-256)</dt>
+          <dd><span class="hash" id="demo-hash">2e58e77648954e67ce51a77b2913064a0d4dc9454fb92d81c8e6ff3321178a60</span></dd>
+          <dt>NFT 원본 등록</dt>
+          <dd>시범 운영 — 블록체인 등록 전, 공개 레지스트리에만 기록</dd>
+        </dl>
+        <div class="cert-foot stack gap-sm">
+          <p>체험용 샘플 인증서입니다. 고객 촬영분이 아니며, <a href="/samples/sample-original.jpg">샘플 원본 파일</a>과 밝기만 4% 올린 <a href="/samples/sample-edited.jpg">보정본</a>을 받아 원본 확인 페이지에서 직접 비교해 볼 수 있습니다.</p>
+          <div class="cluster">
+            <a class="btn btn-ink btn-sm" href="/certificate.html?id=DRC-2026-000001">인증서 전체 보기</a>
+            <button class="btn btn-sm" type="button" data-copy-target="#demo-hash">지문 복사</button>
           </div>
         </div>
-        <div class="grid" style="margin-top:16px">
-          <a class="lk" href="/doyou-curation.html"><b>🧮 큐레이션 엔진</b><span>장소 → 입점·단가</span></a>
-          <a class="lk" href="/doyou-locations.html"><b>📍 동네 큐레이션</b><span>동네별 입점 제안</span></a>
-          <a class="lk" href="/doyou-apply.html"><b>📝 입점 신청</b><span>브랜드 입점</span></a>
-          <a class="lk" href="/doyou-content.html"><b>🎁 콘텐츠 제작</b><span>입점 브랜드 무료</span></a>
-          <a class="lk" href="/doyou-franchise.html"><b>💸 가맹 모집</b><span>성장 배당</span></a>
-          <a class="lk" href="/doyou-ops.html"><b>⚙️ 본점 운영</b><span>운영 매뉴얼</span></a>
-          <a class="lk" href="/doyou-business.html"><b>💳 비즈니스 모델</b><span>구독·MRR</span></a>
-          <a class="lk" href="/doyou-edu.html"><b>🎓 교육 팝업 컨셉</b><span>범어점</span></a>
-          <a class="lk" href="/doyou-hub.html"><b>🏬 DOYOU 허브</b><span>전체 자료 ↗</span></a>
-        </div>
       </div>
-    </section>
-
-    <section class="blk" id="content">
-      <h2 class="b">입점사 쇼케이스 — 🦀 crabox.ai</h2>
-      <p class="lead"><b><a href="/crabox.html">crabox.ai</a></b>는 <b>생성형 AI 아카데미 — DOYOU 입점사</b>입니다. 수능(고교 정규 과정)으로 기초를 다지고 <b>정통 교육 위에 생성형 AI</b>를 얹는 커리큘럼으로, 수능 학습 게임 STUDY RUSH와 생성형 AI 교육을 운영합니다. DataPD는 이 콘텐츠를 큐레이션해 팝업 현장의 <b>키오스크와 웹</b>으로 서비스하고, 반응 데이터를 브랜드에 돌려줍니다. 입점 모델의 실물 사례예요.</p>
-      <div class="app" style="grid-template-columns:1fr 1fr; align-items:stretch">
-        <div class="card">
-          <span class="tag" style="background:var(--blue); color:#fff">🦀 crabox.ai · 수능 학습 게임</span>
-          <h3 style="font-size:19px; font-weight:900; margin:10px 0 6px">⚡ STUDY RUSH</h3>
-          <p style="font-size:13px; color:var(--muted)">crabox.ai가 운영하는 수능 학습자료 기반 게임 — 국·영·수·과·사 + 100% 원본 가이드 15편. 팝업에서 학생·가족을 모으는 집객 콘텐츠로 서비스됩니다.</p>
-          <a class="playbtn" href="/play.html">게임 플레이 →</a>
-          <p style="margin-top:10px; font-size:12.5px"><a href="/guides.html" style="color:var(--bluetx); font-weight:700">학습 자료 15편</a> · <a href="/learn.html" style="color:var(--bluetx); font-weight:700">학습 로드맵</a></p>
-        </div>
-        <div class="card">
-          <span class="tag" style="background:var(--terra); color:#fff">🦀 crabox.ai · 코딩 교육</span>
-          <h3 style="font-size:19px; font-weight:900; margin:10px 0 6px">💻 바이브 코딩 교육</h3>
-          <p style="font-size:13px; color:var(--muted)">crabox.ai가 제작하는 바이브 코딩 교육 — AI에게 말로 시켜 앱을 만듭니다. 이 생태계의 게임·엔진·페이지 전부가 그 결과물.</p>
-          <a class="playbtn" href="/vibe-coding.html">교육 보기 →</a>
-        </div>
-      </div>
-      <p style="margin-top:12px; font-size:13px; color:var(--muted)">crabox.ai가 받는 것(공간·집객·키오스크 유통·반응 데이터)이 곧 입점 혜택입니다 — <a href="/crabox.html" style="font-weight:800">입점사 사례 보기 →</a> · 콘텐츠가 없는 브랜드는 <a href="/doyou-content.html" style="font-weight:800">무료로 만들어 드려요 →</a> · <a href="/doyou-partners.html" style="font-weight:800">전체 입점사 리스트 →</a></p>
-    </section>
-
-    <section class="blk">
-      <div class="fly">
-        <h2>데이터 플라이휠</h2>
-        <div class="ring">
-          <div class="rn"><b>게임</b><span>집객 · 데이터 · 광고면</span></div>
-          <span class="ar">→</span>
-          <div class="rn"><b>큐레이션</b><span>장소 × 브랜드 매칭</span></div>
-          <span class="ar">→</span>
-          <div class="rn"><b>입점·가맹·광고</b><span>수익</span></div>
-          <span class="ar">↻</span>
-          <div class="rn"><b>더 많은 데이터</b><span>큐레이션 정교화</span></div>
-        </div>
-        <p>게임이 사람과 데이터를 만들고 → 데이터로 장소를 큐레이션하고 → 입점·가맹·광고로 벌고 → 다시 더 나은 데이터로. 이 순환이 DataPD의 엔진입니다.</p>
-      </div>
-    </section>
-
-    <section class="blk" id="vision">
-      <h2>성장 로드맵 — 글로벌 팝업 스토어로</h2>
-      <p class="lead">데이터 큐레이션·집객 콘텐츠·운영 매뉴얼은 언어만 바꾸면 어느 도시에서든 작동합니다. 범어에서 검증하고, 전국으로, 그리고 세계로.</p>
-      <div class="flow">
-        <div class="fbox"><div class="ft">🏬 1. 범어 본점 (직영)</div><div class="fd">대구 교육 부촌 1번지에서 모델 검증 — 입점사·데이터·공간 시안까지</div></div>
-        <div class="farr">→</div>
-        <div class="fbox"><div class="ft">🇰🇷 2. 전국 가맹</div><div class="fd">본점 입점사 풀 + 주간 매뉴얼 + 성장 배당으로 도시별 확장</div></div>
-        <div class="farr">→</div>
-        <div class="fbox hot"><div class="ft">🌏 3. 글로벌 팝업 스토어</div><div class="fd">도시를 읽는 큐레이션 플랫폼 — 현지 브랜드 × 현지 콘텐츠로</div></div>
-      </div>
-    </section>
-
-    <div class="cta">
-      <h2>함께할까요?</h2>
-      <p>입점 브랜드 · 가맹 운영자 · 제휴 · 투자 — 무엇이든 한 줄로 알려주세요.</p>
-      <a href="mailto:jinho.choi1010@gmail.com?subject=DataPD 문의">문의하기</a>
-      <a class="alt" href="/doyou-hub.html">DOYOU 자료 보기</a>
     </div>
-  </main>
+  </section>
 
-  <footer>
-    <div><span class="bf-name">DataPD</span></div>
-    <div class="bf-meta">데이터를 재료로 비즈니스를 창출하는 플랫폼 · 주 사업 DOYOU 팝업스토어 운영 · 입점사 <a href="/crabox.html">🦀 crabox.ai</a>의 콘텐츠 <a href="/play.html">STUDY RUSH</a> · <a href="/guides.html">학습 자료</a> · <a href="/vibe-coding.html">바이브 코딩</a> · jinho.choi1010@gmail.com</div>
-  </footer>
-
-  <noscript>
-    <div style="max-width:720px;margin:0 auto;padding:24px 20px;line-height:1.8;color:#141413;">
-      <h1>DataPD — 데이터를 재료로 비즈니스를 창출하는 플랫폼</h1>
-      <p>DataPD의 주 사업은 DOYOU 팝업스토어 운영입니다. 장소별 데이터 큐레이션으로 입점 브랜드를 채우고(1~2주 저비용 팝업 + 반응 데이터 리포트 + 전용 콘텐츠 무료 제작), 가맹점주에게는 매주 큐레이션 제안·운영 매뉴얼·게임 집객·성장 배당을 제공합니다. 또한 새로운 브랜드·제품에 관련된 콘텐츠를 팝업 현장 키오스크로 서비스합니다. 입점사 사례로, 생성형 AI 아카데미 crabox.ai가 수능 학습 게임 STUDY RUSH(100% 원본 학습 가이드 15편 포함)로 기초를 다지고 그 위에 생성형 AI 교육을 운영하며 — 이 콘텐츠가 큐레이션을 통해 팝업과 키오스크에 서비스됩니다.</p>
-      <p><a href="/doyou-invite.html">입점 브랜드 모집</a> · <a href="/doyou-franchise.html">가맹 안내</a> · <a href="/doyou-content.html">무료 콘텐츠 제작</a> · <a href="/crabox.html">입점사 사례 crabox.ai</a> · <a href="/play.html">STUDY RUSH 게임</a> · <a href="/guides.html">학습 자료 15편</a> · <a href="/genai.html">생성형 AI 본과정</a></p>
+  <!-- 5. 촬영 종목 -->
+  <section class="section" aria-labelledby="kinds-title">
+    <div class="wrap">
+      <div class="sec-head stack">
+        <p class="eyebrow">촬영 종목 · 셀프</p>
+        <h2 class="h2" id="kinds-title">혼자서도, 여럿이서도 직접 찍으세요</h2>
+      </div>
+      <div class="grid grid-3">
+        <div class="tile">
+          <h3>증명·여권·취업 사진</h3>
+          <p>규격에 맞춰 직접 찍고, 규격 인화까지 받아 가세요.</p>
+          <p><span class="tag">증명·여권 부스</span></p>
+        </div>
+        <div class="tile">
+          <h3>프로필</h3>
+          <p>개인 프로필, SNS 프로필, 바디프로필을 배경지와 조명 2등 앞에서 찍습니다.</p>
+          <p><span class="tag">메인 촬영 세트</span></p>
+        </div>
+        <div class="tile">
+          <h3>가족·돌·만삭·커플·우정</h3>
+          <p>40분 촬영이면 최대 4인까지 함께 찍을 수 있습니다.</p>
+          <p><span class="tag">메인 촬영 세트</span></p>
+        </div>
+        <div class="tile">
+          <h3>반려동물</h3>
+          <p>반려동물과 함께하는 사진도, 반려동물만 담는 사진도 찍을 수 있습니다.</p>
+          <p><span class="tag">메인 촬영 세트</span></p>
+        </div>
+        <div class="tile">
+          <h3>제품·비즈니스</h3>
+          <p>소상공인 제품 실사와 비즈니스 사진을 직접 찍고, 원본 파일을 인증서와 함께 남기세요.</p>
+          <p><span class="tag">메인 촬영 세트</span></p>
+        </div>
+      </div>
+      <p class="small muted body after">모든 종목에서 고른 사진마다 원본 인증서가 기본으로 발급됩니다. NFT 원본 등록은 원하는 컷만 선택하세요.</p>
     </div>
-  </noscript>
+  </section>
 
-  <script type="application/ld+json">
-  {"@context":"https://schema.org","@type":"Organization","name":"DataPD","url":"https://www.datapd.ai","description":"데이터를 재료로 비즈니스를 창출하는 플랫폼. 주 사업은 DOYOU 팝업스토어 운영(입점 브랜드·가맹점주 서비스)이며, 브랜드 콘텐츠를 키오스크로 서비스합니다. 입점사 사례: 생성형 AI 아카데미 crabox.ai — 수능 기초(고교 정규 과정) 위에 생성형 AI 교육.","email":"jinho.choi1010@gmail.com"}
-  </script>
-<script src="/auth-config.js?v=1"></script><script src="/auth.js?v=2"></script><script src="/auth-nav.js?v=1"></script>
+  <!-- 6. 요금 요약 -->
+  <section class="section" aria-labelledby="price-title">
+    <div class="wrap">
+      <div class="sec-head stack">
+        <h2 class="h2" id="price-title">요금 요약</h2>
+        <p><span class="tag">오픈 예정가 · 확정 전</span></p>
+      </div>
+      <div class="table-wrap body">
+        <table class="price">
+          <caption class="sr-only">최박사사진관 요금표 (오픈 예정가 · 확정 전)</caption>
+          <thead>
+            <tr><th scope="col">항목</th><th scope="col" class="amt">오픈 예정가 · 확정 전</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>셀프 촬영 20분 · 1–2인</td><td class="amt">20,000원</td></tr>
+            <tr><td>셀프 촬영 40분 · 최대 4인 (가족·프로필)</td><td class="amt">35,000원</td></tr>
+            <tr><td>인원 추가 (1인)</td><td class="amt">5,000원</td></tr>
+            <tr><td>셀프 증명·여권·취업 사진 (규격 인화 포함)</td><td class="amt">15,000원</td></tr>
+            <tr><td>원본 인증서 (디지털)</td><td class="amt">모든 촬영에 기본 포함</td></tr>
+            <tr><td>NFT 원본 등록 (선택)<small>지문만 기록 · 별도 동의 후 진행</small></td><td class="amt">컷당 3,000원</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="stack body after">
+        <p class="small muted">위 요금은 오픈 예정가이며 확정 전입니다. 확정 요금은 오픈 때 안내합니다.</p>
+        <p><a class="link-arrow" href="/guide.html">이용 안내에서 자세히</a></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7. 공간 -->
+  <section class="section tight" aria-labelledby="space-title">
+    <div class="wrap">
+      <div class="stack body">
+        <p class="eyebrow">공간 구성안 · 시안</p>
+        <h2 class="h2" id="space-title">범어동 10평 셀프 스튜디오</h2>
+        <p class="body">대구 수성구 범어동의 10평(약 33㎡) 공간입니다. 가로 7.3m, 세로 4.5m 안에 메인 촬영 세트와 증명·여권 부스, 파우더·소품 공간, 셀렉·원본 인증서 발급 스테이션, 대기 공간을 두는 구성안을 다듬고 있습니다. 상세 주소는 오픈 때 안내합니다.</p>
+        <p><a class="link-arrow" href="/guide.html">이용 안내에서 공간 구성안 보기</a></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 8. FAQ -->
+  <section class="section" aria-labelledby="faq-title">
+    <div class="wrap">
+      <div class="sec-head stack">
+        <h2 class="h2" id="faq-title">원본 인증, 이것이 궁금합니다</h2>
+      </div>
+      <div class="faq narrow">
+        <details>
+          <summary>보정한 사진도 인증되나요?</summary>
+          <div class="ans">
+            <p>아니요. 원본 인증서는 스튜디오가 발급한 원본 파일에만 해당합니다. 보정, 자르기, 필터, 형식 변환처럼 파일을 조금이라도 바꾸면 지문이 완전히 달라져 원본과 일치하지 않는 것으로 나옵니다. 보정본을 쓰시더라도 원본 파일은 따로 보관해 두세요.</p>
+            <p>눈으로는 거의 같아 보이는 <a href="/samples/sample-edited.jpg">밝기 4% 보정본</a>으로 직접 확인해 볼 수 있습니다.</p>
+          </div>
+        </details>
+        <details>
+          <summary>카톡으로 보내도 원본 확인이 되나요?</summary>
+          <div class="ans">
+            <p>카카오톡 같은 메신저로 사진을 보내면 대부분 재압축되어 파일이 바뀝니다. 그러면 지문도 달라져 원본 확인이 되지 않습니다. 스크린샷도 마찬가지입니다.</p>
+            <p>확인이 필요할 때는 메일 첨부나 파일 전송처럼 파일을 그대로 전달하는 방법으로 원본 파일을 보내 주세요. 받는 사람은 <a href="/verify.html">원본 확인</a> 페이지에서 바로 확인할 수 있습니다.</p>
+          </div>
+        </details>
+        <details>
+          <summary>NFT는 코인인가요?</summary>
+          <div class="ans">
+            <p>아니요. NFT 원본 등록은 사진 파일의 지문을 공개 블록체인에 남기는 확인용 기록입니다. 가상자산이 아니며 투자·거래·결제 수단이 아닙니다. 어떤 가격이나 이익도 약속하지 않고, 스튜디오는 재판매 시장을 운영하지 않습니다.</p>
+            <p>등록은 선택이며, 컷당 3,000원(오픈 예정가 · 확정 전)은 기록 작업에 대한 요금입니다. 지갑 없이 스튜디오가 기록하고, 확인은 인증서 링크로 하시면 됩니다. 기록할 블록체인 네트워크는 오픈 때 안내합니다.</p>
+          </div>
+        </details>
+        <details>
+          <summary>제 얼굴이 블록체인에 올라가나요?</summary>
+          <div class="ans">
+            <p>아니요. 블록체인에는 사진 파일의 지문(SHA-256), 인증서 번호, 발급 일시만 기록합니다. 사진, 얼굴, 이름·연락처 같은 개인정보는 올리지 않습니다.</p>
+            <p>블록체인 기록은 한 번 남기면 지울 수 없습니다. 그래서 지문만 기록합니다. NFT 원본 등록은 선택이며, 별도로 동의하신 경우에만 진행합니다.</p>
+          </div>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- 9. Closing CTA -->
+  <section class="section" aria-labelledby="cta-title">
+    <div class="wrap">
+      <div class="panel split">
+        <div class="stack">
+          <h2 class="h2" id="cta-title">오픈 소식을 가장 먼저 받아 보세요</h2>
+          <p class="lead">메일로 알림을 신청하시면 정식 오픈이 정해질 때 오픈 날짜와 확정 요금, 상세 주소를 메일 한 통으로 알려 드립니다.</p>
+        </div>
+        <div class="stack">
+          <p><a class="btn btn-accent" href="mailto:jinho.choi1010@gmail.com?subject=%5B%EC%B5%9C%EB%B0%95%EC%82%AC%EC%82%AC%EC%A7%84%EA%B4%80%5D%20%EC%98%A4%ED%94%88%20%EC%95%8C%EB%A6%BC%20%EC%8B%A0%EC%B2%AD">오픈 알림 받기</a></p>
+          <p class="small muted">지금은 오픈 알림 신청만 받고 있습니다. 촬영 예약은 정식 오픈과 함께 시작합니다. 문의는 <a href="mailto:jinho.choi1010@gmail.com">jinho.choi1010@gmail.com</a>으로 보내 주세요.</p>
+          <p class="xs muted">오픈 알림은 신청하신 분께만 한 번 보냅니다. 보내 주신 이메일 주소는 이 알림을 보내는 데에만 쓰고, <a href="/privacy.html">개인정보처리방침</a>에 정한 기간 안에 파기합니다. 신청은 선택이며, 언제든 메일로 취소할 수 있습니다.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-foot">
+  <div class="wrap foot-in">
+    <div>
+      <a class="logo" href="/" aria-label="최박사사진관 홈">
+        <svg class="mark" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9V3h6M15 3h6v6M21 15v6h-6M9 21H3v-6" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="3" fill="var(--accent)"/></svg>
+        <span class="wm">최박사사진관<small>DR. CHOI PHOTO STUDIO</small></span>
+      </a>
+      <p>찍는 순간, 원본이 증명되는 셀프 사진관.</p>
+      <p style="margin-top:14px"><span class="status">오픈 준비 중</span></p>
+    </div>
+    <div>
+      <h4>스튜디오</h4>
+      <ul>
+        <li>대구 수성구 범어동</li>
+        <li>10평 셀프 스튜디오 · 상세 주소는 오픈 때 안내</li>
+        <li><a href="mailto:jinho.choi1010@gmail.com">jinho.choi1010@gmail.com</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>안내</h4>
+      <ul>
+        <li><a href="/guide.html">이용 안내</a></li>
+        <li><a href="/authenticity.html">원본 인증</a></li>
+        <li><a href="/verify.html">원본 확인</a></li>
+        <li><a href="/privacy.html">개인정보처리방침</a></li>
+        <li><a href="/terms.html">이용약관</a></li>
+      </ul>
+    </div>
+    <p class="fine"><span>© 2026 최박사사진관 · DataPD</span><span>사업자 정보는 정식 오픈 때 게재합니다.</span><span>요금·운영 시간은 오픈 전 예정 정보입니다.</span></p>
+  </div>
+</footer>
 </body>
 </html>
