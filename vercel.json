@@ -2,6 +2,9 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "trailingSlash": true,
   "redirects": [
+    { "source": "/drchoistudio", "destination": "https://drchoi-studio.smartear.chatgpt.site/", "permanent": false },
+    { "source": "/drchoistudio/", "destination": "https://drchoi-studio.smartear.chatgpt.site/", "permanent": false },
+    { "source": "/drchoistudio/index.html", "destination": "https://drchoi-studio.smartear.chatgpt.site/", "permanent": false },
     { "source": "/samples/:file", "destination": "/drchoistudio/samples/:file", "permanent": true },
     { "source": "/certificates.json", "destination": "/drchoistudio/certificates.json", "permanent": true },
     { "source": "/static/studio-plan.svg", "destination": "/drchoistudio/studio-plan.svg", "permanent": true },

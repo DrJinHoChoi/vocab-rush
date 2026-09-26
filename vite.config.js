@@ -32,6 +32,9 @@ export default defineConfig({
         // drchoistudio/certificates.json and sample photos are deliberately NOT precached:
         // verification must always read the live registry and exact file bytes.
         globPatterns: ['**/*.{js,css,html,ico,png,svg}'],
+        // The studio home redirects to the external studio site (vercel.json); a precached copy
+        // would keep answering /drchoistudio/ from the cache instead.
+        globIgnores: ['drchoistudio/index.html'],
         // Multi-page static site, not an SPA: never answer a navigation with index.html.
         // Unknown URLs must reach the host (Vercel) so they get 404.html.
         navigateFallback: null,
