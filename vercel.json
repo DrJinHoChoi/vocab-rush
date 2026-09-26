@@ -1,4 +1,14 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "trailingSlash": true
+  "trailingSlash": true,
+  "redirects": [
+    { "source": "/samples/:file", "destination": "/drchoistudio/samples/:file", "permanent": true },
+    { "source": "/certificates.json", "destination": "/drchoistudio/certificates.json", "permanent": true },
+    { "source": "/static/studio-plan.svg", "destination": "/drchoistudio/studio-plan.svg", "permanent": true },
+    { "source": "/verify.html", "destination": "/drchoistudio/verify.html", "permanent": true },
+    { "source": "/certificate.html", "destination": "/drchoistudio/certificate.html", "permanent": true },
+    { "source": "/guide.html", "destination": "/drchoistudio/guide.html", "permanent": true },
+    { "source": "/authenticity.html", "destination": "/drchoistudio/authenticity.html", "permanent": true },
+    { "source": "/terms.html", "destination": "/drchoistudio/terms.html", "permanent": true }
+  ]
 }

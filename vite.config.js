@@ -41,6 +41,8 @@ export default defineConfig({
         cleanupOutdatedCaches: true,
         skipWaiting: true,
         clientsClaim: true,
+        // Reload open tabs once when a new worker replaces an older one (see public/sw-refresh.js).
+        importScripts: ['sw-refresh.js'],
       },
     }),
   ],
