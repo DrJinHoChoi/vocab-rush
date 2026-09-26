@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>복제가 무한해질 때, 원본은 희소해진다 | DataPD 이야기</title>
+<meta name="description" content="디지털 사본은 원본과 비트 하나까지 같습니다. 그런데도 원본이 따로 있다면, 그 차이는 어디에서 올까요. 희소성은 수량이 아니라 증명에서 나옵니다." />
+<link rel="canonical" href="https://www.datapd.ai/stories/why-originals-are-scarce.html" />
+<meta name="theme-color" content="#F4F4F1" media="(prefers-color-scheme: light)" />
+<meta name="theme-color" content="#0E0E0D" media="(prefers-color-scheme: dark)" />
+<link rel="icon" href="/favicon.ico" sizes="any" />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+<meta property="og:type" content="article" />
+<meta property="og:site_name" content="DataPD" />
+<meta property="og:title" content="복제가 무한해질 때, 원본은 희소해진다" />
+<meta property="og:description" content="디지털 사본은 원본과 비트 하나까지 같습니다. 그런데도 원본이 따로 있다면, 그 차이는 어디에서 올까요. 희소성은 수량이 아니라 증명에서 나옵니다." />
+<meta property="og:url" content="https://www.datapd.ai/stories/why-originals-are-scarce.html" />
+<meta property="og:image" content="https://www.datapd.ai/og-card.png" />
+<meta property="og:locale" content="ko_KR" />
+<meta name="twitter:card" content="summary_large_image" />
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap" />
+<link rel="stylesheet" href="/static/site.css" />
+<script src="/static/site.js" defer></script>
+<style>
+  .story-head{ --s:18px; max-width:760px; }
+  .story-head .eyebrow a{ position:relative; color:var(--ink); text-decoration:underline; text-decoration-thickness:1px; text-underline-offset:3px; }
+  .story-head .eyebrow a::before{ content:""; position:absolute; inset:-14px -8px; }
+  .story-head .eyebrow a:hover{ text-decoration-thickness:2px; }
+  .story-head .article-meta{ gap:6px 10px; }
+  .nw{ white-space:nowrap; }
+  .prose blockquote p{ margin:0; }
+  .birth>*+*{ margin-top:18px; }
+  .birth-head{ justify-content:space-between; }
+  .birth .kv dd{ line-height:1.6; }
+  .cmp{ width:100%; border-collapse:collapse; font-size:var(--t-sm); line-height:1.6; }
+  .cmp caption{ caption-side:top; text-align:left; font-size:var(--t-sm); color:var(--graphite); padding-bottom:12px; }
+  .cmp th,.cmp td{ text-align:left; vertical-align:top; padding:12px 14px 12px 0; border-top:1px solid var(--hair); }
+  .cmp tr>:last-child{ padding-right:0; }
+  .cmp thead th{ font-family:var(--mono); font-size:var(--t-xs); font-weight:500; letter-spacing:.04em; color:var(--graphite); border-top:0; padding-top:0; }
+  .cmp tbody th{ font-weight:600; color:var(--ink); }
+  .cmp tbody tr:last-child>*{ border-bottom:1px solid var(--hair); }
+  .cmp .hash{ font-size:12.5px; white-space:nowrap; }
+  .cmp .is-match{ color:var(--ok); font-weight:700; }
+  .cmp .no-match{ color:var(--graphite); font-weight:700; }
+  .story-end{ max-width:760px; }
+  .story-end>*+*{ margin-top:clamp(40px,6vw,64px); }
+  .story-cta{ --s:14px; }
+  .story-next{ --s:14px; }
+  .story-next .link-arrow{ position:relative; }
+  .story-next .link-arrow::before{ content:""; position:absolute; inset:-13px -6px; }
+</style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "복제가 무한해질 때, 원본은 희소해진다",
+  "description": "디지털 사본은 원본과 비트 하나까지 같습니다. 그런데도 원본이 따로 있다면, 그 차이는 어디에서 올까요. 희소성은 수량이 아니라 증명에서 나옵니다.",
+  "image": "https://www.datapd.ai/og-card.png",
+  "datePublished": "2026-09-26",
+  "dateModified": "2026-09-26",
+  "inLanguage": "ko",
+  "author": {
+    "@type": "Organization",
+    "@id": "https://www.datapd.ai/#organization",
+    "name": "DataPD",
+    "url": "https://www.datapd.ai/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "@id": "https://www.datapd.ai/#organization",
+    "name": "DataPD",
+    "url": "https://www.datapd.ai/",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://www.datapd.ai/icon-512.png",
+      "width": 512,
+      "height": 512
+    }
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://www.datapd.ai/stories/why-originals-are-scarce.html"
+  },
+  "url": "https://www.datapd.ai/stories/why-originals-are-scarce.html",
+  "isPartOf": { "@type": "Blog", "@id": "https://www.datapd.ai/stories/#blog", "name": "DataPD 이야기", "url": "https://www.datapd.ai/stories/" }
+}
+</script>
+</head>
+<body>
+<a class="skip" href="#main">본문으로 건너뛰기</a>
+<header class="site-head">
+  <div class="wrap head-in">
+    <a class="logo" href="/" aria-label="DataPD 홈">
+      <svg class="mark" viewBox="0 0 24 24" aria-hidden="true"><g fill="currentColor" fill-opacity=".42"><circle cx="4" cy="4" r="1.9"/><circle cx="12" cy="4" r="1.9"/><circle cx="20" cy="4" r="1.9"/><circle cx="4" cy="12" r="1.9"/><circle cx="20" cy="12" r="1.9"/><circle cx="4" cy="20" r="1.9"/><circle cx="12" cy="20" r="1.9"/><circle cx="20" cy="20" r="1.9"/></g><circle cx="12" cy="12" r="3.4" fill="var(--accent)"/></svg>
+      <span class="wm">DataPD<small>ORIGINAL DATA</small></span>
+    </a>
+    <nav class="nav" aria-label="주요 메뉴">
+      <a href="/#original">오리지널 데이터</a>
+      <a href="/stories/" aria-current="page">이야기</a>
+      <a href="/#projects">프로젝트</a>
+    </nav>
+    <a class="btn btn-ink btn-sm head-cta" href="/drchoistudio/">최박사사진관 <span aria-hidden="true">→</span></a>
+  </div>
+</header>
+
+<main id="main">
+<article aria-labelledby="story-title">
+
+  <header class="section tight">
+    <div class="wrap">
+      <div class="stack story-head">
+        <p class="eyebrow"><a href="/stories/">이야기 01</a></p>
+        <h1 class="h2" id="story-title">복제가 무한해질 때, 원본은 희소해진다</h1>
+        <p class="lead">디지털 사본은 원본과 비트 하나까지 같습니다. 그런데도 원본이 따로 있다면, 그 차이는 어디에서 올까요. 희소성은 수량이 아니라 증명에서 나옵니다.</p>
+        <p class="article-meta"><time datetime="2026-09-26">2026년 9월 26일</time><span aria-hidden="true">·</span><span>DataPD</span><span aria-hidden="true">·</span><span>읽는 시간 약 6분</span></p>
+      </div>
+    </div>
+  </header>
+
+  <div class="section tight">
+    <div class="wrap">
+      <div class="prose">
+
+        <h2 id="photo-as-proof">사진이 곧 증거이던 시절이 지나갑니다</h2>
+        <p>오랫동안 사진은 그 자체로 증거처럼 여겨졌습니다. 카메라 앞에 무언가가 있어야 사진이 남는다고 믿었기에, “사진이 있으니까 진짜”라는 말에는 따로 설명이 필요 없었습니다.</p>
+        <p>이제는 사정이 다릅니다. 문장 몇 줄로 실제로 찍은 것 같은 사진을 만들 수 있고, 얼굴을 바꾸거나 없던 사람을 끼워 넣는 일도 어렵지 않습니다. 사진만이 아닙니다. 글과 목소리도 그럴듯하게 만들어집니다. 그렇게 만든 것이든 실제로 찍은 것이든, 한번 올라간 파일은 금세 복사되어 여기저기로 퍼집니다.</p>
+        <p>그래서 질문이 바뀌었습니다. 예전에는 사진을 보며 “무엇이 찍혔나”를 물었다면, 이제는 “이 파일은 어디에서 왔나”를 먼저 물어야 합니다. 보이는 것만으로는 더 이상 답할 수 없기 때문입니다.</p>
+
+        <h2 id="paradox">사본이 원본과 똑같다는 역설</h2>
+        <p>복제가 원본에서 무엇을 가져가는지는 오래된 질문입니다. 독일의 비평가 발터 벤야민은 1936년에 처음 발표된 글 「<a href="https://plato.stanford.edu/entries/benjamin/">기술복제시대의 예술작품</a>」에서, 아무리 정교한 복제품에도 빠져 있는 것이 있다고 보았습니다. 원작이 특정한 시간과 장소에 단 하나로 존재한다는 사실입니다. 그는 원작의 이 유일한 존재감을 ‘아우라’라는 말로 설명했고, 기술 복제가 그것을 약하게 만든다고 했습니다.</p>
+        <p>디지털 파일에 오면 이 이야기는 한 걸음 더 나아갑니다. 필름 사진은 다시 인화할 때마다 조금씩 달라지고, 복사기로 복사한 종이는 원본보다 흐려집니다. 그런데 디지털 파일을 그대로 복사하면 사본은 원본과 비트 하나까지 같습니다. 파일만 들여다봐서는 어느 쪽이 먼저였는지 알 수 없습니다.</p>
+        <p>파일의 지문도 마찬가지입니다. 지문(<span class="nw">SHA-256</span>)은 파일 내용 전체로 계산하는 64자리 값으로, 바이트가 같은 파일이면 언제 어디서 계산해도 같은 값이 나옵니다. 원본을 그대로 복사한 사본은 지문까지 원본과 같습니다. 지문은 “이 파일이 원본과 같은 바이트인가”에는 답하지만, “이 파일이 처음 만들어진 바로 그 파일인가”에는 답하지 못합니다.</p>
+        <p>그렇다면 원본을 원본으로 만드는 것은 무엇일까요. 답은 파일 바깥에 있습니다. 파일 자체가 아니라 그 파일이 태어난 순간의 기록, 곧 <strong>누가, 언제, 어떤 지문으로 처음 기록했는가</strong>입니다. 사본은 얼마든지 늘어날 수 있지만, 처음 남긴 기록은 하나뿐입니다.</p>
+        <blockquote><p>복제는 무한하고, 원본은 하나입니다.</p></blockquote>
+
+        <h2 id="scarcity">희소성은 수량이 아니라 증명에서 나옵니다</h2>
+        <p>희소성이라고 하면 보통 수량을 먼저 떠올립니다. 판화에 에디션 번호를 매기듯, 몇 점만 만들기로 정해 두는 오래되고 분명한 방식입니다. 다만 DataPD가 말하는 희소성은 이와 다릅니다.</p>
+        <p>DataPD는 사본의 수를 줄이지 않습니다. 복제를 막는 대신, 어떤 파일이 처음 기록된 원본과 같은지 가려낼 수 있게 합니다. 원본이 드물다는 이유로 값을 매기지도 않습니다. DataPD가 만드는 희소성은 <strong>원본이 하나라는 사실을 누구나 확인할 수 있게 하는 것</strong>, 다시 말해 증명할 수 있는 유일성입니다.</p>
+        <p>두 방식은 기대는 곳이 다릅니다. 수량으로 만드는 희소성은 “더 만들지 않겠다”는 약속에서 나오고, 증명으로 만드는 희소성은 “처음 남긴 기록은 하나”라는 사실에서 나옵니다. 앞의 것은 수를 정하는 일이고, 뒤의 것은 기록을 남기고 보여 주는 일입니다.</p>
+        <p>AI가 사진과 글, 목소리까지 만들어 내는 시대에는 그럴듯한 데이터가 점점 흔해지고, 증명할 수 있는 원본이 가장 드문 데이터가 됩니다. DataPD가 오리지널 데이터를 기록하는 이유입니다.</p>
+
+        <h2 id="how">태어나는 순간 기록하고, 누구나 확인하게 합니다</h2>
+        <p>방법은 단순합니다. 데이터가 만들어진 바로 그때 지문을 계산하고, 누가 언제 기록했는지와 함께 남깁니다. 그 기록을 공개해 두면, 나중에 파일을 받은 사람은 누구든 스스로 지문을 계산해 기록과 대조해 볼 수 있습니다. <span class="nw">SHA-256</span>은 미국 국립표준기술연구소(NIST)의 표준 문서 <a href="https://csrc.nist.gov/pubs/fips/180-4/upd1/final">FIPS 180-4</a>에 정의된 공개 해시 함수라서, 제대로 구현된 도구라면 어느 것으로 계산해도 같은 파일에서 같은 지문이 나옵니다.</p>
+        <p>여기서 꼭 기억할 점이 있습니다. 기록과 일치하는 것은 원본과 바이트 단위로 같은 파일뿐입니다. 사진 크기를 줄이거나, 메신저가 사진을 다시 압축해 보내거나, 화면을 캡처하면 파일이 새로 만들어져 지문이 달라집니다. 편집 앱에서 열었다가 다시 저장하는 것만으로도 달라질 수 있습니다. 눈으로는 똑같아 보여도 그렇습니다. 그렇다고 그 파일이 조작됐다는 뜻은 아닙니다. 원본과 같은 파일이 아니라는 뜻일 뿐입니다.</p>
+        <p>그래서 원본 파일 자체를 받아 손대지 않고 보관하는 일이 중요합니다. 보정은 복사본으로 하세요. 원본임을 보여 줘야 할 때는 파일을 줄이거나 다시 저장하지 않고 그대로 보내야 합니다. 메일에 사진을 첨부할 때 크기를 줄일지 묻는다면 원본 크기를 고르세요. 기록은 한 번 남기면 되지만, 그 기록과 맞춰 볼 원본 파일은 가진 사람이 지켜야 합니다.</p>
+        <p>원본 확인으로 알 수 있는 범위도 분명히 해 두겠습니다. 지문이 일치한다는 것은 “이 파일이 처음 기록된 원본 파일과 바이트 단위로 같다”는 뜻입니다. 사진에 담긴 장면이 사실인지, 사진 속 사람이 누구인지, 저작권이 누구에게 있는지, 법적 증거로 쓸 수 있는지까지 보증하지는 않습니다. 기록을 남긴 곳의 서버에만 기대지 않도록 공개 블록체인에 함께 남기는 방법도 있는데, 그것이 무엇을 더하고 무엇을 더하지 않는지는 <a href="/stories/what-blockchain-adds.html">세 번째 이야기</a>에서 다룹니다.</p>
+
+        <h2 id="studio">첫 번째 오리지널 데이터 프로젝트, 최박사사진관</h2>
+        <p>DataPD의 첫 번째 프로젝트인 <a href="/drchoistudio/">최박사사진관</a>은 이 생각을 사진 한 장 단위로 옮긴 곳입니다. 대구 수성구 범어동에서 오픈을 준비하고 있는 셀프 사진관으로, 문을 열면 고객이 고른 사진마다 그 자리에서 원본 파일의 지문을 계산해 원본 인증서를 발급할 예정입니다. 지문과 인증서 번호, 발급 일시, 그리고 파일 크기·해상도·형식 같은 기술 정보는 공개 레지스트리에 기록되지만, 사진이나 얼굴, 이름·연락처는 레지스트리에 올리지 않습니다.</p>
+        <p>지금은 체험용 샘플로 직접 확인해 볼 수 있습니다. 샘플 인증서에는 원본의 첫 기록이 이렇게 남아 있습니다.</p>
+
+        <figure class="panel birth">
+          <div class="cluster birth-head">
+            <span class="eyebrow">원본의 첫 기록 · 샘플</span>
+            <span class="seal">원본</span>
+          </div>
+          <dl class="kv">
+            <dt>누가</dt>
+            <dd>최박사사진관</dd>
+            <dt>언제</dt>
+            <dd><time datetime="2026-09-25T15:00:00+09:00">2026년 9월 25일 15:00 KST</time></dd>
+            <dt>어떤 지문</dt>
+            <dd><span class="hash">2e58e77648954e67ce51a77b2913064a0d4dc9454fb92d81c8e6ff3321178a60</span></dd>
+            <dt>인증서 번호</dt>
+            <dd class="mono">DRC-2026-000001</dd>
+            <dt>블록체인</dt>
+            <dd>시범 운영 — 블록체인 등록 전, 공개 레지스트리에만 기록</dd>
+          </dl>
+          <figcaption>체험용 샘플 인증서로, 고객 촬영분이 아닙니다. <a href="/drchoistudio/certificate.html?id=DRC-2026-000001">인증서 전체 보기</a></figcaption>
+        </figure>
+
+        <p>이 인증서와 여러 파일을 대조해 보면 차이가 분명하게 드러납니다.</p>
+
+        <div class="table-wrap">
+          <table class="cmp">
+            <caption>공개 레지스트리의 DRC-2026-000001과 대조하면</caption>
+            <thead>
+              <tr>
+                <th scope="col">파일</th>
+                <th scope="col">지문 앞 8자리</th>
+                <th scope="col">원본 확인</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row"><a href="/drchoistudio/samples/sample-original.jpg">샘플 원본</a></th>
+                <td><span class="hash">2e58e776…</span></td>
+                <td class="is-match">일치</td>
+              </tr>
+              <tr>
+                <th scope="row">샘플 원본을 그대로 복사한 파일 <span class="xs muted">(예시)</span></th>
+                <td><span class="hash">2e58e776…</span></td>
+                <td class="is-match">일치</td>
+              </tr>
+              <tr>
+                <th scope="row"><a href="/drchoistudio/samples/sample-edited.jpg">밝기만 4% 올린 보정본</a></th>
+                <td><span class="hash">6aa4bf01…</span></td>
+                <td class="no-match">일치하지 않음</td>
+              </tr>
+              <tr>
+                <th scope="row">메신저가 다시 압축한 사본 <span class="xs muted">(예시)</span></th>
+                <td>달라짐</td>
+                <td class="no-match">일치하지 않음</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p>샘플 원본을 그대로 복사한 파일도 일치합니다. 바이트가 같기 때문입니다. 반대로 밝기만 4% 올린 보정본은 눈으로는 거의 구별되지 않지만 지문이 전혀 달라 일치하지 않습니다. 사본이 몇 개가 되든, 공개 레지스트리에서 이 지문을 처음 기록한 인증서는 2026년 9월 25일 15시에 발급된 DRC-2026-000001 하나입니다. 다만 이 발급 일시는 스튜디오 레지스트리의 기록입니다. 스튜디오와 별개로 시각을 확인할 수 있는 기록은 NFT 원본 등록을 한 경우에만 남고, 이 샘플은 시범 운영 단계라 아직 블록체인에 등록하기 전입니다. DataPD가 말하는 원본의 희소성은 바로 이 첫 기록에 있습니다.</p>
+        <p>그러니 복제를 막지 않아도 됩니다. 처음 태어난 순간을 기록해 두면 사본이 아무리 늘어나도 원본의 첫 기록은 하나로 남고, 어떤 파일이 그 기록과 같은지는 누구나 확인할 수 있습니다. DataPD는 다음 오리지널 데이터도 이렇게 기록할 준비를 하고 있습니다.</p>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="section tight">
+    <div class="wrap">
+      <div class="story-end">
+
+        <div class="panel stack story-cta">
+          <h2 class="h3" id="cta-title">샘플 이미지로 직접 확인해 보세요</h2>
+          <p class="small muted">샘플 원본과 밝기 4% 보정본을 원본 확인에 넣어 보면, 무엇이 일치하고 무엇이 일치하지 않는지 바로 볼 수 있습니다. 지문은 브라우저 안에서만 계산하며, 파일은 어디로도 전송되지 않습니다.</p>
+          <div class="cluster">
+            <a class="btn btn-accent" href="/drchoistudio/verify.html">원본 확인해 보기</a>
+            <a class="btn" href="/drchoistudio/">최박사사진관</a>
+          </div>
+        </div>
+
+        <nav class="stack story-next" aria-labelledby="next-title">
+          <h2 class="eyebrow" id="next-title">다음 이야기</h2>
+          <ul class="story-list">
+            <li>
+              <a href="/stories/file-fingerprint.html" rel="next">
+                <span class="no">02</span>
+                <h3>파일의 지문 — <span class="nw">SHA-256</span>으로 원본을 확인하는 법</h3>
+                <p>밝기를 4% 올렸을 뿐인데 지문이 완전히 달라집니다. 해시가 무엇을 증명하고 무엇을 증명하지 않는지, 샘플 이미지로 직접 확인해 봅니다.</p>
+              </a>
+            </li>
+          </ul>
+          <p class="small"><a class="link-arrow" href="/stories/">이야기 전체 보기</a></p>
+        </nav>
+
+      </div>
+    </div>
+  </div>
+
+</article>
+</main>
+
+<footer class="site-foot">
+  <div class="wrap foot-in">
+    <div>
+      <a class="logo" href="/" aria-label="DataPD 홈">
+        <svg class="mark" viewBox="0 0 24 24" aria-hidden="true"><g fill="currentColor" fill-opacity=".42"><circle cx="4" cy="4" r="1.9"/><circle cx="12" cy="4" r="1.9"/><circle cx="20" cy="4" r="1.9"/><circle cx="4" cy="12" r="1.9"/><circle cx="20" cy="12" r="1.9"/><circle cx="4" cy="20" r="1.9"/><circle cx="12" cy="20" r="1.9"/><circle cx="20" cy="20" r="1.9"/></g><circle cx="12" cy="12" r="3.4" fill="var(--accent)"/></svg>
+        <span class="wm">DataPD<small>ORIGINAL DATA</small></span>
+      </a>
+      <p>복제는 무한하고, 원본은 하나입니다.</p>
+      <p>DataPD는 오리지널 데이터를 기록하고, 그것이 원본인지 누구나 확인할 수 있게 합니다.</p>
+    </div>
+    <div>
+      <h4>프로젝트</h4>
+      <ul>
+        <li><a href="/drchoistudio/">최박사사진관</a> <span class="xs">· 오픈 준비 중</span></li>
+        <li><a href="/drchoistudio/verify.html">사진 원본 확인</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>DataPD</h4>
+      <ul>
+        <li><a href="/stories/">이야기</a></li>
+        <li><a href="mailto:jinho.choi1010@gmail.com">jinho.choi1010@gmail.com</a></li>
+        <li><a href="/privacy.html">개인정보처리방침</a></li>
+      </ul>
+    </div>
+    <p class="fine"><span>© 2026 DataPD</span><span>www.datapd.ai</span></p>
+  </div>
+</footer>
+</body>
+</html>

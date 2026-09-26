@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>블록체인은 원본에 무엇을 더하고, 무엇을 더하지 않는가 | DataPD 이야기</title>
+<meta name="description" content="블록체인은 &quot;그 시각에 그 지문이 있었다&quot;는 기록을 누구의 서버에도 기대지 않고 남깁니다. 소유권도, 가격도, 사진의 진실도 보증하지 않습니다." />
+<link rel="canonical" href="https://www.datapd.ai/stories/what-blockchain-adds.html" />
+<meta name="theme-color" content="#F4F4F1" media="(prefers-color-scheme: light)" />
+<meta name="theme-color" content="#0E0E0D" media="(prefers-color-scheme: dark)" />
+<link rel="icon" href="/favicon.ico" sizes="any" />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+<meta property="og:type" content="article" />
+<meta property="og:site_name" content="DataPD" />
+<meta property="og:title" content="블록체인은 원본에 무엇을 더하고, 무엇을 더하지 않는가" />
+<meta property="og:description" content="블록체인은 &quot;그 시각에 그 지문이 있었다&quot;는 기록을 누구의 서버에도 기대지 않고 남깁니다. 소유권도, 가격도, 사진의 진실도 보증하지 않습니다." />
+<meta property="og:url" content="https://www.datapd.ai/stories/what-blockchain-adds.html" />
+<meta property="og:image" content="https://www.datapd.ai/og-card.png" />
+<meta property="og:locale" content="ko_KR" />
+<meta name="twitter:card" content="summary_large_image" />
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap" />
+<link rel="stylesheet" href="/static/site.css" />
+<script src="/static/site.js" defer></script>
+<style>
+  .post-head{ padding-bottom:clamp(28px,4vw,40px); border-bottom:1px solid var(--hair); }
+  .post-head .eyebrow a{ display:inline-block; padding-block:12px; margin-block:-12px; color:var(--ink); text-decoration:underline; text-underline-offset:3px; }
+  .post-head .eyebrow a:hover{ text-decoration-thickness:2px; }
+  .post-body{ padding-top:clamp(8px,2vw,16px); }
+  .prose .ledger{ display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:28px 32px; margin-top:1.8em; }
+  .prose .ledger h3{ margin-top:0; font-size:var(--t-md); padding-bottom:10px; border-bottom:1.5px solid var(--ink); }
+  .prose .ledger .not h3{ border-bottom-color:var(--graphite); }
+  .prose .ledger ul{ list-style:none; padding:0; margin:0; font-size:var(--t-sm); line-height:1.7; }
+  .prose .ledger li{ margin:0; display:grid; grid-template-columns:18px minmax(0,1fr); gap:8px; padding:10px 0; border-bottom:1px solid var(--hair); }
+  .prose .ledger li::before{ font-family:var(--mono); font-weight:600; color:var(--ink); }
+  .prose .ledger .add li::before{ content:"+"; content:"+" / ""; }
+  .prose .ledger .not li::before{ content:"−"; content:"−" / ""; color:var(--graphite); }
+  @media (max-width:560px){ .prose .ledger{ grid-template-columns:1fr; } }
+  .post-cta{ margin-top:clamp(40px,6vw,64px); }
+  .post-cta .h3{ margin-top:6px; }
+  .story-nav{ display:grid; grid-template-columns:minmax(0,1fr) auto; gap:12px 24px; align-items:end; margin-top:clamp(32px,5vw,48px); padding-top:20px; border-top:1px solid var(--hair); }
+  .story-nav a{ display:flex; flex-direction:column; justify-content:center; gap:2px; min-height:44px; text-decoration:none; color:var(--ink); }
+  .story-nav a:hover strong{ text-decoration:underline; text-decoration-thickness:2px; text-underline-offset:4px; }
+  .story-nav .dir{ font-family:var(--mono); font-size:var(--t-xs); letter-spacing:.06em; color:var(--graphite); }
+  .story-nav strong{ font-size:var(--t-md); letter-spacing:-.02em; line-height:1.4; }
+  .story-nav .all{ font-size:var(--t-sm); font-weight:700; }
+  @media (max-width:560px){ .story-nav{ grid-template-columns:1fr; } }
+</style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "블록체인은 원본에 무엇을 더하고, 무엇을 더하지 않는가",
+  "description": "블록체인은 \"그 시각에 그 지문이 있었다\"는 기록을 누구의 서버에도 기대지 않고 남깁니다. 소유권도, 가격도, 사진의 진실도 보증하지 않습니다.",
+  "inLanguage": "ko",
+  "datePublished": "2026-09-26",
+  "dateModified": "2026-09-26",
+  "author": { "@type": "Organization", "@id": "https://www.datapd.ai/#organization", "name": "DataPD", "url": "https://www.datapd.ai/" },
+  "publisher": {
+    "@type": "Organization",
+    "@id": "https://www.datapd.ai/#organization",
+    "name": "DataPD",
+    "url": "https://www.datapd.ai/",
+    "logo": { "@type": "ImageObject", "url": "https://www.datapd.ai/icon-512.png", "width": 512, "height": 512 }
+  },
+  "image": "https://www.datapd.ai/og-card.png",
+  "mainEntityOfPage": { "@type": "WebPage", "@id": "https://www.datapd.ai/stories/what-blockchain-adds.html" },
+  "url": "https://www.datapd.ai/stories/what-blockchain-adds.html",
+  "isPartOf": { "@type": "Blog", "@id": "https://www.datapd.ai/stories/#blog", "name": "DataPD 이야기", "url": "https://www.datapd.ai/stories/" }
+}
+</script>
+</head>
+<body>
+<a class="skip" href="#main">본문으로 건너뛰기</a>
+<header class="site-head">
+  <div class="wrap head-in">
+    <a class="logo" href="/" aria-label="DataPD 홈">
+      <svg class="mark" viewBox="0 0 24 24" aria-hidden="true"><g fill="currentColor" fill-opacity=".42"><circle cx="4" cy="4" r="1.9"/><circle cx="12" cy="4" r="1.9"/><circle cx="20" cy="4" r="1.9"/><circle cx="4" cy="12" r="1.9"/><circle cx="20" cy="12" r="1.9"/><circle cx="4" cy="20" r="1.9"/><circle cx="12" cy="20" r="1.9"/><circle cx="20" cy="20" r="1.9"/></g><circle cx="12" cy="12" r="3.4" fill="var(--accent)"/></svg>
+      <span class="wm">DataPD<small>ORIGINAL DATA</small></span>
+    </a>
+    <nav class="nav" aria-label="주요 메뉴">
+      <a href="/#original">오리지널 데이터</a>
+      <a href="/stories/" aria-current="page">이야기</a>
+      <a href="/#projects">프로젝트</a>
+    </nav>
+    <a class="btn btn-ink btn-sm head-cta" href="/drchoistudio/">최박사사진관 <span aria-hidden="true">→</span></a>
+  </div>
+</header>
+
+<main id="main">
+  <article class="section" aria-labelledby="post-title">
+    <div class="wrap">
+      <div class="narrow">
+
+        <header class="post-head stack" style="--s:18px">
+          <p class="eyebrow"><a href="/stories/">이야기 03</a></p>
+          <h1 class="h2" id="post-title">블록체인은 원본에 무엇을 더하고, 무엇을 더하지 않는가</h1>
+          <p class="lead">블록체인은 “그 시각에 그 지문이 있었다”는 기록을 누구의 서버에도 기대지 않고 남깁니다. 소유권도, 가격도, 사진의 진실도 보증하지 않습니다.</p>
+          <p class="article-meta"><time datetime="2026-09-26">2026년 9월 26일</time><span aria-hidden="true">·</span><span>DataPD</span><span aria-hidden="true">·</span><span>읽는 시간 약 7분</span></p>
+        </header>
+
+        <div class="post-body">
+          <div class="prose">
+            <p><a href="/stories/file-fingerprint.html">이야기 02</a>에서 파일의 지문을 살펴봤습니다. 밝기를 4%만 올려도 지문이 완전히 달라질 만큼, 지문은 파일이 바뀌었는지를 예민하게 알려 줍니다. 그런데 반대쪽도 봐야 합니다. 원본을 바이트 하나 다르지 않게 복사한 파일은 지문도 똑같습니다. 원본 확인에 넣어도 ‘일치’가 나옵니다.</p>
+            <p>그러니 원본을 원본으로 만드는 것은 바이트가 아닙니다. 어떤 지문을, 누가, 언제 처음 기록했는가. 말하자면 원본의 출생 기록입니다. 이번 이야기는 그 기록을 어디에 두느냐에 관한 것입니다. 블록체인이 거기에 무엇을 더하고 무엇을 더하지 않는지, 나눠서 적어 봅니다.</p>
+
+            <h2>블록체인이 더하는 것: 두 번째 기록</h2>
+            <p>오픈을 준비하고 있는 최박사사진관은 문을 열면 고객이 고른 컷의 원본 파일마다 원본 인증서를 발급하고, 지문(SHA-256)과 인증서 번호, 발급 일시를 누구나 내려받을 수 있는 공개 레지스트리에 올립니다. 다만 이 레지스트리는 사진관이 자기 서버에 남긴, 사진관의 기록입니다. 발급 일시도 사진관이 적은 값이고, 웹사이트가 닫히면 함께 볼 수 없게 될 수 있습니다. 이 기록을 믿는다는 것은 결국 사진관을 믿는다는 뜻입니다.</p>
+            <p>공개 블록체인은 여기에 두 번째 기록을 더합니다. 여러 참여자가 같은 장부를 나눠 보관하고, 새 기록은 뒤에 덧붙이기만 하며, 기록이 담긴 블록에는 만들어진 시각이 함께 남습니다. 이미 들어간 기록은 어느 한 곳에서 혼자 고칠 수 없도록 설계돼 있고, 기록을 남긴 사진관 자신도 예외가 아닙니다. 최박사사진관은 정식 오픈 후 NFT 원본 등록을 선택한 컷에 한해 이 기록을 남길 예정입니다. 그러면 원본의 기록에 세 가지가 더해집니다.</p>
+            <ul>
+              <li><strong>사진관과 별개인 기록.</strong> 등록을 마친 컷이라면 사진관 웹사이트가 없어도 블록체인에 남은 지문과 인증서 번호를 따로 찾아 대조할 수 있습니다.</li>
+              <li><strong>시각의 기록.</strong> 블록의 시각은 초 단위까지 맞춘 시계라기보다 “늦어도 이 무렵에는 이 지문이 있었다”는 기록에 가깝습니다. 블록은 앞의 블록에 차례로 이어 붙기 때문에, 어느 지문이 먼저 기록됐는지도 함께 남습니다. 이것이 출생 기록의 뼈대가 됩니다.</li>
+              <li><strong>사진관도 혼자 고칠 수 없는 기록.</strong> 레지스트리는 사진관이 고칠 수 있지만, 블록체인에 남은 기록은 그렇지 않습니다. 두 기록을 맞춰 보면 레지스트리가 나중에 바뀌었는지도 알 수 있습니다.</li>
+            </ul>
+            <p>블록체인이 복사를 막아 주지는 않습니다. 똑같이 복사한 파일은 여전히 같은 지문으로 일치합니다. 달라지는 것은, 기록을 남긴 사진관을 포함해 어느 한 곳이 그 지문의 출생 기록을 혼자 고쳐 쓰기 어려워진다는 점입니다. DataPD가 말하는 희소성, 곧 원본이 하나라는 사실을 누구나 확인할 수 있게 하는 일은 원본의 출생 기록에서 나옵니다. 블록체인은 그 기록이 사진관 서버 밖에도 남게 해 줍니다.</p>
+            <blockquote>파일은 몇 벌이든 복사할 수 있지만, 그 지문을 누가 언제 처음 기록했는지는 단 하나로 남습니다.</blockquote>
+
+            <h2>블록체인이 더하지 않는 것</h2>
+            <p>블록체인이라는 말에는 기대가 많이 붙습니다. 그래서 더하지 않는 것도 분명히 적어 둡니다.</p>
+            <ul>
+              <li><strong>소유권과 저작권.</strong> 기록을 남기는 일과 권리를 넘기는 일은 다릅니다. 문화체육관광부의 「<a href="https://www.mcst.go.kr/site/s_policy/dept/deptView.jsp?pSeq=1863&amp;pDataCD=0406000000&amp;pType=04">NFT 거래 시 유의해야 할 저작권 안내서</a>」(2022)도 소유권과 저작권은 다른 권리이고, NFT를 샀다고 저작권까지 얻는 것은 아니라고 설명합니다. 최박사사진관은 셀프로 촬영한 사진의 저작권이 촬영한 고객에게 있다고 안내하고 있고, NFT 원본 등록을 해도 저작권은 옮겨지지 않습니다.</li>
+              <li><strong>가격과 가치.</strong> 블록체인 기록은 값을 매기지 않고, 사진관의 NFT 원본 등록도 가격이나 수익을 약속하지 않습니다. DataPD가 말하는 희소성은 수량을 줄이거나 값을 매기는 일이 아니라, 증명할 수 있는 유일성입니다.</li>
+              <li><strong>사진 내용의 진실.</strong> 지문이 확인하는 것은 파일이 같은지뿐입니다. 장면이 사실인지, 사진 속 사람이 누구인지는 말해 주지 않습니다. 법적 증거로서의 효력도 블록체인 기록이 보장하지 않습니다.</li>
+              <li><strong>기록 이전의 일.</strong> 블록체인은 들어온 것을 그대로 남길 뿐, 걸러 주지 않습니다. 이미 합성한 파일을 기록하면 그 합성본의 지문이 고스란히 남습니다. 기록을 얼마나 믿을 수 있는지는 파일이 만들어진 순간과 기록한 순간이 얼마나 가까운지, 누가 기록했는지에 달려 있습니다. 고객이 컷을 고른 그 자리에서 최박사사진관이 원본 파일마다 지문을 계산하도록 한 것도 이 간격을 줄이기 위해서입니다.</li>
+              <li><strong>네트워크의 운영.</strong> 블록체인 네트워크는 사진관이 운영하지 않습니다. 장애나 점검, 사양 변경으로 기록을 잠시 조회하지 못할 수 있고, 네트워크의 앞날을 사진관이 보장할 수도 없습니다. 그래서 사진관은 블록체인을 레지스트리 대신 쓰지 않고, 두 번째 기록으로 곁에 둡니다.</li>
+            </ul>
+
+            <h2>지울 수 없어서, 지문만 올립니다</h2>
+            <p>고칠 수 없다는 성질은 개인정보 앞에서는 정반대로 작용합니다. 공개 블록체인에 한번 올린 기록은 기록한 사진관도, 동의를 철회한 고객도 지울 수 없습니다. 사진관의 <a href="/drchoistudio/privacy.html#p3">개인정보처리방침</a>은 목적을 다한 개인정보를 지체 없이 파기한다고 정하고 있습니다. 지울 수 없는 곳에 사람을 알아볼 수 있는 정보를 올리면 이 약속을 지킬 수 없습니다.</p>
+            <p>그래서 공개 블록체인에는 사진·얼굴·이름·연락처를 올리지 않습니다. 기록하는 것은 지문과 인증서 번호, 발급 일시뿐입니다. 지문은 한 방향으로만 계산되기 때문에, 지문에서 사진을 되살릴 수 없습니다. 다만 같은 원본 파일을 가진 사람은 그 파일이 언제 발급됐는지 알 수 있어서, 사진관은 이 기록도 개인정보처리방침에 따라 다루고 블록체인 기록의 보유 기간을 ‘기한 없음(기술적으로 삭제할 수 없음)’으로 따로 밝혀 둡니다. 레지스트리 항목은 요청하면 지울 수 있지만 블록체인 기록은 남습니다. NFT 원본 등록을 원하는 컷만, 따로 동의를 받은 뒤 진행하는 이유입니다.</p>
+
+            <h2>‘NFT’라는 이름에 대하여</h2>
+            <p>NFT라고 하면 사고파는 디지털 소장품을 먼저 떠올리기 쉽습니다. 최박사사진관의 NFT 원본 등록은 그런 것이 아닙니다. 등록을 신청한 컷마다 지문·인증서 번호·발급 일시를 공개 블록체인에 고유한 기록 하나로 남기는, 스튜디오의 증명 기록입니다. 기록은 스튜디오가 남기며 고객에게 옮겨지지 않고, 판매·양도·거래를 위해 발행하지 않습니다. 가상자산이 아니며 투자·거래·결제 수단이 아닙니다.</p>
+            <p>NFT의 법적 성격도 이름으로 정해지지 않습니다. 금융위원회·금융정보분석원·금융감독원은 「가상자산 이용자 보호 등에 관한 법률」(가상자산이용자보호법) 시행을 앞둔 2024년 6월 「<a href="https://www.fsc.go.kr/no010101/82418">NFT의 가상자산 판단 가이드라인</a>」을 내놓으면서, NFT가 가상자산에 해당하는지는 명칭이나 기술이 아니라 실질에 따라 사안별로 판단한다고 밝혔습니다. 대량·대규모 시리즈로 발행돼 대체 가능성이 크거나, 분할할 수 있거나, 재화나 서비스의 지급 수단으로 쓸 수 있거나, 불특정인 사이에서 가상자산과 교환할 수 있다면 가상자산에 해당할 수 있습니다. 결국 무엇이라고 부르느냐보다 어떻게 발행하고 쓰느냐가 중요합니다. DataPD의 글에서 NFT라는 말은 사고파는 물건이 아니라, 남겨 두는 기록이라는 뜻으로만 씁니다.</p>
+
+            <h2>파일 안의 출처 정보, C2PA와는 무엇이 다른가</h2>
+            <p>원본을 확인하는 방법이 해시 레지스트리만 있는 것은 아닙니다. <a href="https://c2pa.org/" hreflang="en">C2PA</a>(Coalition for Content Provenance and Authenticity)는 디지털 콘텐츠가 어디에서 만들어지고 어떻게 편집됐는지를 기록하는 공개 기술 표준입니다. 이 출처 정보를 콘텐츠 자격 증명(Content Credentials)이라고 부르며, 보통 서명과 함께 파일 안에 담습니다. 기록이 파일과 함께 다닌다는 것이 장점입니다.</p>
+            <p>대신 파일 안의 정보는 떨어져 나갈 수 있습니다. 파일을 다시 저장하거나 여러 플랫폼을 거치는 동안 <a href="https://contentauthenticity.org/blog/durable-content-credentials" hreflang="en">일부러든 실수로든 지워질 수 있고</a>(Content Authenticity Initiative 블로그, 영문), 화면을 캡처하면 아예 따라오지 않습니다. C2PA도 이 점을 인정하고, 보이지 않는 워터마크나, 내용이 조금 바뀌어도 비슷하게 남도록 만든 별도의 지문(SHA-256과는 다른 방식)으로 떨어져 나간 출처 정보를 다시 찾는 방법을 <a href="https://c2pa.org/faq/" hreflang="en">표준에 함께 두고 있습니다</a>(C2PA FAQ, 영문). 해시 레지스트리는 반대편에서 출발합니다. 파일이 아무것도 품고 있지 않아도 지문만 계산하면 기록을 찾을 수 있습니다. 다만 파일이 1비트라도 바뀌면 찾지 못합니다.</p>
+            <p>그래서 둘은 서로를 대신하기보다 보완합니다. 공통점도 있습니다. C2PA도 파일과 기록을 묶는 데 SHA-256 같은 암호학적 해시를 쓰고, <a href="https://spec.c2pa.org/specifications/specifications/2.4/explainer/Explainer.html" hreflang="en">C2PA 설명서</a>(영문)에 따르면 콘텐츠 자격 증명 역시 출처 정보가 ‘참’인지를 판단하지 않습니다. 기록이 위변조 없이 온전한지, 믿을 수 있는 서명자가 남겼는지, 그 파일에 연결돼 있는지를 확인할 뿐입니다. 어느 방식이든 증명할 수 있는 것과 없는 것을 먼저 구분해야 한다는 뜻입니다.</p>
+
+            <h2>정리하며</h2>
+            <p>블록체인은 원본을 만들지 않습니다. 원본이 태어난 기록을 사진관도 혼자 고칠 수 없는 곳에 한 벌 더 남길 뿐입니다. 그 한 벌이 사진관의 레지스트리와 나란히 있을 때, 원본의 출생 기록은 한 회사의 말에 그치지 않고 누구나 대조해 볼 수 있는 기록이 됩니다.</p>
+
+            <div class="panel ledger" role="group" aria-label="블록체인이 더하는 것과 더하지 않는 것">
+              <div class="add">
+                <h3>더하는 것</h3>
+                <ul>
+                  <li>사진관 서버와 별개로 남는 공개 기록</li>
+                  <li>늦어도 그 시각에는 그 지문이 있었다는 시각 기록</li>
+                  <li>덧붙이기만 하는, 사진관도 혼자 고칠 수 없는 기록</li>
+                  <li>레지스트리가 나중에 바뀌었는지 맞춰 볼 수 있는 기준</li>
+                </ul>
+              </div>
+              <div class="not">
+                <h3>더하지 않는 것</h3>
+                <ul>
+                  <li>소유권·저작권의 이전</li>
+                  <li>가격·가치, 투자 대상으로서의 의미</li>
+                  <li>사진 내용의 진실, 인물의 신원, 법적 증거 효력</li>
+                  <li>기록 이전에 조작된 파일을 걸러 내는 일</li>
+                  <li>네트워크 운영에 대한 사진관의 통제</li>
+                </ul>
+              </div>
+            </div>
+
+            <p>최박사사진관은 아직 어떤 공개 블록체인을 쓸지 정하지 않았습니다. 네트워크는 정식 오픈 때 안내합니다. 체험용 샘플 인증서 <span class="mono">DRC-2026-000001</span>도 시범 운영 단계라 블록체인 등록 전이며, 지금은 공개 레지스트리에만 기록돼 있습니다.</p>
+          </div>
+
+          <aside class="panel stack post-cta" aria-labelledby="cta-title">
+            <p class="eyebrow">프로젝트 01 · 최박사사진관</p>
+            <h2 class="h3" id="cta-title">NFT 원본 등록은 무엇을 기록하나요</h2>
+            <p class="small muted">무엇이 어디에 기록되는지, 증명하는 것과 증명하지 않는 것을 사진관 페이지에 정리해 두었습니다.</p>
+            <div class="cluster">
+              <a class="btn btn-ink" href="/drchoistudio/authenticity.html#nft">NFT 원본 등록 자세히</a>
+              <a class="btn" href="/drchoistudio/verify.html">원본 확인해 보기</a>
+            </div>
+          </aside>
+
+          <nav class="story-nav" aria-label="이야기 이어 읽기">
+            <a href="/stories/file-fingerprint.html" rel="prev">
+              <span class="dir"><span aria-hidden="true">← </span>이전 · 이야기 02</span>
+              <strong>파일의 지문 — SHA-256으로 원본을 확인하는 법</strong>
+            </a>
+            <a class="all" href="/stories/">이야기 전체 보기</a>
+          </nav>
+        </div>
+
+      </div>
+    </div>
+  </article>
+</main>
+
+<footer class="site-foot">
+  <div class="wrap foot-in">
+    <div>
+      <a class="logo" href="/" aria-label="DataPD 홈">
+        <svg class="mark" viewBox="0 0 24 24" aria-hidden="true"><g fill="currentColor" fill-opacity=".42"><circle cx="4" cy="4" r="1.9"/><circle cx="12" cy="4" r="1.9"/><circle cx="20" cy="4" r="1.9"/><circle cx="4" cy="12" r="1.9"/><circle cx="20" cy="12" r="1.9"/><circle cx="4" cy="20" r="1.9"/><circle cx="12" cy="20" r="1.9"/><circle cx="20" cy="20" r="1.9"/></g><circle cx="12" cy="12" r="3.4" fill="var(--accent)"/></svg>
+        <span class="wm">DataPD<small>ORIGINAL DATA</small></span>
+      </a>
+      <p>복제는 무한하고, 원본은 하나입니다.</p>
+      <p>DataPD는 오리지널 데이터를 기록하고, 그것이 원본인지 누구나 확인할 수 있게 합니다.</p>
+    </div>
+    <div>
+      <h4>프로젝트</h4>
+      <ul>
+        <li><a href="/drchoistudio/">최박사사진관</a> <span class="xs">· 오픈 준비 중</span></li>
+        <li><a href="/drchoistudio/verify.html">사진 원본 확인</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>DataPD</h4>
+      <ul>
+        <li><a href="/stories/">이야기</a></li>
+        <li><a href="mailto:jinho.choi1010@gmail.com">jinho.choi1010@gmail.com</a></li>
+        <li><a href="/privacy.html">개인정보처리방침</a></li>
+      </ul>
+    </div>
+    <p class="fine"><span>© 2026 DataPD</span><span>www.datapd.ai</span></p>
+  </div>
+</footer>
+</body>
+</html>

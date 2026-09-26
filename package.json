@@ -1,7 +1,7 @@
 {
-  "name": "dr-choi-photo-studio",
+  "name": "datapd",
   "version": "1.0.0",
-  "description": "최박사사진관 — 찍는 순간 원본이 증명되는 셀프 사진관 (대구 범어)",
+  "description": "DataPD — 오리지널 데이터. 복제는 무한하고, 원본은 하나입니다. 프로젝트 01: 최박사사진관 (/drchoistudio/)",
   "type": "module",
   "scripts": {
     "dev": "vite",

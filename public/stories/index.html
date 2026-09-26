@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>이야기 — 오리지널 데이터에 관한 글 | DataPD</title>
+<meta name="description" content="원본은 왜 희소해지고, 어떻게 증명할 수 있을까요. DataPD가 오리지널 데이터, 파일의 지문(SHA-256), 증명할 수 있는 희소성에 대해 쓴 글을 모았습니다." />
+<link rel="canonical" href="https://www.datapd.ai/stories/" />
+<meta name="theme-color" content="#F4F4F1" media="(prefers-color-scheme: light)" />
+<meta name="theme-color" content="#0E0E0D" media="(prefers-color-scheme: dark)" />
+<link rel="icon" href="/favicon.ico" sizes="any" />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="DataPD" />
+<meta property="og:title" content="이야기 — 오리지널 데이터에 관한 글" />
+<meta property="og:description" content="원본은 왜 희소해지고, 어떻게 증명할 수 있을까요. DataPD가 오리지널 데이터, 파일의 지문(SHA-256), 증명할 수 있는 희소성에 대해 쓴 글을 모았습니다." />
+<meta property="og:url" content="https://www.datapd.ai/stories/" />
+<meta property="og:image" content="https://www.datapd.ai/og-card.png" />
+<meta property="og:locale" content="ko_KR" />
+<meta name="twitter:card" content="summary_large_image" />
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap" />
+<link rel="stylesheet" href="/static/site.css" />
+<script src="/static/site.js" defer></script>
+<style>
+  .page-head{ --s:18px; max-width:65ch; margin-bottom:clamp(32px,5vw,56px); }
+  .story-list .article-meta{ grid-column:2; font-size:var(--t-xs); margin-top:4px; }
+  .sec-head{ --s:12px; max-width:65ch; margin-bottom:clamp(24px,3.5vw,40px); }
+  .proj{ --s:14px; display:flex; flex-direction:column; }
+  .proj h3{ margin:0; }
+  .proj>.cluster:last-child{ margin-top:auto; padding-top:14px; }
+</style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Blog",
+      "@id": "https://www.datapd.ai/stories/#blog",
+      "name": "DataPD 이야기",
+      "url": "https://www.datapd.ai/stories/",
+      "description": "원본은 왜 희소해지고, 어떻게 증명할 수 있을까요. DataPD가 오리지널 데이터, 파일의 지문(SHA-256), 증명할 수 있는 희소성에 대해 쓴 글을 모았습니다.",
+      "inLanguage": "ko",
+      "publisher": { "@type": "Organization", "@id": "https://www.datapd.ai/#organization", "name": "DataPD", "url": "https://www.datapd.ai/", "logo": { "@type": "ImageObject", "url": "https://www.datapd.ai/icon-512.png", "width": 512, "height": 512 } },
+      "blogPost": [
+        {
+          "@type": "BlogPosting",
+          "headline": "복제가 무한해질 때, 원본은 희소해진다",
+          "description": "디지털 사본은 원본과 비트 하나까지 같습니다. 그런데도 원본이 따로 있다면, 그 차이는 어디에서 올까요. 희소성은 수량이 아니라 증명에서 나옵니다.",
+          "url": "https://www.datapd.ai/stories/why-originals-are-scarce.html",
+          "datePublished": "2026-09-26",
+          "inLanguage": "ko",
+          "author": { "@type": "Organization", "@id": "https://www.datapd.ai/#organization", "name": "DataPD", "url": "https://www.datapd.ai/" }
+        },
+        {
+          "@type": "BlogPosting",
+          "headline": "파일의 지문 — SHA-256으로 원본을 확인하는 법",
+          "description": "밝기를 4% 올렸을 뿐인데 지문이 완전히 달라집니다. 해시가 무엇을 증명하고 무엇을 증명하지 않는지, 샘플 이미지로 직접 확인해 봅니다.",
+          "url": "https://www.datapd.ai/stories/file-fingerprint.html",
+          "datePublished": "2026-09-26",
+          "inLanguage": "ko",
+          "author": { "@type": "Organization", "@id": "https://www.datapd.ai/#organization", "name": "DataPD", "url": "https://www.datapd.ai/" }
+        },
+        {
+          "@type": "BlogPosting",
+          "headline": "블록체인은 원본에 무엇을 더하고, 무엇을 더하지 않는가",
+          "description": "블록체인은 \"그 시각에 그 지문이 있었다\"는 기록을 누구의 서버에도 기대지 않고 남깁니다. 소유권도, 가격도, 사진의 진실도 보증하지 않습니다.",
+          "url": "https://www.datapd.ai/stories/what-blockchain-adds.html",
+          "datePublished": "2026-09-26",
+          "inLanguage": "ko",
+          "author": { "@type": "Organization", "@id": "https://www.datapd.ai/#organization", "name": "DataPD", "url": "https://www.datapd.ai/" }
+        }
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "DataPD", "item": "https://www.datapd.ai/" },
+        { "@type": "ListItem", "position": 2, "name": "이야기", "item": "https://www.datapd.ai/stories/" }
+      ]
+    }
+  ]
+}
+</script>
+</head>
+<body>
+<a class="skip" href="#main">본문으로 건너뛰기</a>
+<header class="site-head">
+  <div class="wrap head-in">
+    <a class="logo" href="/" aria-label="DataPD 홈">
+      <svg class="mark" viewBox="0 0 24 24" aria-hidden="true"><g fill="currentColor" fill-opacity=".42"><circle cx="4" cy="4" r="1.9"/><circle cx="12" cy="4" r="1.9"/><circle cx="20" cy="4" r="1.9"/><circle cx="4" cy="12" r="1.9"/><circle cx="20" cy="12" r="1.9"/><circle cx="4" cy="20" r="1.9"/><circle cx="12" cy="20" r="1.9"/><circle cx="20" cy="20" r="1.9"/></g><circle cx="12" cy="12" r="3.4" fill="var(--accent)"/></svg>
+      <span class="wm">DataPD<small>ORIGINAL DATA</small></span>
+    </a>
+    <nav class="nav" aria-label="주요 메뉴">
+      <a href="/#original">오리지널 데이터</a>
+      <a href="/stories/" aria-current="page">이야기</a>
+      <a href="/#projects">프로젝트</a>
+    </nav>
+    <a class="btn btn-ink btn-sm head-cta" href="/drchoistudio/">최박사사진관 <span aria-hidden="true">→</span></a>
+  </div>
+</header>
+
+<main id="main">
+
+  <!-- 1. 머리말 + 글 목록 -->
+  <section class="section" aria-labelledby="page-title">
+    <div class="wrap">
+      <div class="stack page-head">
+        <p class="eyebrow">STORIES</p>
+        <h1 class="display" id="page-title">이야기</h1>
+        <p class="lead">원본은 무엇이고, 왜 희소해지며, 어떻게 증명할 수 있을까요. 오리지널 데이터에 대해 DataPD가 쓴 글을 모았습니다.</p>
+      </div>
+
+      <h2 class="sr-only">글 목록</h2>
+      <ol class="story-list" role="list">
+        <li>
+          <a href="/stories/why-originals-are-scarce.html">
+            <span class="no" aria-hidden="true">01</span>
+            <h3>복제가 무한해질 때, 원본은 희소해진다</h3>
+            <p>디지털 사본은 원본과 비트 하나까지 같습니다. 그런데도 원본이 따로 있다면, 그 차이는 어디에서 올까요. 희소성은 수량이 아니라 증명에서 나옵니다.</p>
+            <p class="article-meta"><time datetime="2026-09-26">2026년 9월 26일</time></p>
+          </a>
+        </li>
+        <li>
+          <a href="/stories/file-fingerprint.html">
+            <span class="no" aria-hidden="true">02</span>
+            <h3>파일의 지문 — SHA-256으로 원본을 확인하는 법</h3>
+            <p>밝기를 4% 올렸을 뿐인데 지문이 완전히 달라집니다. 해시가 무엇을 증명하고 무엇을 증명하지 않는지, 샘플 이미지로 직접 확인해 봅니다.</p>
+            <p class="article-meta"><time datetime="2026-09-26">2026년 9월 26일</time></p>
+          </a>
+        </li>
+        <li>
+          <a href="/stories/what-blockchain-adds.html">
+            <span class="no" aria-hidden="true">03</span>
+            <h3>블록체인은 원본에 무엇을 더하고, 무엇을 더하지 않는가</h3>
+            <p>블록체인은 "그 시각에 그 지문이 있었다"는 기록을 누구의 서버에도 기대지 않고 남깁니다. 소유권도, 가격도, 사진의 진실도 보증하지 않습니다.</p>
+            <p class="article-meta"><time datetime="2026-09-26">2026년 9월 26일</time></p>
+          </a>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- 2. 프로젝트로 이어지기 -->
+  <section class="section tight" aria-labelledby="project-title">
+    <div class="wrap">
+      <div class="stack sec-head">
+        <p class="eyebrow">프로젝트 01</p>
+        <h2 class="h2" id="project-title">이야기에서 다룬 원리를 담은 첫 프로젝트</h2>
+      </div>
+      <div class="grid grid-2">
+        <div class="tile stack proj">
+          <div class="cluster proj-head">
+            <h3>최박사사진관</h3>
+            <span class="status">오픈 준비 중</span>
+          </div>
+          <p>대구 수성구 범어동에서 오픈을 준비하고 있는 셀프 사진관입니다. 문을 열면 고객이 고른 원본 파일마다 원본 인증서를 발급합니다. 인증서에는 지문(SHA-256)·인증서 번호·발급 일시가 적힙니다.</p>
+          <div class="cluster">
+            <a class="btn" href="/drchoistudio/">최박사사진관 둘러보기</a>
+          </div>
+        </div>
+        <div class="tile stack proj">
+          <h3>원본 확인</h3>
+          <p>최박사사진관이 발급한 원본 파일과 지금 가진 사진 파일이 바이트 단위로 같은지 확인합니다. 사진 내용의 사실성이나 인물의 신원은 보증하지 않으며, 일치하지 않는다고 해서 조작됐다는 뜻도 아닙니다. 지문은 이 브라우저 안에서만 계산되고, 파일은 어디에도 업로드되지 않습니다.</p>
+          <p>체험용 원본 샘플과 밝기만 4% 올린 보정 샘플로 지금 바로 비교해 볼 수 있습니다.</p>
+          <div class="cluster">
+            <a class="btn btn-accent" href="/drchoistudio/verify.html">원본 확인해 보기</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-foot">
+  <div class="wrap foot-in">
+    <div>
+      <a class="logo" href="/" aria-label="DataPD 홈">
+        <svg class="mark" viewBox="0 0 24 24" aria-hidden="true"><g fill="currentColor" fill-opacity=".42"><circle cx="4" cy="4" r="1.9"/><circle cx="12" cy="4" r="1.9"/><circle cx="20" cy="4" r="1.9"/><circle cx="4" cy="12" r="1.9"/><circle cx="20" cy="12" r="1.9"/><circle cx="4" cy="20" r="1.9"/><circle cx="12" cy="20" r="1.9"/><circle cx="20" cy="20" r="1.9"/></g><circle cx="12" cy="12" r="3.4" fill="var(--accent)"/></svg>
+        <span class="wm">DataPD<small>ORIGINAL DATA</small></span>
+      </a>
+      <p>복제는 무한하고, 원본은 하나입니다.</p>
+      <p>DataPD는 오리지널 데이터를 기록하고, 그것이 원본인지 누구나 확인할 수 있게 합니다.</p>
+    </div>
+    <div>
+      <h4>프로젝트</h4>
+      <ul>
+        <li><a href="/drchoistudio/">최박사사진관</a> <span class="xs">· 오픈 준비 중</span></li>
+        <li><a href="/drchoistudio/verify.html">사진 원본 확인</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>DataPD</h4>
+      <ul>
+        <li><a href="/stories/">이야기</a></li>
+        <li><a href="mailto:jinho.choi1010@gmail.com">jinho.choi1010@gmail.com</a></li>
+        <li><a href="/privacy.html">개인정보처리방침</a></li>
+      </ul>
+    </div>
+    <p class="fine"><span>© 2026 DataPD</span><span>www.datapd.ai</span></p>
+  </div>
+</footer>
+</body>
+</html>

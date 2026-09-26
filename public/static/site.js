@@ -1,6 +1,16 @@
-/* 최박사사진관 — shared helpers (no dependencies) */
+/* DataPD · 최박사사진관 — shared helpers (no dependencies) */
 (function () {
   'use strict';
+
+  // Clear values the retired services on this domain (demo login, DOYOU pages) left in this browser.
+  // The old demo login stored e-mail and password in plain text. Nothing is sent anywhere.
+  try {
+    var ls = window.localStorage;
+    for (var i = ls.length - 1; i >= 0; i--) {
+      var k = ls.key(i);
+      if (k && (/^datapd.(users|session)./.test(k) || k === 'datapd.pending' || /^doyou./.test(k))) ls.removeItem(k);
+    }
+  } catch (err) {}
 
   // Mark the current page in the header nav when a page did not set aria-current itself.
   var path = location.pathname.replace(/\/index\.html$/, '/');

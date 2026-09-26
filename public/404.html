@@ -3,20 +3,59 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>페이지를 찾을 수 없습니다 | 최박사사진관</title>
-<meta name="description" content="요청하신 페이지를 찾을 수 없습니다. datapd.ai는 이제 대구 범어동의 셀프 사진관, 최박사사진관입니다." />
-<link rel="canonical" href="https://www.datapd.ai/404.html" />
+<title>페이지를 찾을 수 없습니다 | DataPD</title>
+<meta name="description" content="요청하신 주소에서 페이지를 찾을 수 없습니다. 주소가 바뀌었거나 없는 페이지일 수 있습니다. 최박사사진관 페이지는 /drchoistudio/ 아래로 옮겨졌습니다." />
 <meta name="robots" content="noindex" />
+<script>
+/* 이 파일은 도메인 전체의 404 페이지입니다(어느 깊이의 주소에서든 열리므로 모든 경로는 절대 경로).
+   최박사사진관 페이지는 원래 사이트 첫 화면(/)과 /verify.html 같은 최상위 주소에 있었고, 이제 /drchoistudio/ 아래로 옮겼습니다.
+   예전 주소로 들어오면 검색어(?…)와 해시(#…)를 그대로 붙여 새 주소로 바꿔 줍니다.
+   목록에 없는 주소는 이동시키지 않고 아래 404 안내를 보여 줍니다. */
+(function () {
+  try {
+    var path = location.pathname.toLowerCase().replace(/\/+$/, '');
+    var moved = {
+      '/verify.html': 'verify.html',             '/verify': 'verify.html',
+      '/certificate.html': 'certificate.html',   '/certificate': 'certificate.html',
+      '/guide.html': 'guide.html',               '/guide': 'guide.html',
+      '/authenticity.html': 'authenticity.html', '/authenticity': 'authenticity.html',
+      '/terms.html': 'terms.html',               '/terms': 'terms.html',
+      '/certificates.json': 'certificates.json',
+      '/studio-plan.svg': 'studio-plan.svg',     '/static/studio-plan.svg': 'studio-plan.svg'
+    };
+    var to = Object.prototype.hasOwnProperty.call(moved, path) ? moved[path] : '';
+    if (!to) {
+      var m = /^\/samples\/([^\/]+)$/.exec(path);
+      if (m) to = 'samples/' + m[1];
+    }
+    if (!to) return;
+
+    var dest = '/drchoistudio/' + to + location.search + location.hash;
+    document.addEventListener('DOMContentLoaded', function () {
+      var box = document.getElementById('moved');
+      var link = document.getElementById('moved-link');
+      var shown = document.getElementById('moved-to');
+      if (link) link.setAttribute('href', dest);
+      if (shown) shown.textContent = dest;
+      if (box) box.hidden = false;
+    });
+    document.documentElement.classList.add('is-moving');
+    document.title = '주소가 옮겨졌습니다 | DataPD';
+    location.replace(dest);
+  } catch (e) {
+    /* 이동하지 못하면 아래의 404 안내가 그대로 보입니다. */
+  }
+})();
+</script>
 <meta name="theme-color" content="#F4F4F1" media="(prefers-color-scheme: light)" />
 <meta name="theme-color" content="#0E0E0D" media="(prefers-color-scheme: dark)" />
 <link rel="icon" href="/favicon.ico" sizes="any" />
 <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 <meta property="og:type" content="website" />
-<meta property="og:site_name" content="최박사사진관" />
-<meta property="og:title" content="페이지를 찾을 수 없습니다 | 최박사사진관" />
-<meta property="og:description" content="요청하신 페이지를 찾을 수 없습니다. datapd.ai는 이제 대구 범어동의 셀프 사진관, 최박사사진관입니다." />
-<meta property="og:url" content="https://www.datapd.ai/404.html" />
+<meta property="og:site_name" content="DataPD" />
+<meta property="og:title" content="페이지를 찾을 수 없습니다" />
+<meta property="og:description" content="요청하신 주소에서 페이지를 찾을 수 없습니다. 주소가 바뀌었거나 없는 페이지일 수 있습니다. 최박사사진관 페이지는 /drchoistudio/ 아래로 옮겨졌습니다." />
 <meta property="og:image" content="https://www.datapd.ai/og-card.png" />
 <meta property="og:locale" content="ko_KR" />
 <meta name="twitter:card" content="summary_large_image" />
@@ -28,69 +67,140 @@
 <link rel="stylesheet" href="/static/site.css" />
 <script src="/static/site.js" defer></script>
 <style>
-  .nf .cluster{ margin-top:32px; }
+  /* 옛 주소에서 이동 중일 때는 404 안내를 숨기고 이동 안내만 보여 줍니다. */
+  .is-moving .nf{ display:none; }
+  /* 두 섹션 중 하나만 보이므로 .section+.section 구분선이 헤더 선과 겹치지 않게 합니다. */
+  main>.section+.section{ border-top:0; }
+  .stack-lg>*+*{ margin-top:clamp(36px,5vw,52px); }
+
+  /* 3×3 사본 사이, 원본 자리만 비어 있는 표식 (장식) */
+  .nf-mark{ width:56px; height:56px; color:var(--ink); }
+  .nf-mark .copies{ fill:currentColor; fill-opacity:.42; }
+  .nf-mark .gap{ fill:none; stroke:var(--accent); stroke-width:.9; stroke-dasharray:1.5 1.17; }
+
+  /* 바로 가기 · 옮겨진 페이지 목록 */
+  .list-title{ margin-bottom:14px; }
+  .go{ list-style:none; padding:0; margin:0; border-top:1.5px solid var(--ink); }
+  .go>li{ border-bottom:1px solid var(--hair); }
+  .go a{ display:flex; flex-wrap:wrap; align-items:baseline; justify-content:space-between; gap:2px 16px;
+    min-height:56px; padding:15px 0; text-decoration:none; color:var(--ink); }
+  .go a:hover{ color:var(--ink); }
+  .go .t{ font-size:var(--t-md); font-weight:700; letter-spacing:-.015em; }
+  .go .p{ min-width:0; font-family:var(--mono); font-size:var(--t-xs); letter-spacing:.02em; color:var(--graphite); overflow-wrap:anywhere; }
+  .go a:hover .t{ text-decoration:underline; text-decoration-thickness:2px; text-underline-offset:5px; }
+  .go-sm{ border-top-width:1px; border-top-color:var(--hair); }
+  .go-sm a{ min-height:44px; padding:11px 0; }
+  .go-sm .t{ font-size:var(--t-sm); }
+  .go-sm .old{ text-decoration:line-through; text-decoration-thickness:1px; }
+  .go-sm .new{ color:var(--ink-2); }
+  .list-note{ margin-top:14px; }
+
+  /* 이동 안내 */
+  .moved-to{ font-family:var(--mono); font-size:var(--t-sm); letter-spacing:.02em; color:var(--ink-2);
+    border-left:3px solid var(--ink); background:var(--surface); padding:12px 16px; overflow-wrap:anywhere; word-break:break-all; }
 </style>
 </head>
 <body>
 <a class="skip" href="#main">본문으로 건너뛰기</a>
 <header class="site-head">
   <div class="wrap head-in">
-    <a class="logo" href="/" aria-label="최박사사진관 홈">
-      <svg class="mark" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9V3h6M15 3h6v6M21 15v6h-6M9 21H3v-6" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="3" fill="var(--accent)"/></svg>
-      <span class="wm">최박사사진관<small>DR. CHOI PHOTO STUDIO</small></span>
+    <a class="logo" href="/" aria-label="DataPD 홈">
+      <svg class="mark" viewBox="0 0 24 24" aria-hidden="true"><g fill="currentColor" fill-opacity=".42"><circle cx="4" cy="4" r="1.9"/><circle cx="12" cy="4" r="1.9"/><circle cx="20" cy="4" r="1.9"/><circle cx="4" cy="12" r="1.9"/><circle cx="20" cy="12" r="1.9"/><circle cx="4" cy="20" r="1.9"/><circle cx="12" cy="20" r="1.9"/><circle cx="20" cy="20" r="1.9"/></g><circle cx="12" cy="12" r="3.4" fill="var(--accent)"/></svg>
+      <span class="wm">DataPD<small>ORIGINAL DATA</small></span>
     </a>
     <nav class="nav" aria-label="주요 메뉴">
-      <a href="/guide.html">이용 안내</a>
-      <a href="/authenticity.html">원본 인증</a>
-      <a href="/verify.html">원본 확인</a>
+      <a href="/#original">오리지널 데이터</a>
+      <a href="/stories/">이야기</a>
+      <a href="/#projects">프로젝트</a>
     </nav>
-    <a class="btn btn-ink btn-sm head-cta" href="mailto:jinho.choi1010@gmail.com?subject=%5B%EC%B5%9C%EB%B0%95%EC%82%AC%EC%82%AC%EC%A7%84%EA%B4%80%5D%20%EC%98%A4%ED%94%88%20%EC%95%8C%EB%A6%BC%20%EC%8B%A0%EC%B2%AD">오픈 알림 받기</a>
+    <a class="btn btn-ink btn-sm head-cta" href="/drchoistudio/">최박사사진관 <span aria-hidden="true">→</span></a>
   </div>
 </header>
+
 <main id="main">
-  <section class="section nf">
+
+  <!-- 옛 주소 이동 안내: 위 스크립트가 옛 주소를 알아본 경우에만 보입니다. -->
+  <section class="section moved" id="moved" aria-labelledby="moved-title" hidden>
     <div class="wrap narrow stack">
-      <p class="eyebrow">404 · Page not found</p>
-      <h1 class="h2">찾는 페이지가 없습니다</h1>
-      <p class="lead">이 주소는 이전 사이트(학습 게임·팝업스토어)의 페이지일 수 있습니다. datapd.ai는 이제 최박사사진관입니다.</p>
-      <p class="body muted">찍는 순간, 원본이 증명되는 셀프 사진관. 대구 수성구 범어동에서 오픈을 준비하고 있습니다.</p>
+      <p class="eyebrow">주소 이동 · Moved</p>
+      <h1 class="h2" id="moved-title">주소가 옮겨졌습니다</h1>
+      <p class="lead">최박사사진관 페이지는 이제 <span class="mono">/drchoistudio/</span> 아래에 있습니다. 새 주소로 이동하고 있습니다.</p>
+      <p class="moved-to"><span class="sr-only">새 주소: </span><span id="moved-to">/drchoistudio/</span></p>
       <div class="cluster">
-        <a class="btn btn-ink" href="/">홈으로</a>
-        <a class="btn" href="/verify.html">원본 확인</a>
-        <a class="btn" href="/guide.html">이용 안내</a>
+        <a class="btn btn-ink" id="moved-link" href="/drchoistudio/">새 주소로 바로 가기</a>
       </div>
+      <p class="small muted">화면이 바뀌지 않으면 버튼을 눌러 주세요. 저장해 둔 링크가 있다면 새 주소로 바꿔 두세요.</p>
     </div>
   </section>
+
+  <!-- 404 안내 -->
+  <section class="section nf" aria-labelledby="nf-title">
+    <div class="wrap narrow stack-lg">
+
+      <div class="stack">
+        <svg class="nf-mark" viewBox="0 0 24 24" width="56" height="56" aria-hidden="true" focusable="false"><g class="copies"><circle cx="4" cy="4" r="1.9"/><circle cx="12" cy="4" r="1.9"/><circle cx="20" cy="4" r="1.9"/><circle cx="4" cy="12" r="1.9"/><circle cx="20" cy="12" r="1.9"/><circle cx="4" cy="20" r="1.9"/><circle cx="12" cy="20" r="1.9"/><circle cx="20" cy="20" r="1.9"/></g><circle class="gap" cx="12" cy="12" r="3.4"/></svg>
+        <p class="eyebrow">404 · Not found</p>
+        <h1 class="h2" id="nf-title">페이지를 찾을 수 없습니다</h1>
+        <p class="lead">주소가 바뀌었거나 없는 페이지일 수 있습니다. 예전에 datapd.ai에 있던 학습 게임과 팝업스토어 관련 페이지는 운영을 마쳤습니다.</p>
+      </div>
+
+      <nav aria-labelledby="go-title">
+        <h2 class="eyebrow list-title" id="go-title">바로 가기</h2>
+        <ul class="go">
+          <li><a href="/"><span class="t">DataPD 홈</span><span class="p" aria-hidden="true">/</span></a></li>
+          <li><a href="/stories/"><span class="t">이야기</span><span class="p" aria-hidden="true">/stories/</span></a></li>
+          <li><a href="/drchoistudio/"><span class="t">최박사사진관</span><span class="p" aria-hidden="true">/drchoistudio/</span></a></li>
+          <li><a href="/drchoistudio/verify.html"><span class="t">사진 원본 확인</span><span class="p" aria-hidden="true">/drchoistudio/verify.html</span></a></li>
+          <li><a href="/drchoistudio/certificate.html?id=DRC-2026-000001"><span class="t">체험용 샘플 인증서 보기</span><span class="p" aria-hidden="true">/drchoistudio/certificate.html?id=DRC-2026-000001</span></a></li>
+        </ul>
+      </nav>
+
+      <div>
+        <h2 class="eyebrow list-title" id="moves-title">옮겨진 최박사사진관 페이지</h2>
+        <p class="small muted list-title">최박사사진관 페이지의 주소가 바뀌었습니다. 예를 들어 <span class="mono">/verify.html</span>은 이제 <span class="mono">/drchoistudio/verify.html</span>입니다. 예전 주소를 저장해 두셨다면 새 주소로 바꿔 주세요.</p>
+        <ul class="go go-sm" aria-labelledby="moves-title">
+          <li><a href="/drchoistudio/guide.html"><span class="t">이용 안내</span><span class="p"><span class="sr-only">예전 주소 </span><span class="old">/guide.html</span> <span aria-hidden="true">→</span><span class="sr-only">, 새 주소</span> <span class="new">/drchoistudio/guide.html</span></span></a></li>
+          <li><a href="/drchoistudio/authenticity.html"><span class="t">원본 인증이란</span><span class="p"><span class="sr-only">예전 주소 </span><span class="old">/authenticity.html</span> <span aria-hidden="true">→</span><span class="sr-only">, 새 주소</span> <span class="new">/drchoistudio/authenticity.html</span></span></a></li>
+          <li><a href="/drchoistudio/verify.html"><span class="t">사진 원본 확인</span><span class="p"><span class="sr-only">예전 주소 </span><span class="old">/verify.html</span> <span aria-hidden="true">→</span><span class="sr-only">, 새 주소</span> <span class="new">/drchoistudio/verify.html</span></span></a></li>
+          <li><a href="/drchoistudio/certificate.html"><span class="t">원본 인증서</span><span class="p"><span class="sr-only">예전 주소 </span><span class="old">/certificate.html</span> <span aria-hidden="true">→</span><span class="sr-only">, 새 주소</span> <span class="new">/drchoistudio/certificate.html</span></span></a></li>
+          <li><a href="/drchoistudio/terms.html"><span class="t">이용약관</span><span class="p"><span class="sr-only">예전 주소 </span><span class="old">/terms.html</span> <span aria-hidden="true">→</span><span class="sr-only">, 새 주소</span> <span class="new">/drchoistudio/terms.html</span></span></a></li>
+          <li><a href="/drchoistudio/privacy.html"><span class="t">최박사사진관 개인정보처리방침</span><span class="p"><span class="sr-only">새 주소 </span><span class="new">/drchoistudio/privacy.html</span></span></a></li>
+          <li><a href="/drchoistudio/certificates.json"><span class="t">공개 레지스트리</span><span class="p"><span class="sr-only">예전 주소 </span><span class="old">/certificates.json</span> <span aria-hidden="true">→</span><span class="sr-only">, 새 주소</span> <span class="new">/drchoistudio/certificates.json</span></span></a></li>
+        </ul>
+        <p class="small muted list-note">예전 <span class="mono">/privacy.html</span> 주소에는 이제 DataPD 웹사이트의 <a href="/privacy.html">개인정보처리방침</a>이 있습니다. 최박사사진관의 개인정보처리방침은 <span class="mono">/drchoistudio/privacy.html</span>에서 볼 수 있습니다.</p>
+      </div>
+
+    </div>
+  </section>
+
 </main>
+
 <footer class="site-foot">
   <div class="wrap foot-in">
     <div>
-      <a class="logo" href="/" aria-label="최박사사진관 홈">
-        <svg class="mark" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9V3h6M15 3h6v6M21 15v6h-6M9 21H3v-6" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="3" fill="var(--accent)"/></svg>
-        <span class="wm">최박사사진관<small>DR. CHOI PHOTO STUDIO</small></span>
+      <a class="logo" href="/" aria-label="DataPD 홈">
+        <svg class="mark" viewBox="0 0 24 24" aria-hidden="true"><g fill="currentColor" fill-opacity=".42"><circle cx="4" cy="4" r="1.9"/><circle cx="12" cy="4" r="1.9"/><circle cx="20" cy="4" r="1.9"/><circle cx="4" cy="12" r="1.9"/><circle cx="20" cy="12" r="1.9"/><circle cx="4" cy="20" r="1.9"/><circle cx="12" cy="20" r="1.9"/><circle cx="20" cy="20" r="1.9"/></g><circle cx="12" cy="12" r="3.4" fill="var(--accent)"/></svg>
+        <span class="wm">DataPD<small>ORIGINAL DATA</small></span>
       </a>
-      <p>찍는 순간, 원본이 증명되는 셀프 사진관.</p>
-      <p style="margin-top:14px"><span class="status">오픈 준비 중</span></p>
+      <p>복제는 무한하고, 원본은 하나입니다.</p>
+      <p>DataPD는 오리지널 데이터를 기록하고, 그것이 원본인지 누구나 확인할 수 있게 합니다.</p>
     </div>
     <div>
-      <h4>스튜디오</h4>
+      <h4>프로젝트</h4>
       <ul>
-        <li>대구 수성구 범어동</li>
-        <li>10평 셀프 스튜디오 · 상세 주소는 오픈 때 안내</li>
+        <li><a href="/drchoistudio/">최박사사진관</a> <span class="xs">· 오픈 준비 중</span></li>
+        <li><a href="/drchoistudio/verify.html">사진 원본 확인</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>DataPD</h4>
+      <ul>
+        <li><a href="/stories/">이야기</a></li>
         <li><a href="mailto:jinho.choi1010@gmail.com">jinho.choi1010@gmail.com</a></li>
-      </ul>
-    </div>
-    <div>
-      <h4>안내</h4>
-      <ul>
-        <li><a href="/guide.html">이용 안내</a></li>
-        <li><a href="/authenticity.html">원본 인증</a></li>
-        <li><a href="/verify.html">원본 확인</a></li>
         <li><a href="/privacy.html">개인정보처리방침</a></li>
-        <li><a href="/terms.html">이용약관</a></li>
       </ul>
     </div>
-    <p class="fine"><span>© 2026 최박사사진관 · DataPD</span><span>사업자 정보는 정식 오픈 때 게재합니다.</span><span>요금·운영 시간은 오픈 전 예정 정보입니다.</span></p>
+    <p class="fine"><span>© 2026 DataPD</span><span>www.datapd.ai</span></p>
   </div>
 </footer>
 </body>
