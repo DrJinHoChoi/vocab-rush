@@ -12,9 +12,9 @@ DataPD는 오리지널 데이터를 기록합니다. 데이터가 처음 만들�
 
 | # | 프로젝트 | 주소 | 상태 |
 |---|---|---|---|
-| 01 | 최박사사진관 · Dr. Choi Photo Studio — 원본 인증 셀프 사진관 (대구 수성구 범어동) | [datapd.ai/drchoistudio](https://www.datapd.ai/drchoistudio/) | 오픈 준비 중 |
+| 01 | 최박사 사진관 · Dr. Choi Photo Studio — 원본 인증 셀프 사진관 (대구 수성구 범어동) | [datapd.ai/drchoistudio](https://www.datapd.ai/drchoistudio/) | 오픈 준비 중 |
 
-최박사사진관은 문을 열면 고객이 고른 원본 파일마다 **원본 인증서**(원본 파일의 SHA-256 지문 · 인증서 번호 · 발급 일시)를
+최박사 사진관은 문을 열면 고객이 고른 원본 파일마다 **원본 인증서**(원본 파일의 SHA-256 지문 · 인증서 번호 · 발급 일시)를
 발급하고, 선택하면 지문을 공개 블록체인에 기록(**NFT 원본 등록** — 증명 기록이며 가상자산·거래 대상이 아님)할 예정입니다.
 `/drchoistudio/verify.html`에서 사진 파일을 넣어 원본인지 확인할 수 있습니다 — 파일은 브라우저 안에서만 계산되고 전송되지 않습니다.
 
@@ -26,7 +26,7 @@ DataPD는 오리지널 데이터를 기록합니다. 데이터가 처음 만들�
 | `public/stories/` | DataPD 이야기 — 오리지널 데이터에 관한 글 |
 | `public/privacy.html` | DataPD 웹사이트 개인정보처리방침 |
 | `public/404.html` | 전체 404 + 옛 사진관 주소(`/verify.html` 등) → `/drchoistudio/` 자동 이동 |
-| `public/drchoistudio/` | 최박사사진관: 홈 · 이용 안내 · 원본 인증 · 원본 확인 · 인증서 · 개인정보처리방침 · 이용약관 |
+| `public/drchoistudio/` | 최박사 사진관: 홈 · 이용 안내 · 원본 인증 · 원본 확인 · 인증서 · 개인정보처리방침 · 이용약관 |
 | `public/drchoistudio/certificates.json` | 공개 인증 레지스트리 (지문·번호·일시만, 개인정보·이미지 없음) |
 | `public/drchoistudio/samples/` | 원본 확인 체험용 샘플 (원본 / 4% 보정본) |
 | `public/static/` | 공통 디자인 시스템 `site.css`, `site.js` |
@@ -49,7 +49,7 @@ npm run brand    # 아이콘·파비콘·공유 이미지 재생성
 `main` 브랜치에 푸시하면 Vercel이 빌드해 www.datapd.ai로 배포합니다 (`vercel.json`: 폴더 주소는 `/drchoistudio/`처럼 끝에 `/`를 붙여 엽니다).
 저장소의 `.github/workflows/deploy.yml`은 GitHub Pages로도 배포하지만, 도메인은 Vercel을 가리킵니다.
 
-## 인증서 추가 (최박사사진관)
+## 인증서 추가 (최박사 사진관)
 
 `public/drchoistudio/certificates.json`의 `certificates` 배열에 항목을 추가합니다. `sha256`은 고객에게 전달한
 원본 파일 그대로의 지문(소문자 16진수 64자)이어야 합니다. 사진·이름·연락처는 넣지 않습니다.

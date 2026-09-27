@@ -1,4 +1,4 @@
-/* DataPD · 최박사사진관 — shared helpers (no dependencies) */
+/* DataPD · 최박사 사진관 — shared helpers (no dependencies) */
 (function () {
   'use strict';
 

@@ -1,10 +1,10 @@
-// DataPD + 최박사사진관 brand asset generator.
+// DataPD + 최박사 사진관 brand asset generator.
 // Run: npm run brand             → brand assets only (icons, favicons, share cards)
 //      npm run brand -- --samples → ALSO regenerate the demo photos + certificates.json
 //
 // public/                 DataPD (site root): favicon.svg/.ico, favicon-16/32.png, icon-192/512.png,
 //                         icon-maskable-512.png, apple-touch-icon.png, og-card.png
-// public/drchoistudio/    최박사사진관: favicon.svg/.ico, apple-touch-icon.png, og-card.png
+// public/drchoistudio/    최박사 사진관: favicon.svg/.ico, apple-touch-icon.png, og-card.png
 //                         (--samples) samples/sample-original.jpg, samples/sample-edited.jpg, certificates.json
 //
 // Samples are opt-in because the registry stores the SHA-256 of sample-original.jpg exactly as
@@ -27,7 +27,7 @@ const sha = (buf) => createHash('sha256').update(buf).digest('hex');
 // ---- marks -------------------------------------------------------------------
 // pad = fraction of the tile left empty around the mark (maskable needs more).
 
-// 최박사사진관: four crop marks + safelight dot, on an ink tile.
+// 최박사 사진관: four crop marks + safelight dot, on an ink tile.
 function studioMark(size, { pad = 0.2, bg = INK, fg = PAPER, radius = 0.18 } = {}) {
   const inner = size * (1 - pad * 2), o = size * pad;
   const L = inner * 0.3, W = Math.max(1.5, inner * 0.085);
@@ -90,7 +90,7 @@ for (const [file, size, opt] of rootTargets) writeFileSync(join(PUB, file), awai
 await writeIco(join(PUB, 'favicon.ico'), datapdMark);
 console.log('✓ DataPD icons  public/{favicon.svg,favicon.ico,favicon-16/32,icon-192/512,icon-maskable-512,apple-touch-icon}');
 
-// ---- 최박사사진관 icons (page-level <link rel=icon> under /drchoistudio/) ------
+// ---- 최박사 사진관 icons (page-level <link rel=icon> under /drchoistudio/) ------
 writeFileSync(join(STUDIO, 'favicon.svg'), studioMark(64, { pad: 0.16, radius: 0.2 }));
 writeFileSync(join(STUDIO, 'apple-touch-icon.png'), await png(studioMark(180, { pad: 0.2, radius: 0 })));
 await writeIco(join(STUDIO, 'favicon.ico'), studioMark);
@@ -155,7 +155,7 @@ if (SAMPLES) {
   console.log('✓ samples  original', sha(original), '\n           edited  ', sha(edited));
 
   const registry = {
-    issuer: { name: '최박사사진관', en: 'Dr. Choi Photo Studio', location: '대구 수성구 범어동' },
+    issuer: { name: '최박사 사진관', en: 'Dr. Choi Photo Studio', location: '대구 수성구 범어동' },
     algorithm: 'SHA-256',
     updatedAt: '2026-09-25',
     note: '시범 운영 레지스트리. 정식 오픈 후 발급분은 선택 시 공개 블록체인(NFT)에도 지문을 기록합니다.',
@@ -180,7 +180,7 @@ if (SAMPLES) {
 // The share cards quote the published original's fingerprint, whichever run produced it.
 const hOrig = sha(readFileSync(originalPath));
 
-// ---- 최박사사진관 share card (1200x630) ---------------------------------------------
+// ---- 최박사 사진관 share card (1200x630) ---------------------------------------------
 const shortHash = hOrig.slice(0, 16) + '…' + hOrig.slice(-8);
 const studioOg = `<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
   <rect width="1200" height="630" fill="${PAPER}"/>
@@ -189,7 +189,7 @@ const studioOg = `<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="6
   </g>
   <g transform="translate(96,96)">${studioMark(84, { pad: 0.2 }).replace(/<\/?svg[^>]*>/g, '')}</g>
   <text x="200" y="152" font-family="Consolas, monospace" font-size="20" letter-spacing="3" fill="#5C5C58">DR. CHOI PHOTO STUDIO · 대구 범어</text>
-  <text x="96" y="330" font-family="Malgun Gothic, sans-serif" font-size="112" font-weight="800" letter-spacing="-5" fill="${INK}">최박사사진관</text>
+  <text x="96" y="330" font-family="Malgun Gothic, sans-serif" font-size="112" font-weight="800" letter-spacing="-5" fill="${INK}">최박사 사진관</text>
   <text x="100" y="408" font-family="Malgun Gothic, sans-serif" font-size="40" font-weight="700" fill="#2A2A28">찍는 순간, 원본이 증명되는 셀프 사진관</text>
   <circle cx="110" cy="500" r="9" fill="${RED}"/>
   <text x="134" y="508" font-family="Consolas, monospace" font-size="22" fill="${INK}">ORIGINAL CERTIFIED · SHA-256 ${shortHash}</text>

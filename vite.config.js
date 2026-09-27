@@ -3,7 +3,7 @@ import { VitePWA } from 'vite-plugin-pwa';
 
 // DataPD (www.datapd.ai) — static site. index.html (DataPD home) is the only Vite entry;
 // every other page lives in public/ and is copied as-is: public/stories/ (DataPD 이야기),
-// public/drchoistudio/ (project 01, 최박사사진관 — datapd.ai/drchoistudio/).
+// public/drchoistudio/ (project 01, 최박사 사진관 — datapd.ai/drchoistudio/).
 // The PWA plugin stays on purpose: it ships a new service worker at the same /sw.js, which
 // replaces the old game-era worker in returning visitors' browsers and clears its outdated caches.
 export default defineConfig({
