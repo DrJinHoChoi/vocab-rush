@@ -6,6 +6,7 @@
 //   npm run harness -- --skip-build         reuse the current dist/
 //   npm run harness -- --only /,/stories/   limit Lighthouse to these paths
 //   npm run harness -- --base https://www.datapd.ai   Lighthouse against the live site (no build/preview)
+//   npm run harness -- --skip-build --resume          keep finished Lighthouse runs, measure only the missing ones
 //
 // Writes harness-report/report.json and harness-report/report.md (gitignored).
 // Lighthouse and html-validate run through npx so they never become build dependencies.
@@ -29,6 +30,17 @@ const FORMS = opt('--form', 'mobile,desktop').split(',');
 const BASE = opt('--base', null);
 const ONLY = opt('--only', null)?.split(',');
 const SKIP_BUILD = flag('--skip-build') || !!BASE;
+const RESUME = flag('--resume');
+// Paths that exist in dist/ but never reach visitors (vercel.json redirects them): no Lighthouse, no sitemap check.
+const LH_SKIP = new Set(['/drchoistudio/']);
+// Deliberate trade-offs. Matching Lighthouse audits are reported under "Waived" instead of "Failing".
+const WAIVERS = [
+  { id: 'is-crawlable', path: /^\/(404\.html|drchoistudio\/certificate\.html)/, reason: 'noindex on purpose (404, per-certificate pages)' },
+  { id: /^(image-delivery-insight|uses-responsive-images|modern-image-formats)$/, path: /./, onlyUrls: /\/drchoistudio\/samples\/sample-(original|edited)\.jpg/,
+    reason: 'the verification samples are shown as their exact original bytes, so "save image → 원본 확인" still matches' },
+];
+const waiverFor = (path, f) => WAIVERS.find((w) => (w.id instanceof RegExp ? w.id.test(f.id) : w.id === f.id) && w.path.test(path)
+  && (!w.onlyUrls || (f.items.length && f.items.every((x) => w.onlyUrls.test(String(x))))));
 const CHROME = process.env.CHROME_PATH || ['C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe',
   'C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe', '/usr/bin/google-chrome'].find(existsSync);
 // npx via its JS entry so no shell is involved (Windows cannot spawn npx.cmd without one).
@@ -131,7 +143,7 @@ for (const pg of pages) {
     const ogImg = meta(html, 'property', 'og:image');
     if (ogImg && ogImg.startsWith(SITE) && !exists(ogImg.replace(SITE, ''))) add(path, 'open-graph', 'error', `og:image not in dist: ${ogImg}`);
     if (!meta(html, 'name', 'twitter:card')) add(path, 'open-graph', 'warn', 'twitter:card missing');
-    if (!sitemap.includes(path)) add(path, 'sitemap', 'warn', 'indexable page not listed in sitemap.xml');
+    if (!sitemap.includes(path) && !LH_SKIP.has(path)) add(path, 'sitemap', 'warn', 'indexable page not listed in sitemap.xml');
   } else if (sitemap.includes(path)) add(path, 'sitemap', 'error', 'noindex page listed in sitemap.xml');
 
   // headings: exactly one h1 outside [hidden] blocks
@@ -223,19 +235,39 @@ if (existsSync(regPath)) {
   }
 } else add('/drchoistudio/certificates.json', 'registry', 'error', 'registry missing from dist');
 
+// font coverage: every character the pages use must be in the Pretendard site subset (npm run fonts)
+{
+  const { siteChars } = await import('./subset-fonts.mjs');
+  const man = readdirSync(join(ROOT, 'public', 'fonts')).find((n) => /^pretendard-site-[0-9a-f]+\.json$/.test(n));
+  if (!man) add('/fonts/', 'font-coverage', 'error', 'no Pretendard site subset — run npm run fonts');
+  else {
+    const have = new Set(JSON.parse(readFileSync(join(ROOT, 'public', 'fonts', man), 'utf8')).chars);
+    const missing = [...siteChars()].filter((c) => !have.has(c));
+    if (missing.length) add('/fonts/', 'font-coverage', 'error', `${missing.length} character(s) not in the font subset: ${missing.slice(0, 40).join('')} — run npm run fonts`);
+    // every built head must preload and declare the current subset (inline <style data-fonts>)
+    const woff = man.replace('.json', '.woff2');
+    for (const pg of pages) {
+      if (!pg.html.includes(`href="/fonts/${woff}"`) || !pg.html.includes(`url(/fonts/${woff})`)) {
+        add(pg.path, 'font-coverage', 'error', `head lacks the current subset ${woff} (preload + inline @font-face) — run npm run fonts, then rebuild`);
+      }
+    }
+  }
+}
+
 // ---------- html-validate -------------------------------------------------------------------
 log('html-validate');
-const hvConfig = join(OUT, 'htmlvalidate.json');
+// html-validate joins --config onto the cwd even when it is absolute (Windows), so pass it relative.
+const hvConfig = 'harness-report/htmlvalidate.json';
 mkdirSync(OUT, { recursive: true });
-writeFileSync(hvConfig, JSON.stringify({
+writeFileSync(join(ROOT, hvConfig), JSON.stringify({
   extends: ['html-validate:recommended'],
   rules: {
     'no-inline-style': 'off', 'void-style': 'off', 'no-trailing-whitespace': 'off', 'long-title': 'off',
-    'attribute-boolean-style': 'off', 'no-raw-characters': 'off', 'prefer-native-element': 'off', 'no-redundant-role': 'warn',
-    'element-required-attributes': 'error', 'unique-landmark': 'warn', 'text-content': 'warn',
+    'attribute-boolean-style': 'off', 'no-raw-characters': 'off', 'prefer-native-element': 'off', 'no-redundant-role': 'off',
+    'element-required-attributes': 'error', 'valid-id': ['error', { relaxed: true }], 'tel-non-breaking': 'off', 'unique-landmark': 'warn', 'text-content': 'warn',
   },
 }, null, 2));
-const hv = npx(['--yes', 'html-validate@9', '--config', hvConfig, '--formatter', 'json', ...htmlFiles.map((f) => relative(ROOT, f))]);
+const hv = npx(['--yes', 'html-validate@9', '--config', hvConfig, '--formatter', 'json', ...htmlFiles.map((f) => relative(ROOT, f).split(sep).join('/'))]);
 try {
   for (const r of JSON.parse(hv.stdout || '[]')) {
     const page = toUrlPath(/^([A-Za-z]:|\/)/.test(r.filePath) ? r.filePath : join(ROOT, r.filePath));
@@ -253,24 +285,36 @@ if (LIGHTHOUSE) {
   if (!base) {
     base = `http://localhost:${PORT}`;
     server = spawn(process.execPath, [join(ROOT, 'node_modules/vite/bin/vite.js'), 'preview', '--port', String(PORT), '--strictPort'], { cwd: ROOT, stdio: 'ignore' });
+    // Never leave the preview server behind when the run is interrupted.
+    const stop = () => { try { server.kill(); } catch {} };
+    process.on('exit', stop);
+    for (const sig of ['SIGINT', 'SIGTERM', 'SIGHUP']) process.on(sig, () => { stop(); process.exit(130); });
     for (let i = 0; i < 40; i++) { try { if ((await fetch(base + '/')).ok) break; } catch {} await new Promise((r) => setTimeout(r, 250)); }
   }
   const targets = pages
-    .filter((p) => !ONLY || ONLY.includes(p.path))
+    .filter((p) => !LH_SKIP.has(p.path) && (!ONLY || ONLY.includes(p.path)))
     .map((p) => (p.path === '/drchoistudio/certificate.html' ? '/drchoistudio/certificate.html?id=DRC-2026-000001' : p.path));
   const tmp = join(OUT, 'lh');
-  rmSync(tmp, { recursive: true, force: true }); mkdirSync(tmp, { recursive: true });
+  if (!RESUME) rmSync(tmp, { recursive: true, force: true });
+  mkdirSync(tmp, { recursive: true });
+  const total = targets.length * FORMS.length;
   let n = 0;
   for (const path of targets) {
     for (const form of FORMS) {
       n++;
-      const file = join(tmp, `${n}.json`);
-      log(`lighthouse ${form.padEnd(7)} ${path}`);
-      const args = ['--yes', 'lighthouse@12', base + path, '--quiet', '--output=json', `--output-path=${file}`,
-        '--only-categories=performance,accessibility,best-practices,seo', '--chrome-flags=--headless=new --no-first-run --disable-extensions'];
-      if (form === 'desktop') args.push('--preset=desktop');
-      const r = npx(args, { env: { ...process.env, CHROME_PATH: CHROME }, timeout: 180000 });
-      if (!existsSync(file)) { add(path, 'lighthouse', 'error', `${form} run failed: ${(r.stderr || '').slice(-300)}`); continue; }
+      // One file per page+form, so --resume can keep what an interrupted run already measured.
+      const slug = (path.replace(/[^a-z0-9]+/gi, '_').replace(/^_|_$/g, '') || 'home') + '.' + form;
+      const file = join(tmp, `${slug}.json`);
+      if (RESUME && existsSync(file)) { log(`lighthouse ${form.padEnd(7)} ${path}  (${n}/${total}, kept)`); }
+      else {
+        rmSync(file, { force: true });
+        log(`lighthouse ${form.padEnd(7)} ${path}  (${n}/${total})`);
+        const args = ['--yes', 'lighthouse@12', base + path, '--quiet', '--output=json', `--output-path=${file}`,
+          '--only-categories=performance,accessibility,best-practices,seo', '--chrome-flags=--headless=new --no-first-run --disable-extensions'];
+        if (form === 'desktop') args.push('--preset=desktop');
+        const r = npx(args, { env: { ...process.env, CHROME_PATH: CHROME }, timeout: 180000 });
+        if (!existsSync(file)) { add(path, 'lighthouse', 'error', `${form} run failed: ${(r.stderr || '').slice(-300)}`); continue; }
+      }
       const j = JSON.parse(readFileSync(file, 'utf8'));
       const score = (k) => (j.categories[k]?.score == null ? null : Math.round(j.categories[k].score * 100));
       const failing = [];
@@ -286,7 +330,8 @@ if (LIGHTHOUSE) {
       const metric = (id) => j.audits[id]?.displayValue || '';
       lh.push({ path, form, perf: score('performance'), a11y: score('accessibility'), bp: score('best-practices'), seo: score('seo'),
         fcp: metric('first-contentful-paint'), lcp: metric('largest-contentful-paint'), tbt: metric('total-blocking-time'), cls: metric('cumulative-layout-shift'),
-        failing: failing.sort((a, b) => b.weight - a.weight || a.score - b.score) });
+        failing: failing.filter((f) => !waiverFor(path, f)).sort((a, b) => b.weight - a.weight || a.score - b.score),
+        waived: failing.filter((f) => waiverFor(path, f)).map((f) => ({ id: f.id, reason: waiverFor(path, f).reason })) });
     }
   }
   if (server) server.kill();
@@ -314,6 +359,9 @@ if (lh.length) {
     e.pages.push(`${r.path} (${r.form}${f.displayValue ? ', ' + f.displayValue : ''})`);
     agg.set(k, e);
   }
+  const waived = new Map();
+  for (const r of lh) for (const w of r.waived || []) waived.set(w.id, [...(waived.get(w.id) || []), `${r.path} (${r.form})`]);
+  if (waived.size) { md.push('', '### Waived (deliberate)', ''); for (const [id, where] of waived) md.push(`- ${id} — ${WAIVERS.find((w) => (w.id instanceof RegExp ? w.id.test(id) : w.id === id)).reason} — ${where.length} run(s)`); }
   md.push('', '### Failing audits (all pages)', '');
   for (const e of [...agg.values()].sort((a, b) => b.pages.length - a.pages.length)) {
     md.push(`- **${e.category} · ${e.id}** — ${e.title} — ${e.pages.length} run(s)`);
