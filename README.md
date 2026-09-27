@@ -47,7 +47,7 @@ npm run brand    # 아이콘·파비콘·공유 이미지 재생성
 공개된 지문과 달라지므로, 꼭 필요할 때만 사용하세요.
 
 `main` 브랜치에 푸시하면 Vercel이 빌드해 www.datapd.ai로 배포합니다 (`vercel.json`: 폴더 주소는 `/drchoistudio/`처럼 끝에 `/`를 붙여 엽니다).
-저장소의 `.github/workflows/deploy.yml`은 GitHub Pages로도 배포하지만, 도메인은 Vercel을 가리킵니다.
+호스팅은 Vercel 하나뿐입니다 (예전 GitHub Pages 배포 워크플로와 `public/CNAME`은 2026-09-28 제거).
 
 ## 인증서 추가 (최박사 사진관)
 
