@@ -157,8 +157,8 @@ if (SAMPLES) {
   const registry = {
     issuer: { name: '최박사 사진관', en: 'Dr. Choi Photo Studio', location: '대구 수성구 범어동' },
     algorithm: 'SHA-256',
-    updatedAt: '2026-09-25',
-    note: '시범 운영 레지스트리. 정식 오픈 후 발급분은 선택 시 공개 블록체인(NFT)에도 지문을 기록합니다.',
+    updatedAt: '2026-09-29',
+    note: '시범 운영 레지스트리. 정식 오픈 후 발급분은 선택 시 블록체인 원본 기록을 남깁니다(지문을 직접 올리지 않고, 무작위 값을 섞은 묶음값만 공개 블록체인에 기록).',
     certificates: [
       {
         id: 'DRC-2026-000001',
@@ -168,7 +168,7 @@ if (SAMPLES) {
         category: '샘플 · 그래픽',
         studio: '범어점',
         file: { name: 'sample-original.jpg', bytes: original.length, width: W, height: H, type: 'image/jpeg' },
-        chain: { status: 'pilot', network: null, tx: null, note: '시범 운영 — 블록체인(NFT) 등록 전, 이 레지스트리에만 기록' },
+        chain: { status: 'pilot', network: null, tx: null, note: '시범 운영 — 블록체인 기록 전, 이 레지스트리에만 기록' },
         demo: true,
       },
     ],
