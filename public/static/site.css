@@ -130,6 +130,12 @@ hr{ border:0; border-top:1px solid var(--hair); margin:0; }
   .logo .wm small{ display:none; }
 }
 
+/* DataPD logo line "AI AGENT · ORIGINAL DATA · LIVE ARCHIVE" (about 282px): beside the one-line nav it fits from about 822px
+   in the header and 905px in the 3-column footer, so hide it from 721 to 960px (720px and below already hide it) */
+@media (min-width:721px) and (max-width:960px){ .logo[href="/"] .wm small{ display:none; } }
+/* the four DataPD nav items need about 312px at 14px; below 360px (288px usable at 320) tighten them to stay on one line */
+@media (max-width:359px){ .logo[href="/"] ~ .nav{ gap:12px; } .logo[href="/"] ~ .nav a{ font-size:13px; } }
+
 /* ---------- buttons ---------- */
 .btn{ display:inline-flex; align-items:center; justify-content:center; gap:8px; min-height:44px; padding:10px 20px;
   font:inherit; font-size:var(--t-sm); font-weight:700; letter-spacing:-.01em; text-decoration:none; cursor:pointer;
