@@ -190,7 +190,7 @@ const studioOg = `<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="6
   <g transform="translate(96,96)">${studioMark(84, { pad: 0.2 }).replace(/<\/?svg[^>]*>/g, '')}</g>
   <text x="200" y="152" font-family="Consolas, monospace" font-size="20" letter-spacing="3" fill="#5C5C58">DR. CHOI PHOTO STUDIO · 대구 범어</text>
   <text x="96" y="330" font-family="Malgun Gothic, sans-serif" font-size="112" font-weight="800" letter-spacing="-5" fill="${INK}">최박사 사진관</text>
-  <text x="100" y="408" font-family="Malgun Gothic, sans-serif" font-size="40" font-weight="700" fill="#2A2A28">찍는 순간, 원본이 증명되는 셀프 사진관</text>
+  <text x="100" y="408" font-family="Malgun Gothic, sans-serif" font-size="40" font-weight="700" fill="#2A2A28">원본을 기록으로 남기는 셀프 사진관</text>
   <circle cx="110" cy="500" r="9" fill="${RED}"/>
   <text x="134" y="508" font-family="Consolas, monospace" font-size="22" fill="${INK}">ORIGINAL CERTIFIED · SHA-256 ${shortHash}</text>
 </svg>`;
