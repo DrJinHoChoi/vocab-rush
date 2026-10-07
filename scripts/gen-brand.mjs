@@ -197,31 +197,20 @@ const studioOg = `<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="6
 writeFileSync(join(STUDIO, 'og-card.png'), await png(studioOg));
 console.log('✓ drchoistudio/og-card.png');
 
-// ---- DataPD share card (1200x630): a row of copies, one original -------------------
-// Copies get deterministic stand-in fingerprints; the highlighted one is the real sample's.
-const cols = 7, cellW = 144, gx = 96, rowsY = [486, 540];
-let cells = '';
-rowsY.forEach((y, r) => {
-  for (let c = 0; c < cols; c++) {
-    const x = gx + c * cellW;
-    const isOriginal = r === 0 && c === 4;
-    const h = isOriginal ? hOrig : sha(`datapd-copy-${r}-${c}`);
-    const label = h.slice(0, 8);
-    cells += isOriginal
-      ? `<rect x="${x - 12}" y="${y - 26}" width="${cellW - 16}" height="38" fill="none" stroke="${RED}" stroke-width="2.5"/>
-         <circle cx="${x + 2}" cy="${y - 7}" r="6" fill="${RED}"/>
-         <text x="${x + 16}" y="${y}" font-family="Consolas, monospace" font-size="20" font-weight="700" fill="${RED}">${label}</text>`
-      : `<text x="${x + 16}" y="${y}" font-family="Consolas, monospace" font-size="20" fill="#9C9C96">${label}</text>`;
-  }
-});
+// ---- DataPD share card (1200x630): the home headline and where each part stands ------------------
+// Text only (no fingerprint row). The status line goes stale when a part changes state: regenerate
+// the card then, and bump ?v= on og:image so Kakao/Facebook fetch it again.
 const datapdOg = `<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
   <rect width="1200" height="630" fill="${PAPER}"/>
-  <g transform="translate(96,86)">${datapdMark(84, { pad: 0.2 }).replace(/<\/?svg[^>]*>/g, '')}</g>
-  <text x="200" y="140" font-family="Consolas, monospace" font-size="20" letter-spacing="3" fill="#5C5C58">ORIGINAL DATA · www.datapd.ai</text>
-  <text x="92" y="318" font-family="Segoe UI, Malgun Gothic, sans-serif" font-size="128" font-weight="800" letter-spacing="-4" fill="${INK}">DataPD</text>
-  <text x="98" y="398" font-family="Malgun Gothic, sans-serif" font-size="44" font-weight="700" letter-spacing="-1" fill="#2A2A28">복제는 무한하고, 원본은 하나입니다.</text>
-  <line x1="96" y1="440" x2="1104" y2="440" stroke="#D6D6CF" stroke-width="2"/>
-  ${cells}
+  <g transform="translate(96,76)">${datapdMark(72, { pad: 0.2 }).replace(/<\/?svg[^>]*>/g, '')}</g>
+  <text x="188" y="104" font-family="Segoe UI, Malgun Gothic, sans-serif" font-size="34" font-weight="800" letter-spacing="-1" fill="${INK}">DataPD</text>
+  <text x="188" y="136" font-family="Consolas, monospace" font-size="18" letter-spacing="3" fill="#5C5C58">AI AGENT · ORIGINAL DATA · LIVE ARCHIVE</text>
+  <text x="1104" y="132" text-anchor="end" font-family="Consolas, monospace" font-size="20" letter-spacing="1" fill="#5C5C58">www.datapd.ai</text>
+  <text x="90" y="318" font-family="Malgun Gothic, sans-serif" font-size="96" font-weight="800" letter-spacing="-2" fill="${INK}">셀프 사진관에</text>
+  <text x="90" y="430" font-family="Malgun Gothic, sans-serif" font-size="96" font-weight="800" letter-spacing="-2" fill="${INK}">큐레이터가 있다면?</text>
+  <line x1="96" y1="526" x2="1104" y2="526" stroke="#D6D6CF" stroke-width="2"/>
+  <circle cx="104" cy="563" r="7" fill="${RED}"/>
+  <text x="122" y="570" font-family="Malgun Gothic, sans-serif" font-size="20" fill="#5C5C58">AI 큐레이터 내부 시제품 · 원본 확인 도구 작동 중 · LIVE ARCHIVE(라이브 아카이브) 준비 중</text>
 </svg>`;
 writeFileSync(join(PUB, 'og-card.png'), await png(datapdOg));
 console.log('✓ og-card.png (DataPD)');
