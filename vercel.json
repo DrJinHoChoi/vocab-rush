@@ -3,6 +3,12 @@
   "trailingSlash": true,
   "redirects": [
     {
+      "source": "/:path*",
+      "has": [{ "type": "host", "value": "datapd.ai" }],
+      "destination": "https://www.datapd.ai/:path*",
+      "permanent": true
+    },
+    {
       "source": "/drchoistudio",
       "destination": "https://drchoi-studio.smartear.chatgpt.site/",
       "permanent": false
