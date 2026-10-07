@@ -3,6 +3,12 @@
   "trailingSlash": true,
   "redirects": [
     {
+      "source": "/",
+      "has": [{ "type": "host", "value": "datapd.ai" }],
+      "destination": "https://www.datapd.ai/",
+      "permanent": true
+    },
+    {
       "source": "/:path*",
       "has": [{ "type": "host", "value": "datapd.ai" }],
       "destination": "https://www.datapd.ai/:path*",
