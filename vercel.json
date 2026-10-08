@@ -16,17 +16,17 @@
     },
     {
       "source": "/drchoistudio",
-      "destination": "https://drchoi-studio.smartear.chatgpt.site/",
+      "destination": "https://drchoistudio.datapd.ai/",
       "permanent": false
     },
     {
       "source": "/drchoistudio/",
-      "destination": "https://drchoi-studio.smartear.chatgpt.site/",
+      "destination": "https://drchoistudio.datapd.ai/",
       "permanent": false
     },
     {
       "source": "/drchoistudio/index.html",
-      "destination": "https://drchoi-studio.smartear.chatgpt.site/",
+      "destination": "https://drchoistudio.datapd.ai/",
       "permanent": false
     },
     {
