@@ -111,15 +111,18 @@ const GUARD = ['위조 불가능', '위조할 수 없', '완벽한 증명', '완
   '최초', '유일한 기술', '투자 가치', '가격 상승', '값이 오르', '수익을 보장', '한정판', '소장 가치', '희소가치', '시세', '프리미엄'];
 const NEG = /(아니|않|없|금지|말아|못|아닌|대신)/;
 
-const shells = { datapd: new Map(), studio: new Map() };
+// /en/ is the English introduction: its own language and its own (English) header/footer.
+const shells = { datapd: new Map(), studio: new Map(), en: new Map() };
 for (const pg of pages) {
   const { html, path } = pg;
   const isStudio = path.startsWith('/drchoistudio/');
+  const isEn = path.startsWith('/en/');
+  const lang = isEn ? 'en' : 'ko';
   const noindex = /<meta[^>]+name="robots"[^>]+noindex/i.test(html);
   pg.noindex = noindex;
 
   // document basics
-  if (!/<html[^>]*\slang="ko"/i.test(html)) add(path, 'lang', 'error', '<html lang="ko"> missing');
+  if (!new RegExp(`<html[^>]*\\slang="${lang}"`, 'i').test(html)) add(path, 'lang', 'error', `<html lang="${lang}"> missing`);
   if (!/<meta[^>]+name="viewport"/i.test(html)) add(path, 'viewport', 'error', 'viewport meta missing');
   const title = (html.match(/<title>([^<]*)<\/title>/i) || [])[1];
   if (!title) add(path, 'title', 'error', '<title> missing');
@@ -199,7 +202,7 @@ for (const pg of pages) {
   const norm = (s) => (s || '').replace(/\s+aria-current="page"/g, '').replace(/\s+/g, ' ').trim();
   const head = norm((html.match(/<header class="site-head">[\s\S]*?<\/header>/) || [])[0]);
   const foot = norm((html.match(/<footer class="site-foot">[\s\S]*?<\/footer>/) || [])[0]);
-  const bucket = shells[isStudio ? 'studio' : 'datapd'];
+  const bucket = shells[isStudio ? 'studio' : isEn ? 'en' : 'datapd'];
   const key = head + '\n' + foot;
   bucket.set(key, [...(bucket.get(key) || []), path]);
 
