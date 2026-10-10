@@ -3,7 +3,7 @@
 //      npm run brand -- --samples → ALSO regenerate the demo photos + certificates.json
 //
 // public/                 DataPD (site root): favicon.svg/.ico, favicon-16/32.png, icon-192/512.png,
-//                         icon-maskable-512.png, apple-touch-icon.png, og-card.png
+//                         icon-maskable-512.png, apple-touch-icon.png, og-card.png, og-agent.png
 // public/drchoistudio/    최박사 사진관: favicon.svg/.ico, apple-touch-icon.png, og-card.png
 //                         (--samples) samples/sample-original.jpg, samples/sample-edited.jpg, certificates.json
 //
@@ -197,9 +197,11 @@ const studioOg = `<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="6
 writeFileSync(join(STUDIO, 'og-card.png'), await png(studioOg));
 console.log('✓ drchoistudio/og-card.png');
 
-// ---- DataPD share card (1200x630): the home headline and where each part stands ------------------
+// ---- DataPD share cards (1200x630): a headline and where each part stands ------------------
 // Text only (no fingerprint row). The status line goes stale when a part changes state: regenerate
 // the card then, and bump ?v= on og:image so Kakao/Facebook fetch it again.
+// og-card.png   shared card for the other DataPD pages (studios, live-archive, stories, privacy, 404)
+// og-agent.png  home, /en/ and ai-agent.html: the home headline and the AI 에이전트 status
 const datapdOg = `<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
   <rect width="1200" height="630" fill="${PAPER}"/>
   <g transform="translate(96,76)">${datapdMark(72, { pad: 0.2 }).replace(/<\/?svg[^>]*>/g, '')}</g>
@@ -214,3 +216,18 @@ const datapdOg = `<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="6
 </svg>`;
 writeFileSync(join(PUB, 'og-card.png'), await png(datapdOg));
 console.log('✓ og-card.png (DataPD)');
+
+const agentOg = `<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <rect width="1200" height="630" fill="${PAPER}"/>
+  <g transform="translate(96,76)">${datapdMark(72, { pad: 0.2 }).replace(/<\/?svg[^>]*>/g, '')}</g>
+  <text x="188" y="104" font-family="Segoe UI, Malgun Gothic, sans-serif" font-size="34" font-weight="800" letter-spacing="-1" fill="${INK}">DataPD</text>
+  <text x="188" y="136" font-family="Consolas, monospace" font-size="18" letter-spacing="3" fill="#5C5C58">AI AGENT · ORIGINAL DATA · LIVE ARCHIVE</text>
+  <text x="1104" y="132" text-anchor="end" font-family="Consolas, monospace" font-size="20" letter-spacing="1" fill="#5C5C58">www.datapd.ai</text>
+  <text x="90" y="318" font-family="Malgun Gothic, sans-serif" font-size="96" font-weight="800" letter-spacing="-2" fill="${INK}">원본은 그대로 두고,</text>
+  <text x="90" y="430" font-family="Malgun Gothic, sans-serif" font-size="96" font-weight="800" letter-spacing="-2" fill="${INK}">AI 믹스로 하나 더.</text>
+  <line x1="96" y1="526" x2="1104" y2="526" stroke="#D6D6CF" stroke-width="2"/>
+  <circle cx="104" cy="563" r="7" fill="${RED}"/>
+  <text x="122" y="570" font-family="Malgun Gothic, sans-serif" font-size="20" fill="#5C5C58">AI 큐레이터 내부 시제품 · AI 믹스 준비 중 · 원본 확인 도구 작동 중 · LIVE ARCHIVE 준비 중</text>
+</svg>`;
+writeFileSync(join(PUB, 'og-agent.png'), await png(agentOg));
+console.log('✓ og-agent.png (DataPD AI 에이전트)');
