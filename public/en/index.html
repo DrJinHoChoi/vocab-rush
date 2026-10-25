@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>AI Agent for Photo Studios · AI Curator & AI Mix | DataPD</title>
-<meta name="description" content="AI Curator (prototype) flags the keepers. AI Mix (in design) will use generative AI to turn picked shots into add-ons studios can sell. Originals untouched." />
+<meta name="description" content="AI Curator (prototype) scores each shot, tips the next and suggests keepers. AI Mix (in design) will make generative AI add-ons to sell. Originals untouched." />
 <link rel="canonical" href="https://www.datapd.ai/en/" />
 <link rel="alternate" hreflang="ko" href="https://www.datapd.ai/" />
 <link rel="alternate" hreflang="en" href="https://www.datapd.ai/en/" />
@@ -17,7 +17,7 @@
 <meta property="og:type" content="website" />
 <meta property="og:site_name" content="DataPD" />
 <meta property="og:title" content="Keep the original. Sell the mix. | DataPD" />
-<meta property="og:description" content="AI Curator (prototype) flags the keepers. AI Mix (in design) will use generative AI to turn picked shots into add-ons studios can sell. Originals untouched." />
+<meta property="og:description" content="AI Curator (prototype) scores each shot, tips the next and suggests keepers. AI Mix (in design) will make generative AI add-ons to sell. Originals untouched." />
 <meta property="og:url" content="https://www.datapd.ai/en/" />
 <meta property="og:image" content="https://www.datapd.ai/og-agent.png?v=20261010" />
 <meta property="og:image:width" content="1200" />
@@ -99,7 +99,7 @@
   "@id": "https://www.datapd.ai/en/#webpage",
   "url": "https://www.datapd.ai/en/",
   "name": "AI Agent for Photo Studios · AI Curator & AI Mix | DataPD",
-  "description": "AI Curator (prototype) flags the keepers. AI Mix (in design) will use generative AI to turn picked shots into add-ons studios can sell. Originals untouched.",
+  "description": "AI Curator (prototype) scores each shot, tips the next and suggests keepers. AI Mix (in design) will make generative AI add-ons to sell. Originals untouched.",
   "inLanguage": "en",
   "isPartOf": {
     "@id": "https://www.datapd.ai/#website"
@@ -136,7 +136,7 @@
       <div class="stack hero-copy">
         <p class="eyebrow"><span class="rec" aria-hidden="true"></span>AI agent for photo studios</p>
         <h1 class="display" id="hero-title">Keep the original. Sell the mix.</h1>
-        <p class="lead">DataPD is building an AI agent for self-portrait and photo studios. AI Curator (prototype) reviews each shot as it's taken, gives a short tip for the next one, and suggests the ones that came out well. The customer makes the final pick. AI Mix (in design) will use generative AI to turn shots the customer picks into new add-ons your studio can sell. Original files stay untouched.</p>
+        <p class="lead">DataPD is building an AI agent for self-portrait and photo studios. AI Curator (prototype) scores each shot as it's taken, with a plain reason, gives a short tip for the next one, and suggests the ones that came out well. The customer makes the final pick. AI Mix (in design) will use generative AI to turn shots the customer picks into new add-ons your studio can sell. Original files stay untouched.</p>
       </div>
 
       <div class="stack hero-act">
@@ -150,7 +150,7 @@
       <section class="demo frame" aria-labelledby="demo-title">
         <div class="panel raised stack">
           <p class="eyebrow">Example screen · prototype</p>
-          <h2 class="h3" id="demo-title"><span class="sr-only">Example: </span>AI Curator checks each shot</h2>
+          <h2 class="h3" id="demo-title"><span class="sr-only">Example: </span>AI Curator scores each shot and tips the next</h2>
           <div class="shot" aria-hidden="true">
             <span class="cap">Shot 14</span>
             <span class="face">1</span><span class="face off">2</span><span class="face">3</span>
@@ -183,7 +183,7 @@
         <li>
           <div>
             <h3>Pick</h3>
-            <p>AI Curator suggests up to 12 shots that came out well. The customer chooses.</p>
+            <p>AI Curator scores each shot and suggests up to 12 that came out well. The customer chooses.</p>
             <p class="state note xs">AI Curator · prototype (internal)</p>
           </div>
         </li>
@@ -282,7 +282,7 @@
     <div class="wrap">
       <div class="stack sec-head">
         <p class="eyebrow">How it works</p>
-        <h2 class="h2" id="how-title">Shoot, check, pick</h2>
+        <h2 class="h2" id="how-title">Score, tip, pick</h2>
         <p class="body muted">It works on each shot just after it is taken. Live-view guidance is not available yet.</p>
       </div>
       <ol class="steps narrow" role="list">
@@ -294,14 +294,14 @@
         </li>
         <li>
           <div>
-            <h3>Each shot is checked</h3>
-            <p>Closed eyes, expression, cropped heads, shoulders or feet, the number of people, blur, exposure, and whether a pet has left the frame.</p>
+            <h3>Each shot is scored</h3>
+            <p>It checks for closed eyes, expressions, cropped heads, shoulders or feet, the number of people, blur, exposure and whether a pet has left the frame, then gives each shot a score from 0 to 100 with a plain reason. It rates the shot's condition, never anyone's appearance.</p>
           </div>
         </li>
         <li>
           <div>
             <h3>A short tip for the next shot</h3>
-            <p>One sentence on screen and by voice.</p>
+            <p>One sentence on screen and by voice. Voice tips come at most once every five seconds, and the same tip is spoken no more than twice.</p>
           </div>
         </li>
         <li>
